@@ -1,0 +1,378 @@
+﻿
+@model Model.TemplateModel
+@{
+	/**/
+	string addupdate = "Save";
+	if (Model != null)
+	{
+		if (Model.Id > 0)
+		{
+			addupdate = "Update";
+		}
+	}
+	ViewBag.Title = "Barcode Template";
+	Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Remember to include jQuery :) -->
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>*@
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>*@
+@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />*@
+@*<script src="~/Scripts/assets/ckeditor/adapters/jquery.js"></script>*@
+@*<link href="/Scripts/Barcode/jquery.modal.min.css" rel="stylesheet" />*@
+
+<style>
+	.preview-btn {
+		float: right;
+	}
+
+	.desc-heading {
+		width: auto;
+	}
+</style>
+
+
+
+<div class="row">
+	<div class="prtm-page-bar col-md-7 col-lg-3 col-sm-12 col-xs-12" style="background:none;">
+		<ul class="breadcrumb" style="background:none;">
+			<li class="breadcrumb-item text-capitalize">
+				<h3>BarcodeTemplate</h3>
+			</li>
+
+		</ul>
+	</div>
+</div>
+@using (Html.BeginForm("Index", "Template", FormMethod.Post, new { id = "createForm" }))
+{
+	<div class="row">
+		<div class="col-md-7 col-xs-12">
+
+			<div class="row">
+				<div class="col-lg-4 col-md-4 mrgn-b-md">
+					<label id="size">Size</label>
+					@Html.DropDownList("LengthId", null, new
+			   {
+				   @class = "selectize-control form-control select-size",
+				   onchange = "jsFunction(this.value);"
+			   })
+				</div>
+				<div class="col-lg-4 col-md-4 mrgn-b-md barcode-inputs">
+					<label>Width</label>
+					<span class="form-control">
+						@Html.EditorFor(model => model.Width, new { htmlAttributes = new { @class = "", style = "border:none;float:left;max-width:75%;", oninput = "widthsize(false)" } })
+
+						@*<input type="text" id="width-temp" style="border:none;float:left;width:59%;" name="width-temp" value="" oninput="widthsize(false)" />*@
+						<span class="unit-width" style="float:right;">cm</span>
+
+					</span>
+					@Html.ValidationMessageFor(model => model.Width, "", new { @class = "text-danger" })
+				</div>
+				<div class="col-lg-4 col-md-4 mrgn-b-md barcode-inputs">
+					<label>Height</label>
+					<span class="form-control">
+						@Html.EditorFor(model => model.Height, new { htmlAttributes = new { @class = "", style = "border:none;float:left;max-width:75%;", oninput = "widthsize(true)" } })
+						@*<input type="text" id="height-temp" style="border:none;float:left;width:59%;" name="height-temp" value="" oninput="widthsize(true)" />*@
+						<span class="unit-width" style="float:right;">cm</span>
+					</span>
+					@Html.ValidationMessageFor(model => model.Height, "", new { @class = "text-danger" })
+				</div>
+				
+			</div>
+
+			<div class="row">
+				<div class="col-md-12 col-xs-12 col-sm-12  mrgn-b-lg">
+					<label>Name</label>
+					@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control required-company" } })
+					@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+				</div>
+			</div>
+
+			<div class="row  mrgn-b-lg">
+				<div class="col-lg-12 col-md-12">
+
+					@Html.HiddenFor(n => n.Id)
+					@*<input type="hidden" id="width1" name="Width" value="200" />
+						<input type="hidden" id="height1" name="Height" value="200" />*@
+
+					@*<textarea id="editor" name="posEditor" class="materialize-textarea"></textarea>*@
+					<div class="row">
+						<div class="col-lg-12 col-md-12 mrgn-b-md">
+							<label class="desc-heading">Description</label>
+							<button type="button" class="btn btn-success import-btn printtext pull-right" style="margin-left:5px;">Print</button>&nbsp;&nbsp;
+							<button id="preview" type="button" class="btn btn-success preview-btn" onclick="showTemplate()">Preview »</button>
+						</div>
+					</div>
+
+					@*@Html.TextArea(Model.TemplateHtml, new { @class = "ckeditor", id = "my_content" } )*@
+					@*<textarea id="my_content" name="TemplateHtml" class="ckeditor"></textarea>*@
+					@Html.TextAreaFor(c => c.TemplateHtml, new { @class = "ckeditor" })
+
+					@*<script>
+							CKEDITOR.replace('posEditor');
+						</script>*@
+
+
+
+				</div>
+			</div>
+
+			<div class="row mrgn-b-lg">
+				<div class="col-md-12 col-lg-12 text-right mrgn-b-lg">
+					@*<button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel" @*onclick="window.location.href = '/Company/Template/list'"*>Cancel</button>*@
+					<button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel">Cancel</button>
+					<button type="submit" class="btn btn-success popup-savebtn">addupdate</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-5 col-xs-12">
+			<div class="row mrgn-b-md">
+				<div class="col-md-12">
+					<div class="print-bar-box" id="PrintBarcode">
+						<div class="barcode-div" id="barcode-div" style="max-height:483px;">
+							@*<svg id="barcode"></svg>*@
+						</div>
+						<style media="print">
+							h1 {
+								color: red;
+							}
+
+							.inner-print p {
+								color: #000000;
+								font-size: 14px;
+							}
+
+							body {
+								background-color: #FFFFFF;
+							}
+						</style>
+						<div class="pageFooter"></div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-md-12 ">
+					<h3>DataType</h3>
+				</div>
+				<div class="col-md-6 pad-new">
+					<table class="table  table-bordered small-font">
+						<tbody>
+							<tr>
+								<td>Barcode</td>
+								<td>##barcode##</td>
+							</tr>
+							<tr>
+								<td>Name</td>
+								<td>##name##</td>
+							</tr>
+							<tr>
+								<td>BranchName</td>
+								<td>##brancname##</td>
+							</tr>
+							<tr>
+								<td>BranchEmail</td>
+								<td>##branchemail##</td>
+							</tr>
+							<tr>
+								<td>BranchLogo</td>
+								<td>##branchlogo##</td>
+							</tr>
+							<tr>
+								<td>ProductId</td>
+								<td>##productid##</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="col-md-6 pad-new">
+					<table class="table table-bordered small-font">
+						<tbody>
+							<tr>
+								<td>Product Name</td>
+								<td>##productname##</td>
+							</tr>
+							<tr>
+								<td>Unit</td>
+								<td>##unit##</td>
+							</tr>
+							<tr>
+								<td>Quantity</td>
+								<td>##quantity##</td>
+							</tr>
+							<tr>
+								<td>Discount</td>
+								<td>##discount##</td>
+							</tr>
+							<tr>
+								<td>Price After Discount</td>
+								<td>##priceafterdiscount##</td>
+							</tr>
+							<tr>
+								<td>Price</td>
+								<td>##price##</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+}
+
+<div class="modal fade" id="myCancelModal">
+    <div id="Canceldiv">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Confirm Cancel</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you need to close without save!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" id="cancelyesbtn" class="btn btn-success popup-savebtn" data-dismiss="modal">yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal">
+
+	<div class="row" id="modaldiv1" style="margin:0px;">
+	</div>
+</div>
+<script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
+
+@section scripts
+    {
+
+	<script type="text/javascript">
+ $(document).on("click", "#cancelyesbtn", function () {
+            window.location = '/Admin/Template/list';
+        });
+    function jsFunction(value) {
+    	var val = $("#LengthId option:selected").text();
+    	$(".unit-width").text(val);
+    	var lenId = $(this).val();
+    }
+
+
+    debugger;
+    $(document).on('click', '.printtext', function () {
+        debugger;
+        $(".main-loading").removeClass("displayNone")
+        var contents = $("#PrintBarcode").html();
+
+        var frame1 = $('<iframe />');
+        frame1[0].name = "frame1";
+        frame1.css({ "position": "relative", "top": "-1000000px" });
+        //$("#content .iframecontainer").html(frame1);
+        $("body").append(frame1);
+        var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+        frameDoc.document.open();
+        //Create a new HTML document.
+        frameDoc.document.write('<html><head><title>DIV Contents</title>');
+        frameDoc.document.write('</head><body>');
+        //Append the external CSS file.
+
+        debugger;
+
+        //Append the DIV contents.
+        frameDoc.document.write(contents);
+        frameDoc.document.write('</body></html>');
+        frameDoc.document.close();
+
+        var interval = setInterval(function () {
+            if (frame1.contents().find('.pageFooter').length > 0) {
+                clearInterval(interval);
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                $(".main-loading").addClass("displayNone");
+                frame1.remove();
+                //$("#content .iframecontainer").empty();
+            }
+
+            //frame1.remove();
+        }, 1000);
+    });
+    //$.validator.unobtrusive.parse($("#createForm"));
+    var editor = $('textarea').ckeditor().ckeditor;
+
+    CKEDITOR.instances.TemplateHtml.setData(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.TemplateHtml)));
+
+    function widthsize(flag) {
+        debugger;
+        var len = 0.0;
+        var size = isNaN(parseInt($('.select-size').val())) ? 0 : parseInt($('.select-size').val());
+        var width = isNaN(parseInt($('#width-temp').val())) ? 0 : parseInt($('#width-temp').val());//false
+        var height = isNaN(parseInt($('#height-temp').val())) ? 0 : parseInt($('#height-temp').val());//true
+        if (flag) {
+            len = height;
+        }
+        else {
+            len = width;
+        }
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            //contentType:
+            url: '/Admin/Template/getLength?len=' + len + '&size=' + size,
+            //data: obj,
+            success: function (result) {
+                debugger;
+                $('#barcode-div').html(result);
+            },
+            error: function (xhr, status) {
+                alert(status);
+            }
+        });
+        if (flag) {
+            $('#height').val(height);
+        }
+        if (!flag) {
+            $('#width').val(width);
+        }
+    }
+    function showTemplate() {
+        debugger;
+        var width = $("#Width").val();//
+        var height = $("#Height").val();//
+        var lengthId = $("#LengthId").val();//
+        var list = [];
+        var flag = false;
+        var ckhtml = CKEDITOR.instances.TemplateHtml.getData();
+
+        var obj = {};
+        obj.TemplateName = $('#TemplateName').val();
+        obj.TemplateHtml = ckhtml;
+        obj.Width = width;
+        obj.Height = height;
+        obj.LengthId = lengthId;
+        obj.IsActive = true;
+        $.ajax({
+            type: "POST",
+            dataType: "html",
+            url: '/Admin/Template/ShowTemplate',
+            data: obj,
+            success: function (result) {
+                debugger;
+                $('#barcode-div').html(result);
+            },
+            error: function (xhr, status) {
+                alert(status);
+            }
+        });
+    }
+
+
+	</script>
+}
+
+
+

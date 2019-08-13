@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Services;
+using Model;
+using Helper;
+
+namespace POS.Controllers
+{
+    public class BaseController : Controller
+    {
+        // GET: Base
+        protected IUnitOfService Services;
+        public BaseController()
+        {
+            this.Services = new UnitOfService();    
+        }
+        public ActionResult Index()
+        {
+            Services.BranchService.GetAll();
+            return View();
+        }
+        public ActionResult Edit()
+        {
+            var body = "";
+            List<UserModel> UserModelList = ServerResponse.Invoke<List<UserModel>>("api/user/getDetails", body, "get");
+            return View();
+        }
+    }
+}

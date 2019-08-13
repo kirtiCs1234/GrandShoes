@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Services.IService;
+namespace Services
+{
+    public interface IUnitOfService
+    {
+        IUserService UserService { get; }
+        ISupplierService SupplierService { get; }
+        ISizeGridService SizeGridService { get; }
+        IBranchService BranchService { get; }
+        IRoleService RoleService { get; }
+        IAreaService AreaService { get; }
+        IBuyerService BuyerService { get; }
+        IStaffService StaffService { get; }
+        IDesignationService DesignationService { get; }
+        IProductSourceService ProductSourceService { get; }
+        IProductCategoryService ProductCategoryService { get; }
+
+    }
+}

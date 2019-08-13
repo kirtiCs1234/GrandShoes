@@ -1,0 +1,132 @@
+﻿using Helper;
+using Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Security;
+
+namespace POS.Controllers
+{
+
+    public class MyAccountController : BaseController
+    {
+        // GET: MyAccount
+        public ActionResult Login()
+        {
+            
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(UserLoginModel model)
+        {
+
+           var login = Services.UserService.Login(model);
+            if (login != null)
+            {
+                Session["Email"] = login.Email.ToString();
+                Session["Password"] = login.Password.ToString();
+                return RedirectToAction("Index", "Admin/User");
+            }
+            else if (model.Email == " " && model.Password == " ")
+            {
+                Session["Email"] = "";
+                Session["Password"] = "";
+                return RedirectToAction("Login", "MyAccount");
+            }
+            else if(login==null)
+            {
+                
+                    ViewBag.message = "Email and Password does not match.";
+               
+                
+            }
+            return View(model);
+        }
+       
+        public ActionResult LogOut()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            Session.Clear();
+            return RedirectToAction("Login");
+        }
+        public ActionResult CheckUserEmail(UserLoginModel user)
+        {
+            var iExist = Services.UserService.CheckUserEmail1(user);
+            return Json(!iExist, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ForgetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ForgetPassword(string email)
+        {
+            var result = Services.UserService.GetUserByEmail(email);
+            if (result != null)
+            {
+
+                EmailHandler.SendMail(result.Email, "", "", "Forget Password", "<a href='" + Request.Url.AbsoluteUri.ToLower().Replace("/MyAccount/ForgotPassword", "/MyAccount/ResetForgotPassword/") + result.Id + "'> Click here </a>&nbsp; to reset your password ", null, null);
+                //TempData["Status"] = "Success";
+                //TempData["Message"] = "Link sent to your account.Please login to reset your password.";
+                //return RedirectToAction("thankyou");
+                //return Json(true);
+                return RedirectToAction("ResetForgetPassword/"+result.Id);
+            }
+            else
+            {
+                //TempData["Status"] = "UnSuccess";
+                //TempData["Message"] = "Sorry, Unable to find your email.";
+                //return RedirectToAction("thankyou");
+                return Json(false);
+            }
+            //return RedirectToAction("Index","MyAccount");
+        }
+        public ActionResult ResetForgetPassword(int id)
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ResetForgetPassword(UserLoginModel user)
+        {
+            bool result = Services.UserService.ChangePassword(user);
+            if (result==true)
+            {
+                //TempData["Success"] = "Your password has been successfully changed. Please login now.";
+                return RedirectToAction("Login","MyAccount");
+            }
+            else
+            {
+                ViewBag.Message = "Sorry, Unable to change your password.";
+                return View();
+            }
+        }
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ResetPassword(UserLoginModel model)
+        {
+            var data = Session["Email"].ToString();
+            var Id = Services.UserService.GetUserByEmail(data).Id;
+            model.Id = Id;
+            bool user = Services.UserService.ResetPassword1(model);
+             if (user==true)
+            {
+                Session.Abandon();
+                return RedirectToAction("Index","Area");
+
+            }
+            else
+            {
+                ViewBag.Message= "Invalid Old Password";
+            }
+           // ViewBag.returnmessage = returnMessage;
+            return View();
+        }
+    }
+}

@@ -1,0 +1,451 @@
+﻿@using POS;
+@using POS.Security;
+
+@{
+    var user = CookieHelper.getUser();
+}
+<!Doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+    <meta name="description" content="type_your_description_here">
+    <meta content="" name="author" />
+    <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+    <!-- Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/Scripts/vendor/fontello/css/all-fontello.min.css">
+    <link rel="stylesheet" href="~/Scripts/vendor/fontello/css/icon_set_all.min.css">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <!-- range -->
+    <link rel="stylesheet" href="~/Content/assets/css/range/ion.rangeSlider.css" />
+    <link rel="stylesheet" href="~/Content/assets/css/range/ion.rangeSlider.skinFlat.css" />
+    <!-- icheck -->
+    <link rel="stylesheet" href="~/Content/assets/css/icheck.css" />
+    <!-- main Style -->
+    <link rel="stylesheet" href="~/Content/assets/css/style.css">
+    <link rel="stylesheet" href="~/Content/assets/css/main-style.css">
+    <link href="~/Content/animate.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/assets/css/model.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Cairo:400,600,700,900&amp;subset=arabic" rel="stylesheet">
+
+
+    <link href="~/Content/assets/css/plugins.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/MonthPicker.min.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="~/Content/assets/plugins/fontawesome/css/font-awesome.min.css" type="text/css" />*@
+    @*<link rel="stylesheet" href="~/Content/assets/plugins/animate/animate.min.css" type="text/css" />*@
+    <link rel="stylesheet" type="text/css" href="/Content/assets/css/pratham.min.css">
+
+    <link rel="stylesheet" type="text/css" href="/Content/assets/css/vendor.min.css">
+
+    <script src="/Scripts/jquery-2.2.4.min.js"></script>
+    <style>
+        .loading-toggle {
+            z-index: 999;
+        }
+
+        .loading {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: #acb98d26;
+        }
+
+        .lds-roller {
+            display: inline-block;
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            right: 0;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+            .lds-roller div {
+                animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+                transform-origin: 32px 32px;
+            }
+
+                .lds-roller div:after {
+                    content: " ";
+                    display: block;
+                    position: absolute;
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 50%;
+                    background: #d0c7c7;
+                    margin: -3px 0 0 -3px;
+                }
+
+                .lds-roller div:nth-child(1) {
+                    animation-delay: -0.036s;
+                }
+
+                    .lds-roller div:nth-child(1):after {
+                        top: 50px;
+                        left: 50px;
+                    }
+
+                .lds-roller div:nth-child(2) {
+                    animation-delay: -0.072s;
+                }
+
+                    .lds-roller div:nth-child(2):after {
+                        top: 54px;
+                        left: 45px;
+                    }
+
+                .lds-roller div:nth-child(3) {
+                    animation-delay: -0.108s;
+                }
+
+                    .lds-roller div:nth-child(3):after {
+                        top: 57px;
+                        left: 39px;
+                    }
+
+                .lds-roller div:nth-child(4) {
+                    animation-delay: -0.144s;
+                }
+
+                    .lds-roller div:nth-child(4):after {
+                        top: 58px;
+                        left: 32px;
+                    }
+
+                .lds-roller div:nth-child(5) {
+                    animation-delay: -0.18s;
+                }
+
+                    .lds-roller div:nth-child(5):after {
+                        top: 57px;
+                        left: 25px;
+                    }
+
+                .lds-roller div:nth-child(6) {
+                    animation-delay: -0.216s;
+                }
+
+                    .lds-roller div:nth-child(6):after {
+                        top: 54px;
+                        left: 19px;
+                    }
+
+                .lds-roller div:nth-child(7) {
+                    animation-delay: -0.252s;
+                }
+
+                    .lds-roller div:nth-child(7):after {
+                        top: 50px;
+                        left: 14px;
+                    }
+
+                .lds-roller div:nth-child(8) {
+                    animation-delay: -0.288s;
+                }
+
+                    .lds-roller div:nth-child(8):after {
+                        top: 45px;
+                        left: 10px;
+                    }
+
+        @@keyframes lds-roller {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div class="loading">
+        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+    <div class="prtm-wrapper">
+        <header class="prtm-header">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                        <button class="c-hamburger c-hamburger--htra prtm-bars pull-right"> <span>toggle menu</span> </button>
+                        <div class="prtm-logo">
+                            <a class="navbar-brand" href="/admin/User/Index">COMPANY LOGO</a>
+                        </div>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse" data-hover="dropdown">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    @if (user != null)
+                                    {
+                                        @user.Email
+                                    } <span class="caret"></span><img class="img-responsive display-ib mrgn-l-sm img-circle" src="~/Content/assets/img/user-1.jpg" width="64" height="45" alt="User">
+                                </a>
+                                <ul class="dropdown-menu">
+
+                                    @*<li><a href="user-profile.html"><i class="fa fa-user"></i> My Profile</a></li>*@
+                                    <li><a href="@Url.Action("../../MyAccount/ResetPassword")"><i class="fa fa-user"></i> Change Password</a></li>
+                                    @*<li><a href="users-list.html"><i class="fa fa-money"></i> My Contact</a></li>
+                                        <li><a href="email.html" class="pos-relative"><i class="fa fa-inbox"></i> My Inbox <span class="badge badge-danger pull-right profile-badge">2</span></a></li>
+                                        <li><a href="user-profile.html" class="pos-relative"><i class="fa fa-tasks"></i> My task <span class="badge badge-success pull-right profile-badge">5</span></a></li>
+                                        <li><a href="user-settings.html"><i class="fa fa-cog"></i> Account Setting</a></li>*@
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="@Url.Action("../../MyAccount/LogOut")"><i class="fa fa-power-off"></i>Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+            </nav>
+        </header>
+        <div class="prtm-main">
+            <div class="prtm-sidebar">
+                <div class="prtm-sidebar-back"> </div>
+                <div class="prtm-sidebar-nav-wrapper">
+                    <div class="prtm-sidebar-menu">
+                        <nav class="sidebar-nav collapse">
+                            <ul class="list-unstyled sidebar-menu">
+                                <li class="sidenav-heading text-uppercase">Features</li>
+                                <li class="has-children">
+                                    <a href="#">
+                                        <i class="fa fa-server"></i><span>Master</span>
+                                    </a>
+                                    <ul class="list-unstyled sub-menu collapse" style="display:none;">
+                                        <li><a href="/admin/Color/Index"><span>Color</span></a></li>
+                                        <li><a href="/admin/Buyer/Index"><span>Buyer</span></a></li>
+                                        <li><a href="/admin/Season/Index"><span>Season</span></a></li>
+                                        <li><a href="/admin/Area/Index"><span>Area</span></a></li>
+                                        @*<li><a href="/admin/ProductStyle/Index"><span>Product Style</span></a></li>*@
+                                        <li>
+                                            <a href="/Admin/Role/Index">@*<i class="fa fa-sliders ab" aria-hidden="true"></i>*@<span>Role</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/admin/SizeGrid/Index">@*<i class="fa fa-balance-scale" aria-hidden="true"></i>*@<span>Size Grid</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="has-children">
+                                    <a href="#">
+                                        <i class="fa fa-server"></i><span>Product Category</span>
+                                    </a>
+                                    <ul class="list-unstyled sub-menu collapse" style="display:none;">
+                                        <li><a href="/admin/ProductCat1/Index"><span>Product Category1</span></a></li>
+                                        <li><a href="/admin/ProductCat2/Index"><span>Product Category2</span></a></li>
+                                        <li><a href="/admin/ProductCat3/Index"><span>Product Category3</span></a></li>
+                                        <li><a href="/admin/ProductCat4/Index"><span>Product Category4</span></a></li>
+
+                                    </ul>
+                                </li>
+                                <li class="has-children">
+                                    <a href="#">
+                                        <i class="fa fa-server"></i><span>Product</span>
+                                    </a>
+                                    <ul class="list-unstyled sub-menu collapse" style="display:none;">
+                                        <li><a href="/admin/Product/Index"><span>Product</span></a></li>
+                                        <li><a href="/admin/Offers/Index"><span>Product Search</span></a></li>
+                                        <li><a href="/admin/ProductSource/Index"><span>Product Source</span></a></li>
+
+                                    </ul>
+                                </li>
+                                <li class="has-children">
+                                    <a href="#">
+                                        <i class="fa fa-server"></i><span>Stock Actions</span>
+                                    </a>
+                                    <ul class="list-unstyled sub-menu collapse" style="display:none;">
+                                        <li><a href="/admin/StockAudit/Index"><span>Stock Audit</span></a></li>
+                                        <li>
+                                            <a href="/admin/StockTape/Index">
+                                                <span>
+                                                    Stock Take
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li><a href="/admin/StockEnquiry/Index"><span>Stock Enquiry</span></a></li>
+                                        <li><a href="/admin/StockDistribution/Index"><span>Stock Distribution</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="has-children">
+                                    <a href="#">
+                                        <i class="fa fa-server"></i><span>Reports</span>
+                                    </a>
+                                    <ul class="list-unstyled sub-menu collapse" style="display:none;">
+                                        <li><a href="/admin/BranchStockReport/Index"><span>Branch Stock Report</span></a></li>
+                                        <li><a href="/admin/IBTCartonReport/Index"><span>IBT Carton Report</span></a></li>
+
+                                        <li><a href="/admin/PurchaseOrderReport/Index"><span>Purchase Order Report</span></a></li>
+                                        <li><a href="/admin/StoreDeliveryReport/Index"><span>Stock Distribution Report</span></a></li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="/admin/Supplier/Index"><i class="fa fa-users" aria-hidden="true"></i><span>Supplier</span></a>
+                                </li>
+                                <li>
+                                    <a href="/admin/BranchCartonDispach/Index"><i class="fa fa-users" aria-hidden="true"></i><span>Carton Dispatch</span></a>
+                                </li>
+
+                                <li>
+                                    <a href="/admin/User/Index"><i class="fa fa-book" aria-hidden="true"></i><span>Accounts</span></a>
+                                </li>
+                                <li>
+                                    <a href="/admin/Branch/Index"><i class="fa fa-users" aria-hidden="true"></i><span>Branch</span></a>
+                                </li>
+
+                                <li>
+                                    <a href="/Admin/Template/list"><i class="fa fa-money" aria-hidden="true"></i><span>Template</span></a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/MarkDownBranch/Index"><i class="fa fa-money" aria-hidden="true"></i><span>Mark Down Branch</span></a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/Discount/Index"><i class="fa fa-money" aria-hidden="true"></i><span>Discount</span></a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/PurchaseOrder/Index"><i class="fa fa-money" aria-hidden="true"></i><span>Purchase Order</span></a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/Receipt/Index"><i class="fa fa-money" aria-hidden="true"></i><span>Receipt Order</span></a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/IBTCarton/Index"><i class="fa fa-money" aria-hidden="true"></i><span>IBT Carton</span></a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/SMIBranchDefault/Index"><i class="fa fa-money" aria-hidden="true"></i><span>SMI Branch Default</span></a>
+                                </li>
+                                <li>
+                                    <a href="/Admin/StaffMember/Index"><i class="fa fa-money" aria-hidden="true"></i><span>Staff Member</span></a>
+                                </li>
+                                <li class="has-children">
+                                    <a href="#">
+                                        <i class="fa fa-server"></i><span>SMI Distribution</span>
+                                    </a>
+                                    <ul class="list-unstyled sub-menu collapse" style="display:none;">
+                                        <li>
+                                            <a href="/Admin/suggestion/Index"><i class="fa fa-money" aria-hidden="true"></i><span>SMI Suggestions</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/Admin/IBTCarton/ToBranchTransfer"><i class="fa fa-money" aria-hidden="true"></i><span>SMI Distribution</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="has-children">
+                                    <a href="#">
+                                        <i class="fa fa-server"></i><span>Report</span>
+                                    </a>
+                                    <ul class="list-unstyled sub-menu collapse" style="display:none;">
+                                        <li>
+                                            <a href="/Admin/Report/BranchStockStatusReport"><i class="fa fa-money" aria-hidden="true"></i><span>BranchStockStatusReport</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/Admin/Report/StaffCommition"><i class="fa fa-money" aria-hidden="true"></i><span>Staff Commission</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/Admin/Report/GNRReport"><i class="fa fa-money" aria-hidden="true"></i><span>GNR Report</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/Admin/Report/DailySalesReport"><i class="fa fa-money" aria-hidden="true"></i><span>Daily Sales Report</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/Admin/Report/DailySalesReportSummary"><i class="fa fa-money" aria-hidden="true"></i><span>Daily Sales Report Summary</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/Admin/Report/OutstandingPurchaseOrderReport"><i class="fa fa-money" aria-hidden="true"></i><span>Outstanding Purchase Order Report</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/Admin/Report/TransactionEnquiryReport"><i class="fa fa-money" aria-hidden="true"></i><span>Transaction Enquiry Report</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                </div>
+            </div>
+            <div class="prtm-content-wrapper">
+                <div class="prtm-content">
+                    @RenderBody()
+                </div>
+                <footer class="footer-wrapper">
+                    <div class="prtm-footer clearfix">
+                        <div class="row footer-area pad-lr-md">
+                            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                                <p>Copyright 2018 POS | All Rights Reserved</p>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 text-right">
+                                <a href="index.html">POS Logo</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" id="back-top" class="to-top scrolled"> <span class="to-top-icon"></span> </a>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="/Scripts/assets/js/vendor.min.js" type="text/javascript"></script>
+    <script src="/Scripts/assets/js/pratham.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/vendor/moment/moment.min.js"></script>
+    <script src="~/Scripts/vendor/moment/locale/ar-sa.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="~/Scripts/vendor/select-box/select-box.js"></script>
+    <script src="/Scripts/vendor/nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="/Scripts/vendor/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
+    <script src="/Scripts/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="/Scripts/matchMedia.js"></script>
+    <script src="/Scripts/vendor/iCheck/icheck.min.js"></script>
+    <script src="/Scripts/Barcode/JsBarcode.all.min.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.js")" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $(".advance-search").click(function () {
+                $(".advance-search-container").css('z-index', '4');
+            });
+        });
+
+        $(document).ready(function () {
+            $(".advance-search").click(function () {
+                $(".advance-content").toggle(500);
+            });
+        });
+        $(document).ready(function () {
+            $(".advance-search-btn").click(function () {
+                $(".advance-content").toggle(500);
+            });
+        });
+    </script>
+    <script>
+        $("[data-scroll-to]").click(function () {
+            var $this = $(this),
+                $toElement = $this.attr('data-scroll-to'),
+                $focusElement = $this.attr('data-scroll-focus'),
+                $offset = $this.attr('data-scroll-offset') * 1 || 0,
+                $speed = $this.attr('data-scroll-speed') * 1 || 500;
+
+            $('html, body').animate({
+                scrollTop: $($toElement).offset().top + $offset
+            }, $speed);
+
+            if ($focusElement) $($focusElement).focus();
+        });
+    </script>
+    @RenderSection("scripts", false)
+</body>
+</html>

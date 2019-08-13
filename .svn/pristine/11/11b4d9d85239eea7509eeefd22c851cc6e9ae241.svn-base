@@ -1,0 +1,52 @@
+﻿using Helper;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace POS.Areas.Admin.Controllers
+{
+    [CustomAuth]
+    public class BranchCartonDispachController : BaseController
+    {
+        // GET: Admin/BranchCartonDispach
+        public ActionResult Index()
+        {
+            var SummaryList = Services.StockDistributionSummaryService.GetAll();
+            ViewBag.DistributionSummaryID = new SelectList(SummaryList, "Id", "Id");
+            
+            return View();
+        }
+        public ActionResult DispatchDetail(string BranchName,int? DistributionSummaryID)
+        {
+            var list = Services.IBTService.GetDataBranch(BranchName, DistributionSummaryID);
+            if (list.Count != 0)
+            {
+                ViewBag.cartonCount = list.Count();
+            }
+            return View(list);
+        }
+        public JsonResult AutoCompleteBranch(string name)
+        {
+            var BranchLists = Services.IBTService.BranchAutocomplete(name);
+            return Json(BranchLists, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult Dispatch(int? id)
+        {
+            var CartonId = Services.CartonManagementService.GetById(id);
+			CartonId.IsDispatched = true;
+            bool Edit = Services.CartonManagementService.Edit(CartonId);
+            return Json(new { id = id }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult GetCartonById(int? id)
+        {
+            var CartonList = Services.IBTService.GetByCartonId(id);
+           // var list = ReceiptOrderList.Where(x => x.TotalQuantity != 0 && x.TotalCost != 0).ToList();
+            return View(CartonList);
+        }
+        
+    }
+}

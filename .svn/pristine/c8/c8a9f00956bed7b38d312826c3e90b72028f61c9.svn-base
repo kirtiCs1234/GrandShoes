@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Model;
+using Services.IService;
+using DAL;
+using Helper;
+
+namespace Services.Service
+{
+    class UserService : IUserService
+    {
+        public List<UserModel> GetAll()
+        {
+            var body = "";
+            List<UserModel> UserModelList = ServerResponse.Invoke<List<UserModel>>("api/user/getDetails", body, "get");
+            return UserModelList;
+        }
+    }
+}

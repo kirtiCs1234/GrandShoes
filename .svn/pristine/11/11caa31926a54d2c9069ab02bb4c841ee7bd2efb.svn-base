@@ -1,0 +1,146 @@
+﻿@model List<Model.ViewDistribution>
+@using System.Web.UI.WebControls
+@using POS.Models
+@{
+
+    Layout = null;
+}
+<style>
+    .ScrollStyle {
+        max-height: 220px;
+        overflow-y: scroll;
+    }
+</style>
+
+<link href="~/Content/jsTree/themes/default/style.min.css" rel="stylesheet" />
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">View Product Distribution</h4>
+        </div>
+        <div class="modal-body">
+            <div class="table-responsive">
+                <div id="jstree1" class="ScrollStyle">
+                    @(Html.TreeView(Model)
+                                                                              .EmptyContent("root")
+                                                                              .Children(m => m.Childs)
+                                                                              .HtmlAttributes(new { id = "tree" })
+                                                                              .ChildrenHtmlAttributes(new { @class = "subItem" })
+                                                                              .ItemText(m => m.Name)
+                                                                              .ItemTemplate(
+                @<text>
+                    <a href="@item.ID" onclick="getDetails(@item.ID)" desc="@item.Name">Distribition--@item.Name     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @item.TransactionDate</a>
+                </text>)
+                    )
+                </div>
+            </div>
+    </div>
+        </div>
+    
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Branch Name</th>
+                            <th>Distribution Date</th>
+                            <th>Status</th>
+                            <th>01</th>
+                            <th>02</th>
+                            <th>03</th>
+                            <th>04</th>
+                            <th>05</th>
+                            <th>06</th>
+                            <th>07</th>
+                            <th>08</th>
+                            <th>09</th>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th>15</th>
+                            <th>16</th>
+                            <th>17</th>
+                            <th>18</th>
+                            <th>19</th>
+                            <th>20</th>
+                            <th>21</th>
+                            <th>22</th>
+                            <th>23</th>
+                            <th>24</th>
+                            <th>25</th>
+                            <th>26</th>
+                            <th>27</th>
+                            <th>28</th>
+                            <th>29</th>
+                            <th>30</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ReceiptDetail"></tbody>
+                </table>
+            </div>
+        </div>
+  
+
+    <script src="~/Scripts/jsTree3/jstree.js"></script>
+    <script>
+        $(function () {
+            debugger;
+            $('#jstree1').jstree({
+                "core": {
+                    "multiple": true,
+                    "check_callback": false,
+                    'themes': {
+                        "responsive": true,
+                        'variant': 'larg',
+                        'stripes': false,
+                        'dots': false
+                    }
+                },
+                "types": {
+                    "default": {
+                        "icon": "fa fa-folder icon-state-warning icon-lg"
+                    },
+                    "file": {
+                        "icon": "fa fa-file icon-state-warning icon-lg"
+                    }
+                },
+                "plugins": ["dnd", "state", "types"]
+            });
+        });
+        var id1;
+        function getDetails(value) {
+            id1 = value;//$(this).data("id");
+            $("#ReceiptDetail").html('<tr><td colspan = "5" style="background-color:white;"><img src="/Image/bars.gif" style="width:55px; height:47px;margin-left:40%; z-index:200" /></td></tr>');     
+            Data(0);
+        }
+        function Data(ch) {
+            debugger;
+
+            var crud = "";
+            switch (ch) {
+                case 0:
+                    crud = '/Admin/Product/GetDetail/' + id1;
+                    break;
+            }
+            $.ajax({
+
+                url: crud,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+
+                //dataType: 'html',
+                success: function (result) {
+                    debugger;
+                    //var html = '<tr><td>' + result.Quantity01 + '</td><td>' + result.Quantity02 + '</td><td>' + result.Quantity03 + '</td><td>' + result.Quantity04 + '</td><td>' + result.Quantity05 + '</td><td>' + result.Quantity06 + '</td><td>' + result.Quantity07 + '</td><td>' + result.Quantity08 + '</td><td>' + result.Quantity09 + '</td><td>' + result.Quantity10 + '</td><td>' + result.Quantity11 + '</td><td>' + result.Quantity12 + '</td><td>' + result.Quantity13 + '</td><td>' + result.Quantity14 + '</td><td>' + result.Quantity15 + '</td><td>' + result.Quantity16 + '</td><td>' + result.Quantity17 + '</td><td>' + result.Quantity18 + '</td><td>' + result.Quantity19 + '</td><td>' + result.Quantity20 + '</td><td>' + result.Quantity21 + '</td><td>' + result.Quantity22 + '</td><td>' + result.Quantity23 + '</td><td>' + result.Quantity24 + '</td><td>' + result.Quantity25 + '</td><td>' + result.Quantity26 + '</td><td>' + result.Quantity27 + '</td><td>' + result.Quantity28 + '</td><td>' + result.Quantity29 + '</td><td>' + result.Quantity30 + '</td></tr>';
+                    //$("#table1").append(html);
+                    $("#ReceiptDetail").html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+
+    </script>

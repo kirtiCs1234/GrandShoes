@@ -1,0 +1,108 @@
+﻿@model List<Model.ReceiptOrderItemModel>
+@{
+
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">View Product Receipt</h4>
+        </div>
+    <div class="modal-body">
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Receipt Number</th>
+                    <th>Order Number</th>
+                    <th>Product SKU</th>
+                    <th>Style SKU</th>
+                    <th>Date</th>
+                    <th>Posted</th>
+                    <th>Cancelled</th>
+                </tr>
+            </thead>
+            <tbody class="tbodyIndex">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReceiveOrder.ReceiptNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReceiveOrder.PurchaseOrder.OrderNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.ProductSKU)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.ProductStyle.StyleSKU)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReceiveOrder.ReceiptDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReceiveOrder.ReceiptStatusId)
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.ReceiveOrder.ReceiptStatusId)</td>
+                        <td><i class="fa fa-chevron-down accordian-btn" data-toggle="collapse" onclick="showReceipt(@item.Id)" aria-hidden="true"></i></td>
+                    </tr>
+                    <tr>
+                        <td colspan="9">
+                            <div class="table-responsive accordian-bundling" style="display:none;" id="@item.Id">
+                                <table class="table table-hover bundle-ppoup-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Col No</th>
+                                            <th>01</th>
+                                            <th>02</th>
+                                            <th>03</th>
+                                            <th>04</th>
+                                            <th>05</th>
+                                            <th>06</th>
+                                            <th>07</th>
+                                            <th>08</th>
+                                            <th>09</th>
+                                            <th>10</th>
+                                            <th>11</th>
+                                            <th>12</th>
+                                            <th>13</th>
+                                            <th>14</th>
+                                            <th>15</th>
+                                            <th>16</th>
+                                            <th>17</th>
+                                            <th>18</th>
+                                            <th>19</th>
+                                            <th>20</th>
+                                            <th>21</th>
+                                            <th>22</th>
+                                            <th>23</th>
+                                            <th>24</th>
+                                            <th>25</th>
+                                            <th>26</th>
+                                            <th>27</th>
+                                            <th>28</th>
+                                            <th>29</th>
+                                            <th>30</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ReceiptDetail-@item.Id"></tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+            </table>
+            </div>
+           </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                     
+    </div>
+                
+            </div>
+        </div>

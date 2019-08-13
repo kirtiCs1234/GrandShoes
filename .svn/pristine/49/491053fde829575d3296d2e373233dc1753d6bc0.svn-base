@@ -1,0 +1,51 @@
+﻿using Helper;
+using Model;
+using Newtonsoft.Json;
+using PagedList;
+using Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.Service
+{
+    public class AreaService: IAreaService
+    {
+        public List<AreaModel> GetAll()
+        {
+            var body = "";
+
+            List<AreaModel> AreaModelList = null;
+           // var result = JsonConvert.DeserializeObject<PaginationEntityClass<AreaModel>>(json);
+            var result = ServerResponse.Invoke<PaginationEntityClass<AreaModel>>("api/area/getDetails", body, "get");
+            return AreaModelList;
+        }
+        public AreaModel GetById(int? id)
+        {
+            var body = "";
+            AreaModel AreaById = ServerResponse.Invoke<AreaModel>("api/area/getDetail?id=" + id, body, "get");
+            return AreaById;
+        }
+        public AreaModel Create(AreaModel areaModel)
+        {
+            var body = JsonConvert.SerializeObject(areaModel);
+            AreaModel AreaCreate = ServerResponse.Invoke<AreaModel>("api/area/create", body, "Post");
+            return AreaCreate;
+        }
+        public AreaModel Edit(AreaModel areaModel)
+        {
+            var body = JsonConvert.SerializeObject(areaModel);
+            AreaModel AreaEdit = ServerResponse.Invoke<AreaModel>("api/area/edit?id=" + areaModel.Id, body, "POST");
+            return AreaEdit;
+        }
+        public AreaModel Delete(AreaModel areaModel)
+        {
+            var body = JsonConvert.SerializeObject(areaModel);
+            AreaModel AreaDelete = ServerResponse.Invoke<AreaModel>("api/area/Delete?id=" + areaModel.Id, body, "POST");
+            return AreaDelete;
+        }
+
+    }
+}

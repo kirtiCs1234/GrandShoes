@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+
+namespace Model
+{
+    public class SizeGridModel
+    {
+        public int Id { get; set; }
+        
+        public string GridNumber { get; set; }
+       
+            public string Z01 { get; set; }
+            public string Z02 { get; set; }
+            public string Z03 { get; set; }
+            public string Z04 { get; set; }
+            public string Z05 { get; set; }
+            public string Z06 { get; set; }
+            public string Z07 { get; set; }
+            public string Z08 { get; set; }
+            public string Z09 { get; set; }
+            public string Z10 { get; set; }
+            public string Z11 { get; set; }
+            public string Z12 { get; set; }
+            public string Z13 { get; set; }
+            public string Z14 { get; set; }
+            public string Z15 { get; set; }
+            public string Z16 { get; set; }
+            public string Z17 { get; set; }
+            public string Z18 { get; set; }
+            public string Z19 { get; set; }
+            public string Z20 { get; set; }
+            public string Z21 { get; set; }
+            public string Z22 { get; set; }
+            public string Z23 { get; set; }
+            public string Z24 { get; set; }
+            public string Z25 { get; set; }
+            public string Z26 { get; set; }
+            public string Z27 { get; set; }
+            public string Z28 { get; set; }
+            public string Z29 { get; set; }
+            public string Z30 { get; set; }
+      
+        public Nullable<bool> IsActive { get; set; }
+       
+    }
+}

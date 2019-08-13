@@ -1,0 +1,84 @@
+﻿@model Model.StaffMemberModel
+@{
+    ViewBag.Title = "Details";
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">View Staff Member</h4>
+        </div>
+        @using (Html.BeginForm("Details", "StaffMember", FormMethod.Post, new { id = "viewForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="modal-body">
+                <div class="row  mrgn-b-lg">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>Joining Date</label>
+                        @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                        @Html.EditorFor(model => model.JoiningDate, new { htmlAttributes = new { @class = "form-control date-pick", type = "text", autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.JoiningDate, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>User</label>
+                        @*<input class="form-control" type="text" placeholder="Last Name" name="LastName" />*@
+                        @Html.DropDownListFor(m => m.UserId, null, "--User--", htmlAttributes: new { @class = "form-control" })
+
+                        @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="row  mrgn-b-lg">
+                   
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>Staff Status</label>
+                        @*<input class="form-control" type="text" placeholder="Last Name" name="LastName" />*@
+                        @Html.DropDownListFor(m => m.StaffStatusId, null, "--Staff Status--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.StaffStatusId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row  mrgn-b-lg">
+
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Profile Pic</label>
+                        <div class="pop-img">
+                            @if (Model.ProfilePic != null)
+                            {
+                                <img class="create-user-image" id="user_img" src="~/Image/StaffMember/@Model.ProfilePic" height="50" width="50" onchange="show(this)" />
+                            }
+
+
+                            else
+                            {
+                                <img id="user_img" src="/Image/no-image.jpg" class="create-user-image" height="50" width="50" style="border:thin;" />
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-outline-inverse">Close</button>
+            </div>
+
+        }
+
+    </div>
+</div>
+<script>
+
+    $("#viewForm").find("input").attr("disabled", true);
+    $("#viewForm").find("select").attr("disabled", true);
+    $("#viewForm").find(".popup-savebtn").hide();
+
+</script>
+
+
+

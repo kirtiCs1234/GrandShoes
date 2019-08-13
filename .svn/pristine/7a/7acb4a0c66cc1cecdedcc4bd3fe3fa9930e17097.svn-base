@@ -1,0 +1,242 @@
+﻿using Helper;
+using LinqToExcel;
+using Model;
+using Newtonsoft.Json;
+using OfficeOpenXml;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace POS.Areas.Admin.Controllers
+{
+    [CustomAuth]
+    public class SupplierController : BaseController
+    {
+        // GET: Admin/Supplier
+        public ActionResult Index(int? page)
+        {
+            int TotalCount = 0;
+            var pageSize = 10;
+            var pageNumber = page ?? 1;
+            int CurrentPage = pageNumber;
+            int endPage = CurrentPage + 4;
+            int PagesToShow = 10;
+            var SupplierModelList = Services.SupplierService.GetPaging(page, out TotalCount);
+            ViewBag.TotalCount = TotalCount;
+
+            ViewBag.PageSize = pageSize;
+            var result = Helper.CommonFunction.GetPages(TotalCount, pageSize, CurrentPage, PagesToShow);
+           int totalPages = (TotalCount / pageSize) + (TotalCount % pageSize == 0 ? 0 : 1);
+            ViewBag.result = result;
+            ViewBag.totalPages = totalPages;
+            ViewBag.CurrentPage = CurrentPage;
+            var pageCount = result.Count();
+            ViewBag.pageCount = pageCount;
+
+            ViewBag.endPage = endPage;
+
+            return View(SupplierModelList);
+
+        }
+       
+        public ActionResult _Index1(SupplierSearch supplierSearch, int? page)
+        {
+            int TotalCount = 0;
+            var pageSize = 10;
+            var pageNumber = page ?? 1;
+            int CurrentPage = pageNumber;
+            int endPage = CurrentPage + 4;
+            int PagesToShow = 10;
+            
+            ViewBag.TotalCount = TotalCount;
+            ViewBag.PageSize = pageSize;
+            
+                var body = JsonConvert.SerializeObject(supplierSearch);
+                var SupplierModelList = Services.SupplierService.GetSearchData(supplierSearch, page, out TotalCount);
+           
+            var result = Helper.CommonFunction.GetPages(TotalCount, pageSize, CurrentPage, PagesToShow);
+            int totalPages = (TotalCount / pageSize) + (TotalCount % pageSize == 0 ? 0 : 1);
+            ViewBag.result = result;
+            ViewBag.totalPages = totalPages;
+            ViewBag.CurrentPage = CurrentPage;
+            var pageCount = result.Count();
+            ViewBag.pageCount = pageCount;
+
+            ViewBag.endPage = endPage;
+
+            return View(SupplierModelList);
+
+        }
+
+        public ActionResult ExcelUpload()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ExcelUpload(SupplierModel supplier, HttpPostedFileBase file)
+        {
+           
+                if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+                {
+                    string fileName = file.FileName;
+                    string fileContentType = file.ContentType;
+                    byte[] fileBytes = new byte[file.ContentLength];
+                    var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                  //  var usersList = new SupplierModel();
+                    using (var package = new ExcelPackage(file.InputStream))
+                    {
+                        var currentSheet = package.Workbook.Worksheets;
+                        var workSheet = currentSheet.First();
+                        var noOfCol = workSheet.Dimension.End.Column;
+                        var noOfRow = workSheet.Dimension.End.Row;
+        //                public int Indexvalue(int i)
+        //{
+        //    var n = Cells[rowIterator, i].Value;
+        //    return n;
+        //}
+                        for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                        {
+                       
+                            //var supplier = new SupplierModel();
+                            supplier.Code = workSheet.GetCellValue(rowIterator,1);
+                            supplier.Name = workSheet.GetCellValue(rowIterator, 2);
+                            supplier.PermanentAddress1 = workSheet.GetCellValue(rowIterator, 3);
+                            supplier.PermanentAddress2 = workSheet.GetCellValue(rowIterator, 4);
+                            supplier.PermanentAddress3 = workSheet.GetCellValue(rowIterator, 5);
+                            supplier.PermanentCity = workSheet.GetCellValue(rowIterator, 6);
+                            supplier.PermanentCountry = workSheet.GetCellValue(rowIterator, 7);
+                            supplier.PermanentPostalCode = workSheet.GetCellValue(rowIterator, 8);
+                            supplier.CorrespondanceAddress1 = workSheet.GetCellValue(rowIterator, 9);
+                            supplier.CorrespondanceAddress2 = workSheet.GetCellValue(rowIterator, 10);
+                            supplier.CorrespondanceAddress3 = workSheet.GetCellValue(rowIterator, 11);
+                            supplier.CorrespondanceCity = workSheet.GetCellValue(rowIterator, 12);
+                            supplier.CorrespondanceCountry = workSheet.GetCellValue(rowIterator, 13);
+                            supplier.CorrespondancePostalCode = workSheet.GetCellValue(rowIterator, 14);
+                            supplier.Limit = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 15));
+                            supplier.ContactNumber = workSheet.GetCellValue(rowIterator, 16);
+                            supplier.FaxNumber = workSheet.GetCellValue(rowIterator, 17);
+                            supplier.RegistrationDate = Convert.ToDateTime(workSheet.GetCellValue(rowIterator, 18));
+                            supplier.IsActive = true;
+                       
+                        string chk = workSheet.GetCellValue(rowIterator, 1);
+                        bool isexists = Services.SupplierService.CheckSupplierCode(chk);
+                        if (!isexists)
+                        {
+                           bool create = Services.SupplierService.Create(supplier);
+                        }
+                        else
+                        {
+                            
+                        }
+                           
+                    //    usersList = Services.SupplierService.Create(supplier);
+                    }
+                    TempData["Success"] = "File uploaded successfully!";
+                    return RedirectToAction("Index", "Supplier");
+
+                }
+            }
+            return View(supplier);
+        }
+       
+        public ActionResult ExportList()
+        {
+            var data = Services.SupplierService.GetAll();
+            ExcelPackage excel = new ExcelPackage();
+            var workSheet = excel.Workbook.Worksheets.Add("Sheet1");
+            workSheet.Cells[1, 2].LoadFromCollection(data, true);
+            using (var memoryStream = new MemoryStream())
+            {
+                Response.ContentType = "application/vnd.ms-excel";
+                Response.AddHeader("content-disposition", "attachment;  filename=Supplier1.xlsx");
+                excel.SaveAs(memoryStream);
+                memoryStream.WriteTo(Response.OutputStream);
+                Response.Flush();
+                //Response.End();
+            }
+            return View();
+        }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SupplierModel SupplierModelById = Services.SupplierService.GetById(id);
+            return View(SupplierModelById);
+        }
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(SupplierModel supplier)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+                // user.IsActive = true;
+                var SupplierCreate = Services.SupplierService.Create(supplier);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Supplier");
+            }
+            return View(supplier);
+
+        }
+        public ActionResult Edit(int? id)
+
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SupplierModel SupplierModelById = Services.SupplierService.GetById(id);
+            return View(SupplierModelById);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(SupplierModel supplier)
+        {
+            if (!ModelState.IsValid)
+            {
+                bool SupplierEdit = Services.SupplierService.Edit(supplier);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Supplier");
+            }
+            return View(supplier);
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SupplierModel SupplierModelById = Services.SupplierService.GetById(id);
+
+            if (SupplierModelById == null)
+            {
+                return HttpNotFound();
+            }
+            return View(SupplierModelById);
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(SupplierModel supplier)
+        {
+            if (supplier.Id > 0)
+            {
+                SupplierModel SupplierDelete = Services.SupplierService.Delete(supplier);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Supplier");
+            }
+            return View(supplier);
+        }
+    }
+}

@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Services.IService;
+using Services.Service;
+
+namespace Services
+{
+    public class UnitOfService : IUnitOfService
+    {
+        public IBranchService BranchService => new BranchService();
+        public IRoleService RoleService => new RoleService();
+        public IUserService UserService => new UserService();
+
+    }
+}

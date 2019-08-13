@@ -1,0 +1,95 @@
+﻿@model List<Model.DictModel>
+@{
+    Layout = null;
+    var data = ViewData["model"] as Dictionary<string, string>;
+}
+
+<div style="width:100%;background:#fff;float:left;">
+    <div id="project">
+        <div><span>Order Number</span>@data["OrderNumber"]</div>
+        <div><span>Client Invoice Number</span>@data["ClientInvoiceNumber"]</div>
+        <div><span>Buyer Name</span>@data["Buyer"]</div>
+        <div><span>Order Date</span>@data["OrderDate"]</div>
+        @*<div><span>Order Completion</span>@data["OrderCompletionDate"]</div>*@
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="service">Supplier</th>
+                <th class="desc">Style No</th>
+                <th>Product Description</th>
+                <th>Color</th>
+                <th>Size</th>
+                <th>Barcode</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                decimal sum = 0;
+            }
+            @foreach (var item in Model)
+            {
+
+                var itemsize = item.ItemSize.Where(x => x.Value != "0.00").ToList();
+                if (itemsize != null)
+                {
+                    foreach (var itemk in itemsize)
+                    {
+
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.PurchaseOrder.Supplier.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.SupplierStyle)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Product.ShortDescription)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Product.Color.ColorShort)</td>
+                            <td>@itemk.Value</td>
+                            <td>
+                                @{
+
+                                    var key = itemk.Key;
+                                    if (Convert.ToInt16(key) < 9)
+                                    {
+                                        key = "0" + key;
+                                    }
+
+                                }
+                                @Html.DisplayFor(modelItem => item.Product.Barcode)@key
+
+                            </td>
+                            <td>@item.CostSize[itemk.Key]</td>
+                            <td>@item.QuantitySize[itemk.Key]</td>
+                            <td>
+                                @{
+                                    var value = (Convert.ToDecimal(item.CostSize[itemk.Key]) * Convert.ToDecimal(item.QuantitySize[itemk.Key]));
+                                    sum += value;
+                                }@value
+                            </td>
+
+                        </tr>
+                    }
+
+                }
+
+                @*<tr>
+                        <td colspan="4">TAX 25%</td>
+                        <td class="total">$1,300.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="grand total">GRAND TOTAL</td>
+                        <td class="grand total">$6,500.00</td>
+                    </tr>*@
+
+            }
+            <tr>
+                <td colspan="8" class="total text-right">GRAND TOTAL</td>
+                <td colspan="1" class="total">@sum</td>
+            </tr>
+
+
+        </tbody>
+    </table>
+       </div>
+    <div class="pageFooter"></div>

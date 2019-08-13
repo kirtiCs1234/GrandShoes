@@ -1,0 +1,669 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GrandShoesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="ManagerID" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchCode" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Telephone" Type="varchar" MaxLength="50" />
+          <Property Name="ManagerId" Type="int" />
+          <Property Name="DateOpen" Type="datetime" />
+          <Property Name="DateClosed" Type="datetime" />
+          <Property Name="AddressLine1" Type="varchar" MaxLength="150" />
+          <Property Name="AddressLine2" Type="varchar" MaxLength="150" />
+          <Property Name="AddressLine3" Type="varchar" MaxLength="150" />
+          <Property Name="PostalCode" Type="varchar" MaxLength="50" />
+          <Property Name="AreaCode" Type="varchar" MaxLength="50" />
+          <Property Name="IsSendStock" Type="bit" />
+          <Property Name="IsClosed" Type="bit" />
+          <Property Name="IsHeadOffice" Type="bit" />
+          <Property Name="StoreSize" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Buyer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="BuyLimit" Type="money" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+          <Property Name="ColorLong" Type="varchar" MaxLength="50" />
+          <Property Name="ColorShort" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProductSource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Source" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Season">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="SizeGrid">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GridNumber" Type="varchar" MaxLength="10" />
+          <Property Name="Z01" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z02" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z03" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z04" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z05" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z06" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z07" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z08" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z09" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z10" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z11" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z12" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z13" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z14" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z15" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z16" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z17" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z18" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z19" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z20" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z21" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z22" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z23" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z24" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z25" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z26" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z27" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z28" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z29" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z30" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="PermanentAddress1" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentAddress2" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentAddress3" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentCity" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentCountry" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentPostalCode" Type="varchar" MaxLength="50" />
+          <Property Name="CorrespondanceAddress1" Type="varchar" MaxLength="50" />
+          <Property Name="CorrespondanceAddress2" Type="varchar" MaxLength="50" />
+          <Property Name="CorrespondanceAddress3" Type="varchar" MaxLength="50" />
+          <Property Name="CorrespondanceCity" Type="varchar" MaxLength="50" />
+          <Property Name="CorrespondanceCountry" Type="varchar" MaxLength="50" />
+          <Property Name="CorrespondancePostalCode" Type="varchar" MaxLength="50" />
+          <Property Name="Limit" Type="money" />
+          <Property Name="ContactNumber" Type="varchar" MaxLength="50" />
+          <Property Name="FaxNumber" Type="varchar" MaxLength="50" />
+          <Property Name="RegistrationDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="BranchID" Type="int" />
+          <Property Name="IsVerified" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <Association Name="FK_Area_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Area" Type="Self.Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Branch">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GrandShoesModelStoreContainer">
+          <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Buyer" EntityType="Self.Buyer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSource" EntityType="Self.ProductSource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Season" EntityType="Self.Season" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SizeGrid" EntityType="Self.SizeGrid" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Area_User" Association="Self.FK_Area_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Area" EntitySet="Area" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Branch" Association="Self.FK_User_Branch">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GrandShoesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="GrandShoesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Areas" EntityType="GrandShoesModel.Area" />
+          <EntitySet Name="Branches" EntityType="GrandShoesModel.Branch" />
+          <EntitySet Name="Buyers" EntityType="GrandShoesModel.Buyer" />
+          <EntitySet Name="Colors" EntityType="GrandShoesModel.Color" />
+          <EntitySet Name="ProductCategories" EntityType="GrandShoesModel.ProductCategory" />
+          <EntitySet Name="ProductSources" EntityType="GrandShoesModel.ProductSource" />
+          <EntitySet Name="Roles" EntityType="GrandShoesModel.Role" />
+          <EntitySet Name="Seasons" EntityType="GrandShoesModel.Season" />
+          <EntitySet Name="SizeGrids" EntityType="GrandShoesModel.SizeGrid" />
+          <EntitySet Name="Suppliers" EntityType="GrandShoesModel.Supplier" />
+          <EntitySet Name="Users" EntityType="GrandShoesModel.User" />
+          <AssociationSet Name="FK_Area_User" Association="GrandShoesModel.FK_Area_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Area" EntitySet="Areas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Branch" Association="GrandShoesModel.FK_User_Branch">
+            <End Role="Branch" EntitySet="Branches" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="GrandShoesModel.FK_User_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ManagerID" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="User" Relationship="GrandShoesModel.FK_Area_User" FromRole="Area" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ManagerId" Type="Int32" />
+          <Property Name="DateOpen" Type="DateTime" Precision="3" />
+          <Property Name="DateClosed" Type="DateTime" Precision="3" />
+          <Property Name="AddressLine1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="AddressLine2" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="AddressLine3" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AreaCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsSendStock" Type="Boolean" />
+          <Property Name="IsClosed" Type="Boolean" />
+          <Property Name="IsHeadOffice" Type="Boolean" />
+          <Property Name="StoreSize" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Users" Relationship="GrandShoesModel.FK_User_Branch" FromRole="Branch" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Buyer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BuyLimit" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ColorLong" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ColorShort" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ProductSource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Source" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Users" Relationship="GrandShoesModel.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Season">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="SizeGrid">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GridNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Z01" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z02" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z03" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z04" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z05" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z06" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z07" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z08" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z09" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z10" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z11" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z12" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z13" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z14" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z15" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z16" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z17" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z18" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z19" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z20" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z21" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z22" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z23" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z24" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z25" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z26" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z27" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z28" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z29" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z30" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAddress1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAddress2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAddress3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentPostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorrespondanceAddress1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorrespondanceAddress2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorrespondanceAddress3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorrespondanceCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorrespondanceCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorrespondancePostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Limit" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ContactNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FaxNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="BranchID" Type="Int32" />
+          <Property Name="IsVerified" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Areas" Relationship="GrandShoesModel.FK_Area_User" FromRole="User" ToRole="Area" />
+          <NavigationProperty Name="Branch" Relationship="GrandShoesModel.FK_User_Branch" FromRole="User" ToRole="Branch" />
+          <NavigationProperty Name="Role" Relationship="GrandShoesModel.FK_User_Role" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_Area_User">
+          <End Type="GrandShoesModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="GrandShoesModel.Area" Role="Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Branch">
+          <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="0..1" />
+          <End Type="GrandShoesModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Type="GrandShoesModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="GrandShoesModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GrandShoesModelStoreContainer" CdmEntityContainer="GrandShoesEntities">
+          <EntitySetMapping Name="Areas">
+            <EntityTypeMapping TypeName="GrandShoesModel.Area">
+              <MappingFragment StoreEntitySet="Area">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Branches">
+            <EntityTypeMapping TypeName="GrandShoesModel.Branch">
+              <MappingFragment StoreEntitySet="Branch">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="StoreSize" ColumnName="StoreSize" />
+                <ScalarProperty Name="IsHeadOffice" ColumnName="IsHeadOffice" />
+                <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+                <ScalarProperty Name="IsSendStock" ColumnName="IsSendStock" />
+                <ScalarProperty Name="AreaCode" ColumnName="AreaCode" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="DateClosed" ColumnName="DateClosed" />
+                <ScalarProperty Name="DateOpen" ColumnName="DateOpen" />
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Buyers">
+            <EntityTypeMapping TypeName="GrandShoesModel.Buyer">
+              <MappingFragment StoreEntitySet="Buyer">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="BuyLimit" ColumnName="BuyLimit" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Colors">
+            <EntityTypeMapping TypeName="GrandShoesModel.Color">
+              <MappingFragment StoreEntitySet="Color">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ColorShort" ColumnName="ColorShort" />
+                <ScalarProperty Name="ColorLong" ColumnName="ColorLong" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="GrandShoesModel.ProductCategory">
+              <MappingFragment StoreEntitySet="ProductCategory">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSources">
+            <EntityTypeMapping TypeName="GrandShoesModel.ProductSource">
+              <MappingFragment StoreEntitySet="ProductSource">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="GrandShoesModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seasons">
+            <EntityTypeMapping TypeName="GrandShoesModel.Season">
+              <MappingFragment StoreEntitySet="Season">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SizeGrids">
+            <EntityTypeMapping TypeName="GrandShoesModel.SizeGrid">
+              <MappingFragment StoreEntitySet="SizeGrid">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Z30" ColumnName="Z30" />
+                <ScalarProperty Name="Z29" ColumnName="Z29" />
+                <ScalarProperty Name="Z28" ColumnName="Z28" />
+                <ScalarProperty Name="Z27" ColumnName="Z27" />
+                <ScalarProperty Name="Z26" ColumnName="Z26" />
+                <ScalarProperty Name="Z25" ColumnName="Z25" />
+                <ScalarProperty Name="Z24" ColumnName="Z24" />
+                <ScalarProperty Name="Z23" ColumnName="Z23" />
+                <ScalarProperty Name="Z22" ColumnName="Z22" />
+                <ScalarProperty Name="Z21" ColumnName="Z21" />
+                <ScalarProperty Name="Z20" ColumnName="Z20" />
+                <ScalarProperty Name="Z19" ColumnName="Z19" />
+                <ScalarProperty Name="Z18" ColumnName="Z18" />
+                <ScalarProperty Name="Z17" ColumnName="Z17" />
+                <ScalarProperty Name="Z16" ColumnName="Z16" />
+                <ScalarProperty Name="Z15" ColumnName="Z15" />
+                <ScalarProperty Name="Z14" ColumnName="Z14" />
+                <ScalarProperty Name="Z13" ColumnName="Z13" />
+                <ScalarProperty Name="Z12" ColumnName="Z12" />
+                <ScalarProperty Name="Z11" ColumnName="Z11" />
+                <ScalarProperty Name="Z10" ColumnName="Z10" />
+                <ScalarProperty Name="Z09" ColumnName="Z09" />
+                <ScalarProperty Name="Z08" ColumnName="Z08" />
+                <ScalarProperty Name="Z07" ColumnName="Z07" />
+                <ScalarProperty Name="Z06" ColumnName="Z06" />
+                <ScalarProperty Name="Z05" ColumnName="Z05" />
+                <ScalarProperty Name="Z04" ColumnName="Z04" />
+                <ScalarProperty Name="Z03" ColumnName="Z03" />
+                <ScalarProperty Name="Z02" ColumnName="Z02" />
+                <ScalarProperty Name="Z01" ColumnName="Z01" />
+                <ScalarProperty Name="GridNumber" ColumnName="GridNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="GrandShoesModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="FaxNumber" ColumnName="FaxNumber" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="Limit" ColumnName="Limit" />
+                <ScalarProperty Name="CorrespondancePostalCode" ColumnName="CorrespondancePostalCode" />
+                <ScalarProperty Name="CorrespondanceCountry" ColumnName="CorrespondanceCountry" />
+                <ScalarProperty Name="CorrespondanceCity" ColumnName="CorrespondanceCity" />
+                <ScalarProperty Name="CorrespondanceAddress3" ColumnName="CorrespondanceAddress3" />
+                <ScalarProperty Name="CorrespondanceAddress2" ColumnName="CorrespondanceAddress2" />
+                <ScalarProperty Name="CorrespondanceAddress1" ColumnName="CorrespondanceAddress1" />
+                <ScalarProperty Name="PermanentPostalCode" ColumnName="PermanentPostalCode" />
+                <ScalarProperty Name="PermanentCountry" ColumnName="PermanentCountry" />
+                <ScalarProperty Name="PermanentCity" ColumnName="PermanentCity" />
+                <ScalarProperty Name="PermanentAddress3" ColumnName="PermanentAddress3" />
+                <ScalarProperty Name="PermanentAddress2" ColumnName="PermanentAddress2" />
+                <ScalarProperty Name="PermanentAddress1" ColumnName="PermanentAddress1" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="GrandShoesModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

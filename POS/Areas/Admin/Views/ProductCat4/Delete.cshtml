@@ -1,0 +1,38 @@
+﻿
+
+@model Model.ProductCat4Model
+@{
+    ViewBag.Title = "Delete";
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Delete Product Category4</h4>
+        </div>
+
+        @using (Html.BeginForm("Delete", "ProductCat4", FormMethod.Post, new { id = "viewForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="modal-body">
+                <p>Are you sure you want to delete this product category4?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" data-target="#myModal" class="btn btn-outline-inverse">No</button>
+                @*<input type="submit" value="Add" class="btn btn-success popup-savebtn" />*@
+                <input type="submit" value="Yes" class="btn btn-success" />
+
+            </div>
+
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(".viewForm").find("input").attr("disabled", true);
+    $(".viewForm").find("select").attr("disabled", true);
+</script>

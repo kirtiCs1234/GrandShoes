@@ -1,0 +1,29 @@
+﻿@model List<Model.ReceiveOrderModel>
+@{
+   
+    Layout = null;
+}
+
+    @foreach (var item in Model)
+    {
+       
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.ReceiptNumber)</td>
+			<td>@Html.DisplayFor(modelItem=>item.SupplierInvoice)</td>
+            <td>@Html.DisplayFor(modelItem => item.TotalQuantity)</td>
+            <td>@Html.DisplayFor(modelItem => item.TotalCost)</td>
+            <td>@Html.DisplayFor(modelItem => item.TotalVAT)</td>
+            <td>@Html.DisplayFor(modelItem => item.ReceiptDate)</td>
+            <td style="min-width:85px;">
+
+                <i class="fa fa-pencil edit-form edit" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="edit(@item.Id)"></i>
+                &nbsp;
+				
+				<i class="fa fa-trash delete delete-form" data-toggle="modal" data-target="#myModal" data-backdrop="static" onclick="delet(@item.Id,@item.IsFinalize)"></i> 
+                
+                &nbsp;
+                <i class="fa fa-eye view-form details" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="details(@item.Id)"></i>
+
+            </td>
+        </tr>
+    }

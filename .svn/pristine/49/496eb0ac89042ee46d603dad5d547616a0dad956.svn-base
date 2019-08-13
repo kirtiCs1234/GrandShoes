@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Model.Product
+{
+    public class Product
+    {
+        public int Id { get; set; }
+        public string ProductSKU { get; set; }
+        public Nullable<int> ProductStyleId { get; set; }
+        public string LongDescription { get; set; }
+        public string ShortDescription { get; set; }
+        public Nullable<int> SizeGridID { get; set; }
+        public Nullable<decimal> RecommendedSellingPrice { get; set; }
+        public Nullable<decimal> ActualSellingPrice { get; set; }
+        public Nullable<bool> IsVPI { get; set; }
+        public Nullable<bool> IsMarkDown { get; set; }
+        public Nullable<int> SeasonID { get; set; }
+        public Nullable<int> YearID { get; set; }
+        public Nullable<int> ProductCategoryID { get; set; }
+        public Nullable<int> ProductGroupID { get; set; }
+        public Nullable<int> ProductSourceID { get; set; }
+        public string SupplierStyle { get; set; }
+        public Nullable<int> SupplierID { get; set; }
+        public Nullable<int> BuyerID { get; set; }
+        public Nullable<decimal> CostPriceUSD { get; set; }
+        public Nullable<decimal> CostPrice { get; set; }
+        public Nullable<bool> IsAllowZero { get; set; }
+        public Nullable<int> DefaultTemplateID { get; set; }
+        public Nullable<int> MarkDownTemplateID { get; set; }
+        public Nullable<bool> IsFreeGift { get; set; }
+        public Nullable<bool> IsConsignment { get; set; }
+        public Nullable<bool> IsDiscontinue { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public Nullable<System.DateTime> UpdatedOn { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<int> ImageId { get; set; }
+        public Nullable<int> ColorID { get; set; }
+        public string AvailableSize { get; set; }
+
+        public string autoCompleteSizeGrid { get; set; }
+    }
+}

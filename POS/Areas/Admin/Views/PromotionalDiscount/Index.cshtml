@@ -1,0 +1,83 @@
+﻿@model Model.DiscountSummaryModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+        <div class="prtm-block-title pad-all-md ">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">Discount</h3>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(model => model.FromProductSKU, new { @class = "form-control", @placeholder = "From Product SKU" })
+                    @Html.ValidationMessageFor(m => m.FromProductSKU, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(model => model.ToProductSKU, new { @class = "form-control", @placeholder = "To Product SKU" })
+                    @Html.ValidationMessageFor(m => m.ToProductSKU, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(m => m.FromStyleSKU, new { @class = "form-control", @placeholder = "From Style SKU" })
+                    @Html.ValidationMessageFor(m => m.FromStyleSKU, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(m => m.ToStyleSKU, new { @class = "form-control", @placeholder = "To Style SKU" })
+                    @Html.ValidationMessageFor(m => m.ToStyleSKU, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @placeholder = "From Date" })
+                    @Html.ValidationMessageFor(m => m.FromDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @placeholder = "To date" })
+                    @Html.ValidationMessageFor(m => m.ToDate, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(m => m.FromPrice, new { @class = "form-control", @placeholder = "From Discount" })
+                    @Html.ValidationMessageFor(m => m.FromPrice, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(m => m.ToPrice, new { @class = "form-control", @placeholder = "To Price" })
+                    @Html.ValidationMessageFor(m => m.ToPrice, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <select class="form-control" id="DiscountType">
+                        <option value="">Select</option>
+                        <option value="Percent">Percent</option>
+                        <option value="Rupee">Rupees</option>
+                    </select>
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.EditorFor(model => model.DiscountValue, new { htmlAttributes = new { @class = "form-control", placeholder = "Discount Value" } })
+                    @Html.ValidationMessageFor(model => model.DiscountValue, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <button type="button" class="btn btn-success btn-primary btn-block export-btn" onclick="searchData()">Get Products</button>
+                </div>
+                <div class="col-md-1 col-xs-12 col-sm-2">
+                    <button type="button" class="btn btn-outline-inverse btn-primary mrgn-b-md export-btn" onclick="searchData()">History</button>
+                </div>
+                <div class="col-md-1 col-xs-12 col-sm-2">
+                    <button type="button" class="btn btn-outline-inverse btn-primary export-btn btn-block" onclick="searchData()">Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row marg-btn-20">
+    <div class="getProductList">
+
+    </div>
+</div>

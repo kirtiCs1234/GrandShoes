@@ -1,0 +1,41 @@
+﻿@model List<Model.CartonManagementDetailModel>
+    @{ 
+        Layout = null;
+    }
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.CartonManagementID)</td>
+        <td>@Html.DisplayFor(modelItem => item.Product.ProductSKU)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z01)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z02)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z03)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z04)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z05)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z06)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z07)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z08)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z09)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z10)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z11)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z12)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z13)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z14)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z15)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z16)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z17)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z18)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z19)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z20)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z21)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z22)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z23)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z24)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z25)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z26)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z27)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z28)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z29)</td>
+        <td>@Html.DisplayFor(modelItem => item.Z30)</td>
+        </tr>
+        }

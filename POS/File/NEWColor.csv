@@ -1,0 +1,263 @@
+Code,ColorLong,ColorShort,IsActive
+969,test long  test,test short  test,TRUE
+902,BEAwerVER              ,"BEAVwerwrE     
+",TRUE
+441111111,STD QQQ           dhsfgsf ,reet,TRUE
+444,BEAwerVER              ,"BEAVwerwrE     
+",TRUE
+965,STD QQQ           dhsfgsf ,reet,TRUE
+489,BEAwerVER              ,"BEAVwerwrE     
+",TRUE
+977,STD QQQ           dhsfgsf ,reet,TRUE
+482,BEAwerVER              ,"BEAVwerwrE     
+",TRUE
+991,STD QQQ           dhsfgsf ,reet,TRUE
+999,STD                 ,STD       ,TRUE
+998,MULTI PRINT         ,MULTI     ,TRUE
+901,BRONZE              ,BRONZ     ,TRUE
+900,Light Gold,Lt Gold,TRUE
+822,CAMEL/RED           ,CM/RD     ,TRUE
+817,COFFEE MULTI,COFFEE MUL,TRUE
+816,Multi,Multi,TRUE
+815,COFFEE,COFFEE,TRUE
+814,Sahara,Sahara,TRUE
+813,SUGAR PINK          ,SUGAR     ,TRUE
+812,ANTIQUE             ,ANTIQ     ,TRUE
+811,GROOVY              ,GROOV     ,TRUE
+810,Metallic,Metal,TRUE
+809,MISTY HAZE          ,M/HAZ     ,TRUE
+808,Silver Grey,Silver/Gry,TRUE
+807,BLACK MAIL          ,B/MAL     ,TRUE
+806,BEACH BRONZE        ,B/BNZ     ,TRUE
+805,MEXICAN SILVER      ,MEX/S     ,TRUE
+804,Copper,Copper,TRUE
+803,PEWTER              ,PEWTE     ,TRUE
+802,SILVER              ,SILVE     ,TRUE
+801,Bronze,Bronze,TRUE
+800,GOLD                ,GOLD      ,TRUE
+799,Gold Metalic,Gold Metal,TRUE
+798,Bronze Multi,Bronz Mult,TRUE
+734,Neutral,Neutral,TRUE
+733,Deep Tan,Deep Tan,TRUE
+732,Light Tan,Lt Tan,TRUE
+731,Wheat,Wheat,TRUE
+730,FLESH               ,FLESH     ,TRUE
+729,STORM               ,STORM     ,TRUE
+728,FOG                 ,FOG       ,TRUE
+727,VIOLET              ,VIOLE     ,TRUE
+726,MOCCA               ,MOCCA     ,TRUE
+725,DARK BROWN MULTI    ,D/B/M     ,TRUE
+724,TORTOISE            ,TORTO     ,TRUE
+723,Caramel,Caram,TRUE
+722,SAGE                ,SAGE      ,TRUE
+721,CAMEL               ,CAMEL     ,TRUE
+720,TERRY               ,TERRY     ,TRUE
+719,TERRY MULTI         ,TER/M     ,TRUE
+718,Brown Multi,Brn/Multi,TRUE
+717,BRICK               ,BRICK     ,TRUE
+716,BOLERO MULTI        ,BO/ML     ,TRUE
+715,BOLERO              ,BOLER     ,TRUE
+714,SIENNA              ,SIENN     ,TRUE
+713,WHEAT               ,WHEAT     ,TRUE
+712,HONEY               ,HONEY     ,TRUE
+711,Whisky,Whisky,TRUE
+710,Earth Multi,Earth Mult,TRUE
+709,EARTH               ,EARTH     ,TRUE
+708,COGNAC MULTI        ,CG/ML     ,TRUE
+707,COGNAC              ,COGNA     ,TRUE
+706,TAN MULTI           ,TN/ML     ,TRUE
+705,TAN                 ,TAN       ,TRUE
+704,RUST                ,RUST      ,TRUE
+703,CHOCOLATE           ,CHOC      ,TRUE
+702,Dark Brown,Dk/Br,TRUE
+701,Light Brown,Lt Brown,TRUE
+700,BROWN               ,BROWN     ,TRUE
+605,Brown Patent,Brn Patent,TRUE
+604,YELLOW MULTI        ,Y/MUL     ,TRUE
+603,MANGO               ,MANGO     ,TRUE
+602,Mustard,Mustard,TRUE
+601,LEMON               ,LEMON     ,TRUE
+600,YELLOW              ,YELLW     ,TRUE
+565,SALMON              ,SALMO     ,TRUE
+564,SMOKE               ,SMOKE     ,TRUE
+563,DOVE                ,DOVE      ,TRUE
+562,DARK MULTI          ,DK/ML     ,TRUE
+561,Multi Print,Multi Prnt,TRUE
+560,IVORY               ,IVORY     ,TRUE
+559,PEARL               ,PEARL     ,TRUE
+558,PINK MULTI          ,PK/ML     ,TRUE
+557,PINK                ,PINK      ,TRUE
+556,MINK                ,MINK      ,TRUE
+555,Turquoise,Turqu,TRUE
+554,MAUVE               ,MAUVE     ,TRUE
+553,Cerise,Ceris,TRUE
+552,GRAPE               ,GRAPE     ,TRUE
+551,LILAC               ,LILAC     ,TRUE
+550,Purple,Purple,TRUE
+537,STORM               ,STORM     ,TRUE
+526,CORDOVAN            ,CORDO     ,TRUE
+524,MAHOGANY            ,MAHOG     ,TRUE
+523,BURGUNDY PATENT     ,BUR/P     ,TRUE
+522,BURGUNDY            ,BURGU     ,TRUE
+521,Wine Multi,Wine Multi,TRUE
+520,WINE                ,WINE      ,TRUE
+512,BURNT ORANGE        ,B/ORG     ,TRUE
+511,ORANGE MULTI        ,ORG/M     ,TRUE
+510,ORANGE              ,ORANG     ,TRUE
+508,Ruby,Ruby,TRUE
+507,Maroon,Maroon,TRUE
+506,PLUM                ,PLUM      ,TRUE
+505,ROSE                ,ROSE      ,TRUE
+504,Red Patent,Red Patent,TRUE
+503,BRIGHT RED          ,BR/RD     ,TRUE
+502,FLAME               ,FLAME     ,TRUE
+501,Red Multi,Red Multi,TRUE
+500,RED                 ,RED       ,TRUE
+425,TERRACOTTA          ,TERRA     ,TRUE
+424,DARK RED            ,DARK      ,TRUE
+423,Dark Green,Dk Green,TRUE
+422,Khaki,Khaki,TRUE
+421,OLIVE MULTI         ,OL/ML     ,TRUE
+420,OLIVE               ,OLIVE     ,TRUE
+414,LIME MULTI          ,LIME      ,TRUE
+413,AVOCADO             ,AVOCA     ,TRUE
+412,LIME/ORANGE         ,L/ORG     ,TRUE
+411,BOTTLE GREEN MULTI  ,BG/ML     ,TRUE
+410,BOTTLE GREEN        ,BO/GR     ,TRUE
+409,JADE MULTI          ,JD/ML     ,TRUE
+408,JADE                ,JADE      ,TRUE
+407,MINT                ,MINT      ,TRUE
+406,EMERALD             ,EMERA     ,TRUE
+405,FOREST              ,FORES     ,TRUE
+404,APPLE               ,APPLE     ,TRUE
+403,LIME                ,LIME      ,TRUE
+402,SEA GREEN           ,SE/GR     ,TRUE
+401,Green Multi,Green Mult,TRUE
+400,GREEN               ,GREEN     ,TRUE
+399,TEAL                ,TEAL      ,TRUE
+319,Electric Blue,Electric B,TRUE
+318,Indigo,Indigo,TRUE
+317,SKY BLUE            ,SKY B     ,TRUE
+316,PERRIWINKLE         ,PERRI     ,TRUE
+315,SKY                 ,SKY       ,TRUE
+314,FRENCH BLUE         ,FR/BL     ,TRUE
+313,ROYAL BLUE          ,RO/BL     ,TRUE
+312,Powder Blue,Powder Blu,TRUE
+311,BLUE MULTI          ,BL/ML     ,TRUE
+310,BLUE                ,BLUE      ,TRUE
+309,BLUE PATENT         ,B/PAT     ,TRUE
+308,BAY BLUE            ,BAY B     ,TRUE
+307,DENIM               ,DENIM     ,TRUE
+306,Powder,Powder Blu,TRUE
+305,GREY/NAVY           ,GREY/     ,TRUE
+304,MIDNIGHT            ,MIDNI     ,TRUE
+303,NAVY/GOLD           ,N/GLD     ,TRUE
+302,NAVY PATENT         ,NY/PT     ,TRUE
+301,NAVY MULTI          ,NY/ML     ,TRUE
+300,NAVY                ,NAVY      ,TRUE
+219,Grey Multi,Grey Multi,TRUE
+218,BLK CROC,BLK CROC,TRUE
+217,Black Nubuck,Black,TRUE
+216,BEIGE\RED           ,BEIGE     ,TRUE
+215,Graphite,Graphite,TRUE
+214,Grey Snake,Grey Snake,TRUE
+213,Charcoal,Charcoal,TRUE
+212,LIGHT GREY          ,LT/GR     ,TRUE
+211,Dark Grey,Dark Grey,TRUE
+210,GREY                ,GREY      ,TRUE
+209,Grey Snake,Grey Snake,TRUE
+208,Black/Grey,Black/Grey,TRUE
+207,Blk/Wht,Blk/Wht,TRUE
+206,BLK/CREAM           ,BLK/C     ,TRUE
+205,Black /Gold,Blk/Gold,TRUE
+204,BLACK METALIC       ,B/MET     ,TRUE
+203,Black Suede,Blk Suede,TRUE
+202,Black Patent,Blk\patent,TRUE
+201,BLACK MULTI         ,BL/ML     ,TRUE
+200,BLACK               ,BLACK     ,TRUE
+199,Black/Tan,Black\tan,TRUE
+198,Black/Green,Blk/Green,TRUE
+197,Black/Red,Blk/Red,TRUE
+196,Black/Brown,Black/Brn,TRUE
+195,Beige/Black,Beige/Blk,TRUE
+194,NAVY/JADE           ,NA/JD     ,TRUE
+193,NAVY /GREEN         ,N/GRN     ,TRUE
+192,Silver\blk,Silver\blk,TRUE
+191,Black/Blue,Black\blue,TRUE
+190,BLACK/NAVY          ,BLACK     ,TRUE
+189,TAN/NAVY            ,TAN/N     ,TRUE
+188,Blk\purple,Blk\purple,TRUE
+155,STONE,STONE,TRUE
+154,REED                ,REED      ,TRUE
+153,FUDGE               ,FUDGE     ,TRUE
+152,CORAL               ,CORAL     ,TRUE
+151,APRICOT             ,APRIC     ,TRUE
+150,PEACH               ,PEACH     ,TRUE
+146,Brick,Brick,TRUE
+145,Sabbia,Sabbia,TRUE
+144,Nero,Nero,TRUE
+143,Mauro,Mauro,TRUE
+142,LAGOON              ,LAGOO     ,TRUE
+141,SANDBLAST           ,SANDB     ,TRUE
+140,Black Croc,Black Croc,TRUE
+139,MARROM              ,MARRO     ,TRUE
+138,PORCELAIN           ,PORCE     ,TRUE
+137,DESSERT             ,DESSE     ,TRUE
+136,Silver\white,Silver\wht,TRUE
+135,Wht/Navy,Wht/Navy,TRUE
+134,MOSS                ,MOSS      ,TRUE
+133,ORCHID              ,ORCHI     ,TRUE
+132,SNAKE               ,SNAKE     ,TRUE
+131,BUTTERCUP           ,BUTTE     ,TRUE
+130,BAMBOO              ,BAMBO     ,TRUE
+129,SLATE               ,SLATE     ,TRUE
+128,COKE                ,COKE      ,TRUE
+127,CREAM/GOLD          ,CREAM     ,TRUE
+126,GUAVA               ,GUAVA     ,TRUE
+125,STEEL               ,STEEL     ,TRUE
+124,ICE                 ,ICE       ,TRUE
+123,BISCUIT             ,BISCU     ,TRUE
+122,VANILLA             ,VANIL     ,TRUE
+121,SPICE               ,SPICE     ,TRUE
+120,Stone Multi,Stone Mult,TRUE
+119,ALMOND              ,ALMON     ,TRUE
+118,BONE                ,BONE      ,TRUE
+117,PLATINO             ,PLATI     ,TRUE
+116,OYSTER              ,OYSTE     ,TRUE
+115,Fawn,Fawn,TRUE
+114,Champagne,Champagne,TRUE
+113,SAND                ,SAND      ,TRUE
+112,TAUPE               ,TAUPE     ,TRUE
+111,NATURAL             ,NATUL     ,TRUE
+110,CREAM               ,CREAM     ,TRUE
+109,BEIGE               ,BEIGE     ,TRUE
+108,Off White,Off\white,TRUE
+107,Beige Multi,Beige Mult,TRUE
+106,CLEAR               ,CLEAR     ,TRUE
+105,TOBACCO             ,TOBAC     ,TRUE
+104,White/Gold,Wht/Gold,TRUE
+103,WHITE PATENT        ,WH/PT     ,TRUE
+102,White /Red,Wht/Red,TRUE
+101,White Multi,Wht Multi,TRUE
+100,WHITE               ,WHITE     ,TRUE
+020,Floral,Floral,TRUE
+019,Fuchsia,Fuchsia,TRUE
+018,Leopard,Leopard,TRUE
+017,Mushroom,Mushroom,TRUE
+016,Aqua,Aqua,TRUE
+015,White Yellow,Wht Yellow,TRUE
+014,White  pink,White Pink,TRUE
+013,Wht\blue,Wht\blue,TRUE
+012,Rice,Rice,TRUE
+011,Jeans,Jeans,TRUE
+010,Clay,Clay,TRUE
+009,Buffalo,Buffalo,TRUE
+008,Ceramic,Ceramic,TRUE
+007,White/Pink,Wht/Pink,TRUE
+006,White/Purple,Wht/Purple,TRUE
+005,Brass,Beaver,TRUE
+004,BEAVER DARK         ,BEAVE     ,TRUE
+003,Walnut,Walnut,TRUE
+002,BEAVER              ,BEAVE     ,TRUE
+001,STD                 ,STD       ,TRUE
+555,brown,green,TRUE

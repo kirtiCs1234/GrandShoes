@@ -1,0 +1,64 @@
+﻿using Helper;
+using Model;
+using Newtonsoft.Json;
+using PagedList;
+using Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.Service
+{
+    public class AreaService: IAreaService
+    {
+       
+        public AreaPaginationModel GetAll(int? page)
+        {
+            var body = "";
+            //int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            List<AreaModel> AreaModelList = ServerResponse.Invoke<List<AreaModel>>("api/area/getDetails", body, "get");
+            var pager = new Pager1(AreaModelList.Count(), page);
+            IPagedList<AreaPaginationModel> mode = null;
+            // List<AreaPaginationModel> areaPaginationModels = new List<AreaPaginationModel>();
+
+            //  mode = model.ToPagedList(pageNumber,pager.PageSize);
+            var model = new AreaPaginationModel
+            {
+                Items = AreaModelList.Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize).ToPagedList(pageNumber, pager.PageSize),
+                Pager1 = pager
+
+            };
+            // var model1 = model.ToPagedList(pageNumber,pager.PageSize);
+            // IPagedList<AreaPaginationModel> mod = model.Items.ToList();
+            return model;
+        }
+        public AreaModel GetById(int? id)
+        {
+            var body = "";
+            AreaModel AreaById = ServerResponse.Invoke<AreaModel>("api/area/getDetail?id=" + id, body, "get");
+            return AreaById;
+        }
+        public AreaModel Create(AreaModel areaModel)
+        {
+            var body = JsonConvert.SerializeObject(areaModel);
+            AreaModel AreaCreate = ServerResponse.Invoke<AreaModel>("api/area/create", body, "Post");
+            return AreaCreate;
+        }
+        public AreaModel Edit(AreaModel areaModel)
+        {
+            var body = JsonConvert.SerializeObject(areaModel);
+            AreaModel AreaEdit = ServerResponse.Invoke<AreaModel>("api/area/edit?id=" + areaModel.Id, body, "POST");
+            return AreaEdit;
+        }
+        public AreaModel Delete(AreaModel areaModel)
+        {
+            var body = JsonConvert.SerializeObject(areaModel);
+            AreaModel AreaDelete = ServerResponse.Invoke<AreaModel>("api/area/Delete?id=" + areaModel.Id, body, "POST");
+            return AreaDelete;
+        }
+
+    }
+}

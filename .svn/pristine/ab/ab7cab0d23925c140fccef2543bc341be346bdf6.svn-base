@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Model
+{
+   public class OffersModel
+    {
+        public List<ProductModel> ProductList { get; set; }
+        public OffersModel()
+        {
+            ProductList = new List<ProductModel>();
+        }
+        public string Colors { get; set; }
+        public Nullable<int> ProductStyleId { get; set; }
+        public Nullable<int> ColorId { get; set; }
+        public Nullable<int> SeasonId { get; set; }
+        public string AutocompleteProductSKU { get; set; }
+		public string AutocompleteStyleSKU { get; set; }
+		public string AutocompleteColorCode { get; set; }
+        public string AutocompleteSeason { get; set; }
+        public string AutocompleteSize { get; set; }
+    }
+}

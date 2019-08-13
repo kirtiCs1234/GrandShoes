@@ -1,0 +1,23 @@
+﻿using Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.IService
+{
+    public interface IStaffMemberService
+    {
+        List<StaffMemberModel> GetAll();
+        StaffMemberModel GetById(int? id);
+        StaffMemberModel GetByIdLogCheckDetails(int? id);
+        StaffMemberModel Create(StaffMemberModel staffMemberModel);
+        StaffMemberModel Edit(StaffMemberModel staffMemberModel);
+        StaffMemberModel Delete(StaffMemberModel staffMemberModel);
+
+        List<StaffMemberModel> GetPaging(int? page, out int totalCount);
+        List<StaffMemberModel> GetSearchData(StaffMemberSearch areaSearch, int? page, out int TotalCount);
+
+    }
+}

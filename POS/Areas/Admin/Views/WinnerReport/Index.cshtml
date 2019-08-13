@@ -1,0 +1,153 @@
+﻿@model Model.WinnerReportModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+        <div class="prtm-block-title pad-all-md ">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">Winner Report</h3>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-2 col-xs-12 col-sm-2"> 
+                    <label>From ProductSKU</label>
+                    @Html.TextBoxFor(model => model.FromProductSKU, new { @class = "form-control", @placeholder = "From Product SKU" })
+                    @Html.ValidationMessageFor(m => m.FromProductSKU, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <label>To ProductSKU</label>
+                    @Html.TextBoxFor(model => model.ToProductSKU, new { @class = "form-control", @placeholder = "To Product SKU" })
+                    @Html.ValidationMessageFor(m => m.ToProductSKU, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <label>From StyleSKU</label>
+                    @Html.TextBoxFor(m => m.FromStyleSKU, new { @class = "form-control", @placeholder = "From Style SKU" })
+                    @Html.ValidationMessageFor(m => m.FromStyleSKU, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <label>To StyleSKU</label>
+                    @Html.TextBoxFor(m => m.ToStyleSKU, new { @class = "form-control", @placeholder = "To Style SKU" })
+                    @Html.ValidationMessageFor(m => m.ToStyleSKU, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <label>From ReportDate</label>
+                    @Html.TextBoxFor(m => m.FromReportDate, new { @class = "form-control date", @placeholder = "From Report Date" })
+                    @Html.ValidationMessageFor(m => m.FromReportDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <label>To ReportDate</label>
+                    @Html.TextBoxFor(m => m.ToReportDate, new { @class = "form-control date", @placeholder = "To Report date" })
+                    @Html.ValidationMessageFor(m => m.ToReportDate, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <label>Branch Code</label>
+                    @Html.TextBoxFor(m => m.BranchCode, new { @class = "form-control", @placeholder = "Branch Code" })
+                    @Html.ValidationMessageFor(m => m.BranchCode, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <label>MarkDown</label>
+                    <select class="form-control" name="IsMarkDown" id="IsMarkDown">
+                        <option value="">Select</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <label>Report Type</label>
+                    <select class="form-control" id="ReportType" name="ReportType">
+                        <option value="">Select</option>
+                        <option value="W">Weekly</option>
+                        <option value="M">Monthly</option>
+                    </select>
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <label>Distribution Date</label>
+                    <select class="form-control" name="IsDistributionDate" id="IsDistributionDate" click="getValue()">
+                        <option value="">Select</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <label>From Dist.Date</label>
+                    @Html.EditorFor(model => model.FromDistributionDate, new { htmlAttributes = new { @class = "form-control date", disabled = "disabled",placeholder = "From DistributionDate" } })
+                    @Html.ValidationMessageFor(model => model.FromDistributionDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <label>To Dist.Date</label>
+                    @Html.EditorFor(model => model.ToDistributionDate, new { htmlAttributes = new { @class = "form-control date", disabled = "disabled",placeholder = "To -DistributionDate" } })
+                    @Html.ValidationMessageFor(model => model.ToDistributionDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <button type="button" class="btn btn-success btn-primary btn-block export-btn" onclick="searchData()">Get Products</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row marg-btn-20">
+    <div class="dvUserDetails">
+    </div>
+</div>
+@section scripts{
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#IsDistributionDate').change(function () {
+                var value = $('#IsDistributionDate option:selected').text();
+                if (value == "Yes") {
+                    $("#FromDistributionDate").removeAttr('disabled');
+                    $("#ToDistributionDate").removeAttr('disabled');
+                } else if (value == "No") {
+                    $("#FromDistributionDate").attr('disabled', 'disabled');
+                    $("#ToDistributionDate").attr('disabled', 'disabled');
+                }
+            });
+        });
+        function searchData() {
+            debugger;
+            alert($('#IsMarkDown').val())
+            var obj = {};
+            obj.FromProductSKU = $('#FromProductSKU').val();
+            obj.ToProductSKU = $('#ToProductSKU').val();
+            obj.FromStyleSKU = $('#FromStyleSKU').val();
+            obj.ToStyleSKU = $('#ToStyleSKU').val();
+            obj.FromReportDate = $('#FromReportDate').val();
+            obj.ToReportDate = $('#ToReportDate').val();
+            obj.BranchCode = $("#BranchCode").val();
+            obj.IsMarkDown = $('#IsMarkDown').val();
+            obj.ReportType = $('#ReportType').val();
+            obj.IsDistributionDate = $('#IsDistributionDate').val();
+            obj.FromDistributionDate = $('#FromDistributionDate').val();
+            obj.ToDistributionDate = $('#ToDistributionDate').val();
+           // alert(obj.ToReportDate, obj.ToDistributionDate);
+            obj.BranchName = $("#BranchName").val();
+            obj.IsActive = true;
+            $.ajax({
+                url: '/Admin/WinnerReport/GetWinnerList',
+                type: 'POST',
+                data: obj,
+                success: function (result) {
+                    $('.dvUserDetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+            return false;
+        }
+        $('.date').datepicker({ dateFormat: 'mm-dd-yy' }).val();
+</script>
+}

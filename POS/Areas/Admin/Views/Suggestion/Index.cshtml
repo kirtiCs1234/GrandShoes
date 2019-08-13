@@ -1,0 +1,1153 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div class="row">
+    <div class="prtm-page-bar col-md-5 col-lg-3 col-sm-12 col-12" style="background:none;">
+        <ul class="breadcrumb" style="background:none;">
+            <li class="breadcrumb-item text-capitalize">
+                <h3>Suggestions</h3>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-md-10 col-lg-6 col-sm-8 col-12 search-container">
+        <div class="row" style="margin-top: 3%;">
+            <div class="col-md-4 col-xs-12 col-sm-6">
+                @Html.DropDownList("ProductId", ViewBag.productList as SelectList, "Select Product", new { @class = "form-control" })
+            </div>
+            <div class="col-md-4 col-xs-12 col-sm-6">
+                <input class="form-control date-picker" type="text" placeholder="From Date" name="To Date" id="Date" />
+            </div>
+            <div class="col-md-4 col-xs-12 col-sm-6">
+                <button type="button" onclick="getSugg()" class="form-control btn btn-success">Get</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row hide" id="summaryDiv">
+    <div class="col-md-12">
+        <b><h4><label id="OldDays" style="color:indianred"></label></h4></b>
+        <b><h4><label id="AfterCalcDays" style="color:indianred"></label></h4></b>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-6" id="receiversDiv">
+
+    </div>
+    <div class="col-md-6" id="sendersDiv">
+
+    </div>
+</div>
+
+<div class="row">
+    <hr />
+    <div class="col-md-2">
+        <button type="button" style="float:left" class="btn btn-primary" id="ApproveBtn" onclick="ApproveSuggestion()">Approve Suggestion</button>
+    </div>
+    <div class="col-md-2">
+        <button type="button" style="float:left" class="btn btn-success" id="CartonBtn" onclick="ProceedCarton()">ProceedToCarton</button>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-12 hide table-responsive" id="TableData">
+        <table id="t01">
+            <tr>
+                <th>From</th>
+                <th>To</th>
+                <th>Distance</th>
+                <th>Total</th>
+                <th class="inputQty">01</th>
+                <th class="inputQty">02</th>
+                <th class="inputQty">03</th>
+                <th class="inputQty">04</th>
+                <th class="inputQty">05</th>
+                <th class="inputQty">06</th>
+                <th class="inputQty">07</th>
+                <th class="inputQty">08</th>
+                <th class="inputQty">09</th>
+                <th class="inputQty">10</th>
+                <th class="inputQty">11</th>
+                <th class="inputQty">12</th>
+                <th class="inputQty">13</th>
+                <th class="inputQty">14</th>
+                <th class="inputQty">15</th>
+                <th class="inputQty">16</th>
+                <th class="inputQty">17</th>
+                <th class="inputQty">18</th>
+                <th class="inputQty">19</th>
+                <th class="inputQty">20</th>
+                <th class="inputQty">21</th>
+                <th class="inputQty">22</th>
+                <th class="inputQty">23</th>
+                <th class="inputQty">24</th>
+                <th class="inputQty">25</th>
+                <th class="inputQty">26</th>
+                <th class="inputQty">27</th>
+                <th class="inputQty">28</th>
+                <th class="inputQty">29</th>
+                <th class="inputQty">30</th>
+                <th>Action</th>
+            </tr>
+            <tbody id="myBody"></tbody>
+        </table>
+        <br />
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <form id="stockForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Enter stock to transfer</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-6">
+                            <label>Total Transfer</label>
+                            <input type="text" id="stockTransfer" class="form-control" placeholder="stock" />
+                        </div>
+                        <div class="col-md-6" style="margin-top:3%;">
+                            <input type="hidden" id="branchIDForSize" value="" />
+                            <button type="button" class="btn btn-primary" onclick="getProductSizes()">Get sizes</button>
+                            <button type="button" class="btn btn-info" onclick="transferFirst()">Transfer first</button>
+                            <button type="button" class="btn btn-success" onclick="transferStock()">Submit</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row mrgn-b-lg" id="productSizes">
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
+<script>
+
+    function ProceedCarton() {
+        window.location.href = "/Admin/IBTCarton/ToBranchTransfer";
+    }
+
+    function ApproveSuggestion() {
+        debugger;
+        var Data = getDataFromTable();
+        if (Data.length > 0) {
+            $.ajax({
+                url: '/Admin/Suggestion/insertSuggestion',
+                data: { data: Data },
+                type: 'POST',
+                success: function (result) {
+                    debugger
+                    alert('Suggestions saved successfully !');
+                    $("#ApproveBtn").addClass('disabled');
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            })
+        }
+    }
+
+
+    function getDataFromTable() {
+        var Rows = $("#myBody tr");
+        var DataList = [];
+        for (var i = 0; i < Rows.length; i++) {
+            var data = {};
+            data.FromBranchId = $($($("#myBody tr")[i]).find('td')[0]).find('label[id="fromId"]').text();
+            data.ToBranchId = $($($("#myBody tr")[i]).find('td')[1]).find('label[id="toId"]').text();
+            data.ProductId = $("#ProductId").val();
+            //data.Distance = $($($("#myBody tr")[i]).find('td')[2]).find('label').text();
+            data.Total = $($($("#myBody tr")[i]).find('td')[3]).find('label').text();
+            data.Quantity01 = $($($("#myBody tr")[i]).find('td')[4]).find('label').text();
+            data.Quantity02 = $($($("#myBody tr")[i]).find('td')[5]).find('label').text();
+            data.Quantity03 = $($($("#myBody tr")[i]).find('td')[6]).find('label').text();
+            data.Quantity04 = $($($("#myBody tr")[i]).find('td')[7]).find('label').text();
+            data.Quantity05 = $($($("#myBody tr")[i]).find('td')[8]).find('label').text();
+            data.Quantity06 = $($($("#myBody tr")[i]).find('td')[9]).find('label').text();
+            data.Quantity07 = $($($("#myBody tr")[i]).find('td')[10]).find('label').text();
+            data.Quantity08 = $($($("#myBody tr")[i]).find('td')[11]).find('label').text();
+            data.Quantity09 = $($($("#myBody tr")[i]).find('td')[12]).find('label').text();
+            data.Quantity10 = $($($("#myBody tr")[i]).find('td')[13]).find('label').text();
+            data.Quantity11 = $($($("#myBody tr")[i]).find('td')[14]).find('label').text();
+            data.Quantity12 = $($($("#myBody tr")[i]).find('td')[15]).find('label').text();
+            data.Quantity13 = $($($("#myBody tr")[i]).find('td')[16]).find('label').text();
+            data.Quantity14 = $($($("#myBody tr")[i]).find('td')[17]).find('label').text();
+            data.Quantity15 = $($($("#myBody tr")[i]).find('td')[18]).find('label').text();
+            data.Quantity16 = $($($("#myBody tr")[i]).find('td')[19]).find('label').text();
+            data.Quantity17 = $($($("#myBody tr")[i]).find('td')[20]).find('label').text();
+            data.Quantity18 = $($($("#myBody tr")[i]).find('td')[21]).find('label').text();
+            data.Quantity19 = $($($("#myBody tr")[i]).find('td')[22]).find('label').text();
+            data.Quantity20 = $($($("#myBody tr")[i]).find('td')[23]).find('label').text();
+            data.Quantity21 = $($($("#myBody tr")[i]).find('td')[24]).find('label').text();
+            data.Quantity22 = $($($("#myBody tr")[i]).find('td')[25]).find('label').text();
+            data.Quantity23 = $($($("#myBody tr")[i]).find('td')[26]).find('label').text();
+            data.Quantity24 = $($($("#myBody tr")[i]).find('td')[27]).find('label').text();
+            data.Quantity25 = $($($("#myBody tr")[i]).find('td')[28]).find('label').text();
+            data.Quantity26 = $($($("#myBody tr")[i]).find('td')[29]).find('label').text();
+            data.Quantity27 = $($($("#myBody tr")[i]).find('td')[30]).find('label').text();
+            data.Quantity28 = $($($("#myBody tr")[i]).find('td')[31]).find('label').text();
+            data.Quantity29 = $($($("#myBody tr")[i]).find('td')[31]).find('label').text();
+            data.Quantity30 = $($($("#myBody tr")[i]).find('td')[33]).find('label').text();
+            DataList.push(data);
+        }
+        if (DataList.length == Rows.length)
+            return DataList;
+        else
+            return false;
+    }
+
+
+    var textBoxesTo = [];
+    var targetQtys = [];
+    function transferFirst() {
+        debugger;
+        targetQtys = [];
+        var totalStock = parseFloat($("#stockTransfer").val());
+        var Qts = document.getElementsByClassName("Qty");
+        targetQtys = document.getElementsByClassName("targetQty");
+        var val = 0;
+        var textBoxesFrom = [];
+        var count = 0;
+        textBoxesTo = [];
+
+        if (targetQtys.length <= 0 && Qts.length <= 0) {
+            alert('transfer some stock first !');
+            return false;
+        }
+
+        for (var i = 0; i < Qts.length; i++) {
+            targetQtys[i].value = 0;
+            if (val < totalStock) {
+                val += parseFloat(Qts[i].value);
+                targetQtys[i].value = parseFloat(Qts[i].value);
+                textBoxesFrom.push(Qts[i]);
+                textBoxesTo.push(targetQtys[i]);
+                count++;
+            }
+            if (val > totalStock) {
+                var remain = val - totalStock;
+                textBoxesTo[i].value = parseFloat(Qts[i].value) - remain;
+                val -= remain;
+            }
+        }
+        isTransferFirst = true;
+    }
+
+
+    var Sizes = {};
+    function getProductSizes() {
+        debugger
+        var pid = $("#ProductId").val();
+        var branchID = $("#branchIDForSize").val();
+        if (pid) {
+            $.ajax({
+                url: '/Admin/Suggestion/GetProductSizes?productId=' + pid + "&branchID=" + branchID,
+                type: 'POST',
+                success: function (result) {
+                    debugger
+                    Sizes = {};
+                    Sizes = result;
+                    bindSizes();
+                    isTransferFirst = false;
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            })
+        }
+        else {
+            return false;
+        }
+    }
+
+    function bindSizes() {
+        debugger
+        $('#productSizes').empty();
+        var source = document.getElementById("ProductSizes-div").innerHTML;
+        var obj = { sizes: Sizes };
+        var template = Handlebars.compile(source);
+        $('#productSizes').append(template(obj));
+        GetSizes = true;
+    }
+
+
+    $(document).ready(function () {
+        $("#Date").datepicker({
+            maxDate: 0
+        });
+        $("#Date").datepicker({ dateFormat: 'mm/dd/yy', }).datepicker("setDate", new Date());
+    })
+
+    $("#stockForm").submit(function (event) {
+        debugger
+        transferStock();
+        event.preventDefault();
+        return false;
+    });
+
+    //$(function () {
+    //	$('.date-picker').datepicker({ dateFormat: 'mm/dd/yy' }).val();
+    //});
+
+    var Suggestions;
+    function getSugg() {
+        debugger
+        var date = $("#Date").val();
+        var pid = $("#ProductId").val();
+        if (pid && date) {
+            $.ajax({
+                url: '/Admin/Suggestion/GetSuggestion?date=' + date + '&productId=' + pid,
+                type: 'POST',
+                success: function (result) {
+                    debugger
+                    $('#receiversDiv').empty();
+                    $('#sendersDiv').empty();
+                    $("#myBody").empty();
+                    $("#ApproveBtn").removeClass('disabled');
+
+                    if (result.Response == "200") {
+                        Suggestions = result.Data;
+                        categorizedData();
+                        BindReceiversHtml();
+                        ShowSummary(result);
+                        $("#TableData").removeClass('hide');
+                        $("#summaryDiv").removeClass('hide');
+                    }
+                    else {
+                        $("#TableData").addClass('hide');
+                        $("#summaryDiv").addClass('hide');
+                        alert('Data not found for selected branch/date !')
+                        return false;
+                    }
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            })
+        }
+        else {
+            alert('please fill out fields!');
+            return false;
+        }
+    }
+
+
+    function ShowSummary(data) {
+        debugger
+        $("#OldDays").text(" - Remaining stock Will be sold in an average of " + data.MaxStockSaleDays + " days, according to the lowest selling rate.");
+        $("#AfterCalcDays").text(" - Remaining stock Will be sold in an average of " + data.TotalStockSaleDays + " days, according to the current transfer results.");
+    }
+
+    var senders = [];
+    var receivers = [];
+    function categorizedData() {
+        senders = [];
+        receivers = [];
+        $.each(Suggestions, function (i, v) {
+            if (v.StockToTransfer < 0) {
+                senders.push(v);
+            }
+            else {
+                receivers.push(v);
+            }
+        })
+    }
+
+    function BindReceiversHtml() {
+        debugger
+        var source = document.getElementById("Receivers-div").innerHTML;
+        var obj = { receivers: receivers };
+        var template = Handlebars.compile(source);
+        $('#receiversDiv').append(template(obj));
+
+        //------------------ Senders html bind
+        bindSenders();
+    }
+
+    function bindSenders() {
+        $('#sendersDiv').empty();
+        var source = document.getElementById("Senders-div").innerHTML;
+        var obj = { senders: senders };
+        var template = Handlebars.compile(source);
+        $('#sendersDiv').append(template(obj));
+    }
+
+    var currentBranch;
+    function drag(ev) {
+        currentBranch = 0;
+        currentBranch = ev.target.id;
+    }
+
+    function drop(ev) {
+        debugger
+        var target = ev.target.id;
+        if (currentBranch, target) {
+            var branch = senders.filter(c => c.BranchID == currentBranch)[0];
+            if (branch) {
+                openPopUpForStock(branch, target);
+            }
+        }
+    }
+
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    var branchData;
+    var targetDiv;
+
+
+    function appendDiv() {
+        debugger
+        var branchData = senders.filter(c => c.BranchID == currentBranch)[0];
+        var divID = targetDiv + "Div" + transferredStock + "Data" + branchData.BranchID;
+        var source = document.getElementById("data-div").innerHTML;
+        var obj = { branch: branchData, transferredStock: transferredStock, divID: divID };
+        var template = Handlebars.compile(source);
+        $('#detailDiv' + targetDiv).append(template(obj));
+        CalcQuantity();
+        CreateRowOfRecord();
+        //if (!(accCount > 0))
+        //	myFunAcc();
+    }
+
+    function CreateRowOfRecord() {
+        debugger
+
+        for (var i = 0; i < 30; i++) {
+            if (!textBoxesTo[i]) {
+                textBoxesTo.push(targetQtys[i]);
+                textBoxesTo[i].value = 0;
+            }
+        }
+        var RowData = {};
+
+        RowData.FromBranchName = Suggestions.filter(c => c.BranchID == currentBranch)[0].BranchName;
+        RowData.ToBranchName = Suggestions.filter(c => c.BranchID == targetDiv)[0].BranchName;
+
+        RowData.FromBranch = currentBranch;
+        RowData.ToBranch = targetDiv;
+        RowData.Stock = transferredStock;
+        RowData.Distance = 100 + " Km";
+        RowData.Quantity01 = textBoxesTo[0].value;
+        RowData.Quantity02 = textBoxesTo[1].value;
+        RowData.Quantity03 = textBoxesTo[2].value;
+        RowData.Quantity04 = textBoxesTo[3].value;
+        RowData.Quantity05 = textBoxesTo[4].value;
+        RowData.Quantity06 = textBoxesTo[5].value;
+        RowData.Quantity07 = textBoxesTo[6].value;
+        RowData.Quantity08 = textBoxesTo[7].value;
+        RowData.Quantity09 = textBoxesTo[8].value;
+        RowData.Quantity10 = textBoxesTo[09].value;
+        RowData.Quantity11 = textBoxesTo[10].value;
+        RowData.Quantity12 = textBoxesTo[11].value;
+        RowData.Quantity13 = textBoxesTo[12].value;
+        RowData.Quantity14 = textBoxesTo[13].value;
+        RowData.Quantity15 = textBoxesTo[14].value;
+        RowData.Quantity16 = textBoxesTo[15].value;
+        RowData.Quantity17 = textBoxesTo[16].value;
+        RowData.Quantity18 = textBoxesTo[17].value;
+        RowData.Quantity19 = textBoxesTo[18].value;
+        RowData.Quantity20 = textBoxesTo[19].value;
+        RowData.Quantity21 = textBoxesTo[20].value;
+        RowData.Quantity22 = textBoxesTo[21].value;
+        RowData.Quantity23 = textBoxesTo[22].value;
+        RowData.Quantity24 = textBoxesTo[23].value;
+        RowData.Quantity25 = textBoxesTo[24].value;
+        RowData.Quantity26 = textBoxesTo[25].value;
+        RowData.Quantity27 = textBoxesTo[26].value;
+        RowData.Quantity28 = textBoxesTo[27].value;
+        RowData.Quantity29 = textBoxesTo[28].value;
+        RowData.Quantity30 = textBoxesTo[29].value;
+        var source = document.getElementById("data-RowData").innerHTML;
+        var obj = { RowData: RowData };
+        var template = Handlebars.compile(source);
+        $('#TableData #myBody').append(template(obj));
+    }
+
+
+    function CalcQuantity() {
+        debugger;
+        var sender = currentBranch;
+        var receiver = targetDiv;
+        $.each(senders, function (i, v) {
+            if (v.BranchID == sender) {
+                v.StockToTransfer = parseFloat(v.StockToTransfer) + parseFloat(transferredStock);  //------doing operation(+) senders are already negatives
+                bindSenders();
+            }
+        })
+        $.each(receivers, function (i, v) {
+            if (v.BranchID == receiver) {
+                v.StockToTransfer = parseFloat(Math.abs(v.StockToTransfer)) - parseFloat(transferredStock);
+                $("#Qty" + targetDiv).text("(" + v.StockToTransfer + ")");
+            }
+        })
+    }
+
+    function ReCalcQuantity(current) {
+        debugger
+        var sender = $(current).nextAll()[0].textContent;
+        var Qty = $(current).nextAll()[1].textContent;
+        Qty = Qty.replace('(', '').replace(')', '').trim();
+        var receiver = $($($(current).parents('div')[2])[0]).prevAll()[0].id;
+        var receiverTarget = current.parentElement.parentElement.parentElement.previousElementSibling.id;
+        calReveQty(sender, receiver, receiverTarget, Qty, current);
+    }
+
+    function calReveQty(sender, receiver, receiverTarget, Qty, current) {
+        $.each(senders, function (i, v) {
+            if (v.BranchID == sender) {
+                v.StockToTransfer = parseFloat(v.StockToTransfer) - parseFloat(Qty);  //------doing operation(-) senders are already negatives
+                bindSenders();
+            }
+        })
+        $.each(receivers, function (i, v) {
+            if (v.BranchID == receiver) {
+                v.StockToTransfer = parseFloat(Math.abs(v.StockToTransfer)) + parseFloat(Qty);
+                $("#Qty" + receiverTarget).text("(" + v.StockToTransfer + ")");
+            }
+        })
+        RemoveFromTableData(sender, receiver, receiverTarget, Qty, current);
+    }
+
+    function RemoveFromTableData(sender, receiver, receiverTarget, Qty, current) {
+        debugger
+        var length = $("#TableData #myBody")[0].children.length;
+        for (var i = 0; i < length; i++) {
+            var RowData = {};
+            RowData.FromBranch = $($($($("#TableData #myBody tr")[i])[0].cells[0]).find("label")[0]).text();
+            RowData.ToBranch = $($($($("#TableData #myBody tr")[i])[0].cells[1]).find("label")[0]).text();
+            RowData.Distance = $($($($("#TableData #myBody tr")[i])[0].cells[2]).find("label")[0]).text();
+            RowData.Stock = $($($($("#TableData #myBody tr")[i])[0].cells[3]).find("label")[0]).text();
+            if (sender == RowData.FromBranch && receiver == RowData.ToBranch && Qty == RowData.Stock) {
+                $("#TableData #myBody tr").eq(i).remove();
+                break;
+            }
+        }
+    }
+
+
+    function openPopUpForStock(branch, target) {
+        debugger
+        var rcvBranch = receivers.filter(c => c.BranchID == target)[0];
+        if (!Math.abs(branch.StockToTransfer)) {
+            alert('Does not have enough stock to transfer !');
+            return false;
+        }
+        if (!Math.abs(rcvBranch.StockToTransfer)) {
+            alert('Does not have enough stock to receive !');
+            return false;
+        }
+        if (Math.abs(branch.StockToTransfer) >= Math.abs(rcvBranch.StockToTransfer)) {
+            $("#stockTransfer").val(Math.abs(rcvBranch.StockToTransfer));
+            $('#myModal').modal('show');
+            $("#branchIDForSize").val(branch.BranchID);
+            branchData = branch;
+            targetDiv = target;
+        }
+        if (Math.abs(branch.StockToTransfer) < Math.abs(rcvBranch.StockToTransfer)) {
+            $("#stockTransfer").val(Math.abs(branch.StockToTransfer));
+            $('#myModal').modal('show');
+            $("#branchIDForSize").val(branch.BranchID);
+            branchData = branch;
+            targetDiv = target;
+        }
+        $("#productSizes").empty();
+    }
+
+    var transferredStock;
+    var GetSizes = false;
+    var isTransferFirst = false;
+    function transferStock() {
+        debugger
+        var totalStock = parseFloat($("#stockTransfer").val());
+        var targetQtys = document.getElementsByClassName("targetQty");
+        var Qts = document.getElementsByClassName("Qty");
+        if (targetQtys.length <= 0 && Qts.length <= 0) {
+            alert('transfer some stock first !');
+            return false;
+        }
+
+        textBoxesTo = [];
+        textBoxesFrom = [];
+
+        var val = 0;
+        for (var i = 0; i < Qts.length; i++) {
+            if (val < totalStock) {
+                if (targetQtys[i].value) {
+                    if (parseFloat(Qts[i].value) >= parseFloat(targetQtys[i].value)) {
+                        val += parseFloat(targetQtys[i].value);
+                        textBoxesTo.push(targetQtys[i]);
+                    }
+                    else {
+                        alert('Can transfer ' + Qts[i].value + ' stock only!');
+                        return false;
+                    }
+                }
+            }
+            if (val > totalStock) {
+                var remain = val - totalStock;
+                alert('Transfer limit exceeds by (' + remain + ') !');
+                return false;
+            }
+        }
+        if (val != totalStock) {
+            alert('Transfer above entered stock atleast !');
+            return false;
+        }
+        if (val == totalStock) {
+            SubmitStock();
+        }
+    }
+
+    function SubmitStock() {
+        debugger
+        transferredStock = $("#stockTransfer").val();
+        var receiverBranch = receivers.filter(c => c.BranchID == targetDiv)[0];
+        if (parseFloat(transferredStock) > parseFloat(Math.abs(branchData.StockToTransfer)) && Math.abs(branchData.StockToTransfer) != 0) {
+            alert('Can transfer only ' + Math.abs(branchData.StockToTransfer) + ' stock !');
+            return false;
+        }
+        if (Math.abs(branchData.StockToTransfer) == 0) {
+            alert('Cant transfer ' + Math.abs(branchData.StockToTransfer) + ' stock !');
+            return false;
+        }
+        if (parseFloat(transferredStock) > parseFloat(Math.abs(receiverBranch.StockToTransfer))) {
+            alert('Can receive only ' + receiverBranch.StockToTransfer + ' stock !');
+            return false;
+        }
+        if (transferredStock) {
+            if (GetSizes) {
+                appendDiv(branchData, targetDiv);
+                $('#myModal').modal('hide');
+            }
+        }
+        else {
+            alert('Enter stock first');
+            return false;
+        }
+        $("#productSizes").empty();
+    }
+
+
+    function removeRow(current) {
+        debugger
+        var elements = $(current.parentElement).prevAll();
+        var RowData = {};
+        RowData.FromBranch = $((elements[elements.length - 1])).find('label[id="fromId"]').text()
+        RowData.ToBranch = $(elements[(elements.length - 1) - 1]).find('label[id="toId"]').text();
+        RowData.Distance = $(elements[(elements.length - 1) - 2]).find('label').text();
+        RowData.Stock = $(elements[(elements.length - 1) - 3]).find('label').text();
+        calReveQty(RowData.FromBranch, RowData.ToBranch, RowData.ToBranch, RowData.Stock, current);
+        removeCard(RowData.ToBranch, RowData.FromBranch, RowData.Stock);
+    }
+
+    function removeCard(receiver, sender, stock) {
+        debugger
+        var length = $($(("#detailDiv" + receiver))[0]).children().length;
+        var id = receiver + "Div" + stock + "Data" + sender;
+        for (var i = 0; i < length; i++) {
+            if ($($(("#detailDiv" + receiver))[0]).children()[i].id == id) {
+                $($(("#detailDiv" + receiver))[0]).children()[i].remove();
+                break;
+            }
+        }
+    }
+
+
+    //---------------close---
+
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 4000);
+
+
+    //-----------Accordian
+    //var accCount = 0;
+    //function myFunAcc() {
+    //	var acc = document.getElementsByClassName("accordion");
+    //	var i;
+
+    //	for (i = 0; i < acc.length; i++) {
+    //		acc[i].addEventListener("click", function () {
+    //			debugger
+    //			this.classList.toggle("active");
+    //			var panel = this.nextElementSibling;
+    //			if (panel.style.maxHeight) {
+    //				panel.style.maxHeight = null;
+    //			} else {
+    //				panel.style.maxHeight = panel.scrollHeight + "px";
+    //			}
+    //		});
+    //	}
+    //	accCount++;
+    //}
+</script>
+
+
+
+
+@*---------------Handlebar templates-----------------------*@
+
+
+<script id="Receivers-div" type="text/x-handlebars-template">
+    <div>
+        <h2>
+            <label class="form-control heading">Recevers</label>
+        </h2>
+        {{#each receivers}}
+        <div>
+            <h4 class="list-group-item" id="{{this.BranchID}}" ondrop="drop(event)" ondragover="allowDrop(event)">
+                {{this.BranchName}}
+                <span style="float:right" id="Qty{{this.BranchID}}">({{this.StockToTransfer}})</span>
+            </h4>
+            <div style="height:100%">
+                <div class="row" id="detailDiv{{this.BranchID}}">
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</script>
+
+
+<script id="Senders-div" type="text/x-handlebars-template">
+    <div>
+        <h2>
+            <label class="form-control heading">Senders</label>
+        </h2>
+        {{#each senders}}
+        <div>
+            <h4 class="list-group-item" id="{{this.BranchID}}" draggable="true" ondragstart="drag(event)">
+                {{this.BranchName}}
+                <span style="float:right">({{this.StockToTransfer}})</span>
+            </h4>
+        </div>
+        {{/each}}
+    </div>
+</script>
+
+
+<script id="data-div" type="text/x-handlebars-template">
+    <div class="alert alert-info col-md-2" role="alert" id="{{divID}}">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="ReCalcQuantity(this)"><span aria-hidden="true" style="font-size:large">&times;</span></button>
+        <strong><span id="transferredID">{{branch.BranchID}}</span></strong>
+        <span id="transferredQty"> ({{transferredStock}})</span>
+    </div>
+</script>
+
+
+<script id="ProductSizes-div" type="text/x-handlebars-template">
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(01)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity01}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="01" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(02)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity02}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="02" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(03)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity03}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="03" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(04)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity04}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="04" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(05)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity05}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="05" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(06)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity06}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="06" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(07)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity07}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="07" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(08)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity08}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="08" type="text">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(09)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity09}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="09" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(10)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity10}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="10" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(11)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity11}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="11" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(12)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity12}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="12" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(13)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity13}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="13" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(14)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity14}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="14" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(15)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity15}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="15" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(16)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity16}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="16" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(17)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity17}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="17" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(18)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity18}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="18" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(19)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity19}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="19" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(20)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity20}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="20" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(21)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity21}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="21" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(22)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity22}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="22" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(23)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity23}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="23" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(24)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity24}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="24" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(25)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity25}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="25" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(26)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity26}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="26" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(27)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity27}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="27" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(28)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity28}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="28" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(29)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity29}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="29" type="text">
+    </div>
+
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Quantity of size(30)</label>
+        <input class="form-control text-box single-line Qty" readonly="readonly" type="text" value="{{sizes.Quantity30}}">
+    </div>
+    <div class="col-md-6 col-xs-12 col-sm-6">
+        <label>Transfer Quantity</label>
+        <input class="form-control text-box single-line targetQty" id="30" type="text">
+    </div>
+</script>
+
+
+<script id="data-RowData" type="text/x-handlebars-template">
+    <tr>
+        <td>
+            <label id="fromId" hidden>{{RowData.FromBranch}}</label>
+            <label>{{RowData.FromBranchName}}</label>
+        </td>
+        <td>
+            <label id="toId" hidden>{{RowData.ToBranch}}</label>
+            <label>{{RowData.ToBranchName}}</label>
+        </td>
+        <td><label>{{RowData.Distance}}</label></td>
+        <td><label>{{RowData.Stock}}</label></td>
+        <td><label>{{RowData.Quantity01}}</label></td>
+        <td><label>{{RowData.Quantity02}}</label></td>
+        <td><label>{{RowData.Quantity03}}</label></td>
+        <td><label>{{RowData.Quantity04}}</label></td>
+        <td><label>{{RowData.Quantity05}}</label></td>
+        <td><label>{{RowData.Quantity06}}</label></td>
+        <td><label>{{RowData.Quantity07}}</label></td>
+        <td><label>{{RowData.Quantity08}}</label></td>
+        <td><label>{{RowData.Quantity09}}</label></td>
+        <td><label>{{RowData.Quantity10}}</label></td>
+        <td><label>{{RowData.Quantity11}}</label></td>
+        <td><label>{{RowData.Quantity12}}</label></td>
+        <td><label>{{RowData.Quantity13}}</label></td>
+        <td><label>{{RowData.Quantity14}}</label></td>
+        <td><label>{{RowData.Quantity15}}</label></td>
+        <td><label>{{RowData.Quantity16}}</label></td>
+        <td><label>{{RowData.Quantity17}}</label></td>
+        <td><label>{{RowData.Quantity18}}</label></td>
+        <td><label>{{RowData.Quantity19}}</label></td>
+        <td><label>{{RowData.Quantity20}}</label></td>
+        <td><label>{{RowData.Quantity21}}</label></td>
+        <td><label>{{RowData.Quantity22}}</label></td>
+        <td><label>{{RowData.Quantity23}}</label></td>
+        <td><label>{{RowData.Quantity24}}</label></td>
+        <td><label>{{RowData.Quantity25}}</label></td>
+        <td><label>{{RowData.Quantity26}}</label></td>
+        <td><label>{{RowData.Quantity27}}</label></td>
+        <td><label>{{RowData.Quantity28}}</label></td>
+        <td><label>{{RowData.Quantity29}}</label></td>
+        <td><label>{{RowData.Quantity30}}</label></td>
+        <td><a href="#" onclick="removeRow(this)">Remove</a></td>
+    </tr>
+</script>
+
+
+@*--------------CSS------------------*@
+
+<style>
+    /*//-----------------Scroll model*/
+    #productSizes {
+        padding: 15px;
+        width: 100%;
+        height: 370px;
+        overflow-y: scroll;
+    }
+
+    .alert {
+        margin-left: 15px;
+        border-radius: 10px;
+        height: 40px;
+        font-size: x-small;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+    }
+
+    table#t01 {
+        width: 100%;
+        background-color: #f1f1c1;
+    }
+
+
+
+    /*-----------------------Accordian*/
+
+    /*.accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 15px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+        .accordion:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+    .active:after {
+        content: "\2212";
+    }
+
+    .panel {
+        padding: 0 18px;
+        background-color: white;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+    }*/
+</style>
+

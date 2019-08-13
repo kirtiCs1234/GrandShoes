@@ -1,0 +1,26 @@
+﻿using Helper;
+using Model;
+using Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.Service
+{
+    public class TemplateService :ITemplateService
+    {
+        public List<TemplateModel> GetAll()
+        {
+            var body = "";
+            List<TemplateModel> TemplateModelList = ServerResponse.Invoke<List<TemplateModel>>("api/template/getDetails",body,"GET");
+            return TemplateModelList;
+        }
+        public TemplateModel GetTemplateId(string sku)
+        {
+            var getTemplateId = ServerResponse.Invoke<TemplateModel>("api/template/getTemplateId?sku=" + sku, "", "POST");
+            return getTemplateId;
+        }
+    }
+}

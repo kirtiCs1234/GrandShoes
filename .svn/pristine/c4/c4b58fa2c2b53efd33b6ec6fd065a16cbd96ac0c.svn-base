@@ -1,0 +1,344 @@
+﻿@model Model.ProductModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = null;
+}
+
+<div class="row marg-btn-20">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+        @using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { id = "editForm", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            <div class="forms">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row marg-btn-20">
+                            <div class="col-md-2 col-sm-3 col-xs-12"><label>Product/ Style</label></div>
+                            <div class="col-md-2 col-sm-3 col-xs-12">
+                                @Html.EditorFor(model => model.ProductSKU, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ProductSKU, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-12">
+                                @Html.DropDownListFor(m => m.ProductStyleId, null, "-Style-", htmlAttributes: new { @class = "form-control"
+                                   })  @Html.ValidationMessageFor(model => model.ProductStyle.StyleSKU, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-12">
+                                <button type="button" class="btn btn-primary add-new-btn form-control">Add New</button>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-12 barcode">
+                                <svg id="barcode"></svg>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row marg-btn-20">
+                    <div class="col-md-2 col-sm-2 col-xs-12"><label>Date</label></div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control",@Id="date", @autocomplete = "off" } })
+                        @Html.ValidationMessageFor(model => model.CreatedOn, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">Last M/Down</div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        @Html.EditorFor(model => model.UpdatedOn, new { htmlAttributes = new { @class = "form-control",@Value=@TempData["Date"] } })
+                        @Html.ValidationMessageFor(model => model.UpdatedOn, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-1 col-sm-2 col-xs-12">M/D Seq</div>
+                    <div class="col-md-3 col-sm-2 col-xs-12"><input class="form-control" type="text" value="@TempData["Number"]"/></div>
+                </div>
+                <div class="row marg-btn-20">
+                    <div class="col-md-2 col-sm-2 col-xs-12"><label>Season</label></div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        @Html.DropDownListFor(m => m.SeasonID, null, "-Description-", htmlAttributes: new { @class = "form-control"
+                            })
+                        @Html.ValidationMessageFor(model => model.SeasonID, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">Buyer</div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        @Html.DropDownListFor(m => m.BuyerID, null, "-Buyer-", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.BuyerID, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-1 col-sm-2 col-xs-12">Sup. Style</div>
+                    <div class="col-md-3 col-sm-2 col-xs-12">
+                        @Html.EditorFor(model => model.SupplierStyle, new { htmlAttributes = new { @class = "form-control", placeholder = "Supplier Style" } })
+                        @Html.ValidationMessageFor(model => model.SupplierStyle, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row marg-btn-20">
+                    <div class="col-md-2 col-sm-2 col-xs-12"><label>Description</label></div>
+                    <div class="col-md-10 col-sm-10 col-xs-12">
+                        @Html.EditorFor(model => model.LongDescription, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row marg-btn-20">
+                    <div class="col-md-2 col-sm-2 col-xs-12"><label>Label Desc</label></div>
+                    <div class="col-md-4 col-sm-3 col-xs-12">
+                        @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-1 col-sm-2 col-xs-12"><label>Size Grid</label></div>
+                    <div class="col-md-1 col-sm-1 col-xs-12">
+                        @Html.DropDownListFor(m => m.SizeGridID, null, "-SizeGridNo-", htmlAttributes: new { @class = "form-control", onchange = "GetSizeGrid(this);" })
+                        @Html.ValidationMessageFor(model => model.SizeGridID, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="">
+                            @Html.EditorFor(model => model.AvailableSize, new { htmlAttributes = new { @class = "form-control", multiple = "multiple", placeholder = "" } })
+                            @Html.ValidationMessageFor(model => model.SizeGrid.Z01, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row marg-btn-20">
+                    <div class="col-md-2 col-sm-2 col-xs-12"><label>Prod. Cat.</label></div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        @Html.DropDownListFor(m => m.ProductCategoryID, null, "--Product Category--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ProductCategoryID, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12"><label>Prod. Grp</label></div>
+                    <div class="col-md-2 col-sm-1 col-xs-12">
+                        @Html.DropDownListFor(m => m.ProductGroupID, null, "--Product Group--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ProductGroupID, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12" style="padding-right:0px;"><label>Prod. Srce</label></div>
+                    <div class="col-md-2 col-sm-1 col-xs-12">
+                        @Html.DropDownListFor(m => m.ProductSourceID, null, "--Product Source--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ProductSourceID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row marg-btn-20">
+                    <div class="col-md-2 col-sm-3 col-xs-12"><label>Recommended Selling Price</label></div>
+                    <div class="col-md-2 col-sm-3 col-xs-12">
+                        @Html.EditorFor(model => model.RecommendedSellingPrice, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RecommendedSellingPrice, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-12"><label>Cost Price</label></div>
+                    <div class="col-md-2 col-sm-3 col-xs-12">
+                        @Html.EditorFor(model => model.CostPrice, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CostPrice, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-12" style="padding-right:0px;"><label>Actual Selling Price</label></div>
+                    <div class="col-md-2 col-sm-3 col-xs-12">
+                        @Html.EditorFor(model => model.ActualSellingPrice, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ActualSellingPrice, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row marg-btn-20">
+                    <div class="col-md-2 col-sm-3 col-xs-12"><label>Orig. Price</label></div>
+                    <div class="col-md-2 col-sm-3 col-xs-12">
+                        @Html.EditorFor(model => model.CostPrice, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CostPrice, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-12"><label>International Cost</label></div>
+                    <div class="col-md-2 col-sm-3 col-xs-12">
+                        @Html.EditorFor(model => model.CostPriceUSD, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CostPriceUSD, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row marg-btn-20">
+                    <div class="col-md-2 col-sm-3 col-xs-12"><label>VPI</label></div>
+                    <div class="col-md-2 col-sm-1 col-xs-12">
+                        @Html.EditorFor(model => model.IsVPI, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.IsVPI, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-12"><label>Pack Ratio</label></div>
+                    <div class="col-md-2 col-sm-3 col-xs-12"><input class="form-control" type="text" /></div>
+                    <div class="col-md-1 col-sm-3 col-xs-12"><label>Color</label></div>
+                    <div class="col-md-2 col-sm-3 col-xs-12">
+                        @Html.DropDownListFor(m => m.ColorID, null, "--Color--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ColorID, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="col-md-1 col-sm-3 col-xs-12"><button class="btn btn-primary form-control" type="button">Edit</button></div>
+
+                </div>
+                <div class="row marg-btn-20">
+                    <div class="col-md-2 col-sm-2 col-xs-12"><label>Supp. Code</label></div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        @Html.DropDownListFor(m => m.SupplierID, null, "--Supplier--", htmlAttributes: new { @class = "form-control", onchange = "GetSupplier(this);" })
+                        @Html.ValidationMessageFor(model => model.SupplierID, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <div class="createName">
+                            @Html.EditorFor(model => model.SupplierID, new { htmlAttributes = new { @class = "form-control", placeholder = "Supplier Name" } })
+                            @Html.ValidationMessageFor(model => model.SupplierID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-3 col-xs-12"><label>Consignment</label></div>
+                    <div class="col-md-2 col-sm-3 col-xs-12">
+                        @Html.EditorFor(model => model.IsConsignment, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.IsConsignment, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row marg-btn-20">
+                    <div class="col-md-2 col-sm-2 col-xs-12"><label>Allow Zero Value</label></div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        @Html.EditorFor(model => model.IsAllowZero, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.IsAllowZero, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12"><label>Free Gift</label></div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        @Html.EditorFor(model => model.IsFreeGift, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.IsFreeGift, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row marg-btn-20">
+                    <div class="col-md-2 col-sm-2 col-xs-12"><label>Def. Template</label></div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        @Html.DropDownListFor(m => m.MarkDownTemplateID, null, "--MarkDownTemplate--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MarkDownTemplateID, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12"><label>M/D Template</label></div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        @Html.DropDownListFor(m => m.MarkDownTemplateID, null, "--MarkDownTemplate--", htmlAttributes: new { @class = "form-control" })
+
+                        @Html.ValidationMessageFor(model => model.MarkDownTemplateID, "", new { @class = "text-danger" })
+                    </div>
+                    <input data-val="true"
+                    data-val-number="The field StudentId must be a number."
+                    data-val-required="The StudentId field is required."
+                    id="PrimaryImage"
+                    name="PrimaryImage"
+                    type="hidden"
+                    value="@Model.PrimaryImage" />
+                    <input data-val="true"
+                           data-val-number="The field StudentId must be a number."
+                           data-val-required="The StudentId field is required."
+                           id="Image1"
+                           name="Image1"
+                           type="hidden"
+                           value="@Model.Image1" />
+                    <input data-val="true"
+                           data-val-number="The field StudentId must be a number."
+                           data-val-required="The StudentId field is required."
+                           id="Image2"
+                           name="Image2"
+                           type="hidden"
+                           value="@Model.Image2" />
+                    <input data-val="true"
+                           data-val-number="The field StudentId must be a number."
+                           data-val-required="The StudentId field is required."
+                           id="Image3"
+                           name="Image3"
+                           type="hidden"
+                           value="@Model.Image3" />
+                    <input data-val="true"
+                           data-val-number="The field StudentId must be a number."
+                           data-val-required="The StudentId field is required."
+                           id="Image4"
+                           name="Image4"
+                           type="hidden"
+                           value="@Model.Image4" />
+
+                </div>
+                <div class="row marg-btn-20 file-img">
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Primary Image</label>
+                        <div>
+                            @if (Model.PrimaryImage != null)
+                            {
+                                <img id="file" src="/Image/product/@Model.PrimaryImage" class="create-user-image" height="100" width="90" style="border:thin;" margin-left:20px" />
+                            }
+                            else
+                            {
+                                <img id="file" src="/Image/product/no-Image.jpg" class="create-user-image" height="100" width="90" style="border:thin;" />
+                            }
+                        </div>
+                        <input type="file" title="search image" class="image" id="PrimaryImage" name="file1" onchange="show(this)"/>
+                               @Html.ValidationMessageFor(model => model.PrimaryImage, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Image1</label><div>
+                            @if (Model.Image1 != null)
+                            {
+                                <img id="file1" src="/Image/product/@Model.Image1" class="create-user-image1" height="100" width="90" style="border:thin;" />
+                            }
+                            else
+                            {
+                                <img id="file1" src="/Image/product/no-Image.jpg" class="create-user-image1" height="100" width="90" style="border:thin;" />
+                            }
+                        </div>
+                        <input type="file" title="search image" class="image" id="Image1" name="file1" onchange="show1(this)"/>
+                               @Html.ValidationMessageFor(model => model.Image1, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Image2</label><div>
+                            @if (Model.Image2 != null)
+                            {
+                                <img id="file2" src="/Image/product/@Model.Image2" class="create-user-image2" height="100" width="90" style="border:thin;" />
+                            }
+                            else
+                            {
+                                <img id="file2" src="/Image/product/no-Image.jpg" class="create-user-image2" height="100" width="90" style="border:thin;" />
+                            }
+                        </div>
+                        <input type="file" title="search image" class="image" id="Image2" name="file1" onchange="show2(this)"/>
+                               @Html.ValidationMessageFor(model => model.Image2, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Image3</label><div>
+                            @if (Model.Image3 != null)
+                            {
+                                <img id="file3" src="/Image/product/@Model.Image3" class="create-user-image3" height="100" width="90" style="border:thin;" />
+                            }
+                            else
+                            {
+                                <img id="file3" src="/Image/product/no-Image.jpg" class="create-user-image3" height="100" width="90" style="border:thin;" />
+                            }
+                        </div>
+                        <input type="file" title="search image" class="image" id="Image3" name="file1" onchange="show3(this)"/>
+                               @Html.ValidationMessageFor(model => model.Image3, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <label>Image4</label><div>
+                            @if (Model.Image4 != null)
+                            {
+                                <img id="file4" src="/Image/product/@Model.Image4" class="create-user-image4" height="100" width="90" style="border:thin;" />
+                            }
+                            else
+                            {
+                                <img id="file4" src="/Image/product/no-Image.jpg" class="create-user-image4" height="100" width="90" style="border:thin;" />
+                            }
+                        </div>
+                        <input type="file" title="search image" class="image" id="Image1" name="file1" onchange="show4(this)"/>@Html.ValidationMessageFor(model => model.Image4, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel">Cancel</button>
+                    <input type="submit" value="Update" class="btn btn-success popup-savebtn" />
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"></script>
+<script>
+    JsBarcode("#barcode", "@ViewBag.Barcode", {
+
+    width: 2,
+    height: 30,
+    length:100});
+
+    $.validator.unobtrusive.parse($("#editForm"))
+    $(function () {
+
+        var date = new Date();
+        var currentMonth = date.getMonth();
+        var currentDate = date.getDate();
+        var currentYear = date.getFullYear();
+
+        $('#date').datepicker({
+            minDate: new Date(currentYear, currentMonth, currentDate),
+            dateFormat: 'yy/mm/dd'
+        });
+    })
+</script>
+
+

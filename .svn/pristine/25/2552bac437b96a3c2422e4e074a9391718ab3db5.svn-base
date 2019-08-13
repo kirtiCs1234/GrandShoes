@@ -1,0 +1,135 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+
+namespace POSApi.Controllers.Admin
+{
+    [RoutePrefix("api/productSize")]
+    public class ProductSizesController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+
+        // GET: api/ProductSizes
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<ProductSize> GetProductSizes()
+        {
+           var list=db.ProductSizes.ToList();
+            return list;
+        }
+
+        // GET: api/ProductSizes/5
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetail")]
+        [ResponseType(typeof(ProductSize))]
+        public IHttpActionResult GetProductSize(int id)
+        {
+            ProductSize productSize = db.ProductSizes.Find(id);
+            if (productSize == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(productSize);
+        }
+
+        // PUT: api/ProductSizes/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutProductSize(int id, ProductSize productSize)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != productSize.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(productSize).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductSizeExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/ProductSizes
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(ProductSize))]
+        public IHttpActionResult PostProductSize(ProductSize productSize)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.ProductSizes.Add(productSize);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = productSize.Id }, productSize);
+        }
+
+        // DELETE: api/ProductSizes/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("delete")]
+        [ResponseType(typeof(ProductSize))]
+        public IHttpActionResult DeleteProductSize(int id)
+        {
+            ProductSize productSize = db.ProductSizes.Find(id);
+            if (productSize == null)
+            {
+                return NotFound();
+            }
+
+            db.ProductSizes.Remove(productSize);
+            db.SaveChanges();
+
+            return Ok(productSize);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool ProductSizeExists(int id)
+        {
+            return db.ProductSizes.Count(e => e.Id == id) > 0;
+        }
+    }
+}

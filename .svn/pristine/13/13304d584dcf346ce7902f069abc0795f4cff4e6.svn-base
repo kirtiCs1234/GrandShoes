@@ -1,0 +1,212 @@
+﻿@model List<Model.SizeGridModel>
+<div class="prtm-full-block pos-relative">
+    <div class="prtm-block-title pad-all-md">
+        <div class="pos-relative">
+            <div class="caption">
+                <h3 class="text-capitalize">Size Grid</h3>
+            </div>
+        </div>
+    </div>
+    <div class="prtm-block-content mrgn-b-md">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Grid No</th>
+                        <th>Z01</th>
+                        <th>Z02</th>
+                        <th>Z03</th>
+                        <th>Z04</th>
+                        <th>Z05</th>
+                        <th>Z06</th>
+                        <th>Z07</th>
+                        <th>Z08</th>
+                        <th>Z09</th>
+                        <th>Z10</th>
+                        <th>Z11</th>
+                        <th>Z12</th>
+                        <th>Z13</th>
+                        <th>Z14</th>
+                        <th>Z15</th>
+                        <th>Z16</th>
+                        <th>Z17</th>
+                        <th>Z18</th>
+                        <th>Z19</th>
+                        <th>Z20</th>
+                        <th>Z21</th>
+                        <th>Z22</th>
+                        <th>Z23</th>
+                        <th>Z24</th>
+                        <th>Z25</th>
+                        <th>Z26</th>
+                        <th>Z27</th>
+                        <th>Z28</th>
+                        <th>Z29</th>
+                        <th>Z30</th>
+                        <th style="min-width:125px;">Action</th>
+
+                    </tr>
+                </thead>
+                <tbody class="tbodyIndex">
+                    @if (Model.Count!=0){ 
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GridNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z01)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z02)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z03)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z04)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z05)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z06)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z07)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z08)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z09)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z10)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z11)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z12)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z13)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z14)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z15)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z16)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z17)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z18)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z19)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z20)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z21)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z22)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z23)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z24)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z25)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z26)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z27)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z28)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z29)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Z30)
+                            </td>
+
+                            <td style="min-width:85px;">
+
+                                <i class="fa fa-pencil edit-form edit" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="edit(@item.Id)"></i>
+                                &nbsp;
+                                <i class="fa fa-trash delete delete-form" data-toggle="modal" data-target="#myModal" data-backdrop="static" onclick="del(@item.Id)"></i>
+                                &nbsp;
+                                <i class="fa fa-eye view-form details" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="details(@item.Id)"></i>
+
+                            </td>
+                        </tr>
+                        }
+                    }
+                    
+                    else
+                    {
+                    <tr>
+                        <td colspan="7">
+                            <p>No results found.</p>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    @if (ViewBag.endPage > 1)
+    {
+        <div class="pagination">
+
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li>
+                    <a href="/Admin/SizeGrid/_Index1?page=1">First</a>
+                </li>
+                <li>
+                    <a href="/Admin/SizeGrid/_Index1?page=@(ViewBag.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @foreach (var i in ViewBag.result)
+            {
+
+                var page = i;
+
+                <li class="@(page == ViewBag.CurrentPage ? "active" : "")">
+                    <a href="/Admin/SizeGrid/_Index1?page=@page">@page</a>
+                </li>
+
+            }
+            @if (ViewBag.CurrentPage < ViewBag.totalPages)
+            {
+                <li>
+                    <a href="/Admin/SizeGrid/_Index1?page=@(ViewBag.CurrentPage + 1)">Next</a>
+                </li>
+                <li>
+                    <a href="/Admin/SizeGrid/_Index1?page=@(ViewBag.totalPages)">Last</a>
+                </li>
+            }
+
+        </div>
+    }
+</div>

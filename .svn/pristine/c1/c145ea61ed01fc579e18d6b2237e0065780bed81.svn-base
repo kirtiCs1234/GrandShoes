@@ -1,0 +1,40 @@
+﻿using Helper;
+using Model;
+using Newtonsoft.Json;
+using Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.Service
+{
+    public class DiscountService:IDiscountService
+    {
+        public bool Create(DiscountAddModel discountAdd)
+        {
+            bool create = ServerResponse.Invoke<bool>("api/discount/create", JsonConvert.SerializeObject(discountAdd), "POST");
+            return create;
+        }
+        public List<DiscountModel> GetAll()
+        {
+            var DiscountList = ServerResponse.Invoke<List<DiscountModel>>("api/discount/getDetails", "", "GET");
+            var BranchDiscountList = ServerResponse.Invoke<List<BranchDiscountModel>>("api/branchDiscount/getDetails", "", "GET");
+            foreach (var item in DiscountList)
+            {
+                var BranchList = BranchDiscountList.Where(x => x.DiscountID == item.Id);
+
+                List<string> termsList = new List<string>();
+                foreach (var b in BranchList)
+                {
+                    termsList.Add(b.Branch.Name);
+                }
+                item.Branches = termsList.Aggregate((s1, s2) => s1 + "," + s2);
+            }
+
+            return DiscountList;
+        }
+
+    }
+}

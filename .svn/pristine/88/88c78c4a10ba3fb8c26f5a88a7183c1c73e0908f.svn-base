@@ -1,0 +1,112 @@
+﻿@model List<Model.AllProductDetailModel>
+<div class="col-sm-12 col-md-12 col-lg-12">
+
+    <div class="row">
+
+        <div class="forms" style="padding-top:10px 0px 5px 0;">
+            <div class="col-sm-9 col-lg-9 col-md-9 col-xs-12">
+                <div class="table-style">
+                    <div class="pos-relative">
+                        <div class="prtm-block-content mrgn-b-md">
+                            <div class="table-responsive" style="height:270px;">
+                                <table class="table table-bordered sales-order-table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th style="display:none;"></th>
+                                            <th>Product SKU</th>
+                                            <th>Style SKU</th>
+                                            <th>Product Image</th>
+
+                                            <th>Description</th>
+											<th>Barcode</th>
+                                            <th style="min-width:125px;">Action</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="tbodyIndex">
+                                        @if (Model.Count != 0)
+                                        {
+                                            foreach (var item in Model)
+                                            {
+                                                <tr class="bg" onclick="getId(this);">
+                                                    <td style="display:none;">
+                                                        @Html.HiddenFor(modelItem => item.Id)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ProductSKU)
+                                                    </td>
+                                                    <td>
+
+                                                        @Html.DisplayFor(modelItem => item.StyleSKU)
+
+                                                    </td>
+                                                    <td>
+                                                        @if (item.PrimaryImage != null)
+                                                        {
+                                                            <img id="file" src="/Image/product/@item.PrimaryImage" height="50" width="50" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <img id="user_img4" src="/Image/product/no-Image.jpg" class="create-user-image4" height="50" width="50" />
+
+                                                        }
+
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ShortDescription)
+                                                        @Html.DisplayFor(modelItem => item.LongDescription)
+                                                    </td>
+													<td>
+														<div>
+															@*@Html.Raw(item.TemplateHtml)*@
+															@{			if (item.DefaultTemplateId == null)
+																{
+																	item.DefaultTemplateId = 0;
+																}
+															}
+															<button type="button" class="btn btn-primary add-btn add-form"
+																	data-backdrop="static" data-toggle="modal" id="#myModalBarcode"
+																	onclick="ShowBarcode(@item.DefaultTemplateId, @item.Id)" data-target="#myModalBarcode">
+																Show
+															</button>
+														</div>
+													</td>
+
+                                                    <td style="min-width:85px;">
+                                                        <i class="fa fa-pencil edit-form edit" data-toggle="modal" data-backdrop="static" onclick="edit(@item.Id)"></i>
+                                                        &nbsp;
+                                                        <i class="fa fa-trash delete delete-form" data-toggle="modal" data- data-backdrop="static" onclick="del(@item.Id)"></i>
+                                                        &nbsp;
+                                                        <i class="fa fa-eye view-form details" data-toggle="modal" data-backdrop="static"  onclick="details(@item.Id)"></i>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="7">
+                                                    <p>No record found</p>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-3 col-lg-3 col-md-3 col-xs-12 text-center">
+                <img class="prod-img img-responsive" id="show" src="~/Content/assets/img/ladies-tom.jpg" alt="ladies tom" height="500" width="500" />
+
+                <button type="button" class="btn btn-primary add-btn add-form create" id="create-btn" data-keyboard="false" onclick="create()">Add</button>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

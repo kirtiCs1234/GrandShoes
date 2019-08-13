@@ -1,0 +1,163 @@
+﻿@model List<Model.CartonManagementModel>
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+        <div class="prtm-block-title pad-all-md">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">IBT Carton Report</h3>
+                </div>
+            </div>
+        </div>
+        <div class="prtm-block-content mrgn-b-md">
+            <div class="table-responsive">
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>IBT Number</th>
+                            <th>Branch Name</th>
+                            <th>Carton Number</th>
+
+                            <th>Total Items</th>
+                            <th>Pack Date</th>
+                            <th>Pack Slip</th>
+                            <th>Dispatched</th>
+                            <th>Add</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="tbodyIndex">
+                        @if (Model.Count != 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IBTNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Branch.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CartonNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TotalItems)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PackDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DistributionSummaryID)
+                                    </td>
+                                    <td id="tdApproveUser" data-id="@item.Id" class="account-table-btns approved">
+                                        @if (item.IsDispatched == true)
+                                        {
+                                            <Span>Dispatched</Span>
+                                        }
+                                        else
+                                        {
+                                            <Span>Not Dispatched</Span>
+                                        }
+                                    </td>
+                                    <td><i class="fa fa-chevron-down accordian-btn" data-toggle="collapse" onclick="showReceipt(@item.Id)" aria-hidden="true"></i></td>
+                                </tr>
+                                    <tr>
+                                        <td colspan="9">
+                                            <div class="table-responsive accordian-bundling" style="display:none;" id="@item.Id">
+                                                <table class="table table-hover bundle-ppoup-table">
+                                                    <thead>
+                                                        <tr>
+                                                            @*<th>Product SKU</th>
+                                                            <th>Style SKU</th>
+                                                            <th>Z01 </th>
+                                                            <th>Z02</th>
+                                                            <th>Z03</th>
+                                                            <th>Z04</th>
+                                                            <th>Z05</th>
+                                                            <th>Z06</th>
+                                                            <th>Z07</th>
+                                                            <th>Z08</th>
+                                                            <th>Z09</th>
+                                                            <th>Z10</th>
+                                                            <th>Z11</th>
+                                                            <th>Z12</th>
+                                                            <th>Z13</th>
+                                                            <th>Z14</th>
+                                                            <th>Z15</th>
+                                                            <th>Z16</th>
+                                                            <th>Z17</th>
+                                                            <th>Z18</th>
+                                                            <th>Z19</th>
+                                                            <th>Z20</th>
+                                                            <th>Z21</th>
+                                                            <th>Z22</th>
+                                                            <th>Z23</th>
+                                                            <th>Z24</th>
+                                                            <th>Z25</th>
+                                                            <th>Z26</th>
+                                                            <th>Z27</th>
+                                                            <th>Z28</th>
+                                                            <th>Z29</th>
+                                                            <th>Z30</th>*@
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="ReceiptDetail-@item.Id"></tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7">
+                                    <p>No results found.</p>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    @if (ViewBag.endPage > 1)
+    {
+        <div class="pagination">
+
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li>
+                    <a href="/Admin/IBTCartonReport/_Index1?page=1">First</a>
+                </li>
+                <li>
+                    <a href="/Admin/IBTCartonReport/_Index1?page=@(ViewBag.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @foreach (var i in ViewBag.result)
+            {
+
+                var page = i;
+
+                <li class="@(page == ViewBag.CurrentPage ? "active" : "")">
+                    <a href="/Admin/IBTCartonReport/_Index1?page=@page">@page</a>
+                </li>
+
+            }
+            @if (ViewBag.CurrentPage < ViewBag.totalPages)
+            {
+                <li>
+                    <a href="/Admin/IBTCartonReport/_Index1?page=@(ViewBag.CurrentPage + 1)">Next</a>
+                </li>
+                <li>
+                    <a href="/Admin/IBTCartonReport/_Index1?page=@(ViewBag.totalPages)">Last</a>
+                </li>
+            }
+
+        </div>
+    }
+</div>

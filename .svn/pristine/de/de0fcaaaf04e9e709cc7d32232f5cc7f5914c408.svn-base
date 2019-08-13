@@ -1,0 +1,234 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+using Model;
+using POSApi.ExtensionMethod;
+
+namespace POSApi.Controllers.Admin
+{
+    [RoutePrefix("api/receiptOrder")]
+    public class ReceiveOrdersController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+        public ReceiveOrdersController()
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            db.Configuration.ProxyCreationEnabled = false;
+        }
+        // GET: api/ReceiveOrders
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public IHttpActionResult GetReceiveOrders(int? id)
+        {
+            var list= db.ReceiveOrders.Where(x=>x.IsActive==true && x.PurchaseOrderId==id).Include(x=>x.PurchaseOrder).OrderByDescending(x => x.Id).ToList().Select(x=>new ReceiveOrderModel {
+                Id=x.Id,
+                ReceiptNumber=x.ReceiptNumber,
+                PurchaseOrderId=x.PurchaseOrderId,
+                TotalQuantity=x.TotalQuantity,
+                TotalCost=x.TotalCost,
+                TotalVAT=x.TotalVAT,
+                SupplierInvoice=x.SupplierInvoice,
+                ReceiptDate=x.ReceiptDate,
+                IsActive=x.IsActive
+            }).ToList();
+            return Ok(list);
+        }
+        //Search
+        [HttpPost]
+        [Route("search")]
+        public List<ReceiveOrder>Serach(ReceiptSearch search)
+        {
+            var list = db.ReceiveOrders.Where(x => x.IsActive == true).Include(x => x.PurchaseOrder).ToList();
+            if(search.Name !=null )
+            {
+                list.Where(x => x.PurchaseOrder.OrderNumber.ToLower().Equals(search.Name.ToLower()));
+            }
+            return list;
+        }
+
+        [HttpGet]
+        [Route("getAll")]
+        public List<ReceiveOrder> GetAll()
+        {
+            var list = db.ReceiveOrders.Where(x => x.IsActive == true).OrderByDescending(x=>x.Id).Include(x=>x.PurchaseOrder).ToList().RemoveReferences();
+            return list;
+        }
+        // GET: api/ReceiveOrders/5
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getById")]
+        [ResponseType(typeof(ReceiveOrder))]
+        public IHttpActionResult GetReceiveOrder(int id)
+        {
+            ReceiveOrder receiveOrder = db.ReceiveOrders.Find(id);
+            if (receiveOrder == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(receiveOrder);
+        }
+     
+        [Route("receiveOrderStatus")]
+        public IHttpActionResult GetAllPurchaseOrderStatus()
+        {
+            var OrderStatusList = db.PurchaseOrderStatus.Where(s => s.IsActive == true).ToList().Select(m => new Model.ReceiveOrderStatusModel
+            {
+                Id = m.Id,
+                OrderStatus = m.OrderStatus,
+                IsActive = m.IsActive ?? true,
+            }).ToList();
+            return Ok(OrderStatusList);
+        }
+       
+        // PUT: api/ReceiveOrders/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutReceiveOrder(int id, ReceiveOrder receiveOrder)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != receiveOrder.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(receiveOrder).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ReceiveOrderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/ReceiveOrders
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(ReceiveOrder))]
+        public IHttpActionResult PostReceiveOrder(ReceiveOrder receiveOrder)
+        {
+            ReceiveOrder model = new ReceiveOrder();
+            model.PurchaseOrderId = receiveOrder.PurchaseOrderId;
+            model.ReceiptNumber = receiveOrder.ReceiptNumber;
+            DateTime dNow = DateTime.Now;
+            model.ReceiptDate = dNow;
+            model.LogId = 1;
+            model.TotalQuantity = 0;
+            model.TotalCost = 0;
+            model.TotalVAT = 0;
+            model.IsActive = true;
+            db.ReceiveOrders.Add(model);
+            db.SaveChanges();
+            return Ok(true);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("AddReceiptOrder")]
+        [ResponseType(typeof(ReceiveOrder))]
+        public IHttpActionResult PostReceiveOrder(int? ReceiptOrderId)
+        {
+            var ReceiptOrderItemById = db.ReceiptOrderItems.Where(x=>x.ReceiptOrderId==ReceiptOrderId).ToList();
+            int? TotalQuantity = 0;
+            decimal? TotalCost = 0;
+            foreach (var a in ReceiptOrderItemById)
+            {
+                TotalQuantity += a.Quantity01 + a.Quantity02 + a.Quantity03 + a.Quantity04 + a.Quantity05 + a.Quantity06 + a.Quantity07 + a.Quantity08 + a.Quantity09 + a.Quantity10 + a.Quantity11 + a.Quantity12 + a.Quantity13 + a.Quantity14 + a.Quantity15 + a.Quantity16 + a.Quantity17 +
+                    a.Quantity18 + a.Quantity19 + a.Quantity20 + a.Quantity21 + a.Quantity22 + a.Quantity23 + a.Quantity24 + a.Quantity25 + a.Quantity26 + a.Quantity27 + a.Quantity28 + a.Quantity29 + a.Quantity30;
+
+                TotalCost += a.Cost01 + a.Cost02 + a.Cost03 + a.Cost04 + a.Cost05 + a.Cost06 + a.Cost07 + a.Cost08 + a.Cost09 + a.Cost10 + a.Cost11 + a.Cost12 + a.Cost13 + a.Cost14 + a.Cost15 + a.Cost16 + a.Cost17 + a.Cost18 + a.Cost19 + a.Cost20 + a.Cost21 + a.Cost22 + a.Cost23 + a.Cost24 + a.Cost25 + a.Cost26 + a.Cost27 + a.Cost28 + a.Cost29 + a.Cost30; ;
+            }
+            var ReceiptOrderById = db.ReceiveOrders.Where(x => x.Id == ReceiptOrderId).FirstOrDefault();
+            ReceiptOrderById.TotalQuantity = TotalQuantity;
+            ReceiptOrderById.TotalCost = TotalCost;
+            ReceiptOrderById.IsActive = true;
+            
+            db.SaveChanges();
+            return Ok(true);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("EditReceiptOrder")]
+        [ResponseType(typeof(ReceiveOrder))]
+        public IHttpActionResult PostReceiveOrder1(int? Id)
+        {
+            var ReceiptOrderItemById = db.ReceiptOrderItems.Where(x => x.ReceiptOrderId == Id).ToList();
+            int? TotalQuantity = 0;
+            decimal? TotalCost = 0;
+            foreach (var a in ReceiptOrderItemById)
+            {
+                TotalQuantity += a.Quantity01 + a.Quantity02 + a.Quantity03 + a.Quantity04 + a.Quantity05 + a.Quantity06 + a.Quantity07 + a.Quantity08 + a.Quantity09 + a.Quantity10 + a.Quantity11 + a.Quantity12 + a.Quantity13 + a.Quantity14 + a.Quantity15 + a.Quantity16 + a.Quantity17 +
+                    a.Quantity18 + a.Quantity19 + a.Quantity20 + a.Quantity21 + a.Quantity22 + a.Quantity23 + a.Quantity24 + a.Quantity25 + a.Quantity26 + a.Quantity27 + a.Quantity28 + a.Quantity29 + a.Quantity30;
+
+                TotalCost += a.Cost01 + a.Cost02 + a.Cost03 + a.Cost04 + a.Cost05 + a.Cost06 + a.Cost07 + a.Cost08 + a.Cost09 + a.Cost10 + a.Cost11 + a.Cost12 + a.Cost13 + a.Cost14 + a.Cost15 + a.Cost16 + a.Cost17 + a.Cost18 + a.Cost19 + a.Cost20 + a.Cost21 + a.Cost22 + a.Cost23 + a.Cost24 + a.Cost25 + a.Cost26 + a.Cost27 + a.Cost28 + a.Cost29 + a.Cost30; ;
+            }
+            var ReceiptOrderById = db.ReceiveOrders.Where(x => x.Id == Id).FirstOrDefault();
+            ReceiptOrderById.TotalQuantity = TotalQuantity;
+            ReceiptOrderById.TotalCost = TotalCost;
+            ReceiptOrderById.IsActive = true;
+
+            db.SaveChanges();
+            return Ok(true);
+        }
+        // DELETE: api/ReceiveOrders/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("delete")]
+        [ResponseType(typeof(ReceiveOrder))]
+        public IHttpActionResult DeleteReceiveOrder(int id)
+        {
+            ReceiveOrder receiveOrder = new ReceiveOrder();
+            receiveOrder = db.ReceiveOrders.Where(x => x.Id == id).FirstOrDefault();
+            receiveOrder.IsActive = false;
+            receiveOrder.ReceiptOrderItems = db.ReceiptOrderItems.Where(x => x.IsActive == true && x.ReceiptOrderId==id).ToList();
+            foreach(var a in receiveOrder.ReceiptOrderItems)
+            {
+                a.IsActive = false;
+            }
+            db.SaveChanges();
+
+            return Ok(true);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool ReceiveOrderExists(int id)
+        {
+            return db.ReceiveOrders.Count(e => e.Id == id) > 0;
+        }
+    }
+}

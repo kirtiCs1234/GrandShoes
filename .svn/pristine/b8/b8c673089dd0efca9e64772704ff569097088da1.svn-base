@@ -1,0 +1,160 @@
+﻿@model List<Model.PurchaseOrderModel>
+<style>
+div.scrollmenu {
+  
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: #777;
+}
+    </style>
+<div class="prtm-full-block pos-relative scrollmenu">
+    <div class="prtm-block-title pad-all-md">
+        <div class="pos-relative">
+            <div class="caption">
+                <h3 class="text-capitalize">Purchase Order</h3>
+            </div>
+        </div>
+    </div>
+    <div class="prtm-block-content mrgn-b-md">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Order Number</th>
+                        <th>Client Invoice Number</th>
+                        <th>Supplier Name</th>
+                        <th>Buyer Name</th>
+                        <th>Order Date</th>
+                        <th>Expected Delivery Date</th>
+                        <th>First Delivery Date</th>
+                        <th>Order Completion Date</th>
+                        <th>Quantity</th>
+                        <th>Amount</th>
+                        <th>Vat Amount</th>
+                        <th>Purchase Order Status</th>
+                       
+                        <th style="min-width:125px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="tbodyIndex">
+                    @if (Model.Count != 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClientInvoiceNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Supplier.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Buyer.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ExpectedDeliveryDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FirstDeliveryDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderCompletionDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Amount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.VatAmount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PurchaseOrderStatu.OrderStatus)
+                                </td>
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.FromDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ToDate)
+                                </td>*@
+
+                                <td style="min-width:85px;">
+
+                                    <i class="fa fa-pencil edit-form edit" onclick="window.location.href='/Admin/PurchaseOrder/EditPurchaseOrder/@item.Id'"></i>
+                                    &nbsp;
+
+                                </td>
+                            </tr>
+                        }
+
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7">
+                                <p>No record found</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    @if (ViewBag.endPage > 1)
+    {
+        <div class="pagination">
+
+            @if (ViewBag.CurrentPage > 1)
+                {
+                <li>
+                    <a href="/Admin/PurchaseOrder/_Index?page=1">First</a>
+                </li>
+                <li>
+                    <a href="/Admin/PurchaseOrder/_Index?page=@(ViewBag.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @foreach (var i in ViewBag.result)
+                {
+
+                    var page = i;
+
+                <li class="@(page == ViewBag.CurrentPage ? "active" : "")">
+                    <a href="/Admin/PurchaseOrder/_Index?page=@page">@page</a>
+                </li>
+
+            }
+            @if (ViewBag.CurrentPage < ViewBag.totalPages)
+                {
+                <li>
+                    <a href="/Admin/PurchaseOrder/_Index?page=@(ViewBag.CurrentPage + 1)">Next</a>
+                </li>
+                <li>
+                    <a href="/Admin/PurchaseOrder/_Index?page=@(ViewBag.totalPages)">Last</a>
+                </li>
+            }
+
+        </div>
+    }
+</div>
+
+

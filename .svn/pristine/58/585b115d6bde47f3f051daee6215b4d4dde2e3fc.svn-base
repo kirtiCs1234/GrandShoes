@@ -1,0 +1,95 @@
+﻿using Model;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+
+namespace POS.Areas.Admin.Controllers
+{
+    public class SupplierController : BaseController
+    {
+        // GET: Admin/Supplier
+        public ActionResult Index()
+        {
+            List<SupplierModel> SuppplierModelList = Services.SupplierService.GetAll();
+            return View(SuppplierModelList);
+        }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SupplierModel SupplierModelById = Services.SupplierService.GetById(id);
+            return View(SupplierModelById);
+        }
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(SupplierModel supplier)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+                // user.IsActive = true;
+                SupplierModel SupplierCreate = Services.SupplierService.Create(supplier);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Supplier");
+            }
+            return View(supplier);
+
+        }
+        public ActionResult Edit(int? id)
+
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SupplierModel SupplierModelById = Services.SupplierService.GetById(id);
+            return View(SupplierModelById);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(SupplierModel supplier)
+        {
+            if (ModelState.IsValid)
+            {
+                SupplierModel SupplierEdit = Services.SupplierService.Edit(supplier);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Supplier");
+            }
+            return View(supplier);
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SupplierModel SupplierModelById = Services.SupplierService.GetById(id);
+
+            if (SupplierModelById == null)
+            {
+                return HttpNotFound();
+            }
+            return View(SupplierModelById);
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(SupplierModel supplier)
+        {
+            if (supplier.Id > 0)
+            {
+                SupplierModel SupplierDelete = Services.SupplierService.Delete(supplier);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Supplier");
+            }
+            return View(supplier);
+        }
+    }
+}

@@ -1,0 +1,98 @@
+﻿using Model;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+
+namespace POS.Areas.Admin.Controllers
+{
+    public class ProductSourceController : BaseController
+    {
+        // GET: Admin/ProductSource
+        public ActionResult Index()
+        {
+            List<ProductSourceModel> ProductSourceModelList = Services.ProductSourceService.GetAll();
+
+            return View(ProductSourceModelList);
+        }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            ProductSourceModel ProductSourceModelById = Services.ProductSourceService.GetById(id);
+            return View(ProductSourceModelById);
+        }
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(ProductSourceModel productSource)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+                ProductSourceModel ProductSourceCreate = Services.ProductSourceService.Create(productSource);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "ProductSource");
+            }
+            return View(productSource);
+
+        }
+        public ActionResult Edit(int? id)
+
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            ProductSourceModel ProductSourceModelById = Services.ProductSourceService.GetById(id);
+            return View(ProductSourceModelById);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(ProductSourceModel productSource)
+        {
+            if (ModelState.IsValid)
+            {
+
+                ProductSourceModel ProductSourceEdit = Services.ProductSourceService.Edit(productSource);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "ProductSource");
+            }
+            return View(productSource);
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ProductSourceModel ProductSourceModelById = Services.ProductSourceService.GetById(id);
+
+            if (ProductSourceModelById == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ProductSourceModelById);
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(ProductSourceModel productSource)
+        {
+            if (productSource.Id > 0)
+            {
+                ProductSourceModel ProductSourceDelete = Services.ProductSourceService.Delete(productSource);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "ProductSource");
+            }
+            return View(productSource);
+        }
+    }
+}

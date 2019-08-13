@@ -1,0 +1,182 @@
+﻿@model Model.BranchModel
+@{
+    ViewBag.Title = "Create";
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Add Branch</h4>
+        </div>
+        @using (Html.BeginForm("Create", "Branch", FormMethod.Post, new { id = "createForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @*@Html.HiddenFor(m => m.Id)*@
+
+        <div class="modal-body">
+
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Branch Code</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.BranchCode, new { htmlAttributes = new { @class = "form-control", placeholder = "Branch Code" } })
+                    @Html.ValidationMessageFor(model => model.BranchCode, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Branch Name</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Name" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Telephone</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control", placeholder = "Telephone" } })
+                    @Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Manager</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.DropDownListFor(m => m.ManagerId, null, "--User--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ManagerId, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Date Open</label>
+                  
+                    @Html.EditorFor(model => model.DateOpen, new { htmlAttributes = new { @Id= "DateOpen", @class = "form-control date-pick", placeholder = "Date Open" ,type ="text", autocomplete = "off"} })
+                    @Html.ValidationMessageFor(model => model.DateOpen, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Date Closed</label>
+               
+                    @Html.EditorFor(model => model.DateClosed, new { htmlAttributes = new { @Id= "DateClosed", @class = "form-control date-pick", placeholder = "Date Closed" , type = "text", autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.DateClosed, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Address Line 1</label>
+            
+                    @Html.EditorFor(model => model.AddressLine1, new { htmlAttributes = new { @class = "form-control", placeholder = "Address Line 1" } })
+                    @Html.ValidationMessageFor(model => model.AddressLine1, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Address Line 2</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.AddressLine2, new { htmlAttributes = new { @class = "form-control", placeholder = "Address Line 2" } })
+                    @Html.ValidationMessageFor(model => model.AddressLine2, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Address Line 3</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.AddressLine3, new { htmlAttributes = new { @class = "form-control", placeholder = "Address Line 3" } })
+                    @Html.ValidationMessageFor(model => model.AddressLine3, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Postal Code</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control", placeholder = "Postal Code" } })
+                    @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Area Code</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.AreaCode, new { htmlAttributes = new { @class = "form-control", placeholder = "Area Code" } })
+                    @Html.ValidationMessageFor(model => model.AreaCode, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Is Send Stock</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.IsSendStock, new { htmlAttributes = new { @class = "form-control", placeholder = "IsSendStock" } })
+                    @Html.ValidationMessageFor(model => model.IsSendStock, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Is Closed</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.IsClosed, new { htmlAttributes = new { @class = "form-control", placeholder = "IsClosed" } })
+                    @Html.ValidationMessageFor(model => model.IsClosed, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Is Head Office</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.IsHeadOffice, new { htmlAttributes = new { @class = "form-control", placeholder = "IsHeadOffice" } })
+                    @Html.ValidationMessageFor(model => model.IsHeadOffice, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <label>Store Size</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.StoreSize, new { htmlAttributes = new { @class = "form-control", placeholder = "StoreSize" } })
+                    @Html.ValidationMessageFor(model => model.StoreSize, "", new { @class = "text-danger" })
+
+                </div>
+                </div>
+                <input data-val="true"
+                       data-val-number="The field StudentId must be a number."
+                       data-val-required="The StudentId field is required."
+                       id="IsActive"
+                       name="IsActive"
+                       type="hidden"
+                       value="true" />
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel">Cancel</button>
+                <input type="submit" value="Add" class="btn btn-success popup-savebtn" />
+            </div>
+            }
+        </div>
+        </div>
+        <script>
+            $.validator.unobtrusive.parse($("#createForm"))
+            $(document).ready(function () {
+                var date = new Date();
+                var currentMonth = date.getMonth();
+                var currentDate = date.getDate();
+                var currentYear = date.getFullYear();
+
+                $('#DateOpen').datepicker({
+                    minDate: new Date(currentYear, currentMonth, currentDate),
+                    dateFormat: 'yy/mm/dd'
+                });
+            });
+
+            $(document).ready(function () {
+                var date = new Date();
+                var currentMonth = date.getMonth();
+                var currentDate = date.getDate();
+                var currentYear = date.getFullYear();
+
+                $('#DateClosed').datepicker({
+                    minDate: new Date(currentYear, currentMonth, currentDate),
+                    dateFormat: 'yy/mm/dd'
+                });
+            });
+          </script>

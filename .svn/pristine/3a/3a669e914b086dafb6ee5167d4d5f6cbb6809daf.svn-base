@@ -1,0 +1,163 @@
+﻿
+@model List<Model.PurchaseOrderModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    // var list = ViewBag.Data as IPagedList<Model.AreaModel>;
+}
+
+<div class="row">
+    <div class="prtm-page-bar col-md-5 col-lg-3 col-sm-12 col-12" style="background:none;">
+        <ul class="breadcrumb" style="background:none;">
+            <li class="breadcrumb-item text-capitalize">
+                <h3>Purchase Order</h3>
+            </li>
+            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        </ul>
+    </div>
+    @*@using (Html.BeginForm("Index", "User") new { @class = "formuser" })*@
+    @*@using (Html.BeginForm("Index", "User", FormMethod.Post, new { @class = "formuser" }))
+        {*@
+    <!--------advanced search-->
+    <div class="col-md-8 col-lg-6 col-sm-8 col-12 search-container">
+        <div class="top-search-navbar-search smallsearch col-md-12 col-lg-12 col-sm-12 col-12">
+            <div class="row">
+
+                <input class="top-search-navbar-input col-md-8 col-lg-10 col-sm-8 col-xs-8 searchiFirstName" type="text" placeholder="Search Order No" Id="OrderNumber" name="iFirstName">
+
+                @*<input type="submit" value="Add" class="btn btn-success popup-savebtn" />*@
+
+                <button class="advance-search col-md-2 col-lg-1 col-sm-2 col-xs-2" type="button">
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </button>
+
+                <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-xs-2" onclick="searchData()">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        <div class="advance-search-container col-md-12 col-lg-12 col-sm-12 col-12">
+            <div class="advance-content">
+                <div class="col-md-12 col-lg-12 col-xg-12"><h5 style="margin-bottom:20px;color:#000;font-weight:normal">Advanced Keyword Search</h5></div>
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <label>Order Number</label>
+                    <input class="form-control searchCode" type="text" placeholder="Order Number" name="OrderNumber" id="OrderNumber" />
+                </div>
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <label>Supplier Name</label>
+                    <input class="form-control searchName" type="text" placeholder="Supplier Name" name="SupplierName" id="SupplierName" />
+                </div>
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <label>Buyer Name</label>
+                    <input class="form-control searchMobileNo" type="text" placeholder="Buyer Name" name="Buyer Name" id="BuyerName" />
+                </div>
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <label>Order Date</label>
+                    <input class="form-control searchPostalCode" type="date" placeholder="Order Date" name="Order Date" id="OrderDate" />
+                </div>
+
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <label>Status</label>
+                    <select class="selectize-single-select searchIsActive" name="IsActive" id="IsActive">
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+                    </select>
+                </div>
+
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <button type="button" onclick="searchData(true)" class="btn btn-success advance-search-btn">Search</button>
+                </div>
+            </div>
+        </div>
+    
+
+    </div>
+    <!------------------>
+    @*}*@
+    <div class="add-btn-div col-md-4 col-lg-3 col-sm-4 col-12 text-right">
+        <button type="button" class="btn btn-primary import-btn">Import</button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary export-btn">Export</button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary add-btn add-form create" data-backdrop="static" data-keyboard="false" onclick="window.location.href='/Admin/PurchaseOrder/CreatePurchaseOrder'">Add</button>
+</div>
+</div>
+<div class="table-style">
+    @if (TempData["Success"] != null)
+    {
+        <p class="alert alert-success" id="successMessage" style="width: 300px;height: 25px;color: #fff;text-align: center; padding-bottom: 2em;">
+            @TempData["Success"]
+        </p>
+    }
+    <script>
+        setTimeout(function () {
+            $('#successMessage').fadeOut('slow');
+        }, 5000);
+    </script>
+    <div class="dvUserDetails">
+        @{
+
+            Html.RenderPartial("_Index", Model);
+        }
+
+    </div>
+
+</div>
+
+@section scripts{
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+
+    <script type="text/javascript">
+        function searchData() {
+            debugger;
+            var obj = {};
+
+            obj.OrderNumber = $('#OrderNumber').val();
+            obj.SupplierName = $('#SupplierName').val();
+            obj.BuyerName = $('#BuyerName').val();
+            obj.OrderDate = $('#OrderDate').val();
+            obj.IsActive = true;
+
+            $.ajax({
+                url: '/Admin/PurchaseOrder/_Index',
+                type: 'POST',
+                data: obj,
+                success: function (result) {
+                    $('.dvUserDetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+            return false;
+        }
+
+ $(document).on("click", "a[href^='/Admin/PurchaseOrder/_Index?page']", function () {
+
+            debugger
+            var obj = {};
+            obj.OrderNumber= $('#OrderNumber').val();
+            obj.SupplierName = $('#SupplierName').val();
+            obj.BuyerName = $('#BuyerName').val();
+            obj.OrderDate = $('#OrderDate').val();
+            obj.IsActive = true;
+
+            $.ajax({
+                type: "POST",
+                url: $(this).attr("href"),
+
+                data: obj,
+                success: function (result) {
+                    $('.dvUserDetails').html(result);
+                    //  alert('hdfjdhfj');
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+            return false;
+ });
+    </script>
+}

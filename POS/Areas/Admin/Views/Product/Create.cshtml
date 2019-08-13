@@ -1,0 +1,260 @@
+﻿@model Model.ProductModel
+@{
+    Layout = null;
+    var seList = ViewData["dropDownData"] as Dictionary<string, SelectList>;
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div class="row marg-btn-20">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+        @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { id = "createForm", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="forms">
+                <div class="col-sm-12">
+                    <div class="row marg-btn-20">
+                        <div class="col-md-2 col-sm-3 col-xs-12"><label>Product/ Style</label></div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+                            @Html.EditorFor(model => model.ProductSKU, new { htmlAttributes = new {@Id="SKU", @class = "form-control", placeholder = "Product SKU",onchange="GenerateStyleSKU()" } })
+                            @Html.ValidationMessageFor(model => model.ProductSKU, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+                            @Html.EditorFor(model => model.StyleSKU, new { htmlAttributes = new { @Id="Style",@class = "form-control", placeholder = "Style SKU",onchange="ProductValidation()"} })
+                            @Html.ValidationMessageFor(model => model.StyleSKU, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row marg-btn-20">
+                        <div class="col-md-2 col-sm-2 col-xs-12"><label>Created On</label></div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control date-picker",
+                           placeholder = "Created On",
+                           @autocomplete = "off",@Value=Model.CreatedOn,
+                           @id="date" } })
+                            @Html.ValidationMessageFor(model => model.CreatedOn, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">Last M/Down</div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            @Html.EditorFor(model => model.UpdatedOn, new { htmlAttributes = new
+                       {
+                           @class = "form-control",
+                           placeholder = "Last M/Down", @readonly = "readonly"
+                       } })
+                            @Html.ValidationMessageFor(model => model.UpdatedOn, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-1 col-sm-2 col-xs-12">M/D Seq</div>
+                        <div class="col-md-3 col-sm-2 col-xs-12"><input class="form-control" type="text" disabled /></div>
+                    </div>
+                    <div class="row marg-btn-20">
+                        <div class="col-md-2 col-sm-2 col-xs-12"><label>Season</label></div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            @Html.DropDownListFor(m => m.SeasonID, seList["SeasonID"], "-Description-", htmlAttributes: new { @class = "form-control"
+                       })
+                            @Html.ValidationMessageFor(model => model.SeasonID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">Buyer</div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            @Html.DropDownListFor(m => m.BuyerID, seList["BuyerID"], "-Buyer-", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.BuyerID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-1 col-sm-2 col-xs-12">Sup. Style</div>
+                        <div class="col-md-3 col-sm-2 col-xs-12">
+                            @Html.EditorFor(model => model.SupplierStyle, new { htmlAttributes = new { @class = "form-control", placeholder = "Supplier Style", @onchange = "ValidationCheck()" } })
+                            @Html.ValidationMessageFor(model => model.SupplierStyle, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row marg-btn-20">
+                        <div class="col-md-2 col-sm-2 col-xs-12"><label>Description</label></div>
+                        <div class="col-md-10 col-sm-10 col-xs-12">
+                            @Html.EditorFor(model => model.LongDescription, new { htmlAttributes = new { @class = "form-control", placeholder = "Description" } })
+                            @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row marg-btn-20">
+                        <div class="col-md-2 col-sm-2 col-xs-12"><label>Label Desc</label></div>
+                        <div class="col-md-4 col-sm-3 col-xs-12">
+                            @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control", placeholder = "Label Description" } })
+                            @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-1 col-sm-2 col-xs-12"><label>Size Grid</label></div>
+                        <div class="col-md-1 col-sm-1 col-xs-12">
+                            @Html.DropDownListFor(m => m.SizeGridID, seList["SizeGridID"], "-SizeGridNo-", htmlAttributes: new { @class = "form-control", onchange = "GetSizeGrid(this)" })
+                            @Html.ValidationMessageFor(model => model.SizeGridID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="">
+                                @Html.EditorFor(model => model.AvailableSize, new { htmlAttributes = new { @class = "form-control size-grid-temp", @id = "AvailableSize", @multiple = "multiple", placeholder = "" } })
+                                @Html.ValidationMessageFor(model => model.AvailableSize, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row marg-btn-20">
+                        <div class="col-md-2 col-sm-2 col-xs-12"><label>Prod. Cat.</label></div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            @Html.DropDownListFor(m => m.ProdCat1ID, seList["ProdCat1ID"], "--Prod Cat1--", htmlAttributes: new { @class = "form-control" ,onchange= "GetCategory(this)" })
+                            @Html.ValidationMessageFor(model => model.ProdCat1ID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            @Html.DropDownListFor(m => m.ProdCat2ID, seList["ProdCat2ID"], "--Prod Cat2--", htmlAttributes: new { @class = "form-control", onchange = "GetCategory(this)" })
+                            @Html.ValidationMessageFor(model => model.ProdCat2ID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            @Html.DropDownListFor(m => m.ProdCat3ID, seList["ProdCat3ID"], "--Prod Cat3--", htmlAttributes: new { @class = "form-control", onchange = "GetCategory(this)" })
+                            @Html.ValidationMessageFor(model => model.ProductCategoryID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            @Html.DropDownListFor(m => m.ProdCat4ID, seList["ProdCat4ID"], "--Prod Cat4--", htmlAttributes: new { @class = "form-control", onchange = "GetCategory(this)" })
+                            @Html.ValidationMessageFor(model => model.ProdCat4ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row marg-btn-20">
+                        <div class="col-md-2 col-sm-3 col-xs-12"><label>Recommended Selling Price</label></div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+                            @Html.EditorFor(model => model.RecommendedSellingPrice, new { htmlAttributes = new { @class = "form-control", placeholder = "Recommended Selling Price" } })
+                            @Html.ValidationMessageFor(model => model.RecommendedSellingPrice, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 col-sm-3 col-xs-12"><label>Cost Price</label></div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+                            @Html.EditorFor(model => model.CostPrice, new { htmlAttributes = new { @class = "form-control", placehoder = "Cost Price" } })
+                            @Html.ValidationMessageFor(model => model.CostPrice, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-1 col-sm-3 col-xs-12" style="padding-right:0px;"><label>Actual Selling Price</label></div>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            @Html.EditorFor(model => model.ActualSellingPrice, new { htmlAttributes = new { @class = "form-control", placeholder = "Actual Selling Price" } })
+                            @Html.ValidationMessageFor(model => model.ActualSellingPrice, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row marg-btn-20">
+						<div class="col-md-2 col-sm-3 col-xs-12"><label>International Cost</label></div>
+						<div class="col-md-2 col-sm-3 col-xs-12">
+							@Html.EditorFor(model => model.CostPriceUSD, new { htmlAttributes = new { @class = "form-control", placeholder = "International Cost" } })
+							@Html.ValidationMessageFor(model => model.CostPriceUSD, "", new { @class = "text-danger" })
+						</div>
+                        <div class="col-md-2 col-sm-3 col-xs-12"><label>VPI</label></div>
+                        <div class="col-md-2 col-sm-1 col-xs-12">
+                            @Html.EditorFor(model => model.IsVPI, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.IsVPI, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-1 col-sm-3 col-xs-12"><label>Color</label></div>
+                        <div class="col-md-2 col-sm-1 col-xs-12">
+                            @Html.DropDownListFor(m => m.ColorID, seList["ColorID"], "--Color--", htmlAttributes: new { @class = "form-control",@onchange= "ValidationCheck()" })
+                            @Html.ValidationMessageFor(model => model.ColorID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row marg-btn-20">
+                        <div class="col-md-2 col-sm-2 col-xs-12"><label>Supp. Code</label></div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            @Html.DropDownListFor(m => m.SupplierID, seList["SupplierID"], "--Supplier--", htmlAttributes: new { @class = "form-control",
+                           onchange = "GetSupplier(this);"
+                       })
+                            @Html.ValidationMessageFor(model => model.SupplierID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <div class="createName">
+                                @Html.EditorFor(model => model.SupplierName, new { htmlAttributes = new { @class = "form-control", placeholder = "Supplier Name" } })
+                                @Html.ValidationMessageFor(model => model.SupplierName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-3 col-xs-12"><label>Product Source</label></div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+							@Html.DropDownListFor(m => m.ProductSourceID, seList["ProductSourceID"], "-Product Source-", htmlAttributes: new
+                       {
+                           @class = "form-control"
+                       })
+                            @Html.ValidationMessageFor(model => model.ProductSourceID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row marg-btn-20">
+                        <div class="col-md-2 col-sm-2 col-xs-12"><label>Allow Zero Product</label></div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <select name="IsAllowZero" id="IsAllowZero" class="form-control" onchange="DisableFreeGift()">
+                                <option value="false">False</option>
+                                <option value="true">True</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12"><label>Free Gift</label></div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            @Html.DropDownListFor(m => m.IsFreeGift, seList["IsFreeGift"], "--FreeGift--", htmlAttributes: new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.IsFreeGift, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row marg-btn-20">
+                        <div class="col-md-2 col-sm-2 col-xs-12"><label>Def. Template</label></div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            @Html.DropDownListFor(m => m.DefaultTemplateID, seList["DefaultTemplateID"], "--DefaultTemplate--", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DefaultTemplateID, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12"><label>M/D Template</label></div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            @Html.DropDownListFor(m => m.MarkDownTemplateID, seList["MarkDownTemplateID"], "--MarkDownTemplate--", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MarkDownTemplateID, "", new { @class = "text-danger" })
+                        </div>
+                        <input data-val="true"
+                               data-val-number="The field StudentId must be a number."
+                               data-val-required="The StudentId field is required."
+                               id="IsActive"
+                               name="IsActive"
+                               type="hidden"
+                               value="true" />
+                    </div>
+                    <div class="row marg-btn-20 file-img">
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <label>Primary Image</label><div>
+                                <img id="user_img" src="/Image/product/no-Image.jpg" class="create-user-image"  style="border:thin;margin-left:20px" />
+                            </div>
+                            @Html.TextBoxFor(m => m.PrimaryImage, new { @class = "form-control", type = "file",onchange = "show(this)" })
+                            @Html.ValidationMessageFor(model => model.PrimaryImage, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <label>Image1</label><div>
+                                <img id="user_img1" src="/Image/product/no-Image.jpg" class="create-user-image1" style="border:thin;" />
+                            </div>
+                            @Html.TextBoxFor(m => m.Image1, new { @class = "form-control", type = "file", onchange = "show1(this)" })
+
+                            @*<input type="file" title="search image" class="image" id="Image1" name="file1" onchange="show1(this)" />*@
+                            @Html.ValidationMessageFor(model => model.Image1, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <label>Image2</label><div>
+                                <img id="user_img2" src="/Image/product/no-Image.jpg" class="create-user-image2" style="border:thin;" />
+                            </div>
+                            @Html.TextBoxFor(m => m.Image2, new { @class = "form-control", type = "file", onchange = "show2(this)" })
+                            @Html.ValidationMessageFor(model => model.Image2, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <label>Image3</label>
+                            <div>
+                                <img id="user_img3" src="/Image/product/no-Image.jpg" class="create-user-image3" style="border:thin;" />
+                            </div>
+                            @Html.TextBoxFor(m => m.Image3, new { @class = "form-control", type = "file", onchange = "show3(this)" })
+                            @Html.ValidationMessageFor(model => model.Image3, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12">
+                            <label>Image4</label><div>
+                                <img id="user_img4" src="/Image/product/no-Image.jpg" class="create-user-image4" style="border:thin;" />
+                            </div>
+                            @Html.TextBoxFor(m => m.Image4, new { @class = "form-control", type = "file",onchange = "show4(this)" })
+                            @Html.ValidationMessageFor(model => model.Image4, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-inverse cancel" onclick="RefreshField()">Cancel</button>
+                        <input type="submit" value="Add" class="btn btn-success popup-savebtn" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<style>
+    .ui-widget-content.ui-autocomplete {
+        z-index: 9999 !important;
+    }
+</style>
+<script type="text/javascript">
+    $( document ).ready(function() {
+   $.validator.unobtrusive.parse($("#createForm"))
+});
+      window.onload = function () {
+    $.validator.unobtrusive.parse($("#createForm"))
+    }
+</script>

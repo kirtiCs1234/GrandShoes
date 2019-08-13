@@ -1,0 +1,152 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+
+namespace POSApi.Controllers
+{
+    [RoutePrefix("api/supplier")]
+    public class SuppliersController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+
+        // GET: api/Suppliers
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public IEnumerable<Supplier> GetSuppliers([FromUri] Model.SupplierPagingModel supplierPagingModel)
+        {
+            var data= db.Suppliers.Where(x=>x.IsActive==true).ToList();
+            int count = data.Count();
+            int CurrentPage = supplierPagingModel.Pager.StartPage;
+            int PageSize = supplierPagingModel.Pager.PageSize;
+            int TotalCount = count;
+            // Calculating Totalpage by Dividing (No of Records / Pagesize)  
+            int TotalPages = (int)Math.Ceiling(count / (double)PageSize);
+
+            // Returns List of Customer after applying Paging   
+            var items = data.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+
+            // if CurrentPage is greater than 1 means it has previousPage  
+            var previousPage = CurrentPage > 1 ? "Yes" : "No";
+
+            // if TotalPages is greater than CurrentPage means it has nextPage  
+            var nextPage = CurrentPage < TotalPages ? "Yes" : "No";
+
+
+            return items;
+        }
+
+        // GET: api/Suppliers/5
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetail")]
+        [ResponseType(typeof(Supplier))]
+        public IHttpActionResult GetSupplier(int id)
+        {
+            Supplier supplier = db.Suppliers.Find(id);
+            if (supplier == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(supplier);
+        }
+       // PUT: api/Suppliers/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutSupplier(int id, Supplier supplier)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != supplier.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(supplier).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SupplierExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/Suppliers
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(Supplier))]
+        public IHttpActionResult PostSupplier(Supplier supplier)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Suppliers.Add(supplier);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = supplier.Id }, supplier);
+        }
+
+        // DELETE: api/Suppliers/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("delete")]
+        [ResponseType(typeof(Supplier))]
+        public IHttpActionResult DeleteSupplier(int id)
+        {
+            Supplier supplier = db.Suppliers.Find(id);
+            if (supplier == null)
+            {
+                return NotFound();
+            }
+            supplier.IsActive = false;
+            //db.Suppliers.Remove(supplier);
+            db.SaveChanges();
+
+            return Ok(supplier);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool SupplierExists(int id)
+        {
+            return db.Suppliers.Count(e => e.Id == id) > 0;
+        }
+
+    }
+}

@@ -1,0 +1,762 @@
+﻿using Helper;
+using Model;
+using OfficeOpenXml;
+using PagedList;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+
+namespace POS.Areas.Admin.Controllers
+{
+    [CustomAuth]
+    public class ProductController : BaseController
+    {
+        // GET: Admin/Product
+       
+        public ActionResult Index()
+        {
+            var AllProductDetailModelList = Services.ProductService.GetAllProduct();
+
+
+            return View(AllProductDetailModelList);
+        }
+        public ActionResult _Index(ProdSearch prodSearch)
+        {
+
+            List<ProductStyleModel> ProductStyleModelList = Services.ProductStyleService.GetAll();
+            ViewBag.ProductStyleId = new SelectList(ProductStyleModelList, "Id", "StyleSKU");
+
+            var productModelList = Services.ProductService.SearchProduct(prodSearch);
+            return View(productModelList);
+        }
+        public ActionResult _Index1()
+        {
+            var ProductList = Services.ProductService.GetFreeGiftList();
+            return View(ProductList);
+        }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<BuyerModel> BuyerModelList = Services.BuyerService.GetAll();
+            ViewBag.BuyerID = new SelectList(BuyerModelList, "Id", "Name");
+            List<SupplierModel> SupplierModelName = Services.SupplierService.GetSupplierName(0);
+            ViewBag.SupplierID = new SelectList(SupplierModelName, "Id", "Name");
+            List<ColorModel> ColorModelList = Services.ColorService.GetAll();
+            List<TemplateModel> TemplateModelList = Services.TemplateService.GetAll();
+            List<SupplierModel> SupplierModelList = Services.SupplierService.GetAll();
+            List<SizeGridModel> SizeGridModelList = Services.SizeGridService.GetAll();
+            // sizeGridModel.Z01 = SizeGridModelList.FirstOrDefault(x => x.Id == 1).Z01;
+            List<ProductCategoryModel> ProductCategoryModelList = Services.ProductCategoryService.GetAll();
+            List<ProductGroupModel> ProductGroupModelList = Services.ProductGroupService.GetAll();
+            List<ProductSourceModel> ProductSourceModel = Services.ProductSourceService.GetAll();
+            List<SeasonModel> SeasonModelList = Services.SeasonService.GetAll();
+            List<ProductStyleModel> ProductStyleModelList = Services.ProductStyleService.GetAll();
+
+            ViewBag.ProductStyleId = new SelectList(ProductStyleModelList, "Id", "StyleSKU");
+
+            ViewBag.SeasonID = new SelectList(SeasonModelList, "Id", "Description");
+            ViewBag.SizeGridID = new SelectList(SizeGridModelList, "Id", "GridNumber");
+            ViewBag.ProductCategoryID = new SelectList(ProductCategoryModelList, "Id", "Code");
+            ViewBag.ProductGroupID = new SelectList(ProductGroupModelList, "Id", "GroupName");
+            ViewBag.ProductSourceID = new SelectList(ProductSourceModel, "Id", "Source");
+            ViewBag.SupplierID = new SelectList(SupplierModelList, "Id", "Code");
+
+            ViewBag.ColorID = new SelectList(ColorModelList, "Id", "Code");
+            ViewBag.MarkDownTemplateID = new SelectList(TemplateModelList, "Id", "Name");
+            ProductModel ProductModelById = Services.ProductService.GetById(id);
+            var productSku = ProductModelById.ProductSKU;
+            var markDown = Services.MarkDownService.GetAll();
+          //  var markDownPrev = markDown.Where(x => x.ProductSKU == productSku).Count();
+          //  TempData["Number"] = markDownPrev;
+           // var EffectiveDateLast = markDown.Where(x => x.ProductSKU == productSku).LastOrDefault();
+            //if (EffectiveDateLast == null)
+            //{
+            //    TempData["Date"] = "NONE";
+            //}
+            //else
+            //{
+            //    TempData["Date"] = EffectiveDateLast.EffectiveDate;
+            //}
+            ViewBag.PrimaryImage = ProductModelById.PrimaryImage;
+            ViewBag.Barcode = ProductModelById.Barcode;
+
+            return View(ProductModelById);
+        }
+
+        public ActionResult Create()
+        {
+            ProductModel productModel = new ProductModel();
+            List<ProductModel> freeGiftList = Services.ProductService.GetFreeGift();
+            List<ColorModel> ColorModelList = Services.ColorService.GetAll();
+            List<TemplateModel> TemplateModelList = Services.TemplateService.GetAll();
+            List<SupplierModel> SupplierModelList = Services.SupplierService.GetAll();
+            List<SizeGridModel> SizeGridModelList = Services.SizeGridService.GetAll();
+
+            List<ProductCategoryModel> ProductCategoryModelList = Services.ProductCategoryService.GetAll();
+            List<ProductGroupModel> ProductGroupModelList = Services.ProductGroupService.GetAll();
+            List<ProductSourceModel> ProductSourceModelList = Services.ProductSourceService.GetAll();
+            List<BuyerModel> BuyerModelList = Services.BuyerService.GetAll();
+            List<SeasonModel> SeasonModelList = Services.SeasonService.GetAll();
+            List<ProductStyleModel> ProductStyleModelList = Services.ProductStyleService.GetAll();
+            ViewBag.ProductStyleId = new SelectList(ProductStyleModelList, "Id", "StyleSKU");
+            ViewBag.IsFreeGift = new SelectList(freeGiftList, "Id", "ProductSKU");
+            ViewBag.SeasonID = new SelectList(SeasonModelList, "Id", "Description");
+            //sizeGridModel.Z01 = SizeGridModelList.FirstOrDefault(x => x.Id == 1).Z01;
+            ViewBag.BuyerID = new SelectList(BuyerModelList, "Id", "Name");
+            ViewBag.SizeGridID = new SelectList(SizeGridModelList, "Id", "GridNumber");
+            ViewBag.ProductCategoryID = new SelectList(ProductCategoryModelList, "Id", "Code");
+            ViewBag.ProductGroupID = new SelectList(ProductGroupModelList, "Id", "GroupName");
+            ViewBag.ProductSourceID = new SelectList(ProductSourceModelList, "Id", "Source");
+            ViewBag.SupplierID = new SelectList(SupplierModelList, "Id", "Code");
+            // ViewBag.SupplierID = new SelectList(SupplierModelList, "Id", "Name");
+            ViewBag.ColorID = new SelectList(ColorModelList, "Id", "Code");
+            ViewBag.MarkDownTemplateID = new SelectList(TemplateModelList, "Id", "Name");
+
+            return PartialView();
+        }
+        [HttpPost]
+        public ActionResult Create(ProductModel product, HttpPostedFileBase PrimaryImage, HttpPostedFileBase Image1, HttpPostedFileBase Image2, HttpPostedFileBase Image3, HttpPostedFileBase Image4)
+        {
+            List<ColorModel> ColorModelList = Services.ColorService.GetAll();
+            List<ProductStyleModel> ProductStyleModelList = Services.ProductStyleService.GetAll();
+            var colorCode = ColorModelList.Where(x => x.Id == product.ColorID).FirstOrDefault().Code;
+
+            var style = ProductStyleModelList.Where(x => x.StyleSKU == product.AutocompleteProductStyleSKU).FirstOrDefault().StyleSKU;
+            var styleId = ProductStyleModelList.Where(x => x.StyleSKU == product.AutocompleteProductStyleSKU).FirstOrDefault().Id;
+            product.ProductStyleId = styleId;
+            var sku = product.ProductSKU;
+            product.Barcode = style + sku + colorCode;
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+                if (PrimaryImage != null || Image1 != null || Image2 != null || Image3 != null || Image4 != null)
+                {
+                    var allowedExtensions = new[] { ".jfif", ".Jpg", ".png", ".jpg", "jpeg" };
+                    if (PrimaryImage != null)
+                    {
+                        product.PrimaryImage = PrimaryImage.ToString();
+                        var fileName = Path.GetFileName(PrimaryImage.FileName);
+                        var ext = Path.GetExtension(PrimaryImage.FileName);
+                        if (allowedExtensions.Contains(ext))
+                        {
+                            string name1 = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
+                            string myfile1 = name1 + "_" + product.Id + ext; //appending the name with id  
+                                                                             // store the file inside ~/project folder(Img) 
+                            var path = Path.Combine(Server.MapPath("~/Image/product"), myfile1);
+
+                            var path1 = myfile1;
+                            product.PrimaryImage = path1;
+
+                            PrimaryImage.SaveAs(path);
+                        }
+                    }
+
+                    if (Image1 != null)
+                    {
+                        product.Image1 = Image1.ToString();
+                        var fileName1 = Path.GetFileName(Image1.FileName);
+
+                        var ext1 = Path.GetExtension(Image1.FileName);
+                        if (allowedExtensions.Contains(ext1))
+                        {
+                            string name2 = Path.GetFileNameWithoutExtension(fileName1); //getting file name without extension  
+                            string myfile2 = name2 + "_" + product.Id + ext1; //appending the name with id                                                                               // store the file inside ~/project folder(Img) 
+                            var path = Path.Combine(Server.MapPath("~/Image/product"), myfile2);
+                            var path2 = myfile2;
+                            product.Image1 = path2;
+
+                            Image1.SaveAs(path);
+                        }
+                    }
+                    if (Image2 != null)
+                    {
+                        product.Image2 = Image2.ToString();
+                        var fileName2 = Path.GetFileName(Image2.FileName);
+                        var ext2 = Path.GetExtension(Image2.FileName);
+                        if (allowedExtensions.Contains(ext2))
+                        {
+                            string name3 = Path.GetFileNameWithoutExtension(fileName2); //getting file name without extension  
+                            string myfile3 = name3 + "_" + product.Id + ext2; //appending the name with id                                                                              // store the file inside ~/project folder(Img) 
+                            var path = Path.Combine(Server.MapPath("~/Image/product"), myfile3);
+                            var path3 = myfile3;
+                            product.Image2 = path3;
+
+                            Image2.SaveAs(path);
+                        }
+                    }
+                    if (Image3 != null)
+                    {
+                        product.Image3 = Image3.ToString();
+                        var fileName3 = Path.GetFileName(Image3.FileName);
+                        var ext3 = Path.GetExtension(Image3.FileName);
+
+                        if (allowedExtensions.Contains(ext3))
+                        {
+                            string name4 = Path.GetFileNameWithoutExtension(fileName3); //getting file name without extension  
+                            string myfile4 = name4 + "_" + product.Id + ext3; //appending the name with id  
+                                                                              // store the file inside ~/project folder(Img) 
+                            var path = Path.Combine(Server.MapPath("~/Image/product"), myfile4);
+
+                            var path4 = myfile4;
+                            product.Image3 = path4;
+
+                            Image3.SaveAs(path);
+                        }
+                    }
+                    if (Image4 != null)
+                    {
+                        product.Image4 = Image4.ToString();
+                        var fileName4 = Path.GetFileName(Image4.FileName);
+                        var ext4 = Path.GetExtension(Image4.FileName);
+
+                        if (allowedExtensions.Contains(ext4))
+                        {
+                            string name5 = Path.GetFileNameWithoutExtension(fileName4); //getting file name without extension  
+                            string myfile5 = name5 + "_" + product.Id + ext4; //appending the name with id  
+                                                                              // store the file inside ~/project folder(Img) 
+                            var path = Path.Combine(Server.MapPath("~/Image/product"), myfile5);
+
+                            var path5 = myfile5;
+                            product.Image4 = path5;
+
+                            Image4.SaveAs(path);
+                        }
+                    }
+                }
+              
+                product.IsActive = true;
+
+                var ProductCreate = Services.ProductService.Create(product);
+                TempData["Success"] = "Data Saved Successfully!";
+                return RedirectToAction("Index", "Product");
+
+            }
+            else
+            {
+                var errors1 = ModelState.Select(x => x.Value.Errors)
+                                       .Where(y => y.Count > 0)
+                                       .ToList();
+            }
+            return View(product);
+        }
+        public ActionResult ExcelUpload()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ExcelUpload(ProductModel product, HttpPostedFileBase file)
+        {
+
+            if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+            {                                   
+                string fileName = file.FileName;
+                string fileContentType = file.ContentType;
+                byte[] fileBytes = new byte[file.ContentLength];
+                var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                //  bool usersList = new BranchModel();
+                using (var package = new ExcelPackage(file.InputStream))
+               {
+                   var currentSheet = package.Workbook.Worksheets;
+                    var workSheet = currentSheet.First();
+                    var noOfCol = workSheet.Dimension.End.Column;
+                    var noOfRow = workSheet.Dimension.End.Row;
+                   
+                    for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                    {
+
+
+                    //try
+                    //{
+                    //var supplier = new SupplierModel();
+                            product.ProductSKU =workSheet.GetCellValue(rowIterator,1);
+                        var sku = product.ProductSKU;
+                            var StyleSKU = workSheet.GetCellValue(rowIterator, 2);
+                            product.ProductStyleId =Services.ProductStyleService.GetStyleSKUId(StyleSKU).Id;
+                            product.LongDescription = workSheet.GetCellValue(rowIterator,3);
+                            product.ShortDescription= workSheet.GetCellValue(rowIterator, 4);
+                            var SizeGridNo =workSheet.GetCellValue(rowIterator, 5);
+                            product.SizeGridID = Services.SizeGridService.GetSizeGridId(SizeGridNo).Id;
+                            product.RecommendedSellingPrice= Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 6));
+                            product.ActualSellingPrice = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 7));
+                            product.IsVPI = workSheet.GetCellValue(rowIterator, 8).Equals("1")?true:false;
+                            product.IsMarkDown =workSheet.GetCellValue(rowIterator, 9).Equals("1")?true:false;
+                        var SeasonCode = workSheet.GetCellValue(rowIterator, 10);
+                        product.SeasonID = Services.SeasonService.GetSeasonId(SeasonCode).Id;
+                        var year = workSheet.GetCellValue(rowIterator, 11);
+                        product.YearID = Services.ProductService.GetYearId(year).Id;
+                        var CatagoryCode = workSheet.GetCellValue(rowIterator, 12);
+                        product.ProductCategoryID = Services.ProductCategoryService.GetCatogoryCodeId(CatagoryCode).Id;
+                        var productGroup = workSheet.GetCellValue(rowIterator, 13);
+                        product.ProductGroupID = Services.ProductGroupService.GetProductGroupId(productGroup).Id;
+                        var productSource = workSheet.GetCellValue(rowIterator, 14);
+                        product.ProductSourceID = Services.ProductSourceService.GetProductSourceId(productSource).Id;
+                        product.SupplierStyle = workSheet.GetCellValue(rowIterator, 15);
+                        var supplier = workSheet.GetCellValue(rowIterator, 16);
+                        product.SupplierID = Services.SupplierService.GetSupplierId(supplier).Id;
+                        var buyer = workSheet.GetCellValue(rowIterator, 17);
+                        product.BuyerID = Services.BuyerService.GetBuyerId(buyer).Id;
+                        product.CostPriceUSD = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 18));
+                        product.CostPrice = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 19));
+                        product.IsAllowZero = workSheet.GetCellValue(rowIterator, 20).Equals("1") ? true : false;
+                        var template = workSheet.GetCellValue(rowIterator, 21);
+                        product.DefaultTemplateID = Services.TemplateService.GetTemplateId(template).Id;
+                        var markDown = workSheet.GetCellValue(rowIterator, 22);
+                        product.MarkDownTemplateID = Services.TemplateService.GetTemplateId(template).Id;
+
+                        product.IsFreeGift = workSheet.GetCellValue(rowIterator, 23);
+                        product.IsConsignment = workSheet.GetCellValue(rowIterator, 24).Equals("1") ? true : false;
+
+                        product.IsDiscontinue = workSheet.GetCellValue(rowIterator, 25).Equals("1")?true:false;
+
+                        product.CreatedOn = Convert.ToDateTime(workSheet.GetCellValue(rowIterator, 26));
+                        product.UpdatedOn = Convert.ToDateTime(workSheet.GetCellValue(rowIterator, 27));
+                        var color = workSheet.GetCellValue(rowIterator, 28);
+                        product.ColorID = Services.ColorService.GetColorId(color).Id;
+
+                        product.Barcode = StyleSKU+sku+color;
+                           // var markDown = workSheet.Cells[rowIterator, 22].Value.ToString();
+                            // product.MarkDownTemplateID = Services.MarkDownBranchService.GetMarkDownId(markDown).Id;
+                              //product.PrimaryImage= workSheet.Cells[rowIterator, 30].Value.ToString();
+                            //product.Image1 = workSheet.Cells[rowIterator, 31].Value.ToString();
+                            //product.Image2 = workSheet.Cells[rowIterator, 32].Value.ToString();
+                            //product.Image3 = workSheet.Cells[rowIterator, 33].Value.ToString();
+                            //product.Image4 = workSheet.Cells[rowIterator, 34].Value.ToString();
+                            product.IsActive = true;
+                      
+                        string chk = workSheet.Cells[rowIterator, 1].Value.ToString();
+                        bool isexists = Services.ProductService.CheckProductSKU(chk);
+                       if (!isexists)
+                        {
+                            bool usersList = Services.ProductService.Create(product);
+                        }
+                        else
+                        {
+
+                        }
+
+                     //   usersList = Services.SupplierService.Create(supplier);
+                    }
+                    TempData["Success"] = "File uploaded successfully!";
+                    return RedirectToAction("Index", "Product");
+
+                }
+            }
+            return View(product);
+        }
+
+        public ActionResult ExportList()
+        {
+            var data = Services.BranchService.GetAll();
+            ExcelPackage excel = new ExcelPackage();
+            var workSheet = excel.Workbook.Worksheets.Add("Sheet1");
+            workSheet.Cells[1, 2].LoadFromCollection(data, true);
+            using (var memoryStream = new MemoryStream())
+            {
+                Response.ContentType = "application/vnd.ms-excel";
+                Response.AddHeader("content-disposition", "attachment;  filename=ProductExport.xlsx");
+                excel.SaveAs(memoryStream);
+                memoryStream.WriteTo(Response.OutputStream);
+                Response.Flush();
+                //Response.End();
+            }
+            return View();
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+           var ProductModelById = Services.ProductService.GetById(id);
+            if (ProductModelById == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ProductModelById);
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(ProductModel product)
+        {
+            if (product.Id > 0)
+            {
+               var ProductDelete = Services.ProductService.Delete(product);
+                TempData["Success"] = "Data Deleted Successfully!";
+                return RedirectToAction("Index", "Product");
+            }
+            return View(product);
+        }
+        public ActionResult Edit(int? id)
+
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            List<ColorModel> ColorModelList = Services.ColorService.GetAll();
+            List<TemplateModel> TemplateModelList = Services.TemplateService.GetAll();
+            List<SupplierModel> SupplierModelList = Services.SupplierService.GetAll();
+            List<SizeGridModel> SizeGridModelList = Services.SizeGridService.GetAll();
+            List<ProductCategoryModel> ProductCategoryModelList = Services.ProductCategoryService.GetAll();
+            List<ProductGroupModel> ProductGroupModelList = Services.ProductGroupService.GetAll();
+            List<ProductSourceModel> ProductSourceModel = Services.ProductSourceService.GetAll();
+            List<SeasonModel> SeasonModelList = Services.SeasonService.GetAll();
+            List<BuyerModel> BuyerModelList = Services.BuyerService.GetAll();
+            List<ProductStyleModel> ProductStyleModelList = Services.ProductStyleService.GetAll();
+            ViewBag.ProductStyleId = new SelectList(ProductStyleModelList, "Id", "StyleSKU");
+
+            ViewBag.BuyerID = new SelectList(BuyerModelList, "Id", "Name");
+            ViewBag.SeasonID = new SelectList(SeasonModelList, "Id", "Description");
+            ViewBag.SizeGridID = new SelectList(SizeGridModelList, "Id", "GridNumber");
+            // sizeGridModel.Z01 = SizeGridModelList.FirstOrDefault(x => x.Id == 1).Z01;
+            ViewBag.ProductCategoryID = new SelectList(ProductCategoryModelList, "Id", "Code");
+            ViewBag.ProductGroupID = new SelectList(ProductGroupModelList, "Id", "GroupName");
+            ViewBag.ProductSourceID = new SelectList(ProductSourceModel, "Id", "Source");
+            ViewBag.SupplierID = new SelectList(SupplierModelList, "Id", "Code");
+            //ViewBag.SupplierID = new SelectList(SupplierModelList, "Id", "Name");
+            //  List<SupplierModel> SupplierModelName = Services.SupplierService.GetSupplierName(0);
+            //  ViewBag.SupplierID = new SelectList(SupplierModelName, "Id", "Name");
+            ViewBag.ColorID = new SelectList(ColorModelList, "Id", "Code");
+            ViewBag.MarkDownTemplateID = new SelectList(TemplateModelList, "Id", "Name");
+            ProductModel ProductModelById = Services.ProductService.GetById(id);
+            var productSku = ProductModelById.ProductSKU;
+            var markDown = Services.MarkDownService.GetAll();
+            //var markDownPrev = markDown.Where(x => x.ProductSKU == productSku).Count();
+            //TempData["Number"] = markDownPrev;
+            //var EffectiveDateLast = markDown.Where(x => x.ProductSKU == productSku).LastOrDefault();
+            //if (EffectiveDateLast == null)
+            //{
+            //    TempData["Date"] = "NONE";
+            //}
+            //else
+            //{
+            //    TempData["Date"] = EffectiveDateLast.EffectiveDate;
+            //}
+            ViewBag.PrimaryImage = ProductModelById.PrimaryImage;
+            ViewBag.Barcode = ProductModelById.Barcode;
+            return View(ProductModelById);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(ProductModel product, HttpPostedFileBase PrimaryImage, HttpPostedFileBase Image1, HttpPostedFileBase Image2, HttpPostedFileBase Image3, HttpPostedFileBase Image4)
+        {
+            product.IsActive = true;
+            if (!ModelState.IsValid)
+            {
+                if (PrimaryImage != null || Image1 != null || Image2 != null || Image3 != null || Image4 != null)
+                {
+                    var allowedExtensions = new[] { ".jfif", ".Jpg", ".png", ".jpg", "jpeg",".PNG" };
+                    if (PrimaryImage != null)
+                    {
+                        product.PrimaryImage = PrimaryImage.ToString();
+                        var fileName = Path.GetFileName(PrimaryImage.FileName);
+                        var ext = Path.GetExtension(PrimaryImage.FileName);
+                        if (allowedExtensions.Contains(ext))
+                        {
+                            string name1 = Path.GetFileNameWithoutExtension(fileName); //getting file name without extension  
+                            string myfile1 = name1 + "_" + product.Id + ext; //appending the name with id  
+                                                                             // store the file inside ~/project folder(Img) 
+                            var path = Path.Combine(Server.MapPath("~/Image/product"), myfile1);
+
+                            var path1 = myfile1;
+                            product.PrimaryImage = path1;
+
+                            PrimaryImage.SaveAs(path);
+                        }
+                    }
+
+                    if (Image1 != null)
+                    {
+                        product.Image1 = Image1.ToString();
+                        var fileName1 = Path.GetFileName(Image1.FileName);
+
+                        var ext1 = Path.GetExtension(Image1.FileName);
+                        if (allowedExtensions.Contains(ext1))
+                        {
+                            string name2 = Path.GetFileNameWithoutExtension(fileName1); //getting file name without extension  
+                            string myfile2 = name2 + "_" + product.Id + ext1; //appending the name with id                                                                               // store the file inside ~/project folder(Img) 
+                            var path = Path.Combine(Server.MapPath("~/Image/product"), myfile2);
+                            var path2 = myfile2;
+                            product.Image1 = path2;
+
+                            Image1.SaveAs(path);
+                        }
+                    }
+                    if (Image2 != null)
+                    {
+                        product.Image2 = Image2.ToString();
+                        var fileName2 = Path.GetFileName(Image2.FileName);
+                        var ext2 = Path.GetExtension(Image2.FileName);
+                        if (allowedExtensions.Contains(ext2))
+                        {
+                            string name3 = Path.GetFileNameWithoutExtension(fileName2); //getting file name without extension  
+                            string myfile3 = name3 + "_" + product.Id + ext2; //appending the name with id                                                                              // store the file inside ~/project folder(Img) 
+                            var path = Path.Combine(Server.MapPath("~/Image/product"), myfile3);
+                            var path3 = myfile3;
+                            product.Image2 = path3;
+
+                            Image2.SaveAs(path);
+                        }
+                    }
+                    if (Image3 != null)
+                    {
+                        product.Image3 = Image3.ToString();
+                        var fileName3 = Path.GetFileName(Image3.FileName);
+                        var ext3 = Path.GetExtension(Image3.FileName);
+
+                        if (allowedExtensions.Contains(ext3))
+                        {
+                            string name4 = Path.GetFileNameWithoutExtension(fileName3); //getting file name without extension  
+                            string myfile4 = name4 + "_" + product.Id + ext3; //appending the name with id  
+                                                                              // store the file inside ~/project folder(Img) 
+                            var path = Path.Combine(Server.MapPath("~/Image/product"), myfile4);
+
+                            var path4 = myfile4;
+                            product.Image3 = path4;
+
+                            Image3.SaveAs(path);
+                        }
+                    }
+                    if (Image4 != null)
+                    {
+                        product.Image4 = Image4.ToString();
+                        var fileName4 = Path.GetFileName(Image4.FileName);
+                        var ext4 = Path.GetExtension(Image4.FileName);
+
+                        if (allowedExtensions.Contains(ext4))
+                        {
+                            string name5 = Path.GetFileNameWithoutExtension(fileName4); //getting file name without extension  
+                            string myfile5 = name5 + "_" + product.Id + ext4; //appending the name with id  
+                                                                              // store the file inside ~/project folder(Img) 
+                            var path = Path.Combine(Server.MapPath("~/Image/product"), myfile5);
+
+                            var path5 = myfile5;
+                            product.Image4 = path5;
+
+                            Image4.SaveAs(path);
+                        }
+                    }
+                }
+                List<ColorModel> ColorModelList = Services.ColorService.GetAll();
+                List<TemplateModel> TemplateModelList = Services.TemplateService.GetAll();
+                List<SupplierModel> SupplierModelList = Services.SupplierService.GetAll();
+                List<SizeGridModel> SizeGridModelList = Services.SizeGridService.GetAll();
+                List<ProductCategoryModel> ProductCategoryModelList = Services.ProductCategoryService.GetAll();
+                List<ProductGroupModel> ProductGroupModelList = Services.ProductGroupService.GetAll();
+                List<ProductSourceModel> ProductSourceModel = Services.ProductSourceService.GetAll();
+                List<SeasonModel> SeasonModelList = Services.SeasonService.GetAll();
+                List<BuyerModel> BuyerModelList = Services.BuyerService.GetAll();
+                ViewBag.BuyerID = new SelectList(BuyerModelList, "Id", "Name");
+                ViewBag.SeasonID = new SelectList(SeasonModelList, "Id", "Description");
+                ViewBag.SizeGridID = new SelectList(SizeGridModelList, "Id", "GridNumber");
+                ViewBag.SizeGridID = new SelectList(SizeGridModelList, "Id", "");
+
+                ViewBag.ProductCategoryID = new SelectList(ProductCategoryModelList, "Id", "Code");
+                ViewBag.ProductGroupID = new SelectList(ProductGroupModelList, "Id", "GroupName");
+                ViewBag.ProductSourceID = new SelectList(ProductSourceModel, "Id", "Source");
+                ViewBag.SupplierID = new SelectList(SupplierModelList, "Id", "Code");
+                // List<SupplierModel> SupplierModelName = Services.SupplierService.GetSupplierName(0);
+                // ViewBag.SupplierID = new SelectList(SupplierModelName, "Id", "Name");
+                ViewBag.ColorID = new SelectList(ColorModelList, "Id", "Code");
+                ViewBag.MarkDownTemplateID = new SelectList(TemplateModelList, "Id", "Name");
+
+                bool ProductEdit = Services.ProductService.Edit(product);
+                TempData["Success"] = "Data Saved Successfully!";
+                return RedirectToAction("Index", "Product");
+
+            }
+            else
+            {
+                var errors1 = ModelState.Select(x => x.Value.Errors)
+                                       .Where(y => y.Count > 0)
+                                       .ToList();
+            }
+            return View(product);
+        }
+        public ActionResult getSeasonDescription(int? id)
+        {
+            // ProductModel ProductModelById = Services.ProductService.GetById(id);
+            List<SeasonModel> SeasonModelDescription = Services.SeasonService.GetSeasonDescription(id);
+            ViewBag.SeasonID = new SelectList(SeasonModelDescription, "Id", "Description");
+            return View();
+        }
+
+        public ActionResult getSupplierName(int? id)
+        {
+            ProductModel ProductModelById = Services.ProductService.GetById(id);
+            List<SupplierModel> SupplierModelName = Services.SupplierService.GetSupplierName(id);
+            ViewBag.SupplierID = new SelectList(SupplierModelName, "Id", "Name");
+            return View();
+        }
+        [HttpGet]
+        public JsonResult AutoCompleteStyleSKUList(string name)
+        {
+            var ColorLists = Services.ProductStyleService.ProductStyleAutocomplete(name);
+            return Json(ColorLists, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult AutoCompleteProductSKUList(string name)
+        {
+            var ProductSKUList = Services.ProductService.ProductAutocomplete(name);
+            return Json(ProductSKUList, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult CheckProductSKU(ProductModel model)
+        {
+            var iExist = Services.ProductService.CheckProductSKU(model);
+            return Json(!iExist, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult getGridSize(int? id)
+        {
+            //ProductModel ProductModelById = Services.ProductService.GetById(id);
+            SizeGridModel SizeGridModelById = Services.SizeGridService.GetById(id);
+            List<string> namelist = new List<string>();
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z01.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z01.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z02.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z02.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z03.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z03.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z04.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z04.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z05.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z05.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z06.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z06.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z07.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z07.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z08.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z08.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z09.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z09.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z10.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z10.ToString());
+
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z11.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z11.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z12.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z12.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z13.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z13.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z14.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z14.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z15.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z15.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z16.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z16.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z17.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z17.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z18.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z18.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z19.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z19.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z20.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z20.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z21.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z21.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z22.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z22.ToString());
+
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z23.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z23.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z24.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z24.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z25.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z25.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z26.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z26.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z27.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z27.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z28.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z28.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z29.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z29.ToString());
+            }
+            if (!string.IsNullOrEmpty(SizeGridModelById.Z30.ToString()))
+            {
+                namelist.Add(SizeGridModelById.Z30.ToString());
+            }
+            return Json(namelist, JsonRequestBehavior.AllowGet);
+
+        }
+        [HttpGet]
+        public JsonResult AutoCompleteColorList(string name)
+        {
+            var ColorLists = Services.ColorService.ColoeAutocomplete(name);
+            return Json(ColorLists, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult AutocompleteSupplierCode(string name)
+        {
+            return Json(JsonRequestBehavior.AllowGet);
+        }
+
+    }
+}

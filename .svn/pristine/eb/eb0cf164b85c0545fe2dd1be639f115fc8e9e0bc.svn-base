@@ -1,0 +1,89 @@
+﻿@model Model.StockEnquiryModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+        <div class="prtm-block-title pad-all-md ">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">Stock Enquiry</h3>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.DropDownListFor(m => m.ProductId, null, "--Product SKU--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                   
+                    @Html.DropDownListFor(m => m.ProductStyleId, null, "--Product Styles--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    
+                    @Html.DropDownListFor(m => m.ColorID, null, "--Product Colors--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-4 col-xs-12 col-sm-2">
+                   
+                    @Html.DropDownListFor(m => m.BranchId, null, "--Branch--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.BranchId, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <button type="button" class="btn btn-primary export-btn" onclick="searchData()">Search</button>
+                </div>
+            </div>
+            </div>
+        </div>
+            <div class="row marg-btn-20">
+
+                <div class="dvUserDetails">
+
+                </div>
+            </div>
+        </div>
+        @section scripts{
+
+            <script type="text/javascript">
+                $('#BranchId').append($('<option>', {
+                    value: 0,
+                    text: 'Warehouse'
+                }));
+                function searchData() {
+                    debugger;
+                    var obj = {};
+                    var crud = "";
+                    obj.ProductId = $('#ProductId').val();
+                    obj.ProductStyleId = $('#ProductStyleId').val();
+                    obj.ColorID = $('#ColorID').val();
+                    obj.BranchId = $('#BranchId').val();
+                    if (obj.BranchId == 0) {
+                        crud = '/Admin/StockEnquiry/StockData';
+
+                    }
+                    else {
+                        crud = '/Admin/StockEnquiry/GetData';
+                    }
+                    $.ajax({
+                        url: crud,
+                        type: 'POST',
+                        data: obj,
+                        success: function (result) {
+                            // alert('ssss');
+                            $('.dvUserDetails').html(result);
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+
+                    });
+                    return false;
+                }
+            </script>
+        }
+

@@ -1,0 +1,131 @@
+﻿using DAL;
+using Model;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+
+namespace POSApi.Controllers
+{
+    [RoutePrefix("api/StoreDeliveryReport")]
+    public class StoreDeliveryReportController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+        public StoreDeliveryReportController()
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            db.Configuration.ProxyCreationEnabled = false;
+        }
+        //Searching
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("getSearchData")]
+        public ServiceResult<List<StockDistribution>> GetSearchData(Model.StockDistributionSearch order)
+        {
+            var pageSize = 10;
+
+            ServiceResult<List<StockDistribution>> model = new ServiceResult<List<StockDistribution>>();
+            var source = db.StockDistributions.Where(x => x.IsActive == true).Include(x => x.Branch).Include(x=>x.Product).Include(x=>x.StockDistributionStatu).Include(x=>x.StockDistributionSummary);
+            if (order!= null)
+            {
+                if (!string.IsNullOrEmpty(order.ProductSKU))
+                {
+                    source = source.Where(m => m.Product.ProductSKU.Contains(order.ProductSKU));
+                }
+                if (order.BranchId>0)
+                    source = source.Where(m => m.BranchId==order.BranchId);
+                //  var items = source.OrderBy(m => m.Id).Skip((areaSearch.Page ?? 1 - 1) * pageSize).Take(pageSize).ToList();
+                if (order.FromDate != null && order.ToDateS!= null)
+                {
+                    source = db.StockDistributions.Where(entry => entry.DistributionDate >=order.FromDate
+                  && entry.DistributionDate <= order.ToDateS);
+                }
+            }
+            int count = source.Count();
+            var items = source.OrderByDescending(m => m.Id).Skip(((order.Page ?? 1) - 1) * pageSize)
+                        .Take(pageSize).ToList();
+            model.data = items.Select(x => new StockDistribution
+            {
+                Id = x.Id,
+
+                BranchId = x.BranchId,
+                Branch = db.Branches.Where(m => m.IsActive == true && m.Id == x.BranchId).FirstOrDefault(),
+                Product = db.Products.Where(m => m.IsActive == true && m.Id == x.ProductId).FirstOrDefault(),
+                Quantity01 = x.Quantity01,
+                Quantity02 = x.Quantity02,
+                Quantity03 = x.Quantity03,
+                Quantity04 = x.Quantity04,
+                Quantity05 = x.Quantity05,
+                Quantity06 = x.Quantity06,
+                Quantity07 = x.Quantity07,
+                Quantity08 = x.Quantity08,
+                Quantity09 = x.Quantity09,
+                Quantity10 = x.Quantity10,
+                Quantity11 = x.Quantity11,
+                Quantity12 = x.Quantity12,
+                Quantity13 = x.Quantity13,
+                Quantity14 = x.Quantity14,
+                Quantity15 = x.Quantity15,
+                Quantity16 = x.Quantity16,
+                Quantity17 = x.Quantity17,
+                Quantity18 = x.Quantity18,
+                Quantity19 = x.Quantity19,
+                Quantity20 = x.Quantity20,
+                Quantity21 = x.Quantity21,
+                Quantity22 = x.Quantity22,
+                Quantity23 = x.Quantity23,
+                Quantity24 = x.Quantity24,
+                Quantity25 = x.Quantity25,
+                Quantity26 = x.Quantity26,
+                Quantity27 = x.Quantity27,
+                Quantity28 = x.Quantity28,
+                Quantity29 = x.Quantity29,
+                Quantity30 = x.Quantity30,
+                DistributionDate = x.DistributionDate,
+                StockDistributionStatusId = x.StockDistributionStatusId,
+               IsActive=true,
+             StockDistributionStatu=db.StockDistributionStatus.Where(m=>m.IsActive==true && m.Id==x.StockDistributionStatusId).FirstOrDefault(),
+                StockDistributionSummaryId = x.StockDistributionSummaryId,
+                StockDistributionSummary =db.StockDistributionSummaries.Where(m=>m.IsActive==true && m.Id==x.StockDistributionSummaryId).FirstOrDefault(),
+           
+             Log=x.Log,
+             LogId=x.LogId,
+             InvoiceId=x.InvoiceId,
+              
+            }).ToList();
+            model.TotalCount = count;
+            return model;
+        }
+        //Pagging
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getPaging")]
+        public ServiceResult<List<StockDistribution>> GetPaging([FromUri]Paging paging)
+        {
+            ServiceResult<List<StockDistribution>> model = new ServiceResult<List<StockDistribution>>();
+            var source = db.StockDistributions
+                        .Include(x => x.Branch).AsNoTracking()
+                        .Include(x => x.Product).AsNoTracking()                      
+                        .Where(x => x.IsActive == true)
+                        .ToList();
+            int count = source.Count();
+            // Parameter is passed from Query string if it is null then it default Value will be pageNumber:1  
+            int CurrentPage = paging.pageNumber;
+            // Parameter is passed from Query string if it is null then it default Value will be pageSize:20  
+            int PageSize = paging.pageSize;
+            // Display TotalCount to Records to User  
+            int TotalCount = count;
+            // Calculating Totalpage by Dividing (No of Records / Pagesize)  
+            int TotalPages = (int)Math.Ceiling(count / (double)PageSize);
+            // Returns List of Customer after applying Paging   
+            var items = source.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+            model.TotalCount = count;
+            model.data = items;
+            model.pageSize = PageSize;
+            return model;
+        }
+    }
+}

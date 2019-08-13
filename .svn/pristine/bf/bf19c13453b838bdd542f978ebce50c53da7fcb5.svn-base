@@ -1,0 +1,49 @@
+﻿@model Model.UserResetPassword
+@{
+    Layout = null;
+
+}
+
+<h2>ResetPassword</h2>
+@using (Html.BeginForm("ResetPassword", "User", FormMethod.Post, new { id = "createForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="prtm-full-block pos-relative">
+        <div class="col-sm-12 col-md-12 col-12">
+            <div class="prtm-block">
+
+                <div class="row  mrgn-b-lg">
+                    <div class="col-md-6 col-12 col-sm-12">
+                        <label>New Password</label>
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", type = "Password", placeholder = "Password" } })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6 col-12 col-sm-12">
+                        <label>Confirm Password</label>
+                        @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", type = "Password", placeholder = "Confirm Password" } })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-12 text-right">
+
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-inverse">Cancel</button>
+                    <button type="submit" class="btn btn-success popup-savebtn">Reset Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+}
+
+<script type="text/javascript">
+
+    $.validator.unobtrusive.parse($("#createForm"));
+
+</script>

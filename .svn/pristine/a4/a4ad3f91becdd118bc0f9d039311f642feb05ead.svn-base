@@ -1,0 +1,340 @@
+﻿
+using DAL;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Helper
+{
+    public class CommonFunction
+    {
+        private static GrandShoesEntities db = new GrandShoesEntities();
+       
+        public static int LogMethods(Object obj, string action, int UserId)
+        {
+            var name = obj.GetType().Name;//"";
+            var b = obj.GetType();
+            var a = b.GenericTypeArguments;
+            //var c = a.Count;
+            var pages = db.Pages.Where(x => x.page1.ToLower().Equals(name.ToLower())).FirstOrDefault();
+            Log log = new Log();
+            if (action.Equals("Insert"))
+            {
+                var act = db.ActionLogs.Where(x => x.ActionLogType.ToLower().Equals(action.ToLower())).FirstOrDefault();
+                log.ActionLogId = act.Id;
+                log.UserId = UserId;
+                //log.Comment = Comment;
+                log.LogDate = DateTime.Now;
+                log.IsActive = true;
+                log.PageId = pages.Id;
+                log = db.Logs.Add(log);
+               // try
+              //  {
+                    db.SaveChanges();
+              //  }
+              //  catch (Exception ex) { }
+                return log.Id;
+            }
+            if (action.Equals("Update"))
+            {
+                var act = db.ActionLogs.Where(x => x.ActionLogType.ToLower().Equals(action.ToLower())).FirstOrDefault();
+                log.ActionLogId = act.Id;
+                log.UserId = UserId;
+                //log.Comment = Comment;
+                log.LogDate = DateTime.Now;
+                log.IsActive = true;
+                log.PageId = pages.Id;
+                log = db.Logs.Add(log);
+               // try
+               // {
+                    db.SaveChanges();
+               // }
+               // catch (Exception ex) { }
+                return log.Id;
+                // var body = JsonConvert.SerializeObject(log);
+                // var log2 = ServerResponse.Invoke<Log>("api/log/edit?id=" + log.Id, body, "POST");
+            }
+
+            if (action.Equals("Print"))
+            {
+                var act = db.ActionLogs.Where(x => x.ActionLogType.ToLower().Equals(action.ToLower())).FirstOrDefault();
+                log.ActionLogId = act.Id;
+                log.UserId = UserId;
+                //log.Comment = Comment;
+                log.LogDate = DateTime.Now;
+                log.IsActive = true;
+                log.PageId = pages.Id;
+                log = db.Logs.Add(log);
+              //  try
+               // {
+                    db.SaveChanges();
+              //  }
+              //  catch (Exception ex) { }
+                return log.Id;
+                // var body = JsonConvert.SerializeObject(log);
+                // var log2 = ServerResponse.Invoke<Log>("api/log/edit?id=" + log.Id, body, "POST");
+            }
+            if (action.Equals("Delete"))
+            {
+                var actionLog = db.ActionLogs.Where(x => x.ActionLogType.ToLower().Equals(action.ToLower())).FirstOrDefault();
+                var act = db.ActionLogs.Where(x => x.ActionLogType.ToLower().Equals(action.ToLower())).FirstOrDefault();
+                log.ActionLogId = act.Id;
+                log.UserId = UserId;
+                //log.Comment = Comment;
+                log.LogDate = DateTime.Now;
+                log.IsActive = true;
+                log.PageId = pages.Id;
+                log = db.Logs.Add(log);
+               // try
+               // {
+                    db.SaveChanges();
+              //  }
+              //  catch (Exception ex) { }
+                return log.Id;
+            }
+            if (action.Equals("View"))
+            {
+                //  var logView = db.Logs.Where(x => x.User.Id == UserId).FirstOrDefault();
+                var act = db.ActionLogs.Where(x => x.ActionLogType.ToLower().Equals(action.ToLower())).FirstOrDefault();
+                log.ActionLogId = act.Id;
+                log.UserId = UserId;
+                //log.Comment = Comment;
+                log.LogDate = DateTime.Now;
+                log.IsActive = true;
+                log.PageId = pages.Id;
+                //var body = JsonConvert.SerializeObject(log);           
+                //var StaffCreate = ServerResponse.Invoke<Log>("api/log/create", body, "Post");
+                log = db.Logs.Add(log);
+              //  try
+              //  {
+                    db.SaveChanges();
+              //  }
+               // catch (Exception ex) { }
+                return log.Id;
+            }
+            return log.Id;
+        }
+
+        public static List<int> GetPages(int TotalCount, int PageSize, int CurrentPage, int PagesToShow = 10)
+        {
+            int totalPages = (TotalCount / PageSize) + (TotalCount % PageSize == 0 ? 0 : 1);
+            var UpperBound = CurrentPage + PagesToShow;
+            if (totalPages > PagesToShow)
+            {
+                if (UpperBound > totalPages)
+                {
+                    return Enumerable.Range(totalPages - PagesToShow + 1, PagesToShow).ToList();
+                }
+                else
+                {
+                    return Enumerable.Range(CurrentPage, PagesToShow).ToList();
+                }
+            }
+            else
+            {
+                return Enumerable.Range(1, totalPages).ToList();
+            }
+        
+
+    }
+        public static string GenerateRandomCode(int digits)
+        {
+            Random randrom = new Random();
+            var min = 1;
+            for (int i = 0; i < digits - 1; i++)
+            {
+                min *= 10;
+            }
+            var max = min * 10;
+
+            return randrom.Next(min, max).ToString();
+        }
+        public static bool ValidateUser(byte[] passwordHash, byte[] passwordSalt, string password)
+        {
+            var hashAlgorithm = new SHA512HashAlgorithm();
+            return CompareByteArrays(passwordHash, hashAlgorithm.GenerateSaltedHash(GetBytes(password), passwordSalt));
+        }
+        public static bool CompareByteArrays(byte[] array1, byte[] array2)
+        {
+            return array1.Length == array2.Length && !array1.Where((t, i) => t != array2[i]).Any();
+        }
+        public static byte[] CreateSalt(int size)
+        {
+
+            var rng = new RNGCryptoServiceProvider();
+            var buff = new byte[size];
+            rng.GetBytes(buff);
+            return buff;
+        }
+        public static byte[] GetBytes(string text)
+        {
+            return Encoding.UTF8.GetBytes(text);
+        }
+        //public static BitMapResponseModel GetBitMapResponseObject(string responseparams1)
+        //{
+
+        //    string[] paymentKeys = { "MerchantOrderNo", "Currency", "Amount", "PayMode", "CardType", "TransactionType" };
+        //    string[] cardKeys = { "ReferenceNumber", "TxnDate", "CardEnrollmentResponse", "EciIndicator", "GtwTraceNo", "GtwIdentifier", "AuthCode" };
+        //    string[] statusKeys = { "StatusFlag", "ErrorCode", "ErrorMessage" };
+        //    string[] merchantKeys = { "udf1", "udf2", "udf3", "udf4", "udf5", "udf6", "udf7", "udf8", "udf9", "udf10" };
+        //    string[] fraudKeys = { "frauddecision", "fraudreason" };
+        //    string[] dccKeys = { "DCCConverted", "DCCConverted Amount", "DCC Currency", "DCCMargin", "DCCExchangeRate" };
+        //    string[] tokenKeys = { "CardToken", "CardNumber" };
+
+        //    var dataWithoutMerchantID = responseparams1;
+        //    var blockExistanceField = dataWithoutMerchantID.Substring(0, dataWithoutMerchantID.IndexOf("||", 0));
+        //    var dataWithoutBlockExistenceField = dataWithoutMerchantID.Substring(dataWithoutMerchantID.IndexOf("||", 0) + 2);
+        //    var splittedDataBlock = dataWithoutBlockExistenceField.Split(new[] { "||" }, StringSplitOptions.None);
+        //    char[] charArr = blockExistanceField.ToCharArray();
+        //    BitMapResponseModel model = new BitMapResponseModel();
+        //    for (int i = 0, j = 0; i < charArr.Length; i++)
+        //    {
+
+        //        switch (i)
+        //        {
+        //            case 0:
+        //                {
+        //                    if (charArr[i] == '1')
+        //                    {
+        //                        model.block_Existence_Indicator["Payment"] = true;
+        //                        model.fieldExistenceIndicatorPayment = DecodeFields(splittedDataBlock[j], paymentKeys);
+        //                        j++;
+        //                    }
+        //                    else
+        //                        continue;
+        //                }
+        //                break;
+        //            case 1:
+        //                {
+        //                    if (charArr[i] == '1')
+        //                    {
+        //                        model.block_Existence_Indicator["Card"] = true;
+        //                        model.fieldExistenceIndicatorCard = DecodeFields(splittedDataBlock[j], cardKeys);
+        //                        j++;
+        //                    }
+        //                    else
+        //                        continue;
+        //                }
+        //                break;
+        //            case 2:
+        //                {
+        //                    if (charArr[i] == '1')
+        //                    {
+        //                        model.block_Existence_Indicator["Status"] = true;
+        //                        model.fieldExistenceIndicatorStatus = DecodeFields(splittedDataBlock[j], statusKeys);
+        //                        j++;
+        //                    }
+        //                    else
+        //                        continue;
+        //                }
+        //                break;
+        //            case 3:
+        //                {
+        //                    if (charArr[i] == '1')
+        //                    {
+        //                        model.block_Existence_Indicator["Merchant"] = true;
+        //                        model.fieldExistenceIndicatorMerchant = DecodeFields(splittedDataBlock[j], merchantKeys);
+        //                        j++;
+        //                    }
+        //                    else
+        //                        continue;
+        //                }
+        //                break;
+        //            case 4:
+        //                {
+        //                    if (charArr[i] == '1')
+        //                    {
+        //                        model.block_Existence_Indicator["Fraud"] = true;
+        //                        model.fieldExistenceIndicatorFraud = DecodeFields(splittedDataBlock[j], fraudKeys);
+        //                        j++;
+        //                    }
+        //                    else
+        //                        continue;
+        //                }
+        //                break;
+        //            case 5:
+        //                {
+        //                    if (charArr[i] == '1')
+        //                    {
+        //                        model.block_Existence_Indicator["DCC"] = true;
+        //                        model.fieldExistenceIndicatorDCC = DecodeFields(splittedDataBlock[j], dccKeys);
+        //                        j++;
+        //                    }
+        //                    else
+        //                    {
+        //                        continue;
+        //                    }
+        //                }
+        //                break;
+        //            case 6:
+        //                {
+        //                    if (charArr[i] == '1')
+        //                    {
+        //                        model.block_Existence_Indicator["Token"] = true;
+        //                        model.fieldExistenceIndicatorToken = DecodeFields(splittedDataBlock[j], tokenKeys);
+        //                        j++;
+        //                    }
+        //                    else
+        //                        continue;
+        //                }
+        //                break;
+        //        }
+        //    }
+        //    return model;
+        //}
+        //    public static List<KeyValue> DecodeFields(string data, string[] keyArray)
+        //    {
+        //        List<KeyValue> valuesDecrypted = new List<KeyValue>();
+        //        String fieldExistenceBlock = data.Substring(0, data.IndexOf("|", 0));
+        //        char[] charArr = fieldExistenceBlock.ToCharArray();
+        //        string[] fieldData;
+
+        //        fieldData = data.Substring(data.IndexOf("|", 0) + 1).Split(new[] { "|" }, StringSplitOptions.None);
+        //        int j = 0;
+        //        for (int i = 0; i < charArr.Length; i++)
+        //        {
+        //            if (charArr[i].ToString().Equals("1"))
+        //            {
+        //                valuesDecrypted.Add(new KeyValue(keyArray[i], fieldData[j]));
+        //                j++;
+        //            }
+        //            else
+        //            {
+        //                valuesDecrypted.Add(new KeyValue(keyArray[i], ""));
+        //            }
+
+        //        }
+        //        return valuesDecrypted;
+        //    }
+        //}
+        public class SHA512HashAlgorithm
+        {
+            private readonly SHA512Managed _algorithm = new SHA512Managed();
+
+            public byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
+            {
+                var plainTextWithSaltBytes =
+                    new byte[plainText.Length + salt.Length];
+
+                for (int i = 0; i < plainText.Length; i++)
+                {
+                    plainTextWithSaltBytes[i] = plainText[i];
+                }
+                for (int i = 0; i < salt.Length; i++)
+                {
+                    plainTextWithSaltBytes[plainText.Length + i] = salt[i];
+                }
+
+                return _algorithm.ComputeHash(plainTextWithSaltBytes);
+            }
+
+            public string Type { get { return "SHA512"; } }
+
+        }
+
+    }
+}
+

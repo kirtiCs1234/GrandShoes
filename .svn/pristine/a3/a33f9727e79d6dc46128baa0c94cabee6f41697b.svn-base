@@ -1,0 +1,411 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+using Model;
+
+namespace POSApi.Controllers.Admin
+{
+    [RoutePrefix("api/stockDistributions")]
+    public class StockDistributionsController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+        public StockDistributionsController()
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            db.Configuration.ProxyCreationEnabled = false;
+        }
+        // GET: api/StockDistributions
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<StockDistribution> GetStockDistributions()
+        {
+            var list= db.StockDistributions.Where(x=>x.IsActive==true).Include(x => x.Branch).Include(x => x.Product).ToList();
+            
+            return list;
+        }
+        [HttpPost]
+        [Route("BranchAutocomplete")]
+        public IHttpActionResult BranchAutocomplete(string name)
+        {
+            var list = db.StockDistributions.Where(x => x.IsActive == true).ToList();
+            var data = list.Where(x => x.Branch.Name.StartsWith(name)).ToList().Select(m => new StockDistribution
+            {
+                BranchId = m.BranchId,
+                Branch = db.Branches.Where(x => x.IsActive == true && x.Id == m.BranchId).FirstOrDefault(),
+                Id = m.Id,
+                BranchName=m.Branch.Name
+            }).ToList();
+            return Ok(data);
+        }
+        [HttpGet]
+        [Route("GetStockData")]
+        public List<StockDistribution> GetData(int? DistributionSummaryID,string BranchName)
+        {
+          //  List<StockDistribution> updateList = new List<StockDistribution>();
+            var list = db.StockDistributions.Where(x => x.IsActive == true && x.StockDistributionSummaryId == DistributionSummaryID).Include(x => x.Product).Include(x => x.Branch).Include(x => x.StockDistributionSummary).Include(x=>x.Product.ProductStyle);
+            list = list.Where(x => x.Branch.Name == BranchName);
+            var stockList = list.ToList();
+            var cartonList1 = db.CartonManagements.Where(x => x.IsActive == true && x.TotalItems!=null && x.DistributionSummaryID == DistributionSummaryID).Include(x => x.Branch);
+            cartonList1 = cartonList1.Where(x => x.Branch.Name == BranchName);
+            var cartonList = cartonList1.ToList();
+            foreach (var b in stockList)
+            {
+               // StockDistribution model = new StockDistribution();
+                foreach (var a in cartonList)
+                {
+                    
+                        var cartonDetails = db.CartonManagementDetails.Where(x => x.IsActive == true && x.CartonManagementID == a.Id && x.ProductID == b.ProductId).ToList().FirstOrDefault();
+                    if (cartonDetails != null)
+                    {
+                        b.ProductId = cartonDetails.ProductID;
+                        b.BranchId = b.BranchId;
+                        b.BranchName = b.BranchName;
+                        b.DistributionDate = b.DistributionDate;
+                        b.Id = b.Id;
+                        b.InvoiceId = b.InvoiceId;
+                        b.IsActive = b.IsActive;
+                        b.LogId = b.LogId;
+                        b.Quantity01 = b.Quantity01- cartonDetails.Z01;
+                        b.Quantity02 = b.Quantity02 - cartonDetails.Z02;
+                        b.Quantity03 = b.Quantity03 - cartonDetails.Z03;
+                        b.Quantity04 = b.Quantity04 - cartonDetails.Z04;
+                        b.Quantity05 = b.Quantity05 - cartonDetails.Z05;
+                        b.Quantity06 = b.Quantity06 - cartonDetails.Z06;
+                        b.Quantity07 = b.Quantity07 - cartonDetails.Z07;
+                        b.Quantity08 = b.Quantity08 - cartonDetails.Z08;
+                        b.Quantity09 = b.Quantity09 - cartonDetails.Z09;
+                        b.Quantity10 = b.Quantity10 - cartonDetails.Z10;
+                        b.Quantity11 = b.Quantity11 - cartonDetails.Z11;
+                        b.Quantity12 = b.Quantity12 - cartonDetails.Z12;
+                        b.Quantity13 = b.Quantity13 - cartonDetails.Z13;
+                        b.Quantity14 = b.Quantity14 - cartonDetails.Z14;
+                        b.Quantity15 = b.Quantity15 - cartonDetails.Z15;
+                        b.Quantity16 = b.Quantity16 - cartonDetails.Z16;
+                        b.Quantity17 = b.Quantity17 - cartonDetails.Z17;
+                        b.Quantity18 = b.Quantity18 - cartonDetails.Z18;
+                        b.Quantity19 = b.Quantity19 - cartonDetails.Z19;
+                        b.Quantity20 = b.Quantity20 - cartonDetails.Z20;
+                        b.Quantity21 = b.Quantity21 - cartonDetails.Z21;
+                        b.Quantity22 = b.Quantity22 - cartonDetails.Z22;
+                        b.Quantity23 = b.Quantity23 - cartonDetails.Z23;
+                        b.Quantity24 = b.Quantity24 - cartonDetails.Z24;
+                        b.Quantity25 = b.Quantity25 - cartonDetails.Z25;
+                        b.Quantity26 = b.Quantity26 - cartonDetails.Z26;
+                        b.Quantity27 = b.Quantity27 - cartonDetails.Z27;
+                        b.Quantity28 = b.Quantity28 - cartonDetails.Z28;
+                        b.Quantity29 = b.Quantity29 - cartonDetails.Z29;
+                        b.Quantity30 = b.Quantity30 - cartonDetails.Z30;
+                        b.StockDistributionStatusId = b.StockDistributionStatusId;
+                        b.StockDistributionSummaryId = b.StockDistributionSummaryId;
+                    }
+                }
+            }
+            return stockList;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getSummary")]
+        public IHttpActionResult GetSummary(int id)
+        {
+            var Summary = db.StockDistributions.Where(x=>x.IsActive==true && x.ProductId == id).Include(x => x.Product).ToList().Select(x => new StockDistribution {
+                Id = x.Id,
+                BranchId = x.BranchId,
+                Branch = db.Branches.Where(m => m.IsActive == true && m.Id == x.BranchId).FirstOrDefault(),
+                ProductId = x.ProductId,
+                Product = db.Products.Where(m => m.IsActive == true && m.Id == x.ProductId).FirstOrDefault(),
+                StockDistributionStatusId = x.StockDistributionStatusId,
+                StockDistributionStatu = db.StockDistributionStatus.Where(m => m.IsActive == true && m.Id == x.StockDistributionStatusId).FirstOrDefault(),
+                
+                Quantity01 = x.Quantity01,
+                Quantity02 = x.Quantity02,
+                Quantity03 = x.Quantity03,
+                Quantity04 = x.Quantity04,
+                Quantity05 = x.Quantity05,
+                Quantity06 = x.Quantity06,
+                Quantity07 = x.Quantity07,
+                Quantity08 = x.Quantity08,
+                Quantity09 = x.Quantity09,
+                Quantity10 = x.Quantity10,
+                Quantity11 = x.Quantity11,
+                Quantity12 = x.Quantity12,
+                Quantity13 = x.Quantity13,
+                Quantity14 = x.Quantity14,
+                Quantity15 = x.Quantity15,
+                Quantity16 = x.Quantity16,
+                Quantity17 = x.Quantity17,
+                Quantity18 = x.Quantity18,
+                Quantity19 = x.Quantity19,
+                Quantity20 = x.Quantity20,
+                Quantity21 = x.Quantity21,
+                Quantity22 = x.Quantity22,
+                Quantity23 = x.Quantity23,
+                Quantity24 = x.Quantity24,
+                Quantity25 = x.Quantity25,
+                Quantity26 = x.Quantity26,
+                Quantity27 = x.Quantity27,
+                Quantity28 = x.Quantity28,
+                Quantity29 = x.Quantity29,
+                Quantity30 = x.Quantity30,
+                IsActive=true,
+                StockDistributionSummaryId = x.StockDistributionSummaryId,
+                StockDistributionSummary = db.StockDistributionSummaries.Where(m => m.IsActive == true && m.Id == x.StockDistributionSummaryId).FirstOrDefault(),
+            }).ToList();
+            return Ok(Summary);
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getByBranchId")]
+        [ResponseType(typeof(StockDistribution))]
+        public IHttpActionResult GetStockDistributions(int? BranchId)
+        {
+            StockDistribution stockDistribution = db.StockDistributions.Where(x=>x.BranchId == BranchId).Include(x=>x.Branch).Include(x => x.Product).FirstOrDefault();
+            if (stockDistribution == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(stockDistribution);
+        }
+        [HttpGet]
+        [Route("getLast")]
+        public StockDistribution GetLast()
+        {
+            var list = db.StockDistributions.Where(x => x.IsActive == true).ToList();
+            var last=list.LastOrDefault();
+            return last;
+        }
+        [HttpPost]
+        [Route("editData")]
+        public IHttpActionResult EditData(int Id,StockDistributionModel model)
+        {
+            var stock = db.StockDistributions.Where(x => x.IsActive == true && x.Id == Id).Include(x=>x.Branch).Include(x=>x.Product).FirstOrDefault();
+            //var ProductList = db.Products.Where(x => x.IsActive == true && x.ProductSKU == model.ProductSKU ).Include(x=>x.ProductStyle);
+            //stock.ProductId = ProductList.Where(x => x.ProductStyle.StyleSKU == model.StyleSKU).FirstOrDefault().Id;
+            //stock.BranchId = db.Branches.Where(x => x.IsActive == true && x.Name == model.BranchName).FirstOrDefault().Id;
+            //stock.InvoiceId = stock.InvoiceId;
+            stock.ProductId = stock.ProductId;
+            stock.BranchId = stock.BranchId;
+            stock.DistributionDate = stock.DistributionDate;
+            stock.IsActive = true;
+            stock.LogId = stock.LogId;
+            stock.Quantity01 = model.Quantity01;
+            stock.Quantity02 = model.Quantity02;
+            stock.Quantity03 = model.Quantity03;
+            stock.Quantity04 = model.Quantity04;
+            stock.Quantity05 = model.Quantity05;
+            stock.Quantity06 = model.Quantity06;
+            stock.Quantity07 = model.Quantity07;
+            stock.Quantity08 = model.Quantity08;
+            stock.Quantity09 = model.Quantity09;
+            stock.Quantity10 = model.Quantity10;
+            stock.Quantity11 = model.Quantity11;
+            stock.Quantity12 = model.Quantity12;
+            stock.Quantity13 = model.Quantity13;
+            stock.Quantity14 = model.Quantity14;
+            stock.Quantity15 = model.Quantity15;
+            stock.Quantity16 = model.Quantity16;
+            stock.Quantity17 = model.Quantity17;
+            stock.Quantity18 = model.Quantity18;
+            stock.Quantity19 = model.Quantity19;
+            stock.Quantity20 = model.Quantity20;
+            stock.Quantity21 = model.Quantity21;
+            stock.Quantity22 = model.Quantity22;
+            stock.Quantity23 = model.Quantity23;
+            stock.Quantity24 = model.Quantity24;
+            stock.Quantity25 = model.Quantity25;
+            stock.Quantity26 = model.Quantity26;
+            stock.Quantity27 = model.Quantity27;
+            stock.Quantity28 = model.Quantity28;
+            stock.Quantity29 = model.Quantity29;
+            stock.Quantity30 = model.Quantity30;
+            db.SaveChanges();
+            return Ok(true);
+           
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getProducts")]
+        [ResponseType(typeof(StockDistribution))]
+        public List<StockDistribution> GetProducts(int? StockDistributionSummaryId, int? BranchId)
+        {
+            var ProductList = db.StockDistributions.Where(x => x.IsActive==true).Include(x=>x.Product);
+
+            if (StockDistributionSummaryId>0)
+            {
+                ProductList = ProductList.Where(x => x.StockDistributionSummaryId == StockDistributionSummaryId).Include(x => x.StockDistributionSummary).Include(x => x.Product);
+
+            }
+            if (BranchId > 0)
+            {
+                 ProductList = ProductList.Where(x =>  x.BranchId == BranchId).Include(x => x.Branch).Include(x => x.Product);
+
+            }
+            if(StockDistributionSummaryId > 0|| BranchId > 0)
+            {
+               ProductList = ProductList.Where(x => x.StockDistributionSummaryId == StockDistributionSummaryId || x.BranchId == BranchId).Include(x => x.Branch).Include(x => x.StockDistributionSummary).Include(x => x.Product);
+
+            }
+            return ProductList.ToList();
+
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getById")]
+        [ResponseType(typeof(StockDistribution))]
+        public IHttpActionResult GetStockDistribution(int? id)
+        {
+            StockDistribution stockDistribution = db.StockDistributions.Where(x => x.Id == id).Include(x => x.Branch).Include(x => x.Product).FirstOrDefault();
+            if (stockDistribution == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(stockDistribution);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("getSelectedData")]
+        public List<StockDistribution> GetSearchData(Model.SearchData searchData)
+        {
+            var list = db.StockDistributions.Where(x => x.IsActive == true).Include(x => x.Branch).Include(x=>x.Product).Include(x => x.Product.Color).Include(x => x.Product.ProductStyle);
+            if(searchData.BranchId>0)
+            {
+                list = list.Where(x => x.BranchId == searchData.BranchId).Include(x => x.Product);
+                if(searchData.ProductId>0)
+                {
+                    list = list.Where(x => x.ProductId == searchData.ProductId).Include(x => x.Product);
+                    if (searchData.ProductStyleId>0)
+                    {
+                        list = list.Where(x => x.Product.ProductStyleId == searchData.ProductStyleId).Include(x => x.Product);
+                    }
+                    if (searchData.ColorID>0)
+                    {
+                        list = list.Where(x => x.Product.ColorID == searchData.ColorID).Include(x => x.Product);
+                    }
+                }
+                
+            }
+            return list.ToList();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("getValue")]
+        public List<StockDistribution> GetSearchValue(Model.SearchData searchData)
+        {
+            var list = db.StockDistributions.Where(x => x.IsActive == true).Include(x=>x.Branch).Include(x=>x.Product);
+            if (searchData.StockDistributionSummaryId > 0)
+            {
+                list = list.Where(x => x.StockDistributionSummaryId == searchData.StockDistributionSummaryId);
+
+            }
+            if (searchData.BranchId > 0)
+            {
+                list = list.Where(x => x.BranchId == searchData.BranchId);
+                
+            }
+            return list.ToList();
+        }
+        
+        // GET: api/StockDistributions/5
+        [ResponseType(typeof(StockDistribution))]
+        public IHttpActionResult GetStockDistribution(int id)
+        {
+            StockDistribution stockDistribution = db.StockDistributions.Find(id);
+            if (stockDistribution == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(stockDistribution);
+        }
+        
+        // PUT: api/StockDistributions/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutStockDistribution(int id, StockDistribution stockDistribution)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != stockDistribution.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(stockDistribution).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!StockDistributionExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/StockDistributions
+        [ResponseType(typeof(StockDistribution))]
+        public IHttpActionResult PostStockDistribution(StockDistribution stockDistribution)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.StockDistributions.Add(stockDistribution);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = stockDistribution.Id }, stockDistribution);
+        }
+
+        // DELETE: api/StockDistributions/5
+        [ResponseType(typeof(StockDistribution))]
+        public IHttpActionResult DeleteStockDistribution(int id)
+        {
+            StockDistribution stockDistribution = db.StockDistributions.Find(id);
+            if (stockDistribution == null)
+            {
+                return NotFound();
+            }
+
+            db.StockDistributions.Remove(stockDistribution);
+            db.SaveChanges();
+
+            return Ok(stockDistribution);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool StockDistributionExists(int id)
+        {
+            return db.StockDistributions.Count(e => e.Id == id) > 0;
+        }
+    }
+}

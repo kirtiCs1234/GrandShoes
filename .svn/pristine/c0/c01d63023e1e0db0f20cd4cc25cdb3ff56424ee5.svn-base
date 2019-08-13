@@ -1,0 +1,193 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+using Model;
+
+namespace POSApi.Controllers.Admin
+{
+    [RoutePrefix("api/staff")]
+    public class StaffsController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+        public StaffsController()
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            db.Configuration.ProxyCreationEnabled = false;
+        }
+        // GET: api/Staffs
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<Staff> GetStaffs()
+        {
+            var list= db.Staffs.Where(x=>x.IsActive==true).OrderByDescending(x => x.Id).Include(x=>x.User).Include(x=>x.Designation).Include(x=>x.Branch).ToList();
+            return list;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getStaffPaging")]
+        public ServiceResult<List<Staff>> GetStaffPaging([FromUri]Paging paging)
+
+        {
+            ServiceResult<List<Staff>> model = new ServiceResult<List<Staff>>();
+            var source = db.Staffs.Where(x => x.IsActive == true).OrderByDescending(x => x.Id).Include(x => x.User).Include(x => x.Designation).Include(x => x.Branch).ToList();
+            int count = source.Count();
+
+            // Parameter is passed from Query string if it is null then it default Value will be pageNumber:1  
+            int CurrentPage = paging.pageNumber;
+
+            // Parameter is passed from Query string if it is null then it default Value will be pageSize:20  
+            int PageSize = paging.pageSize;
+
+            // Display TotalCount to Records to User  
+            int TotalCount = count;
+
+            // Calculating Totalpage by Dividing (No of Records / Pagesize)  
+            int TotalPages = (int)Math.Ceiling(count / (double)PageSize);
+
+            // Returns List of Customer after applying Paging   
+            var items = source.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+            model.TotalCount = count;
+            model.data = items;
+
+            return model;
+
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("getSearchData")]
+        public ServiceResult<List<Staff>> GetSearchData(StaffSearch staffSearch)
+
+        {
+            ServiceResult<List<Staff>> model = new ServiceResult<List<Staff>>();
+            var source = db.Staffs.Where(x => x.IsActive == true).Include(x => x.User).Include(x => x.Designation).Include(x => x.Branch);
+
+            if (staffSearch != null)
+            {
+
+                if (!string.IsNullOrEmpty(staffSearch.FirstName))
+
+                    source = source.Where(m => m.User.FirstName == staffSearch.FirstName);
+            }
+
+            var result = source.ToList();
+            int count = result.Count();
+            model.TotalCount = count;
+            model.data = result;
+
+            return model; ;
+        }
+        // GET: api/Staffs/5
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetail")]
+        [ResponseType(typeof(Staff))]
+        public IHttpActionResult GetStaff(int id)
+        {
+            Staff staff = db.Staffs.Find(id);
+            if (staff == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(staff);
+        }
+
+        // PUT: api/Staffs/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutStaff(int id, Staff staff)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != staff.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(staff).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!StaffExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/Staffs
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(Staff))]
+        public IHttpActionResult PostStaff(Staff staff)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Staffs.Add(staff);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = staff.Id }, staff);
+        }
+
+        // DELETE: api/Staffs/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("delete")]
+        [ResponseType(typeof(Staff))]
+        public IHttpActionResult DeleteStaff(int id)
+        {
+            Staff staff = db.Staffs.Find(id);
+            if (staff == null)
+            {
+                return NotFound();
+            }
+            staff.IsActive = false;
+            //db.Staffs.Remove(staff);
+            db.SaveChanges();
+
+            return Ok(staff);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool StaffExists(int id)
+        {
+            return db.Staffs.Count(e => e.Id == id) > 0;
+        }
+    }
+}

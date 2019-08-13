@@ -1,0 +1,277 @@
+﻿@model Model.SizeGridModel
+@{
+    Layout = null;
+    var dict = ViewData["Sizes"] as Dictionary<string, string>;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">View Size Grid</h4>
+        </div>
+        @using (Html.BeginForm("Details", "Supplier", FormMethod.Post, new { id = "viewForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+
+        <div class="modal-body">
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label> Grid No</label>
+                    @Html.EditorFor(model => model.GridNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Grid No" } })
+
+                    @Html.ValidationMessageFor(model => model.GridNumber, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z01</label>
+                    @Html.EditorFor(model => model.Z01, new { htmlAttributes = new { @class = "form-control", placeholder = "Z01", @Value = dict["Z01"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z01, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z02</label>
+                    @Html.EditorFor(model => model.Z02, new { htmlAttributes = new { @class = "form-control", placeholder = "Z02", @Value = dict["Z02"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z02, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z03</label>
+                    @Html.EditorFor(model => model.Z03, new { htmlAttributes = new { @class = "form-control", placeholder = "Z03", @Value = dict["Z03"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z03, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z04</label>
+                    @Html.EditorFor(model => model.Z04, new { htmlAttributes = new { @class = "form-control", placeholder = "Z04", @Value = dict["Z04"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z04, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z05</label>
+                    @Html.EditorFor(model => model.Z05, new { htmlAttributes = new { @class = "form-control", placeholder = "Z05", @Value = dict["Z05"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z05, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z06</label>
+                    @Html.EditorFor(model => model.Z06, new { htmlAttributes = new { @class = "form-control", placeholder = "Z06", @Value = dict["Z06"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z06, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z07</label>
+                    @Html.EditorFor(model => model.Z07, new { htmlAttributes = new { @class = "form-control", placeholder = "Z07", @Value = dict["Z07"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z05, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z08</label>
+                    @Html.EditorFor(model => model.Z08, new { htmlAttributes = new { @class = "form-control", placeholder = "Z08", @Value = dict["Z08"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z08, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z09</label>
+                    @Html.EditorFor(model => model.Z09, new { htmlAttributes = new { @class = "form-control", placeholder = "Z09", @Value = dict["Z09"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z09, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z10</label>
+                    @Html.EditorFor(model => model.Z10, new { htmlAttributes = new { @class = "form-control", placeholder = "Z10", @Value = dict["Z10"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z10, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z11</label>
+                    @Html.EditorFor(model => model.Z11, new { htmlAttributes = new { @class = "form-control", placeholder = "Z11", @Value = dict["Z11"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z11, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z12</label>
+                    @Html.EditorFor(model => model.Z12, new { htmlAttributes = new { @class = "form-control", placeholder = "Z12", @Value = dict["Z12"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z12, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z13</label>
+                    @Html.EditorFor(model => model.Z13, new { htmlAttributes = new { @class = "form-control", placeholder = "Z13", @Value = dict["Z13"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z13, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z14</label>
+                    @Html.EditorFor(model => model.Z14, new { htmlAttributes = new { @class = "form-control", placeholder = "Z14", @Value = dict["Z14"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z14, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z15</label>
+                    @Html.EditorFor(model => model.Z15, new { htmlAttributes = new { @class = "form-control", placeholder = "Z15", @Value = dict["Z15"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z15, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z16</label>
+                    @Html.EditorFor(model => model.Z16, new { htmlAttributes = new { @class = "form-control", placeholder = "Z16", @Value = dict["Z16"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z16, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z17</label>
+                    @Html.EditorFor(model => model.Z17, new { htmlAttributes = new { @class = "form-control", placeholder = "Z17", @Value = dict["Z17"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z17, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z18</label>
+                    @Html.EditorFor(model => model.Z18, new { htmlAttributes = new { @class = "form-control", placeholder = "Z18", @Value = dict["Z18"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z18, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z19</label>
+                    @Html.EditorFor(model => model.Z19, new { htmlAttributes = new { @class = "form-control", placeholder = "Z19", @Value = dict["Z19"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z19, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z20</label>
+                    @Html.EditorFor(model => model.Z20, new { htmlAttributes = new { @class = "form-control", placeholder = "Z20", @Value = dict["Z20"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z20, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z21</label>
+                    @Html.EditorFor(model => model.Z21, new { htmlAttributes = new { @class = "form-control", placeholder = "Z21", @Value = dict["Z21"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z21, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z22</label>
+                    @Html.EditorFor(model => model.Z22, new { htmlAttributes = new { @class = "form-control", placeholder = "Z22", @Value = dict["Z22"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z22, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z23</label>
+                    @Html.EditorFor(model => model.Z23, new { htmlAttributes = new { @class = "form-control", placeholder = "Z23", @Value = dict["Z23"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z23, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z24</label>
+                    @Html.EditorFor(model => model.Z24, new { htmlAttributes = new { @class = "form-control", placeholder = "Z24", @Value = dict["Z24"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z24, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z25</label>
+                    @Html.EditorFor(model => model.Z25, new { htmlAttributes = new { @class = "form-control", placeholder = "Z25", @Value = dict["Z25"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z25, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z26</label>
+                    @Html.EditorFor(model => model.Z26, new { htmlAttributes = new { @class = "form-control", placeholder = "Z26", @Value = dict["Z26"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z26, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z27</label>
+                    @Html.EditorFor(model => model.Z27, new { htmlAttributes = new { @class = "form-control", placeholder = "Z27", @Value = dict["Z27"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z27, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z28</label>
+                    @Html.EditorFor(model => model.Z28, new { htmlAttributes = new { @class = "form-control", placeholder = "Z28", @Value = dict["Z28"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z28, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z29</label>
+                    @Html.EditorFor(model => model.Z29, new { htmlAttributes = new { @class = "form-control", placeholder = "Z29", @Value = dict["Z29"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z29, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Z30</label>
+                    @Html.EditorFor(model => model.Z30, new { htmlAttributes = new { @class = "form-control", placeholder = "Z30", @Value = dict["Z30"] } })
+
+                    @Html.ValidationMessageFor(model => model.Z30, "", new { @class = "text-danger" })
+                </div>
+         
+            <div class="col-md-6 col-xs-12 col-sm-6">
+                <label>Status</label>
+                @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-control", placeholder = "Z30" } })
+
+                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-outline-inverse">Close</button>
+            </div>
+
+        }
+
+    </div>
+    </div>
+    <script>
+
+    $("#viewForm").find("input").attr("disabled", true);
+    $("#viewForm").find("select").attr("disabled", true);
+    $("#viewForm").find(".popup-savebtn").hide();
+
+    </script>
+

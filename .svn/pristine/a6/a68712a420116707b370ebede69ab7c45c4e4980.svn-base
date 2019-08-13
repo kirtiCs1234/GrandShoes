@@ -1,0 +1,124 @@
+﻿
+@model List<Model.UserModel>
+<div class="prtm-full-block pos-relative">
+    <div class="prtm-block-title pad-all-md">
+        <div class="pos-relative">
+            <div class="caption">
+                <h3 class="text-capitalize">User</h3>
+            </div>
+        </div>
+    </div>
+    <div class="prtm-block-content mrgn-b-md">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Middle Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+
+                        <th>Approve/Disapprove</th>
+                        <th>Reset Password</th>
+                        <th style="min-width:125px;">Action</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="tbodyIndex">
+                    @if (Model.Count != 0) {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MiddleName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+                            <td id="tdApproveUser" data-id="@item.Id" class="account-table-btns approved">
+                                @if (item.IsVerified == true)
+                                {
+                                    <Span>Approved </Span>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-success approve-btn approve" type="button" value="Approve" onclick="ApproveUser(this)" data-id="@item.Id">Approve</button>
+                                }
+                            </td>
+                            <td>
+                                <button class="btn btn-success approve-btn ResetPassword" data-toggle="modal" data-target="#myModal" data-backdrop="static" type="button" value="ResetPassword" onclick="ResetPassword(this)" data-id="@item.Id">Reset Password</button>
+                            </td>
+
+                            <td style="min-width:85px;">
+                                <i class="fa fa-pencil edit-form edit" data-backdrop="static" data-toggle="modal" data-target="#myModal" onclick="edit(@item.Id)">
+                                </i>&nbsp;
+
+                                <i class="fa fa-trash delete delete-form" data-toggle="modal" data-target="#myModal" data-backdrop="static" onclick="del(@item.Id)"></i>
+                                &nbsp;
+                                <i class="fa fa-eye view-form details" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="details(@item.Id)"></i>
+
+                            </td>
+                        </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7">
+                                <p>No results found.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+
+    @if (ViewBag.endPage > 1)
+    {
+        <div class="pagination">
+
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li>
+                    <a href="/Admin/User/_Index1?page=1">First</a>
+                </li>
+                <li>
+                    <a href="/Admin/User/_Index1?page=@(ViewBag.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @foreach (var i in ViewBag.result)
+            {
+
+                var page = i;
+
+                <li class="@(page == ViewBag.CurrentPage ? "active" : "")">
+                    <a href="/Admin/User/_Index1?page=@page">@page</a>
+                </li>
+
+            }
+            @if (ViewBag.CurrentPage < ViewBag.pageCount)
+            {
+                <li>
+                    <a href="/Admin/User/_Index1?page=@(ViewBag.CurrentPage + 1)">Next</a>
+                </li>
+                <li>
+                    <a href="/Admin/User/_Index1?page=@(ViewBag.pageCount)">Last</a>
+                </li>
+            }
+
+        </div>
+    }
+</div>

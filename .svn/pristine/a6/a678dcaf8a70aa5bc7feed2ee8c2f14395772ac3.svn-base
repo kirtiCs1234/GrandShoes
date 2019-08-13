@@ -1,0 +1,137 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Model.PurchaseOrderItems
+{
+    public class PurchaseOrderItems
+    {
+        public int ID { get; set; }
+        public int PurchaseOrderId { get; set; }
+        public Nullable<int> ProductStyleId { get; set; }
+        public int ProductId { get; set; }
+        public Nullable<int> SizeGridId { get; set; }
+        public Nullable<int> ColorId { get; set; }
+        public string SuplierStyle { get; set; }
+        public decimal Amount { get; set; }
+        public Nullable<decimal> ItemSize1 { get; set; }
+        public Nullable<decimal> ItemSize2 { get; set; }
+        public Nullable<decimal> ItemSize3 { get; set; }
+        public Nullable<decimal> ItemSize4 { get; set; }
+        public Nullable<decimal> ItemSize5 { get; set; }
+        public Nullable<decimal> ItemSize6 { get; set; }
+        public Nullable<decimal> ItemSize7 { get; set; }
+        public Nullable<decimal> ItemSize8 { get; set; }
+        public Nullable<decimal> ItemSize9 { get; set; }
+        public Nullable<decimal> ItemSize10 { get; set; }
+        public Nullable<decimal> ItemSize11 { get; set; }
+        public Nullable<decimal> ItemSize12 { get; set; }
+        public Nullable<decimal> ItemSize13 { get; set; }
+        public Nullable<decimal> ItemSize14 { get; set; }
+        public Nullable<decimal> ItemSize15 { get; set; }
+        public Nullable<decimal> ItemSize16 { get; set; }
+        public Nullable<decimal> ItemSize17 { get; set; }
+        public Nullable<decimal> ItemSize18 { get; set; }
+        public Nullable<decimal> ItemSize19 { get; set; }
+        public Nullable<decimal> ItemSize20 { get; set; }
+        public Nullable<decimal> ItemSize21 { get; set; }
+        public Nullable<decimal> ItemSize22 { get; set; }
+        public Nullable<decimal> ItemSize23 { get; set; }
+        public Nullable<decimal> ItemSize24 { get; set; }
+        public Nullable<decimal> ItemSize25 { get; set; }
+        public Nullable<decimal> ItemSize26 { get; set; }
+        public Nullable<decimal> ItemSize27 { get; set; }
+        public Nullable<decimal> ItemSize28 { get; set; }
+        public Nullable<decimal> ItemSize29 { get; set; }
+        public Nullable<decimal> ItemSize30 { get; set; }
+        public Nullable<int> QuantitySize1 { get; set; }
+        public Nullable<int> QuantitySize2 { get; set; }
+        public Nullable<int> QuantitySize3 { get; set; }
+        public Nullable<int> QuantitySize4 { get; set; }
+        public Nullable<int> QuantitySize5 { get; set; }
+        public Nullable<int> QuantitySize6 { get; set; }
+        public Nullable<int> QuantitySize7 { get; set; }
+        public Nullable<int> QuantitySize8 { get; set; }
+        public Nullable<int> QuantitySize9 { get; set; }
+        public Nullable<int> QuantitySize10 { get; set; }
+        public Nullable<int> QuantitySize11 { get; set; }
+        public Nullable<int> QuantitySize12 { get; set; }
+        public Nullable<int> QuantitySize13 { get; set; }
+        public Nullable<int> QuantitySize14 { get; set; }
+        public Nullable<int> QuantitySize15 { get; set; }
+        public Nullable<int> QuantitySize16 { get; set; }
+        public Nullable<int> QuantitySize17 { get; set; }
+        public Nullable<int> QuantitySize18 { get; set; }
+        public Nullable<int> QuantitySize19 { get; set; }
+        public Nullable<int> QuantitySize20 { get; set; }
+        public Nullable<int> QuantitySize21 { get; set; }
+        public Nullable<int> QuantitySize22 { get; set; }
+        public Nullable<int> QuantitySize23 { get; set; }
+        public Nullable<int> QuantitySize24 { get; set; }
+        public Nullable<int> QuantitySize25 { get; set; }
+        public Nullable<int> QuantitySize26 { get; set; }
+        public Nullable<int> QuantitySize27 { get; set; }
+        public Nullable<int> QuantitySize28 { get; set; }
+        public Nullable<int> QuantitySize29 { get; set; }
+        public Nullable<int> QuantitySize30 { get; set; }
+        public Nullable<decimal> CostSize1 { get; set; }
+        public Nullable<decimal> CostSize2 { get; set; }
+        public Nullable<decimal> CostSize3 { get; set; }
+        public Nullable<decimal> CostSize4 { get; set; }
+        public Nullable<decimal> CostSize5 { get; set; }
+        public Nullable<decimal> CostSize6 { get; set; }
+        public Nullable<decimal> CostSize7 { get; set; }
+        public Nullable<decimal> CostSize8 { get; set; }
+        public Nullable<decimal> CostSize9 { get; set; }
+        public Nullable<decimal> CostSize10 { get; set; }
+        public Nullable<decimal> CostSize11 { get; set; }
+        public Nullable<decimal> CostSize12 { get; set; }
+        public Nullable<decimal> CostSize13 { get; set; }
+        public Nullable<decimal> CostSize14 { get; set; }
+        public Nullable<decimal> CostSize15 { get; set; }
+        public Nullable<decimal> CostSize16 { get; set; }
+        public Nullable<decimal> CostSize17 { get; set; }
+        public Nullable<decimal> CostSize18 { get; set; }
+        public Nullable<decimal> CostSize19 { get; set; }
+        public Nullable<decimal> CostSize20 { get; set; }
+        public Nullable<decimal> CostSize21 { get; set; }
+        public Nullable<decimal> CostSize22 { get; set; }
+        public Nullable<decimal> CostSize23 { get; set; }
+        public Nullable<decimal> CostSize24 { get; set; }
+        public Nullable<decimal> CostSize25 { get; set; }
+        public Nullable<decimal> CostSize26 { get; set; }
+        public Nullable<decimal> CostSize27 { get; set; }
+        public Nullable<decimal> CostSize28 { get; set; }
+        public Nullable<decimal> CostSize29 { get; set; }
+        public Nullable<decimal> CostSize30 { get; set; }
+        public bool IsActive { get; set; }
+
+        [Required(ErrorMessage ="Enter Product style")]
+        public string autoCompleteProductStyleName { get; set; }
+        [Required(ErrorMessage = "Enter Product name")]
+        public string autoCompleteProductName { get; set; }
+        [Required(ErrorMessage = "Enter Grid size")]
+        public string autoCompleteGridName { get; set; }
+        [Required(ErrorMessage = "Choose Color")]
+        public string autoCompleteColorName { get; set; }
+
+        private int _ItemCount = 0;
+        public int ItemCount
+        {
+            get
+            {
+                _ItemCount =
+                    Convert.ToInt32((QuantitySize1 ?? 0) + (QuantitySize2 ?? 0) + (QuantitySize3 ?? 0 ) + (QuantitySize4 ?? 0) + (QuantitySize5 ?? 0) + (QuantitySize6 ?? 0) + (QuantitySize7 ?? 0) + (QuantitySize8 ?? 0 )+( QuantitySize9 ?? 0 )+( QuantitySize10 ?? 0 )+
+                    (QuantitySize11 ?? 0 )+( QuantitySize12 ?? 0 )+ (QuantitySize13 ?? 0 )+( QuantitySize14 ?? 0 )+( QuantitySize15 ?? 0 )+ (QuantitySize16 ?? 0 )+ (QuantitySize17 ?? 0 )+ (QuantitySize18 ?? 0 )+(QuantitySize19 ?? 0)+ (QuantitySize20 ?? 0) +
+                    (QuantitySize21 ?? 0 )+( QuantitySize22 ?? 0 )+ (QuantitySize23 ?? 0 )+( QuantitySize24 ?? 0 )+( QuantitySize25 ?? 0 )+ (QuantitySize26 ?? 0 )+ (QuantitySize27 ?? 0 )+ (QuantitySize28 ?? 0 )+ (QuantitySize29 ?? 0)+ (QuantitySize30 ?? 0)
+                    );
+
+                return _ItemCount;
+            }
+        }
+        
+    }
+}

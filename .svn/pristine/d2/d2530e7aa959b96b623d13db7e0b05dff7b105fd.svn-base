@@ -1,0 +1,94 @@
+﻿@model List<Model.BranchModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="table-style">
+
+
+    <div class="prtm-full-block pos-relative col-md-4">
+
+        <div class="prtm-block-title pad-all-md ">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">SMI Branch Default</h3>
+                </div>
+            </div>
+        </div>
+        <div class="prtm-block-content mrgn-b-md ">
+            <div class="table-responsive ">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Branch code </th>
+                            <th>Branch Name</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbodyIndex">
+
+                        @foreach (var item in Model)
+                        {
+                        <tr class="dataRow" onclick="scriptFunction(@item.Id);">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BranchCode)
+                                @Html.HiddenFor(modelItem => item.Id)
+
+                                @*<input type="hidden" value="@item.Id" id="BranchID" />*@
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="prtm-full-block pos-relative col-md-8" id="dvSMIBranch">
+
+    </div>
+
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        debugger;
+        $(document).on("click", "#cancelyesbtn", function () {
+            window.location = '/admin/SBIBranchDefault/index';
+        });
+
+        function scriptFunction(value) {
+            var rowId = value;
+            var callAction = '/Admin/SMIBranchDefault/GetAllSMIBranch?id=' + rowId;
+            $.ajax({
+                url: callAction,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                data: { id: rowId },
+                success: function (result) {
+                    debugger;
+                    $('#dvSMIBranch').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+        //$(".dataRow1").click(function (ctr) {
+        //    debugger;
+
+        //    var Id = $("#item_Id").val();
+        //    var callAction = '/Admin/SMIBranchDefaultController/GetAllSMIBranch/' + Id;
+
+        //});
+
+    </script>
+}
+
+
+
+

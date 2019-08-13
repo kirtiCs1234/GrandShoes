@@ -1,0 +1,162 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+
+namespace POSApi.Controllers.Admin
+{
+    [RoutePrefix("api/productStyle")]
+    public class ProductStylesController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+        public ProductStylesController()
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            db.Configuration.ProxyCreationEnabled = false;
+        }
+        // GET: api/ProductStyles
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<ProductStyle> GetProductStyles()
+        {
+            var list = db.ProductStyles.Where(x => x.IsActive == true).ToList();
+            return list;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getCode")]
+        public IQueryable<string> GetProductStyleCode()
+        {
+            var list = from s in db.ProductStyles.Where(x=>x.IsActive==true)
+                       select s.StyleSKU;
+            return list;
+        }
+        // GET: api/ProductStyles/5
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetail")]
+        [ResponseType(typeof(ProductStyle))]
+        public IHttpActionResult GetProductStyle(int id)
+        {
+            ProductStyle productStyle = db.ProductStyles.Find(id);
+            if (productStyle == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(productStyle);
+        }
+
+
+        //Get productStyle for AutoComplete
+        [HttpGet]
+        [Route("ProductStyleAutocomplete")]
+        public IHttpActionResult ProductStyleAutocomplete(string name)
+        {
+            var data = db.ProductStyles.Where(x => x.IsActive == true && x.StyleSKU.Contains(name)).ToList().Select(m => new Model.ProductStyle.ProductStyle
+            {
+                StyleSKU = m.StyleSKU,
+                Id = m.Id,
+            }).ToList();
+            return Ok(data);
+        }
+
+
+        // PUT: api/ProductStyles/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutProductStyle(int id, ProductStyle productStyle)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != productStyle.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(productStyle).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductStyleExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/ProductStyles
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(ProductStyle))]
+        public IHttpActionResult PostProductStyle(ProductStyle productStyle)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.ProductStyles.Add(productStyle);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = productStyle.Id }, productStyle);
+        }
+
+        // DELETE: api/ProductStyles/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("delete")]
+        [ResponseType(typeof(ProductStyle))]
+        public IHttpActionResult DeleteProductStyle(int id)
+        {
+            ProductStyle productStyle = db.ProductStyles.Find(id);
+            if (productStyle == null)
+            {
+                return NotFound();
+            }
+
+            db.ProductStyles.Remove(productStyle);
+            db.SaveChanges();
+
+            return Ok(productStyle);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool ProductStyleExists(int id)
+        {
+            return db.ProductStyles.Count(e => e.Id == id) > 0;
+        }
+    }
+}

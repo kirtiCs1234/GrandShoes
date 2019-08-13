@@ -1,0 +1,78 @@
+﻿@model Model.LogModel
+@{
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Detais </h4>
+        </div>
+        @using (Html.BeginForm("Details", "Log", FormMethod.Post, new { id = "viewForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            @*@Html.HiddenFor(model => model.RoleId)
+                    @Html.HiddenFor(model => model.CompanyId)
+                @Html.HiddenFor(model => model.PasswordHash)
+                @Html.HiddenFor(model => model.PasswordSalt)
+                @Html.HiddenFor(model => model.IsActive)
+                @Html.HiddenFor(model => model.IsVerified)*@
+
+            <div class="modal-body">
+
+                <div class="row  mrgn-b-lg">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>Name</label>
+                        @Html.DisplayFor(model => model.User.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name" } })
+                        @Html.ValidationMessageFor(model => model.User.FirstName, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>Action Name </label>
+                        @Html.DisplayFor(model => model.ActionLog.ActionLogType, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
+                        @Html.ValidationMessageFor(model => model.ActionLog.ActionLogType, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row  mrgn-b-lg">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>Date</label>
+                        @Html.DisplayFor(model => model.LogDate, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                        @Html.ValidationMessageFor(model => model.LogDate, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>Page</label>
+                        @Html.DisplayFor(model => model.Page.page1, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone" } })
+                        @Html.ValidationMessageFor(model => model.Page.page1, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row  mrgn-b-lg">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>Page Url</label>
+                        @Html.DisplayFor(model => model.Page.pageUrl, new { htmlAttributes = new { @class = "form-control", placeholder = "Confirm Password", type = "password" } })
+                        @Html.ValidationMessageFor(model => model.Page.pageUrl, "", new { @class = "text-danger" })
+
+
+                        @* @Html.DropDownList("RoleId", null, "--role--", htmlAttributes: new { @class = "form-control", Required = "true" })*@
+                    </div>
+
+                </div>
+            </div>
+            @*<div class="modal-footer">
+                <button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel">Cancel</button>
+                <input type="submit" value="Update" class="btn btn-success popup-savebtn" />
+            </div>*@
+        }
+    </div>
+</div>
+<script>
+
+    $("#viewForm").find("input").attr("disabled", true);
+    $("#viewForm").find("select").attr("disabled", true);
+    $("#viewForm").find(".popup-savebtn").hide();
+
+</script>
+

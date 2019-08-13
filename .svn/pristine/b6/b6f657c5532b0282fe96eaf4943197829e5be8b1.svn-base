@@ -1,0 +1,134 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+
+namespace POSApi.Controllers
+{
+    [RoutePrefix("api/productCategory")]
+    public class ProductCategoriesController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+
+        // GET: api/ProductCategories
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<ProductCategory> GetProductCategories()
+        {
+            return db.ProductCategories.ToList();
+        }
+
+        // GET: api/ProductCategories/5
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetail")]
+        [ResponseType(typeof(ProductCategory))]
+        public IHttpActionResult GetProductCategory(int id)
+        {
+            ProductCategory productCategory = db.ProductCategories.Find(id);
+            if (productCategory == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(productCategory);
+        }
+
+        // PUT: api/ProductCategories/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutProductCategory(int id, ProductCategory productCategory)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != productCategory.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(productCategory).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductCategoryExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/ProductCategories
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(ProductCategory))]
+        public IHttpActionResult PostProductCategory(ProductCategory productCategory)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.ProductCategories.Add(productCategory);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = productCategory.Id }, productCategory);
+        }
+
+        // DELETE: api/ProductCategories/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("delete")]
+        [ResponseType(typeof(ProductCategory))]
+        public IHttpActionResult DeleteProductCategory(int id)
+        {
+            ProductCategory productCategory = db.ProductCategories.Find(id);
+            if (productCategory == null)
+            {
+                return NotFound();
+            }
+            productCategory.IsActive = false;
+           //db.ProductCategories.Remove(productCategory);
+            db.SaveChanges();
+
+            return Ok(productCategory);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool ProductCategoryExists(int id)
+        {
+            return db.ProductCategories.Count(e => e.Id == id) > 0;
+        }
+    }
+}

@@ -1,0 +1,48 @@
+﻿using Helper;
+using Model;
+using Newtonsoft.Json;
+using Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.Service
+{
+   public class ProductSourceService :IProductSourceService
+    {
+        public List<ProductSourceModel> GetAll()
+        {
+            var body = "";
+            List<ProductSourceModel> ProductSourceModelList = ServerResponse.Invoke<List<ProductSourceModel>>("api/productSource/getDetails", body, "get");
+            return ProductSourceModelList;
+        }
+        public ProductSourceModel GetById(int? id)
+        {
+            var body = "";
+            ProductSourceModel ProductSourceById = ServerResponse.Invoke<ProductSourceModel>("api/productSource/getDetail?id=" + id, body, "get");
+            return ProductSourceById;
+        }
+        public ProductSourceModel Create(ProductSourceModel productSourceModel)
+        {
+            var body = JsonConvert.SerializeObject(productSourceModel);
+            ProductSourceModel ProductSourceCreate = ServerResponse.Invoke<ProductSourceModel>("api/productSource/create", body, "Post");
+            return ProductSourceCreate;
+        }
+        public ProductSourceModel Edit(ProductSourceModel productSourceModel)
+        {
+            var body = JsonConvert.SerializeObject(productSourceModel);
+            ProductSourceModel ProductSourceEdit = ServerResponse.Invoke<ProductSourceModel>("api/productSource/edit?id=" + productSourceModel.Id, body, "POST");
+            return ProductSourceEdit;
+        }
+        public ProductSourceModel Delete(ProductSourceModel productSourceModel)
+        {
+            var body = JsonConvert.SerializeObject(productSourceModel);
+            ProductSourceModel ProductSourceDelete = ServerResponse.Invoke<ProductSourceModel>("api/productSource/Delete?id=" + productSourceModel.Id, body, "POST");
+            return ProductSourceDelete;
+        }
+
+     
+    }
+}

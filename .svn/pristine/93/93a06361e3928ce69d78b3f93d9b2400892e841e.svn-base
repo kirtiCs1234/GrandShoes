@@ -1,0 +1,1100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GrandShoesModelStoreContainer" CdmEntityContainer="GrandShoesEntities">
+    <EntitySetMapping Name="ActionLogs">
+      <EntityTypeMapping TypeName="GrandShoesModel.ActionLog">
+        <MappingFragment StoreEntitySet="ActionLog">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ActionLogType" ColumnName="ActionLogType" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Areas">
+      <EntityTypeMapping TypeName="GrandShoesModel.Area">
+        <MappingFragment StoreEntitySet="Area">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Branches">
+      <EntityTypeMapping TypeName="GrandShoesModel.Branch">
+        <MappingFragment StoreEntitySet="Branch">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+          <ScalarProperty Name="DateOpen" ColumnName="DateOpen" />
+          <ScalarProperty Name="DateClosed" ColumnName="DateClosed" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="AreaCode" ColumnName="AreaCode" />
+          <ScalarProperty Name="IsSendStock" ColumnName="IsSendStock" />
+          <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+          <ScalarProperty Name="IsHeadOffice" ColumnName="IsHeadOffice" />
+          <ScalarProperty Name="StoreSize" ColumnName="StoreSize" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BranchDiscounts">
+      <EntityTypeMapping TypeName="GrandShoesModel.BranchDiscount">
+        <MappingFragment StoreEntitySet="BranchDiscount">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+          <ScalarProperty Name="DiscountID" ColumnName="DiscountID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Buyers">
+      <EntityTypeMapping TypeName="GrandShoesModel.Buyer">
+        <MappingFragment StoreEntitySet="Buyer">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="BuyLimit" ColumnName="BuyLimit" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartonManagements">
+      <EntityTypeMapping TypeName="GrandShoesModel.CartonManagement">
+        <MappingFragment StoreEntitySet="CartonManagement">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DistributionSummaryID" ColumnName="DistributionSummaryID" />
+          <ScalarProperty Name="TotalItems" ColumnName="TotalItems" />
+          <ScalarProperty Name="PackDate" ColumnName="PackDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartonManagementDetails">
+      <EntityTypeMapping TypeName="GrandShoesModel.CartonManagementDetail">
+        <MappingFragment StoreEntitySet="CartonManagementDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CartonManagementID" ColumnName="CartonManagementID" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Z01" ColumnName="Z01" />
+          <ScalarProperty Name="Z02" ColumnName="Z02" />
+          <ScalarProperty Name="Z03" ColumnName="Z03" />
+          <ScalarProperty Name="Z04" ColumnName="Z04" />
+          <ScalarProperty Name="Z05" ColumnName="Z05" />
+          <ScalarProperty Name="Z06" ColumnName="Z06" />
+          <ScalarProperty Name="Z07" ColumnName="Z07" />
+          <ScalarProperty Name="Z08" ColumnName="Z08" />
+          <ScalarProperty Name="Z09" ColumnName="Z09" />
+          <ScalarProperty Name="Z10" ColumnName="Z10" />
+          <ScalarProperty Name="Z11" ColumnName="Z11" />
+          <ScalarProperty Name="Z12" ColumnName="Z12" />
+          <ScalarProperty Name="Z13" ColumnName="Z13" />
+          <ScalarProperty Name="Z14" ColumnName="Z14" />
+          <ScalarProperty Name="Z15" ColumnName="Z15" />
+          <ScalarProperty Name="Z16" ColumnName="Z16" />
+          <ScalarProperty Name="Z17" ColumnName="Z17" />
+          <ScalarProperty Name="Z18" ColumnName="Z18" />
+          <ScalarProperty Name="Z19" ColumnName="Z19" />
+          <ScalarProperty Name="Z20" ColumnName="Z20" />
+          <ScalarProperty Name="Z21" ColumnName="Z21" />
+          <ScalarProperty Name="Z22" ColumnName="Z22" />
+          <ScalarProperty Name="Z23" ColumnName="Z23" />
+          <ScalarProperty Name="Z24" ColumnName="Z24" />
+          <ScalarProperty Name="Z25" ColumnName="Z25" />
+          <ScalarProperty Name="Z26" ColumnName="Z26" />
+          <ScalarProperty Name="Z27" ColumnName="Z27" />
+          <ScalarProperty Name="Z28" ColumnName="Z28" />
+          <ScalarProperty Name="Z29" ColumnName="Z29" />
+          <ScalarProperty Name="Z30" ColumnName="Z30" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clusters">
+      <EntityTypeMapping TypeName="GrandShoesModel.Cluster">
+        <MappingFragment StoreEntitySet="Cluster">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClusterBranches">
+      <EntityTypeMapping TypeName="GrandShoesModel.ClusterBranch">
+        <MappingFragment StoreEntitySet="ClusterBranch">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ClusterId" ColumnName="ClusterId" />
+          <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Colors">
+      <EntityTypeMapping TypeName="GrandShoesModel.Color">
+        <MappingFragment StoreEntitySet="Color">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ColorLong" ColumnName="ColorLong" />
+          <ScalarProperty Name="ColorShort" ColumnName="ColorShort" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Designations">
+      <EntityTypeMapping TypeName="GrandShoesModel.Designation">
+        <MappingFragment StoreEntitySet="Designation">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DesignationName" ColumnName="DesignationName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Discounts">
+      <EntityTypeMapping TypeName="GrandShoesModel.Discount">
+        <MappingFragment StoreEntitySet="Discount">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductSKU" ColumnName="ProductSKU" />
+          <ScalarProperty Name="StyleSKU" ColumnName="StyleSKU" />
+          <ScalarProperty Name="IsFlatDiscount" ColumnName="IsFlatDiscount" />
+          <ScalarProperty Name="IsQuantityDiscount" ColumnName="IsQuantityDiscount" />
+          <ScalarProperty Name="MinimumQuantity" ColumnName="MinimumQuantity" />
+          <ScalarProperty Name="DateFrom" ColumnName="DateFrom" />
+          <ScalarProperty Name="DateTo" ColumnName="DateTo" />
+          <ScalarProperty Name="PercentDiscount" ColumnName="PercentDiscount" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Logs">
+      <EntityTypeMapping TypeName="GrandShoesModel.Log">
+        <MappingFragment StoreEntitySet="Log">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ActionLogId" ColumnName="ActionLogId" />
+          <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+          <ScalarProperty Name="Comment" ColumnName="Comment" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="PageId" ColumnName="PageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MarkDowns">
+      <EntityTypeMapping TypeName="GrandShoesModel.MarkDown">
+        <MappingFragment StoreEntitySet="MarkDown">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductSKU" ColumnName="ProductSKU" />
+          <ScalarProperty Name="StyleSKU" ColumnName="StyleSKU" />
+          <ScalarProperty Name="OriginalSellingPrice" ColumnName="OriginalSellingPrice" />
+          <ScalarProperty Name="PercentageDecrease" ColumnName="PercentageDecrease" />
+          <ScalarProperty Name="IsPercentageOriginalPrice" ColumnName="IsPercentageOriginalPrice" />
+          <ScalarProperty Name="NewSellingPrice" ColumnName="NewSellingPrice" />
+          <ScalarProperty Name="NewCashPrice" ColumnName="NewCashPrice" />
+          <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MarkDownBranches">
+      <EntityTypeMapping TypeName="GrandShoesModel.MarkDownBranch">
+        <MappingFragment StoreEntitySet="MarkDownBranches">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="MarkDownID" ColumnName="MarkDownID" />
+          <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pages">
+      <EntityTypeMapping TypeName="GrandShoesModel.Page">
+        <MappingFragment StoreEntitySet="Page">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="page1" ColumnName="page" />
+          <ScalarProperty Name="pageUrl" ColumnName="pageUrl" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="GrandShoesModel.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductSKU" ColumnName="ProductSKU" />
+          <ScalarProperty Name="ProductStyleId" ColumnName="ProductStyleId" />
+          <ScalarProperty Name="LongDescription" ColumnName="LongDescription" />
+          <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+          <ScalarProperty Name="SizeGridID" ColumnName="SizeGridID" />
+          <ScalarProperty Name="RecommendedSellingPrice" ColumnName="RecommendedSellingPrice" />
+          <ScalarProperty Name="ActualSellingPrice" ColumnName="ActualSellingPrice" />
+          <ScalarProperty Name="IsVPI" ColumnName="IsVPI" />
+          <ScalarProperty Name="IsMarkDown" ColumnName="IsMarkDown" />
+          <ScalarProperty Name="SeasonID" ColumnName="SeasonID" />
+          <ScalarProperty Name="YearID" ColumnName="YearID" />
+          <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />
+          <ScalarProperty Name="ProductGroupID" ColumnName="ProductGroupID" />
+          <ScalarProperty Name="ProductSourceID" ColumnName="ProductSourceID" />
+          <ScalarProperty Name="SupplierStyle" ColumnName="SupplierStyle" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="BuyerID" ColumnName="BuyerID" />
+          <ScalarProperty Name="CostPriceUSD" ColumnName="CostPriceUSD" />
+          <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+          <ScalarProperty Name="IsAllowZero" ColumnName="IsAllowZero" />
+          <ScalarProperty Name="DefaultTemplateID" ColumnName="DefaultTemplateID" />
+          <ScalarProperty Name="MarkDownTemplateID" ColumnName="MarkDownTemplateID" />
+          <ScalarProperty Name="IsFreeGift" ColumnName="IsFreeGift" />
+          <ScalarProperty Name="IsConsignment" ColumnName="IsConsignment" />
+          <ScalarProperty Name="IsDiscontinue" ColumnName="IsDiscontinue" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ColorID" ColumnName="ColorID" />
+          <ScalarProperty Name="PrimaryImage" ColumnName="PrimaryImage" />
+          <ScalarProperty Name="Image1" ColumnName="Image1" />
+          <ScalarProperty Name="Image2" ColumnName="Image2" />
+          <ScalarProperty Name="Image3" ColumnName="Image3" />
+          <ScalarProperty Name="Image4" ColumnName="Image4" />
+          <ScalarProperty Name="AvailableSize" ColumnName="AvailableSize" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+          <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductCategories">
+      <EntityTypeMapping TypeName="GrandShoesModel.ProductCategory">
+        <MappingFragment StoreEntitySet="ProductCategory">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductGroups">
+      <EntityTypeMapping TypeName="GrandShoesModel.ProductGroup">
+        <MappingFragment StoreEntitySet="ProductGroup">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductSizes">
+      <EntityTypeMapping TypeName="GrandShoesModel.ProductSize">
+        <MappingFragment StoreEntitySet="ProductSize">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductSources">
+      <EntityTypeMapping TypeName="GrandShoesModel.ProductSource">
+        <MappingFragment StoreEntitySet="ProductSource">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Source" ColumnName="Source" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductStyles">
+      <EntityTypeMapping TypeName="GrandShoesModel.ProductStyle">
+        <MappingFragment StoreEntitySet="ProductStyle">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StyleSKU" ColumnName="StyleSKU" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PurchaseOrders">
+      <EntityTypeMapping TypeName="GrandShoesModel.PurchaseOrder">
+        <MappingFragment StoreEntitySet="PurchaseOrder">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+          <ScalarProperty Name="ClientInvoiceNumber" ColumnName="ClientInvoiceNumber" />
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="BuyerId" ColumnName="BuyerId" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="ExpectedDeliveryDate" ColumnName="ExpectedDeliveryDate" />
+          <ScalarProperty Name="FirstDeliveryDate" ColumnName="FirstDeliveryDate" />
+          <ScalarProperty Name="OrderCompletionDate" ColumnName="OrderCompletionDate" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="VatAmount" ColumnName="VatAmount" />
+          <ScalarProperty Name="PurchaseOrderStatusId" ColumnName="PurchaseOrderStatusId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PurchaseOrderItems">
+      <EntityTypeMapping TypeName="GrandShoesModel.PurchaseOrderItem">
+        <MappingFragment StoreEntitySet="PurchaseOrderItem">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+          <ScalarProperty Name="ProductStyleId" ColumnName="ProductStyleId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="SizeGridId" ColumnName="SizeGridId" />
+          <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+          <ScalarProperty Name="SuplierStyle" ColumnName="SuplierStyle" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="ItemSize1" ColumnName="ItemSize1" />
+          <ScalarProperty Name="ItemSize2" ColumnName="ItemSize2" />
+          <ScalarProperty Name="ItemSize3" ColumnName="ItemSize3" />
+          <ScalarProperty Name="ItemSize4" ColumnName="ItemSize4" />
+          <ScalarProperty Name="ItemSize5" ColumnName="ItemSize5" />
+          <ScalarProperty Name="ItemSize6" ColumnName="ItemSize6" />
+          <ScalarProperty Name="ItemSize7" ColumnName="ItemSize7" />
+          <ScalarProperty Name="ItemSize8" ColumnName="ItemSize8" />
+          <ScalarProperty Name="ItemSize9" ColumnName="ItemSize9" />
+          <ScalarProperty Name="ItemSize10" ColumnName="ItemSize10" />
+          <ScalarProperty Name="ItemSize11" ColumnName="ItemSize11" />
+          <ScalarProperty Name="ItemSize12" ColumnName="ItemSize12" />
+          <ScalarProperty Name="ItemSize13" ColumnName="ItemSize13" />
+          <ScalarProperty Name="ItemSize14" ColumnName="ItemSize14" />
+          <ScalarProperty Name="ItemSize15" ColumnName="ItemSize15" />
+          <ScalarProperty Name="ItemSize16" ColumnName="ItemSize16" />
+          <ScalarProperty Name="ItemSize17" ColumnName="ItemSize17" />
+          <ScalarProperty Name="ItemSize18" ColumnName="ItemSize18" />
+          <ScalarProperty Name="ItemSize19" ColumnName="ItemSize19" />
+          <ScalarProperty Name="ItemSize20" ColumnName="ItemSize20" />
+          <ScalarProperty Name="ItemSize21" ColumnName="ItemSize21" />
+          <ScalarProperty Name="ItemSize22" ColumnName="ItemSize22" />
+          <ScalarProperty Name="ItemSize23" ColumnName="ItemSize23" />
+          <ScalarProperty Name="ItemSize24" ColumnName="ItemSize24" />
+          <ScalarProperty Name="ItemSize25" ColumnName="ItemSize25" />
+          <ScalarProperty Name="ItemSize26" ColumnName="ItemSize26" />
+          <ScalarProperty Name="ItemSize27" ColumnName="ItemSize27" />
+          <ScalarProperty Name="ItemSize28" ColumnName="ItemSize28" />
+          <ScalarProperty Name="ItemSize29" ColumnName="ItemSize29" />
+          <ScalarProperty Name="ItemSize30" ColumnName="ItemSize30" />
+          <ScalarProperty Name="QuantitySize1" ColumnName="QuantitySize1" />
+          <ScalarProperty Name="QuantitySize2" ColumnName="QuantitySize2" />
+          <ScalarProperty Name="QuantitySize3" ColumnName="QuantitySize3" />
+          <ScalarProperty Name="QuantitySize4" ColumnName="QuantitySize4" />
+          <ScalarProperty Name="QuantitySize5" ColumnName="QuantitySize5" />
+          <ScalarProperty Name="QuantitySize6" ColumnName="QuantitySize6" />
+          <ScalarProperty Name="QuantitySize7" ColumnName="QuantitySize7" />
+          <ScalarProperty Name="QuantitySize8" ColumnName="QuantitySize8" />
+          <ScalarProperty Name="QuantitySize9" ColumnName="QuantitySize9" />
+          <ScalarProperty Name="QuantitySize10" ColumnName="QuantitySize10" />
+          <ScalarProperty Name="QuantitySize11" ColumnName="QuantitySize11" />
+          <ScalarProperty Name="QuantitySize12" ColumnName="QuantitySize12" />
+          <ScalarProperty Name="QuantitySize13" ColumnName="QuantitySize13" />
+          <ScalarProperty Name="QuantitySize14" ColumnName="QuantitySize14" />
+          <ScalarProperty Name="QuantitySize15" ColumnName="QuantitySize15" />
+          <ScalarProperty Name="QuantitySize16" ColumnName="QuantitySize16" />
+          <ScalarProperty Name="QuantitySize17" ColumnName="QuantitySize17" />
+          <ScalarProperty Name="QuantitySize18" ColumnName="QuantitySize18" />
+          <ScalarProperty Name="QuantitySize19" ColumnName="QuantitySize19" />
+          <ScalarProperty Name="QuantitySize20" ColumnName="QuantitySize20" />
+          <ScalarProperty Name="QuantitySize21" ColumnName="QuantitySize21" />
+          <ScalarProperty Name="QuantitySize22" ColumnName="QuantitySize22" />
+          <ScalarProperty Name="QuantitySize23" ColumnName="QuantitySize23" />
+          <ScalarProperty Name="QuantitySize24" ColumnName="QuantitySize24" />
+          <ScalarProperty Name="QuantitySize25" ColumnName="QuantitySize25" />
+          <ScalarProperty Name="QuantitySize26" ColumnName="QuantitySize26" />
+          <ScalarProperty Name="QuantitySize27" ColumnName="QuantitySize27" />
+          <ScalarProperty Name="QuantitySize28" ColumnName="QuantitySize28" />
+          <ScalarProperty Name="QuantitySize29" ColumnName="QuantitySize29" />
+          <ScalarProperty Name="QuantitySize30" ColumnName="QuantitySize30" />
+          <ScalarProperty Name="CostSize1" ColumnName="CostSize1" />
+          <ScalarProperty Name="CostSize2" ColumnName="CostSize2" />
+          <ScalarProperty Name="CostSize3" ColumnName="CostSize3" />
+          <ScalarProperty Name="CostSize4" ColumnName="CostSize4" />
+          <ScalarProperty Name="CostSize5" ColumnName="CostSize5" />
+          <ScalarProperty Name="CostSize6" ColumnName="CostSize6" />
+          <ScalarProperty Name="CostSize7" ColumnName="CostSize7" />
+          <ScalarProperty Name="CostSize8" ColumnName="CostSize8" />
+          <ScalarProperty Name="CostSize9" ColumnName="CostSize9" />
+          <ScalarProperty Name="CostSize10" ColumnName="CostSize10" />
+          <ScalarProperty Name="CostSize11" ColumnName="CostSize11" />
+          <ScalarProperty Name="CostSize12" ColumnName="CostSize12" />
+          <ScalarProperty Name="CostSize13" ColumnName="CostSize13" />
+          <ScalarProperty Name="CostSize14" ColumnName="CostSize14" />
+          <ScalarProperty Name="CostSize15" ColumnName="CostSize15" />
+          <ScalarProperty Name="CostSize16" ColumnName="CostSize16" />
+          <ScalarProperty Name="CostSize17" ColumnName="CostSize17" />
+          <ScalarProperty Name="CostSize18" ColumnName="CostSize18" />
+          <ScalarProperty Name="CostSize19" ColumnName="CostSize19" />
+          <ScalarProperty Name="CostSize20" ColumnName="CostSize20" />
+          <ScalarProperty Name="CostSize21" ColumnName="CostSize21" />
+          <ScalarProperty Name="CostSize22" ColumnName="CostSize22" />
+          <ScalarProperty Name="CostSize23" ColumnName="CostSize23" />
+          <ScalarProperty Name="CostSize24" ColumnName="CostSize24" />
+          <ScalarProperty Name="CostSize25" ColumnName="CostSize25" />
+          <ScalarProperty Name="CostSize26" ColumnName="CostSize26" />
+          <ScalarProperty Name="CostSize27" ColumnName="CostSize27" />
+          <ScalarProperty Name="CostSize28" ColumnName="CostSize28" />
+          <ScalarProperty Name="CostSize29" ColumnName="CostSize29" />
+          <ScalarProperty Name="CostSize30" ColumnName="CostSize30" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+          <ScalarProperty Name="OrderItemDate" ColumnName="OrderItemDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PurchaseOrderStatus">
+      <EntityTypeMapping TypeName="GrandShoesModel.PurchaseOrderStatu">
+        <MappingFragment StoreEntitySet="PurchaseOrderStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceiptOrderItems">
+      <EntityTypeMapping TypeName="GrandShoesModel.ReceiptOrderItem">
+        <MappingFragment StoreEntitySet="ReceiptOrderItem">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ReceiptOrderId" ColumnName="ReceiptOrderId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="ColumnNumber" ColumnName="ColumnNumber" />
+          <ScalarProperty Name="SalesCost" ColumnName="SalesCost" />
+          <ScalarProperty Name="Quantity01" ColumnName="Quantity01" />
+          <ScalarProperty Name="Quantity02" ColumnName="Quantity02" />
+          <ScalarProperty Name="Quantity03" ColumnName="Quantity03" />
+          <ScalarProperty Name="Quantity04" ColumnName="Quantity04" />
+          <ScalarProperty Name="Quantity05" ColumnName="Quantity05" />
+          <ScalarProperty Name="Quantity06" ColumnName="Quantity06" />
+          <ScalarProperty Name="Quantity07" ColumnName="Quantity07" />
+          <ScalarProperty Name="Quantity08" ColumnName="Quantity08" />
+          <ScalarProperty Name="Quantity09" ColumnName="Quantity09" />
+          <ScalarProperty Name="Quantity10" ColumnName="Quantity10" />
+          <ScalarProperty Name="Quantity11" ColumnName="Quantity11" />
+          <ScalarProperty Name="Quantity12" ColumnName="Quantity12" />
+          <ScalarProperty Name="Quantity13" ColumnName="Quantity13" />
+          <ScalarProperty Name="Quantity14" ColumnName="Quantity14" />
+          <ScalarProperty Name="Quantity15" ColumnName="Quantity15" />
+          <ScalarProperty Name="Quantity16" ColumnName="Quantity16" />
+          <ScalarProperty Name="Quantity17" ColumnName="Quantity17" />
+          <ScalarProperty Name="Quantity18" ColumnName="Quantity18" />
+          <ScalarProperty Name="Quantity19" ColumnName="Quantity19" />
+          <ScalarProperty Name="Quantity20" ColumnName="Quantity20" />
+          <ScalarProperty Name="Quantity21" ColumnName="Quantity21" />
+          <ScalarProperty Name="Quantity22" ColumnName="Quantity22" />
+          <ScalarProperty Name="Quantity23" ColumnName="Quantity23" />
+          <ScalarProperty Name="Quantity24" ColumnName="Quantity24" />
+          <ScalarProperty Name="Quantity25" ColumnName="Quantity25" />
+          <ScalarProperty Name="Quantity26" ColumnName="Quantity26" />
+          <ScalarProperty Name="Quantity27" ColumnName="Quantity27" />
+          <ScalarProperty Name="Quantity28" ColumnName="Quantity28" />
+          <ScalarProperty Name="Quantity29" ColumnName="Quantity29" />
+          <ScalarProperty Name="Quantity30" ColumnName="Quantity30" />
+          <ScalarProperty Name="Cost01" ColumnName="Cost01" />
+          <ScalarProperty Name="Cost02" ColumnName="Cost02" />
+          <ScalarProperty Name="Cost03" ColumnName="Cost03" />
+          <ScalarProperty Name="Cost04" ColumnName="Cost04" />
+          <ScalarProperty Name="Cost05" ColumnName="Cost05" />
+          <ScalarProperty Name="Cost06" ColumnName="Cost06" />
+          <ScalarProperty Name="Cost07" ColumnName="Cost07" />
+          <ScalarProperty Name="Cost08" ColumnName="Cost08" />
+          <ScalarProperty Name="Cost09" ColumnName="Cost09" />
+          <ScalarProperty Name="Cost10" ColumnName="Cost10" />
+          <ScalarProperty Name="Cost11" ColumnName="Cost11" />
+          <ScalarProperty Name="Cost12" ColumnName="Cost12" />
+          <ScalarProperty Name="Cost13" ColumnName="Cost13" />
+          <ScalarProperty Name="Cost14" ColumnName="Cost14" />
+          <ScalarProperty Name="Cost15" ColumnName="Cost15" />
+          <ScalarProperty Name="Cost16" ColumnName="Cost16" />
+          <ScalarProperty Name="Cost17" ColumnName="Cost17" />
+          <ScalarProperty Name="Cost18" ColumnName="Cost18" />
+          <ScalarProperty Name="Cost19" ColumnName="Cost19" />
+          <ScalarProperty Name="Cost20" ColumnName="Cost20" />
+          <ScalarProperty Name="Cost21" ColumnName="Cost21" />
+          <ScalarProperty Name="Cost22" ColumnName="Cost22" />
+          <ScalarProperty Name="Cost23" ColumnName="Cost23" />
+          <ScalarProperty Name="Cost24" ColumnName="Cost24" />
+          <ScalarProperty Name="Cost25" ColumnName="Cost25" />
+          <ScalarProperty Name="Cost26" ColumnName="Cost26" />
+          <ScalarProperty Name="Cost27" ColumnName="Cost27" />
+          <ScalarProperty Name="Cost28" ColumnName="Cost28" />
+          <ScalarProperty Name="Cost29" ColumnName="Cost29" />
+          <ScalarProperty Name="Cost30" ColumnName="Cost30" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+          <ScalarProperty Name="ProductStyleId" ColumnName="ProductStyleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReceiveOrders">
+      <EntityTypeMapping TypeName="GrandShoesModel.ReceiveOrder">
+        <MappingFragment StoreEntitySet="ReceiveOrder">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ReceiptNumber" ColumnName="ReceiptNumber" />
+          <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+          <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+          <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+          <ScalarProperty Name="TotalVAT" ColumnName="TotalVAT" />
+          <ScalarProperty Name="SupplierInvoice" ColumnName="SupplierInvoice" />
+          <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+          <ScalarProperty Name="ReceiptStatusId" ColumnName="ReceiptStatusId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="GrandShoesModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Seasons">
+      <EntityTypeMapping TypeName="GrandShoesModel.Season">
+        <MappingFragment StoreEntitySet="Season">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SizeGrids">
+      <EntityTypeMapping TypeName="GrandShoesModel.SizeGrid">
+        <MappingFragment StoreEntitySet="SizeGrid">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="GridNumber" ColumnName="GridNumber" />
+          <ScalarProperty Name="Z01" ColumnName="Z01" />
+          <ScalarProperty Name="Z02" ColumnName="Z02" />
+          <ScalarProperty Name="Z03" ColumnName="Z03" />
+          <ScalarProperty Name="Z04" ColumnName="Z04" />
+          <ScalarProperty Name="Z05" ColumnName="Z05" />
+          <ScalarProperty Name="Z06" ColumnName="Z06" />
+          <ScalarProperty Name="Z07" ColumnName="Z07" />
+          <ScalarProperty Name="Z08" ColumnName="Z08" />
+          <ScalarProperty Name="Z09" ColumnName="Z09" />
+          <ScalarProperty Name="Z10" ColumnName="Z10" />
+          <ScalarProperty Name="Z11" ColumnName="Z11" />
+          <ScalarProperty Name="Z12" ColumnName="Z12" />
+          <ScalarProperty Name="Z13" ColumnName="Z13" />
+          <ScalarProperty Name="Z14" ColumnName="Z14" />
+          <ScalarProperty Name="Z15" ColumnName="Z15" />
+          <ScalarProperty Name="Z16" ColumnName="Z16" />
+          <ScalarProperty Name="Z17" ColumnName="Z17" />
+          <ScalarProperty Name="Z18" ColumnName="Z18" />
+          <ScalarProperty Name="Z19" ColumnName="Z19" />
+          <ScalarProperty Name="Z20" ColumnName="Z20" />
+          <ScalarProperty Name="Z21" ColumnName="Z21" />
+          <ScalarProperty Name="Z22" ColumnName="Z22" />
+          <ScalarProperty Name="Z23" ColumnName="Z23" />
+          <ScalarProperty Name="Z24" ColumnName="Z24" />
+          <ScalarProperty Name="Z25" ColumnName="Z25" />
+          <ScalarProperty Name="Z26" ColumnName="Z26" />
+          <ScalarProperty Name="Z27" ColumnName="Z27" />
+          <ScalarProperty Name="Z28" ColumnName="Z28" />
+          <ScalarProperty Name="Z29" ColumnName="Z29" />
+          <ScalarProperty Name="Z30" ColumnName="Z30" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SMIBranchDefaults">
+      <EntityTypeMapping TypeName="GrandShoesModel.SMIBranchDefault">
+        <MappingFragment StoreEntitySet="SMIBranchDefault">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FromBranchId" ColumnName="FromBranchId" />
+          <ScalarProperty Name="ToBranchId" ColumnName="ToBranchId" />
+          <ScalarProperty Name="Distance" ColumnName="Distance" />
+          <ScalarProperty Name="IsPreferredRoute" ColumnName="IsPreferredRoute" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Staffs">
+      <EntityTypeMapping TypeName="GrandShoesModel.Staff">
+        <MappingFragment StoreEntitySet="Staff">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="DesignationID" ColumnName="DesignationID" />
+          <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+          <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+          <ScalarProperty Name="FingerPrintAccess" ColumnName="FingerPrintAccess" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StaffCommitions">
+      <EntityTypeMapping TypeName="GrandShoesModel.StaffCommition">
+        <MappingFragment StoreEntitySet="StaffCommition">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SaleId" ColumnName="SaleId" />
+          <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="SaleStatusId" ColumnName="SaleStatusId" />
+          <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StaffMembers">
+      <EntityTypeMapping TypeName="GrandShoesModel.StaffMember">
+        <MappingFragment StoreEntitySet="StaffMember">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="StaffRoleId" ColumnName="StaffRoleId" />
+          <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+          <ScalarProperty Name="ProfilePic" ColumnName="ProfilePic" />
+          <ScalarProperty Name="StaffStatusId" ColumnName="StaffStatusId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsFingurPrintAccess" ColumnName="IsFingurPrintAccess" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StaffRoles">
+      <EntityTypeMapping TypeName="GrandShoesModel.StaffRole">
+        <MappingFragment StoreEntitySet="StaffRole">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StaffStatus">
+      <EntityTypeMapping TypeName="GrandShoesModel.StaffStatu">
+        <MappingFragment StoreEntitySet="StaffStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockAudits">
+      <EntityTypeMapping TypeName="GrandShoesModel.StockAudit">
+        <MappingFragment StoreEntitySet="StockAudit">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+          <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+          <ScalarProperty Name="Quantity01" ColumnName="Quantity01" />
+          <ScalarProperty Name="Quantity02" ColumnName="Quantity02" />
+          <ScalarProperty Name="Quantity03" ColumnName="Quantity03" />
+          <ScalarProperty Name="Quantity04" ColumnName="Quantity04" />
+          <ScalarProperty Name="Quantity05" ColumnName="Quantity05" />
+          <ScalarProperty Name="Quantity06" ColumnName="Quantity06" />
+          <ScalarProperty Name="Quantity07" ColumnName="Quantity07" />
+          <ScalarProperty Name="Quantity08" ColumnName="Quantity08" />
+          <ScalarProperty Name="Quantity09" ColumnName="Quantity09" />
+          <ScalarProperty Name="Quantity10" ColumnName="Quantity10" />
+          <ScalarProperty Name="Quantity11" ColumnName="Quantity11" />
+          <ScalarProperty Name="Quantity12" ColumnName="Quantity12" />
+          <ScalarProperty Name="Quantity13" ColumnName="Quantity13" />
+          <ScalarProperty Name="Quantity14" ColumnName="Quantity14" />
+          <ScalarProperty Name="Quantity15" ColumnName="Quantity15" />
+          <ScalarProperty Name="Quantity16" ColumnName="Quantity16" />
+          <ScalarProperty Name="Quantity17" ColumnName="Quantity17" />
+          <ScalarProperty Name="Quantity18" ColumnName="Quantity18" />
+          <ScalarProperty Name="Quantity19" ColumnName="Quantity19" />
+          <ScalarProperty Name="Quantity20" ColumnName="Quantity20" />
+          <ScalarProperty Name="Quantity21" ColumnName="Quantity21" />
+          <ScalarProperty Name="Quantity22" ColumnName="Quantity22" />
+          <ScalarProperty Name="Quantity23" ColumnName="Quantity23" />
+          <ScalarProperty Name="Quantity24" ColumnName="Quantity24" />
+          <ScalarProperty Name="Quantity25" ColumnName="Quantity25" />
+          <ScalarProperty Name="Quantity26" ColumnName="Quantity26" />
+          <ScalarProperty Name="Quantity27" ColumnName="Quantity27" />
+          <ScalarProperty Name="Quantity28" ColumnName="Quantity28" />
+          <ScalarProperty Name="Quantity29" ColumnName="Quantity29" />
+          <ScalarProperty Name="Quantity30" ColumnName="Quantity30" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockBranchInventories">
+      <EntityTypeMapping TypeName="GrandShoesModel.StockBranchInventory">
+        <MappingFragment StoreEntitySet="StockBranchInventory">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+          <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+          <ScalarProperty Name="Quantity01" ColumnName="Quantity01" />
+          <ScalarProperty Name="Quantity02" ColumnName="Quantity02" />
+          <ScalarProperty Name="Quantity03" ColumnName="Quantity03" />
+          <ScalarProperty Name="Quantity04" ColumnName="Quantity04" />
+          <ScalarProperty Name="Quantity05" ColumnName="Quantity05" />
+          <ScalarProperty Name="Quantity06" ColumnName="Quantity06" />
+          <ScalarProperty Name="Quantity07" ColumnName="Quantity07" />
+          <ScalarProperty Name="Quantity08" ColumnName="Quantity08" />
+          <ScalarProperty Name="Quantity09" ColumnName="Quantity09" />
+          <ScalarProperty Name="Quantity10" ColumnName="Quantity10" />
+          <ScalarProperty Name="Quantity11" ColumnName="Quantity11" />
+          <ScalarProperty Name="Quantity12" ColumnName="Quantity12" />
+          <ScalarProperty Name="Quantity13" ColumnName="Quantity13" />
+          <ScalarProperty Name="Quantity14" ColumnName="Quantity14" />
+          <ScalarProperty Name="Quantity15" ColumnName="Quantity15" />
+          <ScalarProperty Name="Quantity16" ColumnName="Quantity16" />
+          <ScalarProperty Name="Quantity17" ColumnName="Quantity17" />
+          <ScalarProperty Name="Quantity18" ColumnName="Quantity18" />
+          <ScalarProperty Name="Quantity19" ColumnName="Quantity19" />
+          <ScalarProperty Name="Quantity20" ColumnName="Quantity20" />
+          <ScalarProperty Name="Quantity21" ColumnName="Quantity21" />
+          <ScalarProperty Name="Quantity22" ColumnName="Quantity22" />
+          <ScalarProperty Name="Quantity23" ColumnName="Quantity23" />
+          <ScalarProperty Name="Quantity24" ColumnName="Quantity24" />
+          <ScalarProperty Name="Quantity25" ColumnName="Quantity25" />
+          <ScalarProperty Name="Quantity26" ColumnName="Quantity26" />
+          <ScalarProperty Name="Quantity27" ColumnName="Quantity27" />
+          <ScalarProperty Name="Quantity28" ColumnName="Quantity28" />
+          <ScalarProperty Name="Quantity29" ColumnName="Quantity29" />
+          <ScalarProperty Name="Quantity30" ColumnName="Quantity30" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+          <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockBranchTransactions">
+      <EntityTypeMapping TypeName="GrandShoesModel.StockBranchTransaction">
+        <MappingFragment StoreEntitySet="StockBranchTransaction">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="StockTransactionTypeId" ColumnName="StockTransactionTypeId" />
+          <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+          <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+          <ScalarProperty Name="Quantity01" ColumnName="Quantity01" />
+          <ScalarProperty Name="Quantity02" ColumnName="Quantity02" />
+          <ScalarProperty Name="Quantity03" ColumnName="Quantity03" />
+          <ScalarProperty Name="Quantity04" ColumnName="Quantity04" />
+          <ScalarProperty Name="Quantity05" ColumnName="Quantity05" />
+          <ScalarProperty Name="Quantity06" ColumnName="Quantity06" />
+          <ScalarProperty Name="Quantity07" ColumnName="Quantity07" />
+          <ScalarProperty Name="Quantity08" ColumnName="Quantity08" />
+          <ScalarProperty Name="Quantity10" ColumnName="Quantity10" />
+          <ScalarProperty Name="Quantity11" ColumnName="Quantity11" />
+          <ScalarProperty Name="Quantity12" ColumnName="Quantity12" />
+          <ScalarProperty Name="Quantity13" ColumnName="Quantity13" />
+          <ScalarProperty Name="Quantity14" ColumnName="Quantity14" />
+          <ScalarProperty Name="Quantity15" ColumnName="Quantity15" />
+          <ScalarProperty Name="Quantity16" ColumnName="Quantity16" />
+          <ScalarProperty Name="Quantity17" ColumnName="Quantity17" />
+          <ScalarProperty Name="Quantity18" ColumnName="Quantity18" />
+          <ScalarProperty Name="Quantity19" ColumnName="Quantity19" />
+          <ScalarProperty Name="Quantity20" ColumnName="Quantity20" />
+          <ScalarProperty Name="Quantity21" ColumnName="Quantity21" />
+          <ScalarProperty Name="Quantity22" ColumnName="Quantity22" />
+          <ScalarProperty Name="Quantity23" ColumnName="Quantity23" />
+          <ScalarProperty Name="Quantity24" ColumnName="Quantity24" />
+          <ScalarProperty Name="Quantity25" ColumnName="Quantity25" />
+          <ScalarProperty Name="Quantity26" ColumnName="Quantity26" />
+          <ScalarProperty Name="Quantity27" ColumnName="Quantity27" />
+          <ScalarProperty Name="Quantity28" ColumnName="Quantity28" />
+          <ScalarProperty Name="Quantity29" ColumnName="Quantity29" />
+          <ScalarProperty Name="Quantity30" ColumnName="Quantity30" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockDistributions">
+      <EntityTypeMapping TypeName="GrandShoesModel.StockDistribution">
+        <MappingFragment StoreEntitySet="StockDistribution">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="DistributionDate" ColumnName="DistributionDate" />
+          <ScalarProperty Name="StockDistributionStatusId" ColumnName="StockDistributionStatusId" />
+          <ScalarProperty Name="Quantity01" ColumnName="Quantity01" />
+          <ScalarProperty Name="Quantity02" ColumnName="Quantity02" />
+          <ScalarProperty Name="Quantity03" ColumnName="Quantity03" />
+          <ScalarProperty Name="Quantity04" ColumnName="Quantity04" />
+          <ScalarProperty Name="Quantity05" ColumnName="Quantity05" />
+          <ScalarProperty Name="Quantity06" ColumnName="Quantity06" />
+          <ScalarProperty Name="Quantity07" ColumnName="Quantity07" />
+          <ScalarProperty Name="Quantity08" ColumnName="Quantity08" />
+          <ScalarProperty Name="Quantity09" ColumnName="Quantity09" />
+          <ScalarProperty Name="Quantity10" ColumnName="Quantity10" />
+          <ScalarProperty Name="Quantity11" ColumnName="Quantity11" />
+          <ScalarProperty Name="Quantity12" ColumnName="Quantity12" />
+          <ScalarProperty Name="Quantity13" ColumnName="Quantity13" />
+          <ScalarProperty Name="Quantity14" ColumnName="Quantity14" />
+          <ScalarProperty Name="Quantity15" ColumnName="Quantity15" />
+          <ScalarProperty Name="Quantity16" ColumnName="Quantity16" />
+          <ScalarProperty Name="Quantity17" ColumnName="Quantity17" />
+          <ScalarProperty Name="Quantity18" ColumnName="Quantity18" />
+          <ScalarProperty Name="Quantity19" ColumnName="Quantity19" />
+          <ScalarProperty Name="Quantity20" ColumnName="Quantity20" />
+          <ScalarProperty Name="Quantity21" ColumnName="Quantity21" />
+          <ScalarProperty Name="Quantity22" ColumnName="Quantity22" />
+          <ScalarProperty Name="Quantity23" ColumnName="Quantity23" />
+          <ScalarProperty Name="Quantity24" ColumnName="Quantity24" />
+          <ScalarProperty Name="Quantity25" ColumnName="Quantity25" />
+          <ScalarProperty Name="Quantity26" ColumnName="Quantity26" />
+          <ScalarProperty Name="Quantity27" ColumnName="Quantity27" />
+          <ScalarProperty Name="Quantity28" ColumnName="Quantity28" />
+          <ScalarProperty Name="Quantity29" ColumnName="Quantity29" />
+          <ScalarProperty Name="Quantity30" ColumnName="Quantity30" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="StockDistributionSummaryId" ColumnName="StockDistributionSummaryId" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockDistributionStatus">
+      <EntityTypeMapping TypeName="GrandShoesModel.StockDistributionStatu">
+        <MappingFragment StoreEntitySet="StockDistributionStatus">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockDistributionSummaries">
+      <EntityTypeMapping TypeName="GrandShoesModel.StockDistributionSummary">
+        <MappingFragment StoreEntitySet="StockDistributionSummary">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DistributionNumber" ColumnName="DistributionNumber" />
+          <ScalarProperty Name="DateOpen" ColumnName="DateOpen" />
+          <ScalarProperty Name="DateClose" ColumnName="DateClose" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockInventories">
+      <EntityTypeMapping TypeName="GrandShoesModel.StockInventory">
+        <MappingFragment StoreEntitySet="StockInventory">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="ProductStyleId" ColumnName="ProductStyleId" />
+          <ScalarProperty Name="BracketNumber" ColumnName="BracketNumber" />
+          <ScalarProperty Name="ColumnNumber" ColumnName="ColumnNumber" />
+          <ScalarProperty Name="Quantity01" ColumnName="Quantity01" />
+          <ScalarProperty Name="Quantity02" ColumnName="Quantity02" />
+          <ScalarProperty Name="Quantity03" ColumnName="Quantity03" />
+          <ScalarProperty Name="Quantity04" ColumnName="Quantity04" />
+          <ScalarProperty Name="Quantity05" ColumnName="Quantity05" />
+          <ScalarProperty Name="Quantity06" ColumnName="Quantity06" />
+          <ScalarProperty Name="Quantity07" ColumnName="Quantity07" />
+          <ScalarProperty Name="Quantity08" ColumnName="Quantity08" />
+          <ScalarProperty Name="Quantity09" ColumnName="Quantity09" />
+          <ScalarProperty Name="Quantity10" ColumnName="Quantity10" />
+          <ScalarProperty Name="Quantity11" ColumnName="Quantity11" />
+          <ScalarProperty Name="Quantity12" ColumnName="Quantity12" />
+          <ScalarProperty Name="Quantity13" ColumnName="Quantity13" />
+          <ScalarProperty Name="Quantity14" ColumnName="Quantity14" />
+          <ScalarProperty Name="Quantity15" ColumnName="Quantity15" />
+          <ScalarProperty Name="Quantity16" ColumnName="Quantity16" />
+          <ScalarProperty Name="Quantity17" ColumnName="Quantity17" />
+          <ScalarProperty Name="Quantity18" ColumnName="Quantity18" />
+          <ScalarProperty Name="Quantity19" ColumnName="Quantity19" />
+          <ScalarProperty Name="Quantity20" ColumnName="Quantity20" />
+          <ScalarProperty Name="Quantity21" ColumnName="Quantity21" />
+          <ScalarProperty Name="Quantity22" ColumnName="Quantity22" />
+          <ScalarProperty Name="Quantity23" ColumnName="Quantity23" />
+          <ScalarProperty Name="Quantity24" ColumnName="Quantity24" />
+          <ScalarProperty Name="Quantity25" ColumnName="Quantity25" />
+          <ScalarProperty Name="Quantity26" ColumnName="Quantity26" />
+          <ScalarProperty Name="Quantity27" ColumnName="Quantity27" />
+          <ScalarProperty Name="Quantity28" ColumnName="Quantity28" />
+          <ScalarProperty Name="Quantity29" ColumnName="Quantity29" />
+          <ScalarProperty Name="Quantity30" ColumnName="Quantity30" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockSupplierTransactions">
+      <EntityTypeMapping TypeName="GrandShoesModel.StockSupplierTransaction">
+        <MappingFragment StoreEntitySet="StockSupplierTransaction">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="StockTransactionTypeId" ColumnName="StockTransactionTypeId" />
+          <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+          <ScalarProperty Name="Quantity01" ColumnName="Quantity01" />
+          <ScalarProperty Name="Quantity02" ColumnName="Quantity02" />
+          <ScalarProperty Name="Quantity03" ColumnName="Quantity03" />
+          <ScalarProperty Name="Quantity04" ColumnName="Quantity04" />
+          <ScalarProperty Name="Quantity05" ColumnName="Quantity05" />
+          <ScalarProperty Name="Quantity06" ColumnName="Quantity06" />
+          <ScalarProperty Name="Quantity07" ColumnName="Quantity07" />
+          <ScalarProperty Name="Quantity08" ColumnName="Quantity08" />
+          <ScalarProperty Name="Quantity09" ColumnName="Quantity09" />
+          <ScalarProperty Name="Quantity10" ColumnName="Quantity10" />
+          <ScalarProperty Name="Quantity11" ColumnName="Quantity11" />
+          <ScalarProperty Name="Quantity12" ColumnName="Quantity12" />
+          <ScalarProperty Name="Quantity13" ColumnName="Quantity13" />
+          <ScalarProperty Name="Quantity14" ColumnName="Quantity14" />
+          <ScalarProperty Name="Quantity15" ColumnName="Quantity15" />
+          <ScalarProperty Name="Quantity16" ColumnName="Quantity16" />
+          <ScalarProperty Name="Quantity17" ColumnName="Quantity17" />
+          <ScalarProperty Name="Quantity18" ColumnName="Quantity18" />
+          <ScalarProperty Name="Quantity19" ColumnName="Quantity19" />
+          <ScalarProperty Name="Quantity20" ColumnName="Quantity20" />
+          <ScalarProperty Name="Quantity21" ColumnName="Quantity21" />
+          <ScalarProperty Name="Quantity22" ColumnName="Quantity22" />
+          <ScalarProperty Name="Quantity23" ColumnName="Quantity23" />
+          <ScalarProperty Name="Quantity24" ColumnName="Quantity24" />
+          <ScalarProperty Name="Quantity25" ColumnName="Quantity25" />
+          <ScalarProperty Name="Quantity26" ColumnName="Quantity26" />
+          <ScalarProperty Name="Quantity27" ColumnName="Quantity27" />
+          <ScalarProperty Name="Quantity28" ColumnName="Quantity28" />
+          <ScalarProperty Name="Quantity29" ColumnName="Quantity29" />
+          <ScalarProperty Name="Quantity30" ColumnName="Quantity30" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockTapes">
+      <EntityTypeMapping TypeName="GrandShoesModel.StockTape">
+        <MappingFragment StoreEntitySet="StockTape">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="BranchId" ColumnName="BranchId" />
+          <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+          <ScalarProperty Name="Quantity01" ColumnName="Quantity01" />
+          <ScalarProperty Name="Quantity02" ColumnName="Quantity02" />
+          <ScalarProperty Name="Quantity03" ColumnName="Quantity03" />
+          <ScalarProperty Name="Quantity04" ColumnName="Quantity04" />
+          <ScalarProperty Name="Quantity05" ColumnName="Quantity05" />
+          <ScalarProperty Name="Quantity06" ColumnName="Quantity06" />
+          <ScalarProperty Name="Quantity07" ColumnName="Quantity07" />
+          <ScalarProperty Name="Quantity08" ColumnName="Quantity08" />
+          <ScalarProperty Name="Quantity09" ColumnName="Quantity09" />
+          <ScalarProperty Name="Quantity10" ColumnName="Quantity10" />
+          <ScalarProperty Name="Quantity11" ColumnName="Quantity11" />
+          <ScalarProperty Name="Quantity12" ColumnName="Quantity12" />
+          <ScalarProperty Name="Quantity13" ColumnName="Quantity13" />
+          <ScalarProperty Name="Quantity14" ColumnName="Quantity14" />
+          <ScalarProperty Name="Quantity15" ColumnName="Quantity15" />
+          <ScalarProperty Name="Quantity16" ColumnName="Quantity16" />
+          <ScalarProperty Name="Quantity17" ColumnName="Quantity17" />
+          <ScalarProperty Name="Quantity18" ColumnName="Quantity18" />
+          <ScalarProperty Name="Quantity19" ColumnName="Quantity19" />
+          <ScalarProperty Name="Quantity20" ColumnName="Quantity20" />
+          <ScalarProperty Name="Quantity21" ColumnName="Quantity21" />
+          <ScalarProperty Name="Quantity22" ColumnName="Quantity22" />
+          <ScalarProperty Name="Quantity23" ColumnName="Quantity23" />
+          <ScalarProperty Name="Quantity24" ColumnName="Quantity24" />
+          <ScalarProperty Name="Quantity25" ColumnName="Quantity25" />
+          <ScalarProperty Name="Quantity26" ColumnName="Quantity26" />
+          <ScalarProperty Name="Quantity27" ColumnName="Quantity27" />
+          <ScalarProperty Name="Quantity28" ColumnName="Quantity28" />
+          <ScalarProperty Name="Quantity29" ColumnName="Quantity29" />
+          <ScalarProperty Name="Quantity30" ColumnName="Quantity30" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StockTransactionTypes">
+      <EntityTypeMapping TypeName="GrandShoesModel.StockTransactionType">
+        <MappingFragment StoreEntitySet="StockTransactionType">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Suppliers">
+      <EntityTypeMapping TypeName="GrandShoesModel.Supplier">
+        <MappingFragment StoreEntitySet="Supplier">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PermanentAddress1" ColumnName="PermanentAddress1" />
+          <ScalarProperty Name="PermanentAddress2" ColumnName="PermanentAddress2" />
+          <ScalarProperty Name="PermanentAddress3" ColumnName="PermanentAddress3" />
+          <ScalarProperty Name="PermanentCity" ColumnName="PermanentCity" />
+          <ScalarProperty Name="PermanentCountry" ColumnName="PermanentCountry" />
+          <ScalarProperty Name="PermanentPostalCode" ColumnName="PermanentPostalCode" />
+          <ScalarProperty Name="CorrespondanceAddress1" ColumnName="CorrespondanceAddress1" />
+          <ScalarProperty Name="CorrespondanceAddress2" ColumnName="CorrespondanceAddress2" />
+          <ScalarProperty Name="CorrespondanceAddress3" ColumnName="CorrespondanceAddress3" />
+          <ScalarProperty Name="CorrespondanceCity" ColumnName="CorrespondanceCity" />
+          <ScalarProperty Name="CorrespondanceCountry" ColumnName="CorrespondanceCountry" />
+          <ScalarProperty Name="CorrespondancePostalCode" ColumnName="CorrespondancePostalCode" />
+          <ScalarProperty Name="Limit" ColumnName="Limit" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="FaxNumber" ColumnName="FaxNumber" />
+          <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="LogId" ColumnName="LogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Templates">
+      <EntityTypeMapping TypeName="GrandShoesModel.Template">
+        <MappingFragment StoreEntitySet="Template">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Format" ColumnName="Format" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="GrandShoesModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+          <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+          <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+          <ScalarProperty Name="IsPrimaryAccountHolder" ColumnName="IsPrimaryAccountHolder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Years">
+      <EntityTypeMapping TypeName="GrandShoesModel.Year">
+        <MappingFragment StoreEntitySet="Year">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Year1" ColumnName="Year" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Images">
+      <EntityTypeMapping TypeName="GrandShoesModel.Image">
+        <MappingFragment StoreEntitySet="Image">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsPrimary" ColumnName="IsPrimary" />
+          <ScalarProperty Name="Image1" ColumnName="Image" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

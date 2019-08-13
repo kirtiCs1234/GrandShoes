@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Model.Color;
+using Services;
+using Services.IService;
+using Helper;
+using Newtonsoft.Json;
+
+namespace Services.Service
+{
+
+    class Color : IColor
+    {
+        public bool AddColor(ColorModel Color)
+        {
+            return ServerResponse.Invoke<bool>("/api/Color/addcolor", JsonConvert.SerializeObject(Color), "post");
+        }
+
+        public List<ColorModel> GetAllColor()
+        {
+            return ServerResponse.Invoke<List<ColorModel>>("/api/Color/GetAllColor", "", "get");
+        }
+
+        public bool DeleteColor(int id)
+        {
+            return ServerResponse.Invoke<bool>("/api/Color/deleteColor?id="+id, "", "post");
+        }
+
+        public ColorModel GetColorByColorId(int id)
+        {
+            return ServerResponse.Invoke<ColorModel>("/api/Color/getColorById?id=" + id, "", "get");
+        }
+
+        public bool UpdateColor(ColorModel Color)
+        {
+            return ServerResponse.Invoke<bool>("/api/Color/UpdateColor", JsonConvert.SerializeObject(Color), "post");
+        }
+        public bool IsColorExist(int Id, string ColorCode)
+        {
+            ColorCode = System.Web.HttpUtility.UrlEncode(ColorCode);
+            return ServerResponse.Invoke<bool>("/api/Color/iscolorexist?id=" + Id + "&code=" + ColorCode, "", "Get");
+        }
+
+        public List<ColorModel> SearchColor(ColorModel Color)
+        {
+            return ServerResponse.Invoke<List<ColorModel>>("/api/Color/SearchColor", JsonConvert.SerializeObject(Color), "post");
+        }
+
+        public List<ColorModel> ColoeAutocomplete(string name)
+        {
+            name = System.Web.HttpUtility.UrlEncode(name);
+            return ServerResponse.Invoke<List<ColorModel>>("api/Color/ColorsAutocomplete?name=" + name, "", "get");
+        }
+    }
+
+
+}

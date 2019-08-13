@@ -1,0 +1,340 @@
+﻿@model Model.DiscountAddModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<style>
+    .radio-container {
+        box-sizing: border-box;
+        font-family: ‘Open Sans’, sans-serif;
+        font-size: 13px;
+        line-height: 30px;
+        margin: 0;
+        outline: 0;
+        overflow: hidden;
+        padding: 0;
+    }
+
+        .radio-container input {
+            box-sizing: border-box;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            position: relative;
+            top: 9px;
+            vertical-align: top;
+        }
+</style>
+
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+
+        <div class="modal-body">
+
+            <div class="row">
+                <div class="col-md-2 col-xs-12 col-sm-3">
+                    <label style="width:auto;float:left;margin-right:5px;
+padding-top:5px">Groups</label>
+                    <select class="form-control" style="width:auto;float:left;">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select>
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-3 radio-container text-center">
+                    <input name="radiobtn" type="radio" value="red" @*checked="checked"*@ id="allSelect">
+                    <label style="width:auto;">All Branches</label>
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-3 radio-container">
+                    <input name="radiobtn" type="radio" value="green" id="noneSelect">
+                    <label style="width:auto;">Selective Branches</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    </  div>
+
+    <div class="table-style">
+        <div class="prtm-full-block pos-relative col-md-4 padding-section">
+
+            <div class="prtm-block-title pad-all-md ">
+                <div class="pos-relative">
+                    <div class="caption">
+                        <h3 class="text-capitalize">Discount</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prtm-block-content mrgn-b-md ">
+                <div class="table-responsive" style="height:248px;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Branch</th>
+                                <th>Store</th>
+                                <th>Transit</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbodyIndex">
+
+                            @foreach (var item in Model.BranchList1)
+                            {
+                                <tr class="dataRow">
+                                    <td>
+
+                                        <input type="checkbox" name="selectedBranch" class="branches" value="@item.Id">
+
+                                        @Html.DisplayFor(modelItem => item.BranchCode)
+                                        @Html.DisplayFor(modelItem => item.Name)
+
+                                    </td>
+                                    <td>@Html.DisplayFor(modelItem => item.StoreSize)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.StoreSize)</td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-inverse cancel" id="select-all">All</button>
+                <button type="button" class="btn btn-outline-inverse cancel" id="select-none">None</button>
+            </div>
+        </div>
+
+        <div class="prtm-full-block pos-relative col-md-8 branch-right-section">
+            <div class="partial-render">
+                @Html.Action("Create")
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="dvCartonDetails" style="width:100%;float:left;">
+        @Html.Action("Detail")
+    </div>
+
+
+    @section scripts{
+        <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"
+                integrity="sha256-EgPuQS+2I8bm2u3b3r1dJUEiO56a/xeZGXiTnNTvYZM="
+                crossorigin="anonymous"></script>
+        <script type="text/javascript">
+
+        function Submit() {
+            debugger
+            $('form').validate();
+            var obj = {};
+            obj.Discounts = {};
+            obj.BranchList = [];
+            obj.Discounts.ProductSKU = $("#AutocompleteProductSKU").val(),
+                obj.Discounts.StyleSKU = $("#AutocompleteProductStyleSKU").val(),
+                obj.Discounts.MinimumQuantity = $("#MinimumQuantity").val(),
+                obj.Discounts.DateFrom = $("#DateFrom").val(),
+                obj.Discounts.DateTo = $("#DateTo").val(),
+                obj.Discounts.PercentDiscount = $("#PercentDiscount").val(),
+                obj.Discounts.Text = $("#Text").val(),
+                obj.Discounts.IsActive = true
+
+                if ($('input:checked[name=selectedBranch]').length <= 0) {
+                        alert('select atleast one branch from mark down !')
+                }
+                 else {
+                        $('input:checked[name=selectedBranch]').each(function () {
+                    if ($(this).is(':checked')) {
+                        debugger;
+                        obj.BranchList.push($(this).val());
+                        if ($('form').valid()) {
+                            $.ajax({
+                                type: "POST", //HTTP POST Method
+                                url: '/Admin/Discount/Create',
+                                data: obj,
+                                success: function (result) {
+                                    loadData();
+                                },
+                                error: function (xhr, status) {
+
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }
+        function loadData() {
+            debugger;
+            $.ajax({
+                url: '/Admin/Discount/Detail',
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: 'html',
+                success: function (result) {
+
+                    $('.dvCartonDetails').html(result);
+                     alert('@TempData["Success"]');
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+
+
+        $(document).ready(function () {
+            debugger
+            var ProductSKUList = {};
+            $("#AutocompleteProductSKU").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/Discount/AutoCompleteProductSKUList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            ProductSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value.ProductSKU }; });
+                            response(ProductSKUList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#AutocompleteProductSKU").val(ui.item.label);
+                    $("#autoCompleteProductSKUId").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
+
+        $(document).ready(function () {
+            debugger
+            var costPrice = "";
+            var NoOfPrevMarkDown = "";
+            var DateOfPreMarkDown = "";
+            var StyleSKUList = {};
+            $("#AutocompleteProductStyleSKU").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/Discount/AutoCompleteProductStyleSKUList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            StyleSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value.StyleSKU }; });
+                            response(StyleSKUList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#AutocompleteProductStyleSKU").val(ui.item.label);
+                    $("#autoCompleteProductStyleId").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
+        $(function () {
+            $("#DateFrom").datepicker();
+
+        });
+        $(function () {
+            $("#DateTo").datepicker();
+
+        });
+        $(document).ready(function () {
+            debugger
+            $('.check').click(function () {
+                debugger
+                $('.check').not(this).prop('checked', false);
+                $('#flate').click(function () {
+                    debugger
+                    if (document.getElementById('flate').checked) {
+                        $("#MinimumQuantity").prop("disabled", true);
+
+                    }
+                    else {
+                        $("#MinimumQuantity").prop("disabled", false);
+                    }
+                });
+                $('#quantity').click(function () {
+                    debugger
+                    if (document.getElementById('quantity').checked) {
+
+                        $("#MinimumQuantity").prop("disabled", false);
+                    }
+                    else {
+                        $("#MinimumQuantity").prop("disabled", true);
+                    }
+                });
+            });
+        });
+        $('#select-all').click(function (event) {
+            debugger
+
+            // Iterate each checkbox
+            $('.branches:checkbox').each(function () {
+                this.checked = true;
+            });
+
+        });
+        $('#select-none').click(function (event) {
+            debugger
+
+            // Iterate each checkbox
+            $('.branches:checkbox').each(function () {
+                this.checked = false;
+            });
+
+            });
+
+
+
+            $('#allSelect').click(function (event) {
+                debugger
+
+                // Iterate each checkbox
+                $('.branches:checkbox').each(function () {
+                    this.checked = true;
+                });
+
+            });
+
+            $('#noneSelect').click(function (event) {
+                debugger
+
+                // Iterate each checkbox
+                $('.branches:checkbox').each(function () {
+                    this.checked = false;
+                });
+
+            });
+
+
+        </script>
+    }
+
+    <style>
+        .ui-widget-content.ui-autocomplete {
+            z-index: 9999 !important;
+        }
+    </style>
+

@@ -1,0 +1,209 @@
+﻿@model Model.CartonManagementModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<div class="table-style">
+    <div class="prtm-block-title pad-all-md ">
+        <div class="pos-relative">
+            <div class="caption">
+                <h3 class="text-capitalize">Branch Carton Dispatch</h3>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-md-8 col-xs-12">
+        <div class="pack-center">
+            <div class="row">
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12 col-sm-12 mrgn-b-xs">
+
+                            <label>Branch</label>
+                            @Html.EditorFor(model => model.BranchName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Hidden("BranchID", new { id = "BranchID" })
+
+                            @Html.ValidationMessageFor(model => model.BranchName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 mrgn-b-sm">
+
+                            <label>Carton:</label>
+                            @Html.DropDownListFor(m => m.DistributionSummaryID, null, "--Distribution Summary--", htmlAttributes: new { @class = "form-control" })
+                            @*@Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })*@
+                            @*<input type="text" class="form-control" style="margin-top:15px;" />*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 hr-mrgn">
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-xs-10 col-sm-12 ">
+
+                    <div class="row delivery-box">
+
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <label>Delivery Sheet</label>
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control bordered" } })
+
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <label>Carton Count</label>
+                            @Html.EditorFor(model => model.CartonCount, new { htmlAttributes = new { @class = "form-control bordered", @Value = ViewBag.cartonCount } })
+
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+
+
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <label>Scan Count</label>
+                            @Html.EditorFor(model => model.ScanCount, new { htmlAttributes = new { @class = "form-control bordered" } })
+
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 col-xs-12">
+        <input type="button" value="Get Data" id="SubmitButton" class="btn btn-success popup-savebtn form-control branch-btn-input" onclick="GetData();" />
+        <button type="button" class="btn btn-outline-inverse cancel form-control mrgn-b-md branch-btn" id="reStart" onclick="Restart()">Print</button>
+        <input type="button" value="Undo Dispatch" id="SubmitButton" class="btn btn-success popup-savebtn form-control branch-btn-input" onclick="UndoDispatch()" />
+    </div>
+</div>
+<div class="dvCartonDetails" style="width:100%;float:left;">
+    @Html.Action("DispatchDetail")
+</div>
+<style>
+    .ui-widget-content.ui-autocomplete {
+        z-index: 9999 !important;
+    }
+</style>
+@section scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            debugger
+            var BranchList = {};
+            //var ProductStyleList = [];
+            $("#BranchName").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/BranchCartonDispach/AutoCompleteBranch",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+
+                            BranchList = $.map(result, function (value, key) { return { value: value.ID, label: value.Name }; });
+                            response(BranchList);
+                            // getBranchAddress();
+                            // alert(result.BranchCode);
+                            //$('#Address').val('(' + result.BranchCode + ') ' + result.AddressLine1 + ' ' + result.AddressLine2 + ' ' + result.AddressLine3);
+                            //$('#Address1').val(result.AreaCode + ', PIN' + result.PostalCode + ' (' + result.Telephone + ')');
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#BranchName").val(ui.item.label);
+                    $("#BranchID").val(ui.item.value);
+
+                    //  GetProductStyle(productName);
+                    //  ProductStyleList = ui.item.ProductStyleSKU;
+                },
+                minLength: 1
+            });
+        });
+
+        function Dispatch(ctrl) {
+            debugger;
+            var id = $(ctrl).attr("data-id");
+
+            $.ajax({
+
+                url: '/Admin/BranchCartonDispach/Dispatch/' + id + '',
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                // data: {page : page} ,
+                dataType: 'json',
+                success: function (result) {
+
+                    var id = result.id;
+                    $("[id='tdApproveUser'][data-id='" + id + "']").html("<span>Dispatched</span>");
+                },
+                error: function (xhr, status) {
+                    //alert(status)
+                }
+            });
+        }
+        function GetData() {
+
+            debugger
+            var obj = {};
+            obj.BranchName = $('#BranchName').val();
+            obj.DistributionSummaryID = $('#DistributionSummaryID').val();
+            if (obj.BranchName == '' && obj.DistributionSummaryID == '') {
+                alert("Please Enter Branch Name and Carton.")
+            }
+            $.ajax({
+                url: '/Admin/BranchCartonDispach/DispatchDetail',
+                type: 'GET',
+                data: obj,
+                success: function (result) {
+                    debugger;
+
+                    $('#ScanCount').val(0);
+
+                    $(".dvCartonDetails").html(result);
+                    var count = $('#table11 tr')[0].cells[0].innerText.trim();
+
+                    $("#CartonCount").val(count);
+                },
+
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+        }
+        function showReceipt(id) {
+            debugger
+            //  alert(id);
+            $("#ReceiptDetail-" + id).html('<tr><td colspan="5" style="background-color:white;"><img src="/Image/bars.gif" style="width:55px; height:47px;margin-left:40%; z-index:200" /></td></tr>');
+
+            $.ajax(
+                {
+                    url: '/Admin/BranchCartonDispach/GetCartonById/' + id,
+                    type: "GET",
+                    success: function (result) {
+                        debugger
+                        $("#ReceiptDetail-" + id).html(result);
+                        // alert("dgfhdf");
+                    },
+                    error: function (xhr, status) {
+                        alert(status)
+                    }
+                });
+        }
+        $(document).on('click', ".accordian-btn", function () {
+            $(this).toggleClass("accordian-reverse");
+            $(this).parent().parent().next().find(".accordian-bundling").toggle(500);
+        });
+    </script>
+}

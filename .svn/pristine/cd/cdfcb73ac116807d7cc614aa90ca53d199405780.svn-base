@@ -1,0 +1,152 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Http;
+using DAL;
+using Model.PurchaseOrder;
+
+
+namespace POSApi.Controllers
+{
+    [RoutePrefix("api/PurchaseOrder")]
+    public class PurchaseOrderController : ApiController
+    {
+        private GrandShoesEntities Entities = new GrandShoesEntities();
+
+        // GET: All PurchaseOrder
+        [Route("GetAllPurchaseOrder")]
+        public IHttpActionResult GetAllPurchaseOrder()
+        {
+            List<Model.PurchaseOrder.PurchaseOrder> AllOrders = new List<Model.PurchaseOrder.PurchaseOrder>();
+            var OrderList = Entities.PurchaseOrders.Where(s => s.IsActive == true).ToList().Select(m => new Model.PurchaseOrder.PurchaseOrder
+            {
+                Id = m.ID,
+                OrderNumber = m.OrderNumber,
+                ClientInvoiceNumber = m.ClientInvoiceNumber,
+                SupplierId = m.SupplierId,
+                BuyerId = m.BuyerId ,
+                OrderDate=m.OrderDate,
+                ExpectedDeliveryDate=m.ExpectedDeliveryDate ?? null,
+                FirstDeliveryDate=m.FirstDeliveryDate ?? null,
+                OrderCompletionDate=m.OrderCompletionDate ?? null,
+                Quantity =m.Quantity,
+                Amount =m.Amount,
+                VatAmount=m.VatAmount,
+                PurchaseOrderStatusId =m.PurchaseOrderStatusId,
+                IsActive=m.IsActive
+            }).ToList();
+            return Ok(OrderList);
+        }
+
+        //Add AddPurchaseOrder
+        [Route("AddPurchaseOrder")]
+        public IHttpActionResult AddPurchaseOrder(Model.PurchaseOrder.PurchaseOrder order)
+        {
+            DAL.PurchaseOrder Orders = new DAL.PurchaseOrder();
+            Orders.OrderNumber = order.OrderNumber;
+            Orders.ClientInvoiceNumber = order.ClientInvoiceNumber;
+            Orders.SupplierId = order.SupplierId;
+            Orders.BuyerId = order.BuyerId;
+            Orders.OrderDate = order.OrderDate.Date;
+            Orders.ExpectedDeliveryDate = order.ExpectedDeliveryDate;
+            Orders.FirstDeliveryDate = order.FirstDeliveryDate;
+            Orders.OrderCompletionDate = order.OrderCompletionDate;
+            Orders.Quantity = order.Quantity;
+            Orders.Amount = order.Amount;
+            Orders.VatAmount = order.VatAmount;
+            Orders.PurchaseOrderStatusId = order.PurchaseOrderStatusId;
+            Orders.IsActive = order.IsActive ?? true;
+            Entities.PurchaseOrders.Add(Orders);
+            Entities.SaveChanges();
+            int id = Orders.ID;
+            return Ok(id);
+        }
+
+        //GetPurchaseOrderById
+        [Route("GetPurchaseOrderById")]
+        public IHttpActionResult GetPurchaseOrderById(int id)
+        {
+            Model.PurchaseOrder.PurchaseOrder order=Entities.PurchaseOrders.Where(s => s.IsActive == true && s.ID == id).ToList().Select(m => new Model.PurchaseOrder.PurchaseOrder
+            {
+            Id=m.ID,
+            OrderNumber = m.OrderNumber,
+            ClientInvoiceNumber = m.ClientInvoiceNumber,
+            SupplierId = m.SupplierId,
+            BuyerId = m.BuyerId,
+            OrderDate = m.OrderDate,
+            ExpectedDeliveryDate = m.ExpectedDeliveryDate,
+            FirstDeliveryDate = m.FirstDeliveryDate,
+            OrderCompletionDate = m.OrderCompletionDate,
+            Quantity = m.Quantity,
+            Amount = m.Amount,
+            VatAmount = m.VatAmount,
+            PurchaseOrderStatusId = m.PurchaseOrderStatusId,
+            IsActive=m.IsActive,
+        }).FirstOrDefault();
+            return Ok(order);
+        }
+
+        //Delete PurchaseOrder
+        [HttpPost]
+        [Route("DeletePurchaseOrder")]
+        public IHttpActionResult DeletePurchaseOrder(int id)
+        {
+            DAL.PurchaseOrder order = new DAL.PurchaseOrder();
+            order = Entities.PurchaseOrders.Where(s => s.ID == id).FirstOrDefault();
+            order.IsActive = false;
+            Entities.SaveChanges();
+            return Ok(true);
+        }
+
+        //Update PurchaseOrder
+        [HttpPost]
+        [Route("UpdatePurchaseOrder")]
+        public IHttpActionResult UpdatePurchaseOrder(Model.PurchaseOrder.PurchaseOrder order)
+        {
+            DAL.PurchaseOrder Orders = new DAL.PurchaseOrder();
+            Orders = Entities.PurchaseOrders.Where(s => s.ID == order.Id).FirstOrDefault();
+            Orders.OrderNumber = order.OrderNumber;
+            Orders.ClientInvoiceNumber = order.ClientInvoiceNumber;
+            Orders.SupplierId = order.SupplierId;
+            Orders.BuyerId = order.BuyerId;
+            Orders.OrderDate = order.OrderDate.Date;
+            Orders.ExpectedDeliveryDate = order.ExpectedDeliveryDate;
+            Orders.FirstDeliveryDate = order.FirstDeliveryDate;
+            Orders.OrderCompletionDate = order.OrderCompletionDate;
+            Orders.Quantity = order.Quantity;
+            Orders.Amount = order.Amount;
+            Orders.VatAmount = order.VatAmount;
+            Orders.PurchaseOrderStatusId = order.PurchaseOrderStatusId;
+            Orders.IsActive = order.IsActive ?? true;
+            Entities.SaveChanges();
+            return Ok(true);
+        }
+
+        //Get All PurchaseOrderStatus
+        [Route("GetAllPurchaseOrderStatus")]
+        public IHttpActionResult GetAllPurchaseOrderStatus()
+        {
+            var OrderStatusList = Entities.PurchaseOrderStatus.Where(s => s.IsActive == true).ToList().Select(m => new Model.PurchaseOrder.PurchaseOrderStatus
+            {
+                Id = m.Id,
+                OrderStatus = m.OrderStatus,
+                IsActive=m.IsActive ?? true,
+            }).ToList();
+            return Ok(OrderStatusList);
+        }
+
+        //Checking Existing order Number
+        [HttpGet]
+        [Route("isOrderNumberexist")]
+        public IHttpActionResult isOrderNumberexist(string OrderNumber)
+        {
+            var order = Entities.PurchaseOrders.Any(s => s.IsActive == true && s.OrderNumber == OrderNumber);
+            if (order)
+                return Ok(true);
+            else
+                return Ok(false);
+        }
+
+    }
+}

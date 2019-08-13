@@ -1,0 +1,239 @@
+﻿@model Model.StockBranchInventoryModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+        <div class="prtm-block-title pad-all-md ">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">Stock Take</h3>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="table-style">
+                @if (TempData["Success"] != null)
+                {
+                    <p class="alert alert-success" id="successMessage" style="width: 300px;height: 25px;color: #fff;text-align: center; padding-bottom: 2em;">
+                        @TempData["Success"]
+                    </p>
+                }
+                <script>
+        setTimeout(function () {
+            $('#successMessage').fadeOut('slow');
+        }, 5000);
+                </script>
+                
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.DropDownListFor(m => m.BranchId, null, "--Branch Name--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.BranchId, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+
+                    <button type="button" class="btn btn-primary import-btn " data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="Import()">Import</button>
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <button type="button" class="btn btn-primary import-btn " onclick="View()">View</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+<div class="modal fade" id="myModal">
+    <div id="dvCreatedetails">
+
+    </div>
+
+</div>
+<div class="modal fade" id="myCancelModal">
+    <div id="Canceldiv">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Confirm Cancel</h4>
+                </div>
+                <div class="modal-body">
+                    <p>you sure you need to close without save!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" id="cancelyesbtn" class="btn btn-default" data-dismiss="modal">yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row marg-btn-20">
+
+
+    <div class="dvUserDetails">
+
+    </div>
+
+
+</div>
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).on("click", "#cancelyesbtn", function () {
+            window.location = '/admin/StockTape/index';
+        })
+        function View() {
+            debugger;
+            var obj = {};
+            obj.BranchId = $('#BranchId').val();
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/StockTape/_Index',
+                contentType: 'application/html; charse=utf-8',
+
+                data: obj,
+                dataType: 'html',
+                success: function (result) {
+                    debugger;
+                    $('.dvUserDetails').html(result);
+
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+
+        }
+        function Import() {
+            debugger;
+            Data(0);
+        }
+        function ShowVariance() {
+            debugger;
+            Data(1);
+        }
+        function Data(ch) {
+            debugger;
+            var obj = {};
+
+            obj.BranchId = $('#BranchId').val();
+            var crud = "";
+            switch (ch) {
+                case 0:
+                    crud = '/Admin/StockTape/ExcelUpload';
+                    break;
+                case 1:
+                    crud = '/Admin/StockTape/ShowVariance';
+                    break;
+            }
+            $.ajax({
+
+                url: crud,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                data: obj,
+                dataType: 'html',
+                success: function (result) {
+                    debugger;
+                    $('#dvCreatedetails').html(result);
+
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+
+        }
+        function Delete() {
+            debugger;
+            var obj = {};
+
+            obj.BranchId = $('#BranchId').val();
+            $.ajax({
+
+                url: '/Admin/StockTape/DeleteRecord',
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+
+                data: obj,
+                success: function (result) {
+                    debugger;
+                    //$('#dvCreatedetails').html(result);
+                    alert("success")
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+
+
+        }
+        function ExcelSubmit() {
+            debugger
+            var obj = {};
+            obj.BranchId = $('#BranchId').val();
+            obj.file = $()
+
+            $.ajax({
+                url: '/Admin/StockTape/ExcelUpload',
+                type: 'POST',
+                data: formData,
+                async: false,
+                success: function (data) {
+                    debugger;
+                    alert(data)
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+
+            return false;
+        }
+        function loadData() {
+            debugger;
+            $.ajax({
+                url: '/Admin/StockTape/_Index',
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: 'html',
+                success: function (result) {
+
+                    $('.dvUserDetails').html(result);
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+        function Accept(BranchId) {
+            debugger;
+            var obj = {};
+            obj.BranchId = BranchId;
+            var ans = confirm("Are you sure you want to Update this Branch Record?");
+            if (ans) {
+                $.ajax({
+                    type: "GET",
+                    url: "/Admin/StockTape/Update",
+
+                    data: obj,
+                    success: function (result) {
+                        debugger;
+                        Delete();
+                        //   window.location.href = window.location.pathname
+                        // loadData();
+                        //  updateData();
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+            return false;
+        }
+
+
+    </script>
+}

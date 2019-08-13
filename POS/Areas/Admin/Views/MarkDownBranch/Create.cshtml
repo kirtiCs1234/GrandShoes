@@ -1,0 +1,164 @@
+﻿@model Model.MarkDownAddModel
+@{
+    Layout = null;
+
+}
+<style>
+    #ui-datepicker-div {
+        z-index: 9999 !important;
+    }
+</style>
+<div class="table-style">
+    <div class="prtm-full-block pos-relative col-md-10">
+
+        @using (Html.BeginForm("Create", "MarkDownBranch", FormMethod.Post, new { id = "createForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="prtm-block-content mrgn-b-md col-md-12 padding-section">
+
+      
+            <div class="">
+                <div class="row  mrgn-b-lg">
+                    <div class="col-md-8 col-xs-12 col-sm-6">
+                        <label>Product SKU</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12 col-sm-6">
+
+                        @Html.EditorFor(model => model.AutocompleteProductSKU, new { htmlAttributes = new { @class = "form-control", placeholder = "Product SKU", @Value = ViewBag.ProductSKU } })
+                        @Html.ValidationMessageFor(model => model.MarkDown.ProductSKU, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row  mrgn-b-lg">
+                    <div class="col-md-8 col-xs-12 col-sm-6">
+                        <label>Style SKU</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12 col-sm-6">
+
+                        @Html.EditorFor(model => model.AutocompleteProductStyleSKU, new { htmlAttributes = new { @class = "form-control", placeholder = "Style SKU", @Value = @ViewBag.StyleSKU, onchange="getProductValues()" } })
+                        @Html.ValidationMessageFor(model => model.MarkDown.StyleSKU, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row  mrgn-b-lg">
+                    <div class="col-md-8 col-xs-12 col-sm-6">
+                        <label>Original Selling Price</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12 col-sm-6">
+
+                        @Html.EditorFor(model => model.MarkDown.OriginalSellingPrice, new { htmlAttributes = new { @class = "form-control", @id = "OriginalSellingPrice", placeholder = "Original Selling Price", @Value = @ViewBag.OriginalSellingPrice } })
+                        @Html.ValidationMessageFor(model => model.MarkDown.OriginalSellingPrice, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="row  mrgn-b-lg">
+                    <div class="col-md-8 col-xs-12 col-sm-6">
+                        <label>Number Of Previous MarkDown</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12 col-sm-6">
+
+                        @Html.EditorFor(model => model.Count, new { htmlAttributes = new { @class = "form-control", @id = "NoMarkDown", placeholder = "Number Of Previous MarkDown",@readonly="readonly", @Value= @ViewBag.Count } })
+                        @Html.ValidationMessageFor(model => model.MarkDown.ProductSKU, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="row  mrgn-b-lg">
+                    <div class="col-md-8 col-xs-12 col-sm-6">
+                        <label>Date Of Last MarkDown</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12 col-sm-6">
+                        @Html.EditorFor(model => model.LastMarkDownDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", placeholder = "Date Of Last MarkDown", @Value = ViewBag.LastMarkDown ,@Id="LastMarkDown"} })
+                        @Html.ValidationMessageFor(model => model.LastMarkDownDate, "", new { @class = "text-danger" })
+                      
+
+             ` </div>
+                </div>
+                @*<div class="row  mrgn-b-lg">
+                    @*<div class="col-md-8 col-xs-12 col-sm-6">
+                        <label><input type="checkbox" class="check" id="quantity" onclick="Calculation()" /> Use Percentage Decrease</label>
+                    </div>*@
+                
+                        @*<div class="col-md-4 col-xs-12 col-sm-6">
+
+                            @Html.EditorFor(model => model.MarkDown.PercentageDecrease, new { htmlAttributes = new { @class = "form-control", @id = "PercentageDecrease", placeholder = "Percentage Decrease" } })
+                            @Html.ValidationMessageFor(model => model.MarkDown.PercentageDecrease, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>*@
+
+                    @*<div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+                            <label><input type="checkbox" class="check" id="quantity" onclick="Calculation1()" />Percentage On Original Price</label>
+                        </div>
+
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            @Html.EditorFor(model => model.MarkDown.PercentageDecrease, new { htmlAttributes = new { @class = "form-control", @id = "PercentageDecrease", placeholder = "Percentage Decrease" } })
+                            @Html.ValidationMessageFor(model => model.MarkDown.PercentageDecrease, "", new { @class = "text-danger" })
+
+                        </div>
+                        </div>*@
+              
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+
+                            <label>Last Selling Price</label>
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+
+                            @Html.EditorFor(model => model.MarkDown.NewCashPrice, new { htmlAttributes = new { @class = "form-control", @id = "NewCashPrice", @readonly = "readonly", placeholder = "Last Selling Price", @Value = @ViewBag.NewCashPrice } })
+                            @Html.ValidationMessageFor(model => model.MarkDown.NewCashPrice, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+				<div class="row  mrgn-b-lg">
+					<div class="col-md-8 col-xs-12 col-sm-6">
+
+						<label>New Price</label>
+					</div>
+					<div class="col-md-4 col-xs-12 col-sm-6">
+
+						@Html.EditorFor(model => model.MarkDown.NewSellingPrice, new { htmlAttributes = new { @class = "form-control", @id = "NewSellingPrice", placeholder = "New Selling Price"} })
+						@Html.ValidationMessageFor(model => model.MarkDown.NewSellingPrice, "", new { @class = "text-danger" })
+
+					</div>
+				</div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+
+                            <label>Effective Date</label>
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-2">
+
+                            @Html.EditorFor(model => model.MarkDown.EffectiveDate, new { htmlAttributes = new { @class = "form-control", placeholder = "Effective Date", type = "text",@Id="TodayDate" ,@Value=ViewBag.TodayDate} })
+                            @Html.ValidationMessageFor(model => model.MarkDown.EffectiveDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                            <label><input type="checkbox" />Exclude Area man MarkDown</label>
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+                            <label>Label Template File</label>
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            @Html.EditorFor(model => model.MarkDown.Guid, new { htmlAttributes = new { @class = "form-control", placeholder = "" } })
+                            @Html.ValidationMessageFor(model => model.MarkDown.NewCashPrice, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+        </div>
+        }
+    </div>
+    <div class="col-md-2 padding-section">
+        <input type="button" value="Accept" id="SubmitButton" class="btn btn-success popup-savebtn form-control branch-btn-input" onclick="Submit()" />
+        <button type="button" class="btn btn-outline-inverse cancel form-control mrgn-b-md branch-btn" data-scroll-to="#id1" onclick="History()">History</button>
+        <button type="button" class="btn btn-outline-inverse cancel form-control" onclick="Clear()">Clear</button>
+    </div>
+</div>
+<script>
+    window.onload = function () {
+        $.validator.unobtrusive.parse($("#createForm"))
+    }
+    
+</script>

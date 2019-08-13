@@ -1,0 +1,219 @@
+﻿using Helper;
+using Model;
+using Newtonsoft.Json;
+using OfficeOpenXml;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+
+namespace POS.Areas.Admin.Controllers
+{
+    [CustomAuth]
+    public class SeasonController : BaseController
+    {
+        // GET: Admin/Season
+        public ActionResult Index(int? page)
+        {
+            int TotalCount = 0;
+            var pageSize = 10;
+            var pageNumber = page ?? 1;
+            int CurrentPage = pageNumber;
+            var endPage = CurrentPage + 4;
+            int PagesToShow = 10;
+            var SeasonModelList = Services.SeasonService.GetPaging(page, out TotalCount);
+            ViewBag.TotalCount = TotalCount;
+            ViewBag.PageSize = pageSize;
+            var result = Helper.CommonFunction.GetPages(TotalCount, pageSize, CurrentPage, PagesToShow);
+            int totalPages = (TotalCount / pageSize) + (TotalCount % pageSize == 0 ? 0 : 1);
+            ViewBag.result = result;
+            ViewBag.totalPages = totalPages;
+            ViewBag.CurrentPage = CurrentPage;
+            var pageCount = result.Count();
+            ViewBag.pageCount = pageCount;
+
+            ViewBag.endPage = endPage;
+
+            return View(SeasonModelList);
+
+        }
+        
+        public ActionResult _Index1(SeasonSearch seasonSearch, int? page)
+        {
+            int TotalCount = 0;
+            var pageSize = 10;
+            var pageNumber = page ?? 1;
+            int CurrentPage = pageNumber;
+            var endPage = CurrentPage + 4;
+            int PagesToShow = 10;
+            ViewBag.TotalCount = TotalCount;
+            ViewBag.PageSize = pageSize;
+              var body = JsonConvert.SerializeObject(seasonSearch);
+                var SeasonModelList = Services.SeasonService.GetSearchData(seasonSearch, page, out TotalCount);
+           
+            var result = Helper.CommonFunction.GetPages(TotalCount, pageSize, CurrentPage, PagesToShow);
+            int totalPages = (TotalCount / pageSize) + (TotalCount % pageSize == 0 ? 0 : 1);
+            ViewBag.result = result;
+            ViewBag.totalPages = totalPages;
+            ViewBag.CurrentPage = CurrentPage;
+            var pageCount = result.Count();
+            ViewBag.pageCount = pageCount;
+
+            ViewBag.endPage = endPage;
+
+            return View(SeasonModelList);
+
+        }
+        public ActionResult ExcelUpload()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ExcelUpload(SeasonModel season, HttpPostedFileBase file)
+        {
+
+            if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+            {
+                string fileName = file.FileName;
+                string fileContentType = file.ContentType;
+                byte[] fileBytes = new byte[file.ContentLength];
+                var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                
+                using (var package = new ExcelPackage(file.InputStream))
+                {
+                    var currentSheet = package.Workbook.Worksheets;
+                    var workSheet = currentSheet.First();
+                    var noOfCol = workSheet.Dimension.End.Column;
+                    var noOfRow = workSheet.Dimension.End.Row;
+
+                    for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                    {
+                        //var supplier = new SupplierModel();
+                        season.Code = workSheet.Cells[rowIterator, 1].Value.ToString();
+                        season.Description = workSheet.Cells[rowIterator, 2].Value.ToString();
+                        
+                        season.IsActive = true;
+                        string chk = workSheet.Cells[rowIterator, 1].Value.ToString();
+                        bool isexists = Services.SeasonService.CheckSeasonCode(chk);
+                        if (!isexists)
+                        {
+                            bool status = Services.SeasonService.Create(season);
+                        }
+                        else
+                        {
+
+                        }
+
+                        //    usersList = Services.SupplierService.Create(supplier);
+                    }
+                    return RedirectToAction("Index", "Season");
+
+                }
+            }
+            return View(season);
+        }
+
+        public ActionResult ExportList()
+        {
+            var data = Services.ColorService.GetAll();
+            ExcelPackage excel = new ExcelPackage();
+            var workSheet = excel.Workbook.Worksheets.Add("Sheet1");
+            workSheet.Cells[1, 1].LoadFromCollection(data, true);
+            using (var memoryStream = new MemoryStream())
+            {
+                Response.ContentType = "application/vnd.ms-excel";
+                Response.AddHeader("content-disposition", "attachment;  filename=Season.xlsx");
+                excel.SaveAs(memoryStream);
+                memoryStream.WriteTo(Response.OutputStream);
+                Response.Flush();
+                //Response.End();
+            }
+            return View();
+        }
+        public ActionResult Details(int? id)
+        {
+            if (id== null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+            var body = JsonConvert.SerializeObject(id);
+            var result = Services.SeasonService.GetById(id);
+
+            return View(result);
+        }
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(SeasonModel seasonModel)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+                seasonModel.IsActive = true;
+                var body = JsonConvert.SerializeObject(seasonModel);
+                var result = Services.SeasonService.Create(seasonModel);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Season");
+            }
+            return View(seasonModel);
+        }
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+          
+            SeasonModel SeasonModelById = Services.SeasonService.GetById(id);
+            return View(SeasonModelById);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(SeasonModel season)
+        {
+            if (ModelState.IsValid)
+            {
+                SeasonModel Edit = Services.SeasonService.Edit(season);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Season");
+            }
+            return View(season);
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SeasonModel SeasonModelById = Services.SeasonService.GetById(id);
+
+            if (SeasonModelById == null)
+            {
+                return HttpNotFound();
+            }
+            return View(SeasonModelById);
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(SeasonModel season)
+        {
+            if (season.Id > 0)
+            {
+                SeasonModel UserDelete = Services.SeasonService.Delete(season);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Season");
+            }
+            return View(season);
+        }
+        public ActionResult CheckSeasonCode(SeasonModel season)
+      {
+            var iExist = Services.SeasonService.CheckSeasonCode(season);
+            return Json(!iExist, JsonRequestBehavior.AllowGet);
+        }
+    }
+}

@@ -1,0 +1,266 @@
+﻿@model Model.DiscountSummaryModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+        <div class="prtm-block-title pad-all-md ">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">Discount</h3>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(model => model.FromProductSKU, new { @class = "form-control", @placeholder = "From Product SKU" })
+                    @Html.ValidationMessageFor(m => m.FromProductSKU, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(model => model.ToProductSKU, new { @class = "form-control", @placeholder = "To Product SKU" })
+                    @Html.ValidationMessageFor(m => m.ToProductSKU, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(m => m.FromStyleSKU, new { @class = "form-control", @placeholder = "From Style SKU" })
+                    @Html.ValidationMessageFor(m => m.FromStyleSKU, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(m => m.ToStyleSKU, new { @class = "form-control", @placeholder = "To Style SKU" })
+                    @Html.ValidationMessageFor(m => m.ToStyleSKU, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @placeholder = "From Date" })
+                    @Html.ValidationMessageFor(m => m.FromDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @placeholder = "To date" })
+                    @Html.ValidationMessageFor(m => m.ToDate, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(m => m.FromPrice, new { @class = "form-control", @placeholder = "From Discount" })
+                    @Html.ValidationMessageFor(m => m.FromPrice, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.TextBoxFor(m => m.ToPrice, new { @class = "form-control", @placeholder = "To Price" })
+                    @Html.ValidationMessageFor(m => m.ToPrice, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <select class="form-control" id="DiscountType">
+                        <option value="">Select</option>
+                        <option value="Percent">Percent</option>
+                        <option value="Rupee">Rupees</option>
+                    </select>
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.EditorFor(model => model.DiscountValue, new { htmlAttributes = new { @class = "form-control", placeholder = "Discount Value" } })
+                    @Html.ValidationMessageFor(model => model.DiscountValue, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <button type="button" class="btn btn-success btn-primary btn-block export-btn" onclick="searchData()">Get Products</button>
+                </div>
+                <div class="col-md-1 col-xs-12 col-sm-2">
+                    <button type="button" class="btn btn-outline-inverse btn-primary mrgn-b-md export-btn" onclick="searchData()">History</button>
+                </div>
+                <div class="col-md-1 col-xs-12 col-sm-2">
+                    <button type="button" class="btn btn-outline-inverse btn-primary export-btn btn-block" onclick="searchData()">Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="row marg-btn-20">
+        <div class="col-sm-12 col-md-12 col-xs-12">
+            <div class="prtm-full-block">
+                <div class="row marg-btn-20">
+                    <div class="prtm-block-content mrgn-b-md">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Branches</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbodyIndex">
+                                    <tr>
+                                        <td>
+                                            <ul>
+                                                <li>001 0001</li>
+                                                <li></li>
+                                                <li>5%</li>
+                                                <li>01/01/2019</li>
+                                            </ul>
+                                        </td>
+                                        <td width="800px">
+                                            <input type="checkbox" />All Select
+                                            <div class="branch-list-block">
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />NICOL</li>
+                                                    <li><input type="checkbox" />CITY BRANCH</li>
+                                                    <li><input type="checkbox" />SAMMY MARKS SQUARE</li>
+                                                    <li><input type="checkbox" />D.S.O. POLOKWANE</li>
+                                                    <li><input type="checkbox" />DSO MTHATHA MALL</li>
+                                                </ul>
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />WEST 388</li>
+                                                    <li><input type="checkbox" />BRAZILIA BALLITO JUNCTION</li>
+                                                    <li><input type="checkbox" />SOUTHGATE SHOPPING M</li>
+                                                    <li><input type="checkbox" />DSO NEWTOWN</li>
+                                                    <li><input type="checkbox" />DSO GILWELD</li>
+                                                </ul>
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />EMPANGENI</li>
+                                                    <li><input type="checkbox" />BLOEMFONTEIN</li>
+                                                    <li><input type="checkbox" />DSO WESTWOOD MALL</li>
+                                                    <li><input type="checkbox" />MARK PARK CENTRE</li>
+                                                    <li><input type="checkbox" />MIMOSA MALL</li>
+                                                </ul>
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />MOTN STOCK ROOM</li>
+                                                    <li><input type="checkbox" />GATEWAY</li>
+                                                    <li><input type="checkbox" />MIDLANDS MALL</li>
+                                                    <li><input type="checkbox" />GRAND SHOE CARLTON CENTRE</li>
+                                                    <li><input type="checkbox" />DSO HEMMINGWAYS</li>
+                                                </ul>
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />WEBSTORE</li>
+                                                    <li><input type="checkbox" />CALL BACK STOCK</li>
+                                                    <li><input type="checkbox" />WAREHOUSE</li>
+                                                    <li><input type="checkbox" />B001</li>
+                                                    <li><input type="checkbox" />B001</li>
+                                                </ul>
+
+                                            </div>
+                                        </td>
+                                        <td>Active</td>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-primary export-btn" onclick="searchData()">Allow</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <ul>
+                                                <li>001 0002</li>
+                                                <li></li>
+                                                <li>5%</li>
+                                                <li>01/01/2019</li>
+                                            </ul>
+                                        </td>
+                                        <td width="800px">
+                                            <input type="checkbox" />All Select
+                                            <div class="branch-list-block">
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />NICOL</li>
+                                                    <li><input type="checkbox" />CITY BRANCH</li>
+                                                    <li><input type="checkbox" />SAMMY MARKS SQUARE</li>
+                                                    <li><input type="checkbox" />D.S.O. POLOKWANE</li>
+                                                    <li><input type="checkbox" />DSO MTHATHA MALL</li>
+                                                </ul>
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />WEST 388</li>
+                                                    <li><input type="checkbox" />BRAZILIA BALLITO JUNCTION</li>
+                                                    <li><input type="checkbox" />SOUTHGATE SHOPPING M</li>
+                                                    <li><input type="checkbox" />DSO NEWTOWN</li>
+                                                    <li><input type="checkbox" />DSO GILWELD</li>
+                                                </ul>
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />EMPANGENI</li>
+                                                    <li><input type="checkbox" />BLOEMFONTEIN</li>
+                                                    <li><input type="checkbox" />DSO WESTWOOD MALL</li>
+                                                    <li><input type="checkbox" />MARK PARK CENTRE</li>
+                                                    <li><input type="checkbox" />MIMOSA MALL</li>
+                                                </ul>
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />MOTN STOCK ROOM</li>
+                                                    <li><input type="checkbox" />GATEWAY</li>
+                                                    <li><input type="checkbox" />MIDLANDS MALL</li>
+                                                    <li><input type="checkbox" />GRAND SHOE CARLTON CENTRE</li>
+                                                    <li><input type="checkbox" />DSO HEMMINGWAYS</li>
+                                                </ul>
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />WEBSTORE</li>
+                                                    <li><input type="checkbox" />CALL BACK STOCK</li>
+                                                    <li><input type="checkbox" />WAREHOUSE</li>
+                                                    <li><input type="checkbox" />B001</li>
+                                                    <li><input type="checkbox" />B001</li>
+                                                </ul>
+
+                                            </div>
+                                        </td>
+                                        <td>true</td>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-primary export-btn" onclick="searchData()">Allow</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <ul>
+                                                <li>001 0003</li>
+                                                <li></li>
+                                                <li>5%</li>
+                                                <li>01/01/2019</li>
+                                            </ul>
+                                        </td>
+                                        <td width="800px">
+                                            <input type="checkbox" />All Select
+                                            <div class="branch-list-block">
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />NICOL</li>
+                                                    <li><input type="checkbox" />CITY BRANCH</li>
+                                                    <li><input type="checkbox" />SAMMY MARKS SQUARE</li>
+                                                    <li><input type="checkbox" />D.S.O. POLOKWANE</li>
+                                                    <li><input type="checkbox" />DSO MTHATHA MALL</li>
+                                                </ul>
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />WEST 388</li>
+                                                    <li><input type="checkbox" />BRAZILIA BALLITO JUNCTION</li>
+                                                    <li><input type="checkbox" />SOUTHGATE SHOPPING M</li>
+                                                    <li><input type="checkbox" />DSO NEWTOWN</li>
+                                                    <li><input type="checkbox" />DSO GILWELD</li>
+                                                </ul>
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />EMPANGENI</li>
+                                                    <li><input type="checkbox" />BLOEMFONTEIN</li>
+                                                    <li><input type="checkbox" />DSO WESTWOOD MALL</li>
+                                                    <li><input type="checkbox" />MARK PARK CENTRE</li>
+                                                    <li><input type="checkbox" />MIMOSA MALL</li>
+                                                </ul>
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />MOTN STOCK ROOM</li>
+                                                    <li><input type="checkbox" />GATEWAY</li>
+                                                    <li><input type="checkbox" />MIDLANDS MALL</li>
+                                                    <li><input type="checkbox" />GRAND SHOE CARLTON CENTRE</li>
+                                                    <li><input type="checkbox" />DSO HEMMINGWAYS</li>
+                                                </ul>
+                                                <ul class="branch-list">
+                                                    <li><input type="checkbox" />WEBSTORE</li>
+                                                    <li><input type="checkbox" />CALL BACK STOCK</li>
+                                                    <li><input type="checkbox" />WAREHOUSE</li>
+                                                    <li><input type="checkbox" />B001</li>
+                                                    <li><input type="checkbox" />B001</li>
+                                                </ul>
+
+                                            </div>
+                                        </td>
+                                        <td>true</td>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-primary export-btn" onclick="searchData()">Allow</button>
+                                        </td>
+                                    </tr>
+</table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

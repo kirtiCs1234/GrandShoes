@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Services.IService;
+using Services.Service;
+
+namespace Services
+{
+    public class UnitOfService : IUnitOfService
+    {
+        public IUserService UserService => new UserService();
+    }
+}

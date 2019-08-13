@@ -1,0 +1,49 @@
+﻿using Helper;
+using Model;
+using Newtonsoft.Json;
+using Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.Service
+{
+    class SupplierService : ISupplierService
+    {
+        public List<SupplierModel> GetAll()
+
+        {
+            var body = "";
+            List<SupplierModel> SupplierModelList = ServerResponse.Invoke<List<SupplierModel>>("api/supplier/getDetails", body, "get");
+            return SupplierModelList;
+        }
+        public SupplierModel GetById(int? id)
+        { 
+            var body = "";
+            SupplierModel SupplierById = ServerResponse.Invoke<SupplierModel>("api/supplier/getDetail?id="+id, body, "get");
+            return SupplierById;
+        }
+        public SupplierModel Create(SupplierModel supplierModel)
+        {
+            var body = JsonConvert.SerializeObject(supplierModel);
+            SupplierModel SupplierCreate = ServerResponse.Invoke<SupplierModel>("api/supplier/create", body, "Post");
+            return SupplierCreate;
+        }
+        public SupplierModel Edit(SupplierModel supplierModel)
+        {
+            var body = JsonConvert.SerializeObject(supplierModel);
+            SupplierModel SupplierEdit = ServerResponse.Invoke<SupplierModel>("api/supplier/edit?id=" + supplierModel.Id, body, "POST");
+            return SupplierEdit;
+        }
+        public SupplierModel Delete(SupplierModel supplierModel)
+        {
+            var body = JsonConvert.SerializeObject(supplierModel);
+            SupplierModel SupplierDelete = ServerResponse.Invoke<SupplierModel>("api/supplier/Delete?id=" + supplierModel.Id, body, "POST");
+            return SupplierDelete;
+        }
+
+
+    }
+}

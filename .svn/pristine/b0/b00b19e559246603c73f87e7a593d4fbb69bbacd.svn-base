@@ -1,0 +1,238 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+using Model;
+using Newtonsoft.Json;
+
+namespace POSApi.Controllers
+{
+    [RoutePrefix("api/productCategory")]
+    public class ProductCategoriesController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+        public ProductCategoriesController()
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            db.Configuration.ProxyCreationEnabled = false;
+        }
+        // GET: api/ProductCategories
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<ProductCategory> GetProductCategories()
+        {
+            var list= db.ProductCategories.Where(x=>x.IsActive==true).OrderByDescending(x => x.Id).ToList();
+            return list;
+        }
+        [HttpPost]
+        [Route("checkCode")]
+        public bool GetEmail(ProductCategory model)
+        {
+            if (model.Id > 0)
+            {
+                var code = db.ProductCategories.Where(x => x.Id == model.Id && x.IsActive == true).FirstOrDefault();
+                if (code.Code.Equals(model.Code))
+                {
+                    return false;
+                }
+
+            }
+            var data = db.ProductCategories.Any(x => x.Code == model.Code && x.IsActive == true);
+            return data;
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("getCatagoryCodeId")]
+        public ProductCategory GetCode(string sku)
+        {
+            ProductCategory model = new ProductCategory();
+            bool data = db.ProductCategories.Any(x => x.Code == sku && x.IsActive == true);
+            if (data == true)
+            {
+                model = db.ProductCategories.Where(x => x.IsActive == true && x.Code== sku).FirstOrDefault();
+            }
+            else
+            {
+                model.Code= sku;
+                model.IsActive = true;
+                db.ProductCategories.Add(model);
+                db.SaveChanges();
+                var list = db.ProductCategories.Where(x => x.IsActive == true).ToList();
+                model = list.LastOrDefault();
+            }
+            return model;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getProductCategoryPaging")]
+        public ServiceResult<List<ProductCategory>> GetArea([FromUri]Paging paging)
+
+        {
+            ServiceResult<List<ProductCategory>> model = new ServiceResult<List<ProductCategory>>();
+            var source = db.ProductCategories.Where(x => x.IsActive == true)
+                        .OrderByDescending(x => x.Id).ToList();
+            int count = source.Count();
+            // Parameter is passed from Query string if it is null then it default Value will be pageNumber:1  
+            int CurrentPage = paging.pageNumber;
+            // Parameter is passed from Query string if it is null then it default Value will be pageSize:20  
+            int PageSize = paging.pageSize;
+            // Display TotalCount to Records to User  
+            int TotalCount = count;
+            // Calculating Totalpage by Dividing (No of Records / Pagesize)  
+            int TotalPages = (int)Math.Ceiling(count / (double)PageSize);
+            // Returns List of Customer after applying Paging   
+            var items = source.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+            model.TotalCount = count;
+            model.data = items;
+            model.pageSize = PageSize;
+            return model;
+
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("getSearchData")]
+        public ServiceResult<List<ProductCategory>> GetSearchData(ProductCategorySearch productCategorySearch)
+
+        {
+            ServiceResult<List<ProductCategory>> model = new ServiceResult<List<ProductCategory>>();
+            var source = db.ProductCategories.Where(x => x.IsActive == true);
+            var pageSize = 10;
+            var CurrentPage = 1;
+            if (productCategorySearch != null)
+            {
+
+                if (!string.IsNullOrEmpty(productCategorySearch.Code))
+
+                    source = source.Where(m => m.Code== productCategorySearch.Code);
+            }
+
+            
+            int count = source.Count();
+           
+            var items = source.OrderByDescending(x => x.Id).Skip(((productCategorySearch.Page ?? 1) - 1) * pageSize).Take(pageSize).ToList();
+            model.data = items.Select(x => new ProductCategory
+            {
+                Id = x.Id,
+                Code=x.Code,
+                Description=x.Description,
+                IsActive=x.IsActive
+            }).ToList();
+            model.TotalCount = count;
+            return model; ;
+        }
+
+        // GET: api/ProductCategories/5
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetail")]
+        [ResponseType(typeof(ProductCategory))]
+        public IHttpActionResult GetProductCategory(int id)
+        {
+            ProductCategory productCategory = db.ProductCategories.Find(id);
+            if (productCategory == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(productCategory);
+        }
+
+        // PUT: api/ProductCategories/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutProductCategory(int id, ProductCategory productCategory)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != productCategory.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(productCategory).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductCategoryExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/ProductCategories
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(ProductCategory))]
+        public IHttpActionResult PostProductCategory(ProductCategory productCategory)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.ProductCategories.Add(productCategory);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = productCategory.Id }, productCategory);
+        }
+
+        // DELETE: api/ProductCategories/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("delete")]
+        [ResponseType(typeof(ProductCategory))]
+        public IHttpActionResult DeleteProductCategory(int id)
+        {
+            ProductCategory productCategory = db.ProductCategories.Find(id);
+            if (productCategory == null)
+            {
+                return NotFound();
+            }
+            productCategory.IsActive = false;
+           //db.ProductCategories.Remove(productCategory);
+            db.SaveChanges();
+
+            return Ok(productCategory);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool ProductCategoryExists(int id)
+        {
+            return db.ProductCategories.Count(e => e.Id == id) > 0;
+        }
+    }
+}

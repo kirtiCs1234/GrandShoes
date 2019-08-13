@@ -1,0 +1,982 @@
+﻿@model Model.ReceiptOrderItemModel
+@{
+    Layout = null;
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Add Receipt</h4>
+        </div>
+@using (Html.BeginForm("Create", "Receipt", FormMethod.Post, new { id = "createForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="modal-body">
+
+        <div class="row  mrgn-b-lg">
+            <div class="col-md-4 col-xs-12 col-sm-4">
+                <label>Receipt No</label>
+                <div class="inverse-select  text-left">
+                    @Html.TextBoxFor(model => model.ReceiptNumber, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(Model => Model.ReceiveOrder.ReceiptNumber)
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12 col-sm-4">
+                @Html.HiddenFor(model => model.ReceiptOrderId,  new { @class = "form-control",@Value= ViewBag.ReceiptOrderId})
+                <label>Product SKU</label>
+                @Html.TextBoxFor(model => model.autoCompleteProductName, " ", new { @class = "form-control" })
+                <input id="autoCompleteProductId" name="autoCompleteProductId" type="hidden" />
+                @Html.ValidationMessageFor(Model => Model.autoCompleteProductName)
+            </div>
+            <div class="col-md-4 col-xs-12 col-sm-4">
+                <label>Style SKU</label>
+                @Html.TextBoxFor(model => model.autoCompleteProductStyleName, " ", new { @class = "form-control" ,onchange= "getPurchaseOrderValues();" })
+                <input id="autoCompleteProductStyleId" name="autoCompleteProductStyleId" type="hidden" />
+                @Html.ValidationMessageFor(Model => Model.autoCompleteProductStyleName)
+            </div>
+            
+        </div>
+        <div class="row  mrgn-b-lg">
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-hover" id="myTable">
+
+                        <thead class="abc" id="abcd">
+                            <tr>
+                               <th>Action</th>
+                                <span style="display:none" id="costSize_Quantity01"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity01"></span>)Quantity01</th>
+                                <span style="display:none" id="costSize_Quantity02"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity02"></span>)Quantity02</th>
+                                <span style="display:none" id="costSize_Quantity03"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity03"></span>)Quantity03</th>
+                                <span style="display:none" id="costSize_Quantity04"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity04"></span>)Quantity04</th>
+                                <span style="display:none" id="costSize_Quantity05"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity05"></span>)Quantity05</th>
+                                <span style="display:none" id="costSize_Quantity06"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity06"></span>)Quantity06</th>
+                                <span style="display:none" id="costSize_Quantity07"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity07"></span>)Quantity07</th>
+                                <span style="display:none" id="costSize_Quantity08"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity08"></span>)Quantity08</th>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity09"></span>)Quantity09</th>
+                                <span style="display:none" id="costSize_Quantity10"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity10"></span>)Quantity10</th>
+                                <span style="display:none" id="costSize_Quantity11"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity11"></span>)Quantity11</th>
+                                <span style="display:none" id="costSize_Quantity12"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity12"></span>)Quantity12</th>
+                                <span style="display:none" id="costSize_Quantity13"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity13"></span>)Quantity13</th>
+                                <span style="display:none" id="costSize_Quantity14"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity14"></span>)Quantity14</th>
+                                <span style="display:none" id="costSize_Quantity15"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity15"></span>)Quantity15</th>
+                                <span style="display:none" id="costSize_Quantity16"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity16"></span>)Quantity16</th>
+                                <span style="display:none" id="costSize_Quantity17"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity17"></span>)Quantity17</th>
+                                <span style="display:none" id="costSize_Quantity18"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity18"></span>)Quantity18</th>
+                                <span style="display:none" id="costSize_Quantity19"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity19"></span>)Quantity19</th>
+                                <span style="display:none" id="costSize_Quantity20"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity20"></span>)Quantity20</th>
+                                <span style="display:none" id="costSize_Quantity21"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity21"></span>)Quantity21</th>
+                                <span style="display:none" id="costSize_Quantity22"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity22"></span>)Quantity22</th>
+                                <span style="display:none" id="costSize_Quantity23"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity23"></span>)Quantity23</th>
+                                <span style="display:none" id="costSize_Quantity24"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity24"></span>)Quantity24</th>
+                                <span style="display:none" id="costSize_Quantity25"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity25"></span>)Quantity25</th>
+                                <span style="display:none" id="costSize_Quantity26"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity26"></span>)Quantity26</th>
+                                <span style="display:none" id="costSize_Quantity27"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity27"></span>)Quantity27</th>
+                                <span style="display:none" id="costSize_Quantity28"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity28"></span>)Quantity28</th>
+                                <span style="display:none" id="costSize_Quantity29"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity29"></span>)Quantity29</th>
+                                <span style="display:none" id="costSize_Quantity30"></span>
+                                <th>(<span style="color:orangered;" id="quantitySize_Quantity30"></span>)Quantity30</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbodyIndex">
+                            <tr>
+ 
+                                @*<td>
+                                    @Html.EditorFor(model => model.Quantity01, new { htmlAttributes = new { @class = "form-control",  @Id = "Quantity01", placeholder = "Z01", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity01"></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity02, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity02", placeholder = "Z02", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity02" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity03, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity03", placeholder = "Z03", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity03" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity04, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity04", placeholder = "Z04", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity04" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity05, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity05", placeholder = "Z05", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity05" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity06, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity06", placeholder = "Z06", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity06" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity07, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity07", placeholder = "Z07", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" style="display:none;" id="span_Quantity07" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity08, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity08", placeholder = "Z08", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" style="display:none;" id="span_Quantity08" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity09, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity09", placeholder = "Z09", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" style="display:none;" id="span_Quantity09" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity10, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity10", placeholder = "Z10", @onchange = "CalculationCheck(this)", type = "number",@Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity05" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity11, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity11", placeholder = "Z11", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity05" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity12, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity12", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity05" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity13, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity13", placeholder = "Z13", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity05" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity14, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity14", placeholder = "Z14", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity05" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity15, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity15", placeholder = "Z15", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity15" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity16, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity16", placeholder = "Z16", @onchange = "CalculationCheck(this)", type = "number",@Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity16" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity17, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity17", placeholder = "Z17", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity17" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity18, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity18", placeholder = "Z18", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity18" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity19, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity19", placeholder = "Z19", @onchange = "CalculationCheck(this)", type = "number",@Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity19" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity20, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity20", placeholder = "Z20", @onchange = "CalculationCheck(this)", type = "number",@Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity20" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity21, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity21", placeholder = "Z21", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity21" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity22, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity22", placeholder = "Z22", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity22" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity23, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity23", placeholder = "Z23", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity23" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity24, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity24", placeholder = "Z24", @onchange = "CalculationCheck(this)", type = "number",  @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity24" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity25, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity25", placeholder = "Z25", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity25" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity26, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity26", placeholder = "Z26", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity26" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity27, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity27", placeholder = "Z27", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity27" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity28, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity28", placeholder = "Z28", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity28" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity29, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity29", placeholder = "Z29", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity29" value=""></span>
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.Quantity30, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity30", placeholder = "Z30", @onchange = "CalculationCheck(this)", type = "number",@Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity30" value=""></span>
+                                </td>*@
+
+                            </tr>
+                        </tbody>
+                       
+                        <tbody id="FirstBody"></tbody>
+                    </table>
+
+                </div>
+                </div>
+            </div>
+                <input data-val="true"
+                       data-val-number="The field StudentId must be a number."
+                       data-val-required="The StudentId field is required."
+                       id="IsActive"
+                       name="IsActive"
+                       type="hidden"
+                       value="true" />
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel">Cancel</button>
+                <input type="button" onclick="AddReceiptOrder()" value="Add" class="btn btn-success popup-savebtn" />
+            </div>
+            }
+        </div>
+    </div>
+<style>
+    .ui-widget-content.ui-autocomplete {
+        z-index: 9999 !important;
+    }
+</style>
+
+    <script type="text/javascript">
+    $('#myTable').append('<tbody><tr id="AddNewItem"><td colspan="4" class="text-right"><i class="fa fa-plus-circle" onclick="AddRow(this)" aria-hidden="true"></i></td></tr>  ');
+    function AddReceiptOrder() {
+        debugger;
+        var obj = {};
+        obj.ReceiptOrderId = $('#ReceiptOrderId').val();
+        $.ajax(
+              {
+                  type: "GET", //HTTP POST Method
+                  url: '/Admin/Receipt/AddReceiptOrder',
+                  data: obj,
+                  success: function (result) {
+                      window.location.href = "/Admin/Receipt/Index";
+                  },
+                  error: function (errormessage) {
+                      alert(errormessage.responseText);
+                  }
+              });
+    }
+    function AddRow(id) {
+        debugger;
+        var i = id.parentNode.parentNode.rowIndex-2;
+        if (i <= 30)
+            $('#myTable,#FirstBody:last-child').append('<tr id="Row' + i + '"><td style="width:70px;" class="text-right"><input type="button" value="Add" id="button_' + i + '" onclick="AddReceiptOrderItem(this)" class="btn btn-success popup-savebtn" /><i class="fa fa-trash" id="DeletePrice" onclick="del(this)"></i></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity01_' + i + '" " /><span  value="" id="span_Quantity01_' + i + '""></span></td> <td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity02_' + i + '" " /><span value="" id="span_Quantity02_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity03_' + i + '" " /><span value="" id="span_Quantity03_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity04_' + i + '" " /><span value="" id="span_Quantity04_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity05_' + i + '" " /><span style="display:none;" value="" id="span_Quantity05_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity06_' + i + '" " /><span style="display:none;" value="" id="span_Quantity06_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity07_' + i + '" " /><span style="display:none;" value="" id="span_Quantity07_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity08_' + i + '" " /><span style="display:none;" value="" id="span_Quantity08_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity09_' + i + '" " /><span style="display:none;" value="" id="span_Quantity09_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity10_' + i + '" " /><span style="display:none;" value="" id="span_Quantity10_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " ,onchange = "CalculationCheck(this)" id="Quantity11_' + i + ' " /><span style="display:none;" value="" id="span_Quantity11_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " ,onchange = "CalculationCheck(this)" id="Quantity12_' + i + '" " /><span value="" style="display:none;" id="span_Quantity12_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control ",onchange = "CalculationCheck(this)"  id="Quantity13_' + i + '' + i + '" " /><span style="display:none;" id="span_Quantity13_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity14_' + i + '" " /><span style="display:none;" value="" id="span_Quantity14_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity15_' + i + '" " /><span style="display:none;" value="" id="span_Quantity15_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity16_' + i + '" " /><span value="" style="display:none;" id="span_Quantity16_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity17_' + i + '" " /><span style="display:none;" value="" id="span_Quantity17_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity18_' + i + '" " /><span style="display:none;" value="" id="span_Quantity18_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity19_' + i + '" " /><span style="display:none;" value="" id="span_Quantity19_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity20_' + i + '" " /><span value="" id="span_Quantity20_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity21" " /><span style="display:none;" value="" id="span_Quantity21_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity22_' + i + '" " /><span style="display:none;" value="" id="span_Quantity22_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)"  id="Quantity23_' + i + '" " /><span value="" style="display:none;" id="span_Quantity23_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)"  id="Quantity24_' + i + '" " /><span style="display:none;" value="" id="span_Quantity24_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity25_' + i + '" " /><span style="display:none;" value="" id="span_Quantity25_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity26_' + i + '" " /><span value="" style="display:none;" id="span_Quantity26_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control "onchange = "CalculationCheck(this)"  id="Quantity27_' + i + '" " /><span value="" style="display:none;" id="span_Quantity27_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity28_' + i + '" " /><span style="display:none;" value="" id="span_Quantity28_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control ",onchange = "CalculationCheck(this)" id="Quantity29_' + i + ' " " /><span style="display:none;" value="" id="span_Quantity29_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control ",onchange = "CalculationCheck(this)" id="Quantity30_' + i + '" " /><span value="" style="display:none;" id="span_Quantity30_' + i + '""></span></td></tr></tbody>');
+        else { alert("Items limit reached..."); }
+      //  GridNumberList = GridNumberList;
+        //var count = GridNumberList[0].sizeList.length;
+       // for (var i = 0; i < count; i++) {
+         //   ItemList[i] = GridNumberList[0].sizeList[i];
+       // }
+    }
+    function AddReceiptOrderItem(id) {
+        debugger;
+        var i = id.parentNode.parentNode.rowIndex - 2;
+        var obj = {};
+        obj.ReceiptOrderId = $('#ReceiptOrderId').val();
+        obj.autoCompleteProductName = $('#autoCompleteProductName').val();
+        obj.autoCompleteProductStyleName = $('#autoCompleteProductStyleName').val();
+        obj.Quantity01 = $('#Quantity01_' + i).val();
+        obj.Quantity02 = $('#Quantity02_' + i).val();
+        obj.Quantity03 = $('#Quantity03_' + i).val();
+        obj.Quantity04 = $('#Quantity04_' + i).val();
+        obj.Quantity05 = $('#Quantity05_' + i).val();
+        obj.Quantity06 = $('#Quantity06_' + i).val();
+        obj.Quantity07 = $('#Quantity07_' + i).val();
+        obj.Quantity08 = $('#Quantity08_' + i).val();
+        obj.Quantity09 = $('#Quantity09_' + i).val();
+        obj.Quantity10 = $('#Quantity10_' + i).val();
+        obj.Quantity11 = $('#Quantity11_' + i).val();
+        obj.Quantity12 = $('#Quantity12_' + i).val();
+        obj.Quantity13 = $('#Quantity13_' + i).val();
+        obj.Quantity14 = $('#Quantity14_' + i).val();
+        obj.Quantity15 = $('#Quantity15_' + i).val();
+        obj.Quantity16 = $('#Quantity16_' + i).val();
+        obj.Quantity17 = $('#Quantity17_' + i).val();
+        obj.Quantity18 = $('#Quantity18_' + i).val();
+        obj.Quantity19 = $('#Quantity19_' + i).val();
+        obj.Quantity20 = $('#Quantity20_' + i).val();
+        obj.Quantity21 = $('#Quantity21_' + i).val();
+        obj.Quantity22 = $('#Quantity22_' + i).val();
+        obj.Quantity23 = $('#Quantity23_' + i).val();
+        obj.Quantity24 = $('#Quantity24_' + i).val();
+        obj.Quantity25 = $('#Quantity25_' + i).val();
+        obj.Quantity26 = $('#Quantity26_' + i).val();
+        obj.Quantity27 = $('#Quantity27_' + i).val();
+        obj.Quantity28 = $('#Quantity28_' + i).val();
+        obj.Quantity29 = $('#Quantity29_' + i).val();
+        obj.Quantity30 = $('#Quantity30_' + i).val();
+        obj.Cost01 = $('#costSize_Quantity01').text();
+        obj.Cost02 = $('#costSize_Quantity02').text();
+        obj.Cost03 = $('#costSize_Quantity03').text();
+        obj.Cost04 = $('#costSize_Quantity04').text();
+        obj.Cost05 = $('#costSize_Quantity05').text();
+        obj.Cost06 = $('#costSize_Quantity06').text();
+        obj.Cost07 = $('#costSize_Quantity07').text();
+        obj.Cost08 = $('#costSize_Quantity08').text();
+        obj.Cost09 = $('#costSize_Quantity09').text();
+        obj.Cost10 = $('#costSize_Quantity10').text();
+        obj.Cost11 = $('#costSize_Quantity11').text();
+        obj.Cost12 = $('#costSize_Quantity12').text();
+        obj.Cost13 = $('#costSize_Quantity13').text();
+        obj.Cost14 = $('#costSize_Quantity14').text();
+        obj.Cost15 = $('#costSize_Quantity15').text();
+        obj.Cost16 = $('#costSize_Quantity16').text();
+        obj.Cost17 = $('#costSize_Quantity17').text();
+        obj.Cost18 = $('#costSize_Quantity18').text();
+        obj.Cost19 = $('#costSize_Quantity19').text();
+        obj.Cost20 = $('#costSize_Quantity20').text();
+        obj.Cost21 = $('#costSize_Quantity21').text();
+        obj.Cost22 = $('#costSize_Quantity22').text();
+        obj.Cost23 = $('#costSize_Quantity23').text();
+        obj.Cost24 = $('#costSize_Quantity24').text();
+        obj.Cost25 = $('#costSize_Quantity25').text();
+        obj.Cost26 = $('#costSize_Quantity26').text();
+        obj.Cost27 = $('#costSize_Quantity27').text();
+        obj.Cost28 = $('#costSize_Quantity28').text();
+        obj.Cost29 = $('#costSize_Quantity29').text();
+        obj.Cost30 = $('#costSize_Quantity30').text();
+        if (obj.Quantity01 == "") {
+            obj.Quantity01 = 0;
+        }
+        if (isNaN(obj.Quantity01)) {
+            obj.Quantity01 = 0;
+        }
+        if (obj.Quantity02 == "") {
+            obj.Quantity02 = 0;
+        }
+        if (isNaN(obj.Quantity02)) {
+            obj.Quantity02 = 0;
+        }
+        if (obj.Quantity03 == "") {
+            obj.Quantity03 = 0;
+        }
+        if (isNaN(obj.Quantity03)) {
+            obj.Quantity03= 0;
+        }
+        if (obj.Quantity04 == "") {
+            obj.Quantity04 = 0;
+        }
+        if (isNaN(obj.Quantity04)) {
+            obj.Quantity04 = 0;
+        }
+        if (obj.Quantity05 == "") {
+            obj.Quantity05 = 0;
+        }
+        if (isNaN(obj.Quantity05)) {
+            obj.Quantity05 = 0;
+        }
+        if (obj.Quantity06 == "") {
+            obj.Quantity06 = 0;
+        }
+        if (isNaN(obj.Quantity06)) {
+            obj.Quantity06 = 0;
+        }
+        if (obj.Quantity07 == "") {
+            obj.Quantity07 = 0;
+        }
+        if (isNaN(obj.Quantity07)) {
+            obj.Quantity07 = 0;
+        }
+        if (obj.Quantity08 == "") {
+            obj.Quantity08 = 0;
+        }
+        if (isNaN(obj.Quantity08)) {
+            obj.Quantity08 = 0;
+        }
+        if (obj.Quantity09 == "") {
+            obj.Quantity09= 0;
+        }
+        if (isNaN(obj.Quantity09)) {
+            obj.Quantity09 = 0;
+        }
+        if (obj.Quantity10 == "") {
+            obj.Quantity10 = 0;
+        }
+        if (isNaN(obj.Quantity10)) {
+            obj.Quantity10 = 0;
+        }
+        if (obj.Quantity11 == "") {
+            obj.Quantity11 = 0;
+        }
+        if (isNaN(obj.Quantity11)) {
+            obj.Quantity11 = 0;
+        }
+        if (obj.Quantity12 == "") {
+            obj.Quantity12 = 0;
+        }
+        if (isNaN(obj.Quantity12)) {
+            obj.Quantity12 = 0;
+        }
+        if (obj.Quantity13 == "") {
+            obj.Quantity13= 0;
+        }
+        if (isNaN(obj.Quantity13)) {
+            obj.Quantity13 = 0;
+        }
+        if (obj.Quantity14 == "") {
+            obj.Quantity14 = 0;
+        }
+        if (isNaN(obj.Quantity14)) {
+            obj.Quantity14= 0;
+        }
+        if (obj.Quantity15 == "") {
+            obj.Quantity15= 0;
+        }
+        if (isNaN(obj.Quantity15)) {
+            obj.Quantity15 = 0;
+        }
+        if (obj.Quantity16 == "") {
+            obj.Quantity16 = 0;
+        }
+        if (isNaN(obj.Quantity16)) {
+            obj.Quantity16 = 0;
+        }
+        if (obj.Quantity17 == "") {
+            obj.Quantity17 = 0;
+        }
+        if (isNaN(obj.Quantity17)) {
+            obj.Quantity17 = 0;
+        }
+        if (obj.Quantity18 == "") {
+            obj.Quantity18 = 0;
+        }
+        if (isNaN(obj.Quantity18)) {
+            obj.Quantity18 = 0;
+        }
+        if (obj.Quantity19 == "") {
+            obj.Quantity19 = 0;
+        }
+        if (isNaN(obj.Quantity19)) {
+            obj.Quantity19 = 0;
+        }
+       
+        if (obj.Quantity20 == "") {
+            obj.Quantity20 = 0;
+        }
+        if (isNaN(obj.Quantity20)) {
+            obj.Quantity20 = 0;
+        }
+        if (obj.Quantity21 == "") {
+            obj.Quantity21 = 0;
+        }
+        if (isNaN(obj.Quantity21)) {
+            obj.Quantity21 = 0;
+        }
+        if (obj.Quantity22 == "") {
+            obj.Quantity22 = 0;
+        }
+        if (isNaN(obj.Quantity22)) {
+            obj.Quantity22= 0;
+        }
+        if (obj.Quantity23 == "") {
+            obj.Quantity23 = 0;
+        }
+        if (isNaN(obj.Quantity23)) {
+            obj.Quantity23= 0;
+        }
+        if (obj.Quantity24== "") {
+            obj.Quantity24= 0;
+        }
+        if (isNaN(obj.Quantity24)) {
+            obj.Quantity24= 0;
+        }
+        if (obj.Quantity25== "") {
+            obj.Quantity25 = 0;
+        }
+        if (isNaN(obj.Quantity25)) {
+            obj.Quantity25 = 0;
+        }
+        if (obj.Quantity26 == "") {
+            obj.Quantity26 = 0;
+        }
+        if (isNaN(obj.Quantity26)) {
+            obj.Quantity26= 0;
+        }
+        if (obj.Quantity27 == "") {
+            obj.Quantity27 = 0;
+        }
+        if (isNaN(obj.Quantity27)) {
+            obj.Quantity27 = 0;
+        }
+        if (obj.Quantity28 == "") {
+            obj.Quantity28 = 0;
+        }
+        if (isNaN(obj.Quantity28)) {
+            obj.Quantity28 = 0;
+        }
+        if (obj.Quantity29 == "") {
+            obj.Quantity29= 0;
+        }
+        if (isNaN(obj.Quantity29)) {
+            obj.Quantity29 = 0;
+        }
+        if (obj.Quantity30== "") {
+            obj.Quantity30 = 0;
+        }
+        if (isNaN(obj.Quantity30)) {
+            obj.Quantity30 = 0;
+        }
+        if (obj.Cost01 == "") {
+            obj.Cost01 = 0;
+        }
+        if (isNaN(obj.Cost01)) {
+            obj.Cost01 = 0;
+        }
+        if (obj.Cost02 == "") {
+            obj.Cost02 = 0;
+        }
+        if (isNaN(obj.Cost02)) {
+            obj.Cost02 = 0;
+        }
+        if (obj.Cost03 == "") {
+            obj.Cost03 = 0;
+        }
+        if (isNaN(obj.Cost03)) {
+            obj.Cost03= 0;
+        }
+        if (obj.Cost04 == "") {
+            obj.Cost04 = 0;
+        }
+        if (isNaN(obj.Cost04)) {
+            obj.Cost04 = 0;
+        }
+        if (obj.Cost05 == "") {
+            obj.Cost05= 0;
+        }
+        if (isNaN(obj.Cost05)) {
+            obj.Cost05 = 0;
+        }
+        if (obj.Cost06 == "") {
+            obj.Cost06 = 0;
+        }
+        if (isNaN(obj.Cost06)) {
+            obj.Cost06 = 0;
+        }
+        if (obj.Cost07 == "") {
+            obj.Cost07 = 0;
+        }
+        if (isNaN(obj.Cost07)) {
+            obj.Cost07 = 0;
+        }
+        if (obj.Cost08 == "") {
+            obj.Cost08 = 0;
+        }
+        if (isNaN(obj.Cost08)) {
+            obj.Cost08 = 0;
+        }
+        if (obj.Cost09 == "") {
+            obj.Cost09 = 0;
+        }
+        if (isNaN(obj.Cost09)) {
+            obj.Cost09 = 0;
+        }
+        if (obj.Cost10 == "") {
+            obj.Cost10 = 0;
+        }
+        if (isNaN(obj.Cost10)) {
+            obj.Cost10= 0;
+        }
+        if (obj.Cost11 == "") {
+            obj.Cost11 = 0;
+        }
+        if (isNaN(obj.Cost11)) {
+            obj.Cost11 = 0;
+        }
+        if (obj.Cost12 == "") {
+            obj.Cost12 = 0;
+        }
+        if (isNaN(obj.Cost12)) {
+            obj.Cost12 = 0;
+        }
+        if (obj.Cost13== "") {
+            obj.Cost13= 0;
+        }
+        if (isNaN(obj.Cost13)) {
+            obj.Cost13 = 0;
+        }
+        if (obj.Cost14 == "") {
+            obj.Cost14= 0;
+        }
+        if (isNaN(obj.Cost14)) {
+            obj.Cost14= 0;
+        }
+        if (obj.Cost15 == "") {
+            obj.Cost15 = 0;
+        }
+        if (isNaN(obj.Cost15)) {
+            obj.Cost15 = 0;
+        }
+        if (obj.Cost16== "") {
+            obj.Cost16 = 0;
+        }
+        if (isNaN(obj.Cost16)) {
+            obj.Cost16= 0;
+        }
+        if (obj.Cost17== "") {
+            obj.Cost17 = 0;
+        }
+        if (isNaN(obj.Cost17)) {
+            obj.Cost17= 0;
+        }
+        if (obj.Cost18 == "") {
+            obj.Cost18 = 0;
+        }
+        if (isNaN(obj.Cost18)) {
+            obj.Cost18 = 0;
+        }
+        if (obj.Cost19 == "") {
+            obj.Cost19 = 0;
+        }
+        if (isNaN(obj.Cost19)) {
+            obj.Cost19= 0;
+        }
+        if (obj.Cost20 == "") {
+            obj.Cost20 = 0;
+        }
+        if (isNaN(obj.Cost20)) {
+            obj.Cost20 = 0;
+        }
+        if (obj.Cost21 == "") {
+            obj.Cost21 = 0;
+        }
+        if (isNaN(obj.Cost21)) {
+            obj.Cost21 = 0;
+        }
+        if (obj.Cost22 == "") {
+            obj.Cost22 = 0;
+        }
+        if (isNaN(obj.Cost22)) {
+            obj.Cost22 = 0;
+        }
+        if (obj.Cost23 == "") {
+            obj.Cost23 = 0;
+        }
+        if (isNaN(obj.Cost23)) {
+            obj.Cost23 = 0;
+        }
+        if (obj.Cost24 == "") {
+            obj.Cost24 = 0;
+        }
+        if (isNaN(obj.Cost24)) {
+            obj.Cost24 = 0;
+        }
+        if (obj.Cost25 == "") {
+            obj.Cost25 = 0;
+        }
+        if (isNaN(obj.Cost25)) {
+            obj.Cost25= 0;
+        }
+        if (obj.Cost26 == "") {
+            obj.Cost26 = 0;
+        }
+        if (isNaN(obj.Cost26)) {
+            obj.Cost26= 0;
+        }
+        if (obj.Cost27 == "") {
+            obj.Cost27 = 0;
+        }
+        if (isNaN(obj.Cost27)) {
+            obj.Cost27 = 0;
+        }
+        if (obj.Cost28 == "") {
+            obj.Cost28 = 0;
+        }
+        if (isNaN(obj.Cost28)) {
+            obj.Cost28 = 0;
+        }
+        if (obj.Cost29 == "") {
+            obj.Cost29 = 0;
+        }
+        if (isNaN(obj.Cost29)) {
+            obj.Cost29 = 0;
+        }
+        if (obj.Cost30 == "") {
+            obj.Cost30 = 0;
+        }
+        if (isNaN(obj.Cost30)) {
+            obj.Cost30 = 0;
+        }
+        
+        obj.IsActive = true;
+        $.ajax(
+               {
+                   type: "POST", //HTTP POST Method
+                   url: '/Admin/Receipt/AddReceiptOrderItem',
+                   data: obj,
+                   success: function (result) {
+                       event.preventDefault();
+                       alert("data save successfully......");
+
+                       $("#Quantity01_" + i).prop("disabled", true);
+                       $("#Quantity02_" + i).prop("disabled", true);
+                       $("#Quantity03_" + i).prop("disabled", true);
+                       $("#Quantity04_" + i).prop("disabled", true);
+                       $("#Quantity05_" + i).prop("disabled", true);
+                       $("#Quantity06_" + i).prop("disabled", true);
+                       $("#Quantity07_" + i).prop("disabled", true);
+                       $("#Quantity08_" + i).prop("disabled", true);
+                       $("#Quantity09_" + i).prop("disabled", true);
+                       $("#Quantity10_" + i).prop("disabled", true);
+                       $("#Quantity11_" + i).prop("disabled", true);
+                       $("#Quantity12_" + i).prop("disabled", true);
+                       $("#Quantity13_" + i).prop("disabled", true);
+                       $("#Quantity14_" + i).prop("disabled", true);
+                       $("#Quantity15_" + i).prop("disabled", true);
+                       $("#Quantity16_" + i).prop("disabled", true);
+                       $("#Quantity17_" + i).prop("disabled", true);
+                       $("#Quantity18_" + i).prop("disabled", true);
+                       $("#Quantity19_" + i).prop("disabled", true);
+                       $("#Quantity20_" + i).prop("disabled", true);
+                       $("#Quantity21_" + i).prop("disabled", true);
+                       $("#Quantity22_" + i).prop("disabled", true);
+                       $("#Quantity23_" + i).prop("disabled", true);
+                       $("#Quantity24_" + i).prop("disabled", true);
+                       $("#Quantity25_" + i).prop("disabled", true);
+                       $("#Quantity26_" + i).prop("disabled", true);
+                       $("#Quantity27_" + i).prop("disabled", true);
+                       $("#Quantity28_" + i).prop("disabled", true);
+                       $("#Quantity29_" + i).prop("disabled", true);
+                       $("#Quantity30_" + i).prop("disabled", true);
+                       $("#button_" + i ).prop("disabled", true);
+                   },
+                   error: function (errormessage) {
+                       alert(errormessage.responseText);
+                   }
+               });
+    }
+    function CalculationCheck(ctrl) {
+        debugger;
+       // var initValue = $(ctrl).parents('td').find('.spanval').text();
+        var inputValue = $(ctrl).val();
+        var ctrlId = $(ctrl).attr("id");
+        var itemNumber = ctrlId.substring(0, 10);
+        var hiddenCtrl = $("#span_" + ctrlId + "");
+        var spanV = hiddenCtrl.text();
+        if (spanV == "") {
+            spanV = 0;
+        }
+        var wareHouseCtrl = $("#quantitySize_" + itemNumber + "");
+        var whareHouse = wareHouseCtrl.text();
+        var temp = whareHouse;
+        if (whareHouse == "")
+            whareHouse = 0;
+        if (inputValue == "") {
+            inputValue = 0;
+            whareHouse = temp;
+        }
+       var span = jQuery("#span_" + ctrlId + "").text(inputValue);
+        var value = inputValue - spanV;
+        if (parseInt(whareHouse) >= parseInt(value)) {
+            whareHouse = parseInt(whareHouse) - parseInt(value);
+            wareHouseCtrl.text(whareHouse);
+        }
+        else {
+            alert("please enter Quantity of Stock Distrubution is less than Quantity of Stock Invebtory ");
+            $(ctrl).val(0);
+            hiddenCtrl.text(0);
+            var ware = parseInt(spanV) + parseInt(whareHouse);
+            wareHouseCtrl.text(ware);
+        }
+        
+
+    }
+    function del(id) {
+        debugger;
+        var Id = id.parentNode.parentNode.rowIndex;
+        var quantity = parseFloat($(id).parents("tr").find("[id^='Quantity']").val());
+        if (isNaN(quantity)) { quantity = 0; }
+        var unitCost = parseFloat($(id).parents("tr").find("[id^='UnitCost']").val());
+        if (isNaN(unitCost)) { unitCost = 0; }
+        var price = parseFloat($(".ItemAmount").val()).toFixed(2);
+        if (isNaN(price)) { price = 0; }
+        price -= quantity * unitCost;
+        $(id).parents("tr").remove();
+        $(".ItemAmount").val(price);
+
+    };
+    $(document).ready(function () {
+        debugger
+
+        var StyleSKUList = {};
+        $("#autoCompleteProductStyleName").autocomplete({
+            source: function (request, response) {
+                debugger
+                $.ajax({
+                    url: "/Admin/Receipt/AutoCompleteStyleSKUList",
+                    type: "GET",
+                    data: { name: request.term },
+                    success: function (result) {
+
+                        StyleSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value.StyleSKU }; });
+                        response(StyleSKUList);
+
+                    },
+                    error: function (xhr, status) {
+                        alert(status)
+                    }
+
+                });
+            },
+            select: function (event, ui) {
+                debugger
+                event.preventDefault();
+
+                $("#autoCompleteProductStyleName").val(ui.item.label);
+                $("#autoCompleteProductStyleId").val(ui.item.value);
+
+            },
+
+            minLength: 1
+        });
+
+    })
+    function getPurchaseOrderValues() {
+        debugger;
+        var obj={};
+        obj.autoCompleteProductStyleName = $('#autoCompleteProductStyleName').val();
+        obj.autoCompleteProductName = $('#autoCompleteProductName').val();
+        obj.PurchaseOrderId = $('#Id').val();
+        obj.IsActive = true;
+        $.ajax({
+            url: '/Admin/Receipt/GetPurchaseOrder',
+            type: 'POST',
+            data: obj,
+            success: function (result) {
+                debugger;
+                // $('.dvUserDetails').html(result);
+               // alert(result);
+               
+                   // alert(result[0].ID);
+                
+               
+                    $("#quantitySize_Quantity01").text(result.QuantitySize1);
+                
+                    $("#quantitySize_Quantity02").text(result.QuantitySize2);
+                    $("#quantitySize_Quantity03").text(result.QuantitySize3);
+                    $("#quantitySize_Quantity04").text(result.QuantitySize4);
+                    $("#quantitySize_Quantity05").text(result.QuantitySize5);
+                    $("#quantitySize_Quantity06").text(result.QuantitySize6);
+                    $("#quantitySize_Quantity07").text(result.QuantitySize7);
+                    $("#quantitySize_Quantity08").text(result.QuantitySize8);
+                    $("#quantitySize_Quantity09").text(result.QuantitySize9);
+                    $("#quantitySize_Quantity10").text(result.QuantitySize10);
+                    $("#quantitySize_Quantity11").text(result.QuantitySize11);
+                    $("#quantitySize_Quantity12").text(result.QuantitySize12);
+                    $("#quantitySize_Quantity13").text(result.QuantitySize13);
+                    $("#quantitySize_Quantity14").text(result.QuantitySize14);
+                    $("#quantitySize_Quantity15").text(result.QuantitySize15);
+                    $("#quantitySize_Quantity16").text(result.QuantitySize16);
+                    $("#quantitySize_Quantity17").text(result.QuantitySize17);
+                    $("#quantitySize_Quantity18").text(result.QuantitySize18);
+                    $("#quantitySize_Quantity19").text(result.QuantitySize19);
+                    $("#quantitySize_Quantity20").text(result.QuantitySize20);
+                    $("#quantitySize_Quantity21").text(result.QuantitySize21);
+                    $("#quantitySize_Quantity22").text(result.QuantitySize22);
+                    $("#quantitySize_Quantity23").text(result.QuantitySize23);
+                    $("#quantitySize_Quantity24").text(result.QuantitySize24);
+                    $("#quantitySize_Quantity25").text(result.QuantitySize25);
+                    $("#quantitySize_Quantity26").text(result.QuantitySize26);
+                    $("#quantitySize_Quantity27").text(result.QuantitySize27);
+                    $("#quantitySize_Quantity28").text(result.QuantitySize28);
+                    $("#quantitySize_Quantity29").text(result.QuantitySize29);
+                    $("#quantitySize_Quantity30").text(result.QuantitySize30);
+                    $("#costSize_Quantity01").text(result.CostSize1);
+                    $("#costSize_Quantity02").text(result.CostSize2);
+                    $("#costSize_Quantity03").text(result.CostSize3);
+                    $("#costSize_Quantity04").text(result.CostSize4);
+                    $("#costSize_Quantity05").text(result.CostSize5);
+                    $("#costSize_Quantity06").text(result.CostSize6);
+                    $("#costSize_Quantity07").text(result.CostSize7);
+                    $("#costSize_Quantity08").text(result.CostSize8);
+                    $("#costSize_Quantity09").text(result.CostSize9);
+                    $("#costSize_Quantity10").text(result.CostSize10);
+                    $("#costSize_Quantity11").text(result.CostSize11);
+                    $("#costSize_Quantity12").text(result.CostSize12);
+                    $("#costSize_Quantity13").text(result.CostSize13);
+                    $("#costSize_Quantity14").text(result.CostSize14); 
+                    $("#costSize_Quantity15").text(result.CostSize15);
+                    $("#costSize_Quantity16").text(result.CostSize16);
+                    $("#costSize_Quantity17").text(result.CostSize17);
+                    $("#costSize_Quantity18").text(result.CostSize18);
+                    $("#costSize_Quantity19").text(result.CostSize19);
+                    $("#costSize_Quantity20").text(result.CostSize20);
+                    $("#costSize_Quantity21").text(result.CostSize21);
+                    $("#costSize_Quantity22").text(result.CostSize22);
+                    $("#costSize_Quantity23").text(result.CostSize23);
+                    $("#costSize_Quantity24").text(result.CostSize24);
+                    $("#costSize_Quantity25").text(result.CostSize25);
+                    $("#costSize_Quantity26").text(result.CostSize26);
+                    $("#costSize_Quantity27").text(result.CostSize27);
+                    $("#costSize_Quantity28").text(result.CostSize28);
+                    $("#costSize_Quantity29").text(result.CostSize29);
+                    $("#costSize_Quantity30").text(result.CostSize30);
+                    
+
+            },
+            error: function (xhr, status) {
+                alert(status)
+            }
+
+        });
+        return false;
+    }
+    $(document).ready(function () {
+        debugger
+        var ProductSKUList = {};
+        $("#autoCompleteProductName").autocomplete({
+            source: function (request, response) {
+                debugger
+                $.ajax({
+                    url: "/Admin/Receipt/AutoCompleteProductSKUList",
+                    type: "GET",
+                    data: { name: request.term },
+                    success: function (result) {
+                        debugger
+                        ProductSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value.ProductSKU }; });
+                        response(ProductSKUList);
+
+                    },
+                    error: function (xhr, status) {
+                        alert(status)
+                    }
+                });
+            },
+            select: function (event, ui) {
+                debugger
+                event.preventDefault();
+                $("#autoCompleteProductName").val(ui.item.label);
+                $("#autoCompleteProductId").val(ui.item.value);
+            },
+            minLength: 1
+        });
+    })
+
+    </script>
+

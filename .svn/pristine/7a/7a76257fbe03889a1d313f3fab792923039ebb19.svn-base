@@ -1,0 +1,95 @@
+﻿using DAL;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Helper;
+namespace Helper
+{
+	public class LogCreater
+	{
+		private GrandShoesEntities db = new GrandShoesEntities();
+		
+		public List<PageName> crPage()
+		{
+			var page = db.PageNames.ToList();
+			try
+			{
+				db.SaveChanges();
+			}
+			catch (Exception ex) { }
+			return page;
+		}
+		public ActionLog ActionLog(string pageName)
+		{
+			var actionLog = db.ActionLogs.Where(x => x.IsActive == true && x.ActionLogType.Contains(pageName.ToLower())).FirstOrDefault();
+			return actionLog;
+		}
+		public Log crLog(Log model)
+		{
+			var createLog = db.Logs.Add(model);
+			try
+			{
+				db.SaveChanges();
+			}
+			catch (Exception ex) { }
+			return createLog;
+		}
+
+	}
+
+	public static class LogHelper
+	{
+		static LogCreater log = new LogCreater();
+		public static bool CreateLog(this Object obj,string pageName,string logTable, int? id)
+		{
+			string name = obj.getName();
+			
+			int? pageId = null;
+			var page = log.crPage();
+
+			foreach (var item in page)
+			{
+				if (name.ToLower().Contains(item.Page.ToLower()))
+				{
+					pageId = item.Id;
+				}
+			}
+			var model = new DAL.Log();
+			var actionLog = log.ActionLog(pageName);
+			model.ActionLogId = actionLog.Id;
+			model.UserId = id;
+			model.LogDate = DateTime.Now;
+			model.IsActive = true;
+			model.PageId = pageId;
+			//model.LogTable = logTable;
+			var CreateLog = log.crLog(model);
+			return true;
+		}
+		public static string getName(this Object obj)
+		{
+			string name = null;
+			try
+			{
+				name = obj.GetType().GenericTypeArguments[0].Name;
+			}
+			catch (Exception ex) { }
+			try
+			{
+				if (name == null)
+				{
+					name = obj.GetType().Name;
+				}
+			}
+			catch (Exception ex) { }
+			return name;
+		}
+		public static string getRouteName(this String str)
+		{
+			var stringg = str.Split('/');
+			var len = stringg.Length;
+			var name = stringg[len - 1];
+			return name;
+		}
+	}
+	}

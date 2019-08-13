@@ -1,0 +1,335 @@
+﻿@model List<Model.UserModel>
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var data = ViewBag.processData as Dictionary<string, string>;
+}
+<div class="row">
+    <div class="prtm-page-bar col-md-5 col-lg-3 col-sm-12 col-12" style="background:none;">
+        <ul class="breadcrumb" style="background:none;">
+            <li class="breadcrumb-item text-capitalize">
+                <h3>Account</h3>
+            </li>
+            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        </ul>
+    </div>
+    @*@using (Html.BeginForm("Index", "User") new { @class = "formuser" })*@
+    @*@using (Html.BeginForm("Index", "User", FormMethod.Post, new { @class = "formuser" }))
+        {*@
+    <!--------advanced search-->
+    <div class="col-md-8 col-lg-6 col-sm-8 col-12 search-container">
+        <div class="top-search-navbar-search smallsearch col-md-12 col-lg-12 col-sm-12 col-12">
+            <div class="row">
+
+                <input class="top-search-navbar-input col-md-8 col-lg-10 col-sm-8 col-xs-8 searchiFirstName" type="text" placeholder="Search User Name" name="FirstName" id="FirstName">
+
+                @*<input type="submit" value="Add" class="btn btn-success popup-savebtn" />*@
+
+                <button class="advance-search col-md-2 col-lg-1 col-sm-2 col-xs-2" type="button">
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </button>
+
+                <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-xs-2" onclick="searchData()">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+
+        <div class="advance-search-container col-md-12 col-lg-12 col-sm-12 col-12">
+            <div class="advance-content">
+                <div class="col-md-12 col-lg-12 col-xg-12"><h5 style="margin-bottom:20px;color:#000;font-weight:normal">Advanced Keyword Search</h5></div>
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <label>First Name</label>
+                    <input class="form-control searchFirstName" type="text" placeholder="First Name" id="iFirstName" name="FirstName" />
+                </div>
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <label>Last Name</label>
+                    <input class="form-control searchLastName" type="text" placeholder="Last Name" id="LastName" name="LastName" />
+                </div>
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <label>Email</label>
+                    <input class="form-control searchEmail" type="email" id="Email" placeholder="Email" name="Email" />
+                </div>
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <label>Phone</label>
+                    <input class="form-control searchPhone" type="tel" placeholder="Phone" id="Phone" name="Phone" />
+                </div>
+
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <label>Status</label>
+                    <select class="selectize-single-select searchIsActive" name="IsActive" id="IsAcitive">
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+                    </select>
+                </div>
+
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <button type="button" onclick="searchData(false)" class="btn btn-success advance-search-btn">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!------------------>
+    @*}*@
+    <div class="add-btn-div col-md-4 col-lg-3 col-sm-4 col-12 text-right">
+        <button type="button" class="btn btn-primary import-btn " data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="Import()">Import</button>&nbsp;&nbsp;
+		<a href="@Url.Action("ExportList")">
+			<button type="button" class="btn btn-primary export-btn" data-target="#myModal" data-backdrop="static" data-keyboard="false">Export</button>&nbsp;&nbsp;
+			</a>
+			<button type="button" class="btn btn-primary add-btn add-form create" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="create()">Add</button>
+</div>
+	
+</div>
+<div class="row mrgn-b-md">
+	<div class="col-md-12 col-lg-12 col-sm-12 col-12 text-right ">
+		<a class="btn btn-outline-inverse" href="~/File/UserFormate.csv"><i class="fa fa-arrow-circle-down" aria-hidden="true"></i> User.csv</a>
+	</div>
+</div>
+<div class="table-style">
+    @if (TempData["Success"] != null)
+    {
+        <p class="alert alert-success" id="successMessage" style="width: 300px;height: 25px;color: #fff;text-align: center; padding-bottom: 2em;">
+            @TempData["Success"]
+        </p>
+    }
+    <script>
+        setTimeout(function () {
+            $('#successMessage').fadeOut('slow');
+        }, 5000);
+    </script>
+    <div class="dvUserDetails">
+        @{
+
+            Html.RenderPartial("_Index1", Model);
+        }
+
+    </div>
+</div>
+<div class="modal fade" id="myModal">
+    <div id="dvCreatedetails">
+
+
+    </div>
+
+</div>
+<div class="modal fade" id="myCancelModal">
+    <div id="Canceldiv">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Confirm Cancel</h4>
+                </div>
+                <div class="modal-body">
+                    <p>you sure you need to close without save!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" id="cancelyesbtn" class="btn btn-success popup-savebtn" data-dismiss="modal">yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <table>
+        <thead>
+            <tr>
+                <td>Sr No.</td>
+                <td>Email</td>
+                <td>Message</td>
+            </tr>
+        </thead>
+        <tbody>
+            @if (data != null)
+            {
+                foreach (var item in data)
+                {
+                    var processData = item.Key.Split('#');
+                    <tr>
+                        <td>@processData[0]</td>
+                        <td>@processData[1]</td>
+                        <td>@item.Value</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@section scripts{
+
+    <script type="text/javascript">
+        function searchData() {
+            debugger
+            var obj = {};
+            obj.FirstName = $('#FirstName').val();
+            obj.iFirstName = $('#iFirstName').val();
+            obj.LastName = $('#LastName').val();
+            obj.Email = $('#Email').val();
+            obj.Phone = $('#Phone').val();
+            obj.IsActive = true;
+            $.ajax({
+                url: '/Admin/User/_Index1',
+                type: 'POST',
+                data: obj,
+                success: function (result) {
+                    $('.dvUserDetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+            return false;
+        }
+
+        
+        $(document).on("click", "a[href^='/Admin/User/_Index1?page']", function () {
+            debugger
+            var obj = {};
+            obj.FirstName = $('#FirstName').val();
+            obj.iFirstName = $('#iFirstName').val();
+            obj.LastName = $('#LastName').val();
+            obj.Email = $('#Email').val();
+            obj.Phone = $('#Phone').val();
+            obj.IsActive = $('#IsActive').val();
+            $.ajax({
+                type: "POSt",
+                url: $(this).attr("href"),
+
+                data: obj,
+                success: function (result) {
+                    $('.dvUserDetails').html(result);
+                    //  alert('hdfjdhfj');
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+            return false;
+        });
+
+        $(document).on("click", "#cancelyesbtn", function () {
+            window.location = '/admin/User/index';
+        });
+        var id1;
+        function create() {
+            Data(0);
+        }
+
+        function edit(edit) {
+            id1 = edit;//$(this).data("id");
+            Data(1);
+        }
+
+        function details(details) {
+            id1 = details;//$(this).data("id");
+            Data(2);
+        }
+
+        function del(del) {
+            id1 = del;//"";
+            Data(3);
+        }
+        function Import() {
+        	Data(4);
+        }
+        function Export() {
+        	Data(5);
+        }
+        //  $(".approve").click(function () {
+        //       id2 = $(this).data("id");
+        //      approved();
+        //  });
+        function Data(ch) {
+            debugger;
+            var crud = "";
+            switch (ch) {
+                case 0:
+                    
+                    crud = '/Admin/User/Create';
+                    break;
+                case 1:
+                    crud = '/Admin/User/Edit/' + id1;
+                    break;
+                case 2:
+                    crud = '/Admin/User/Details/' + id1;
+                    break;
+                case 3:
+                    crud = '/Admin/User/Delete/' + id1;
+                    break;
+            	case 4:
+            		crud = '/Admin/User/ExcelUpload';
+            		break;
+            	case 5:
+            		crud = '/Admin/User/ExportList';
+            		break;
+            }
+            $.ajax({
+
+                url: crud,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                // data: {page : page} ,
+                dataType: 'html',
+                success: function (result) {
+
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+        function ApproveUser(ctrl) {
+            debugger
+            var id = $(ctrl).attr("data-id");
+
+            $.ajax({
+
+                url: '/Admin/User/approve/' + id + '',
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                // data: {page : page} ,
+                dataType: 'json',
+                success: function (result) {
+
+                    var id = result.id;
+                    $("[id='tdApproveUser'][data-id='" + id + "']").html("<span>Approved</span>");
+                },
+                error: function (xhr, status) {
+                    //alert(status)
+                }
+            });
+        }
+
+        function ResetPassword(ctrl) {
+            var id = $(ctrl).attr("data-id");
+
+            $.ajax({
+
+                url: '/Admin/User/ResetPassword/' + id + '',
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                // data: {page : page} ,
+                dataType: 'html',
+                success: function (result) {
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    //alert(status)
+                }
+            });
+
+        }
+
+
+    </script>
+
+}

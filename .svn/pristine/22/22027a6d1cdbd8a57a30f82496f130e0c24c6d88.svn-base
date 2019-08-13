@@ -1,0 +1,1522 @@
+﻿@model Model.ReceiveOrderModel
+@{
+    Layout = null;
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Add Receipt</h4>
+        </div>
+@if (Model.IsFinalize == true)
+{
+	<p>Sorry this receipt is Finalized so new receipt can not be Add.</p>
+}
+else
+{
+	using (Html.BeginForm("Create", "Receipt", FormMethod.Post, new { id = "createForm" }))
+	{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(m => m.PurchaseOrderId)
+    <div class="modal-body">
+		@*<div style="width:100%;float:left;">
+			<input type="button" class="btn btn-success popup-savebtn toggle-btn" id="stock" data-toggle="collapse" value="View Stock Distribution" />
+			<span id="massage"></span>
+			<div id="demo" class="collapse">
+				@Html.Action("ViewDistribution")
+			</div>
+		</div>*@
+        <div class="row  mrgn-b-lg">
+            <div class="col-md-4 col-xs-12 col-sm-4">
+                <label>Receipt No</label>
+                <div class="inverse-select  text-left">
+                    @Html.TextBoxFor(model => model.ReceiptNumber, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(Model => Model.ReceiptNumber)
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12 col-sm-4">
+                
+				@Html.HiddenFor(model => model.PurchaseOrderId, new { @class = "form-control" })
+				@Html.HiddenFor(model => model.Id, new { @class = "form-control", @Value = @ViewBag.ReceiptId })
+                @*<label>Product SKU</label>*@
+                @*@Html.TextBoxFor(model => model.autoCompleteProductName, " ", new { @class = "form-control" })*@
+                <input id="autoCompleteProductId" name="autoCompleteProductId" type="hidden" />
+                @*@Html.ValidationMessageFor(Model => Model.autoCompleteProductName)*@
+            </div>
+            <div class="col-md-4 col-xs-12 col-sm-4">
+                @*<label>Style SKU</label>
+                @Html.TextBoxFor(model => model.autoCompleteProductStyleName, " ", new { @class = "form-control" ,onchange=*@ @*"getPurchaseOrderValues();" })*@
+                <input id="autoCompleteProductStyleId" name="autoCompleteProductStyleId" type="hidden" />
+                @*@Html.ValidationMessageFor(Model => Model.autoCompleteProductStyleName)*@
+            </div>
+            <label id="lable" style="color:red;font-size:12px;margin-left:12px"></label>
+        </div>
+        <div class="row  mrgn-b-lg">
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                @*<div class="table-responsive">*@
+                    <table class="table table-hover" id="myTable">
+                     @for (int i = 0; i < Model.purchaseOrderItemList.Count; i++)
+					 {
+                        <thead class="abc" id="abcd">
+							<tr>
+								<th>ProductBarcode</th>
+								<span style="display:none" id="costSize_Quantity01_@i">@Model.purchaseOrderItemList[i].CostSize1</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity01_@i">@Model.purchaseOrderItemList[i].QuantitySize1</span>)Quantity01</th>
+								<span style="display:none" id="costSize_Quantity02_@i" value="@Model.purchaseOrderItemList[i].CostSize2">@Model.purchaseOrderItemList[i].CostSize2</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity02_@i">@Model.purchaseOrderItemList[i].QuantitySize2</span>)Quantity02</th>
+								<span style="display:none" id="costSize_Quantity03_@i" value="@Model.purchaseOrderItemList[i].CostSize3">@Model.purchaseOrderItemList[i].CostSize3</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity03_@i" value="">@Model.purchaseOrderItemList[i].QuantitySize3</span>)Quantity03</th>
+								<span style="display:none" id="costSize_Quantity04_@i" value="@Model.purchaseOrderItemList[i].CostSize4">@Model.purchaseOrderItemList[i].CostSize4</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity04_@i" value="@Model.purchaseOrderItemList[i].QuantitySize4">@Model.purchaseOrderItemList[i].QuantitySize4</span>)Quantity04</th>
+								<span style="display:none" id="costSize_Quantity05_@i">@Model.purchaseOrderItemList[i].CostSize5</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity05_@i" value="@Model.purchaseOrderItemList[i].QuantitySize5">@Model.purchaseOrderItemList[i].QuantitySize5</span>)Quantity05</th>
+								<span style="display:none" id="costSize_Quantity06_@i">@Model.purchaseOrderItemList[i].CostSize6</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity06_@i" value="@Model.purchaseOrderItemList[i].QuantitySize6">@Model.purchaseOrderItemList[i].QuantitySize6</span>)Quantity06</th>
+								<span style="display:none" id="costSize_Quantity07_@i" >@Model.purchaseOrderItemList[i].CostSize7</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity07_@i" value="@Model.purchaseOrderItemList[i].QuantitySize7">@Model.purchaseOrderItemList[i].QuantitySize7</span>)Quantity07</th>
+								<span style="display:none" id="costSize_Quantity08_@i">@Model.purchaseOrderItemList[i].CostSize8</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity08_@i" value="@Model.purchaseOrderItemList[i].QuantitySize8">@Model.purchaseOrderItemList[i].QuantitySize8</span>)Quantity08</th>
+								<span style="display:none" id="costSize_Quantity09_@i" >@Model.purchaseOrderItemList[i].CostSize9</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity09_@i" value="@Model.purchaseOrderItemList[i].QuantitySize9">@Model.purchaseOrderItemList[i].QuantitySize9</span>)Quantity09</th>
+								<span  style="display:none" id="costSize_Quantity10_@i" >@Model.purchaseOrderItemList[i].CostSize10</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity10_@i" value="@Model.purchaseOrderItemList[i].QuantitySize10">@Model.purchaseOrderItemList[i].QuantitySize10</span>)Quantity10</th>
+								<span style="display:none" id="costSize_Quantity11_@i" >@Model.purchaseOrderItemList[i].CostSize11</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity11_@i" value="@Model.purchaseOrderItemList[i].QuantitySize11">@Model.purchaseOrderItemList[i].QuantitySize11</span>)Quantity11</th>
+								<span style="display:none" id="costSize_Quantity12_@i">@Model.purchaseOrderItemList[i].CostSize12</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity12_@i" value="@Model.purchaseOrderItemList[i].QuantitySize4">@Model.purchaseOrderItemList[i].QuantitySize12</span>)Quantity12</th>
+								<span style="display:none" id="costSize_Quantity13_@i" >@Model.purchaseOrderItemList[i].CostSize13</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity13_@i" value="@Model.purchaseOrderItemList[i].QuantitySize13">@Model.purchaseOrderItemList[i].QuantitySize13</span>)Quantity13</th>
+
+							<span style="display:none" id="costSize_Quantity14_@i" >@Model.purchaseOrderItemList[i].CostSize14</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity14_@i" value="@Model.purchaseOrderItemList[i].QuantitySize14">@Model.purchaseOrderItemList[i].QuantitySize14</span>)Quantity14</th>
+							<span style="display:none" id="costSize_Quantity15_@i" >@Model.purchaseOrderItemList[i].CostSize15</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity15_@i" value="@Model.purchaseOrderItemList[i].QuantitySize15">@Model.purchaseOrderItemList[i].QuantitySize15</span>)Quantity15</th>
+							<span style="display:none" id="costSize_Quantity16_@i" >@Model.purchaseOrderItemList[i].CostSize16</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity16_@i" value="@Model.purchaseOrderItemList[i].QuantitySize16">@Model.purchaseOrderItemList[i].QuantitySize16</span>)Quantity16</th>
+							<span style="display:none" id="costSize_Quantity17_@i">@Model.purchaseOrderItemList[i].CostSize17</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity17_@i" value="@Model.purchaseOrderItemList[i].QuantitySize17">@Model.purchaseOrderItemList[i].QuantitySize17</span>)Quantity17</th>
+							<span style="display:none" id="costSize_Quantity18_@i">@Model.purchaseOrderItemList[i].CostSize18</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity18_@i" value="@Model.purchaseOrderItemList[i].QuantitySize18">@Model.purchaseOrderItemList[i].QuantitySize18</span>)Quantity18</th>
+							<span style="display:none" id="costSize_Quantity19_@i" >@Model.purchaseOrderItemList[i].CostSize19</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity19_@i" value="@Model.purchaseOrderItemList[i].QuantitySize19">@Model.purchaseOrderItemList[i].QuantitySize19</span>)Quantity19</th>
+							<span style="display:none" id="costSize_Quantity20_@i" >@Model.purchaseOrderItemList[i].CostSize20</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity20_@i" value="@Model.purchaseOrderItemList[i].QuantitySize20">@Model.purchaseOrderItemList[i].QuantitySize20</span>)Quantity20</th>
+							<span style="display:none" id="costSize_Quantity21_@i">@Model.purchaseOrderItemList[i].CostSize21</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity21_@i" value="@Model.purchaseOrderItemList[i].QuantitySize21">@Model.purchaseOrderItemList[i].QuantitySize21</span>)Quantity21</th>
+							<span style="display:none" id="costSize_Quantity22_@i">@Model.purchaseOrderItemList[i].CostSize22</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity22_@i" value="@Model.purchaseOrderItemList[i].QuantitySize22">@Model.purchaseOrderItemList[i].QuantitySize22</span>)Quantity22</th>
+							<span style="display:none" id="costSize_Quantity23_@i">@Model.purchaseOrderItemList[i].CostSize23</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity23_@i" value="@Model.purchaseOrderItemList[i].QuantitySize23">@Model.purchaseOrderItemList[i].QuantitySize23</span>)Quantity23</th>
+							<span style="display:none" id="costSize_Quantity24_@i">@Model.purchaseOrderItemList[i].CostSize24</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity24_@i" value="@Model.purchaseOrderItemList[i].QuantitySize24">@Model.purchaseOrderItemList[i].QuantitySize24</span>)Quantity24</th>
+							<span style="display:none" id="costSize_Quantity25_@i">@Model.purchaseOrderItemList[i].CostSize25</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity25_@i" value="@Model.purchaseOrderItemList[i].QuantitySize25">@Model.purchaseOrderItemList[i].QuantitySize25</span>)Quantity25</th>
+							<span style="display:none" id="costSize_Quantity26_@i">@Model.purchaseOrderItemList[i].CostSize26</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity26_@i" value="@Model.purchaseOrderItemList[i].QuantitySize26">@Model.purchaseOrderItemList[i].QuantitySize26</span>)Quantity26</th>
+							<span style="display:none" id="costSize_Quantity27_@i">@Model.purchaseOrderItemList[i].CostSize27</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity27_@i" value="@Model.purchaseOrderItemList[i].QuantitySize27">@Model.purchaseOrderItemList[i].QuantitySize27</span>)Quantity27</th>
+							<span style="display:none" id="costSize_Quantity28_@i">@Model.purchaseOrderItemList[i].CostSize28</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity28_@i" value="@Model.purchaseOrderItemList[i].QuantitySize28">@Model.purchaseOrderItemList[i].QuantitySize28</span>)Quantity28</th>
+							<span style="display:none" id="costSize_Quantity29_@i">@Model.purchaseOrderItemList[i].CostSize29</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity29_@i" value="@Model.purchaseOrderItemList[i].QuantitySize29">@Model.purchaseOrderItemList[i].QuantitySize29</span>)Quantity29</th>
+							<span style="display:none" id="costSize_Quantity30_@i">@Model.purchaseOrderItemList[i].CostSize30</span>
+								<th>(<span style="color:orangered;" id="quantitySize_Quantity30_@i" value="@Model.purchaseOrderItemList[i].QuantitySize30">@Model.purchaseOrderItemList[i].QuantitySize30</span>)Quantity30</th>
+						</tr>
+                        </thead>
+                        <tbody class="tbodyIndex" id="myTable1">
+                         
+                            <tr>
+								<td>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].ReceiptOrderId, new { @class = "form-control", @Value = @ViewBag.ReceiptId })
+									@Html.EditorFor(model => model.purchaseOrderItemList[i].Product.Barcode, new { htmlAttributes = new { @class = "form-control" } })
+								@Html.EditorFor(model => model.ReceiptOrderItems[i].ProductId, new { htmlAttributes = new { @class = "form-control", style = "display:none;", id = "ProductId_" + i, @Value = Model.purchaseOrderItemList[i].ProductId } })
+							</td>
+								
+                                @*<td style="width:70px;" class="text-right"><input type="button" value="Add" id="button_0" onclick="AddReceiptOrderItem(this)" class="btn btn-success popup-savebtn" /></td>*@
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity01, new { htmlAttributes = new { @class = "form-control", id = "Quantity01_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity01_@i"></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost01, new { @class = "form-control", style = "display:none;", id = "costSize_Quantity1_" + i, @Value = Model.purchaseOrderItemList[i].CostSize1, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity02, new { htmlAttributes = new { @class = "form-control", id = "Quantity02_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity02_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost02, new { @class = "form-control", id = "costSize_Quantity2_" + i, style = "display:none;", @Value = Model.purchaseOrderItemList[i].CostSize2, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity03, new { htmlAttributes = new { @class = "form-control", id = "Quantity03_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity03_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost03, new { @class = "form-control", id = "costSize_Quantity3_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize3, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity04, new { htmlAttributes = new { @class = "form-control", id = "Quantity04_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity04_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost04, new { @class = "form-control", id = "costSize_Quantity4_" + i, style = "display:none;", @Value = Model.purchaseOrderItemList[i].CostSize4, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity05, new { htmlAttributes = new { @class = "form-control", id = "Quantity05_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity05_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost05, new { @class = "form-control", id = "costSize_Quantity5_" + i, style = "display:none;", @Value = Model.purchaseOrderItemList[i].CostSize5, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity06, new { htmlAttributes = new { @class = "form-control", id = "Quantity06_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity06_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost06, new { @class = "form-control", id = "costSize_Quantity6_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize6, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity07, new { htmlAttributes = new { @class = "form-control", id = "Quantity07_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity07_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost07, new { @class = "form-control", id = "costSize_Quantity7_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize7, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity08, new { htmlAttributes = new { @class = "form-control", id = "Quantity08_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;"  id="span_Quantity08_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost08, new { @class = "form-control", id = "costSize_Quantity8_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize8, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity09, new { htmlAttributes = new { @class = "form-control", id = "Quantity09_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity09_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost09, new { @class = "form-control", id = "costSize_Quantity9_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize9, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity10, new { htmlAttributes = new { @class = "form-control", id = "Quantity10_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity10_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost10, new { @class = "form-control", id = "costSize_Quantity10_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize10, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity11, new { htmlAttributes = new { @class = "form-control", id = "Quantity11_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity11_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost11, new { @class = "form-control", id = "costSize_Quantity11_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize11, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity12, new { htmlAttributes = new { @class = "form-control", id = "Quantity12_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity12_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost12, new { @class = "form-control", id = "costSize_Quantity12_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize12, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity13, new { htmlAttributes = new { @class = "form-control", id = "Quantity13_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity13_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost13, new { @class = "form-control", id = "costSize_Quantity13_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize13, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity14, new { htmlAttributes = new { @class = "form-control", id = "Quantity14_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity14_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost14, new { @class = "form-control", id = "costSize_Quantity14_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize14, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity15, new { htmlAttributes = new { @class = "form-control", id = "Quantity15_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity15_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost15, new { @class = "form-control", id = "costSize_Quantity15_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize15, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity16, new { htmlAttributes = new { @class = "form-control", id = "Quantity16_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity16_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost16, new { @class = "form-control", id = "costSize_Quantity16_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize16, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity17, new { htmlAttributes = new { @class = "form-control", id = "Quantity17_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity17_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost17, new { @class = "form-control", id = "costSize_Quantity17_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize17, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity18, new { htmlAttributes = new { @class = "form-control", id = "Quantity18_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity18_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost18, new { @class = "form-control", id = "costSize_Quantity18_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize18, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity19, new { htmlAttributes = new { @class = "form-control", id = "Quantity19_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity19_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost19, new { @class = "form-control", id = "costSize_Quantity19_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize19, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity20, new { htmlAttributes = new { @class = "form-control", id = "Quantity20_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity20_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost20, new { @class = "form-control", id = "costSize_Quantity20_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize20, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity21, new { htmlAttributes = new { @class = "form-control", id = "Quantity21_" + i, placeholder = "Z21", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity21_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost21, new { @class = "form-control", id = "costSize_Quantity21_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize21, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity22, new { htmlAttributes = new { @class = "form-control", id = "Quantity22_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity22_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost22, new { @class = "form-control", id = "costSize_Quantity22_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize22, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity23, new { htmlAttributes = new { @class = "form-control", id = "Quantity23_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity23_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost23, new { @class = "form-control", id = "costSize_Quantity23_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize23, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity24, new { htmlAttributes = new { @class = "form-control", id = "Quantity24_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity24_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost24, new { @class = "form-control", id = "costSize_Quantity24_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize24, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity25, new { htmlAttributes = new { @class = "form-control", id = "Quantity25_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity25_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost25, new { @class = "form-control", id = "costSize_Quantity25_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize25, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity26, new { htmlAttributes = new { @class = "form-control", id = "Quantity26_" + i, placeholder = "Z26", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity26_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost26, new { @class = "form-control", id = "costSize_Quantity26_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize26, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity27, new { htmlAttributes = new { @class = "form-control", id = "Quantity27_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity27_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost27, new { @class = "form-control", id = "costSize_Quantity27_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize27, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity28, new { htmlAttributes = new { @class = "form-control", id = "Quantity28_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity28_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost28, new { @class = "form-control", id = "costSize_Quantity28_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize28, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity29, new { htmlAttributes = new { @class = "form-control", id = "Quantity29_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity29_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost29, new { @class = "form-control", id = "costSize_Quantity29_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize29, type = "number" })
+                                </td>
+                                <td>
+                                    @Html.EditorFor(model => model.ReceiptOrderItems[i].Quantity30, new { htmlAttributes = new { @class = "form-control", id = "Quantity30_" + i, @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                    <span style="display:none;" id="span_Quantity30_@i" value=""></span>
+									@Html.HiddenFor(model => model.ReceiptOrderItems[i].Cost30, new { @class = "form-control", id = "costSize_Quantity30_" + i, style = "display:none;", @Value = @Model.purchaseOrderItemList[i].CostSize30, type = "number" })
+                                </td>
+
+                            </tr>
+						
+                        </tbody>
+					 }
+                        @*<tbody id="FirstBody"></tbody>
+                        <span id="mas"></span>*@
+                    </table>
+
+                </div>
+                </div>
+            </div>
+                <input data-val="true"
+                       data-val-number="The field StudentId must be a number."
+                       data-val-required="The StudentId field is required."
+                       id="IsActive"
+                       name="IsActive"
+                       type="hidden"
+                       value="true" />
+
+            @*</div>*@
+            <div class="modal-footer">
+                <button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel">Cancel</button>
+				@if (Model.IsFinalize == true)
+				{
+				<input type="button" onclick="AddReceiptOrder(@ViewBag.ReceiptId)" value="Save" class="btn btn-success popup-savebtn" disabled/>
+				<input type="button" style="background-color:#DC7633" onclick="SaveConfirm(@Model.PurchaseOrderId)" value="Save and Finalize" class="btn btn-success popup-savebtn toggle-btn" disabled/>
+				}
+				else
+				{
+					<input type="button" onclick="AddReceiptOrder(@ViewBag.ReceiptId)" value="Save" id="SaveData" class="btn btn-success popup-savebtn" />
+					<input type="button" style="background-color:#DC7633" onclick="SaveConfirm(@Model.PurchaseOrderId)" value="Save and Finalize" class="btn btn-success popup-savebtn toggle-btn" />
+				}
+            </div>
+			<div id="demo" class="collapse">
+				
+			</div>
+	}
+}
+        </div>
+
+    </div>
+<style>
+    .ui-widget-content.ui-autocomplete {
+        z-index: 9999 !important;
+    }
+</style>
+
+    <script type="text/javascript">
+		function Finalize(){
+			debugger
+			var obj={};
+			var purchaseId=@Model.PurchaseOrderId;
+			var receipt=@ViewBag.ReceiptId;
+			obj.PurchaseOrderId=purchaseId;
+			obj.ReceiptId=receipt;
+			$.ajax({
+				url: '/Admin/Receipt/Finalize',
+				type: "POST",
+				data: obj,
+				success: function (result) {
+					debugger;
+					alert("Receipt is Finalize.")
+					window.location.href="/Admin/Receipt/Index";
+				}
+			})
+		
+		}
+		function SaveConfirm(id){
+			debugger
+			var obj={};
+			var table = document.getElementById("myTable");
+			var ReceiptItems = [];
+			obj.ReceiptOrderItems = ReceiptItems;
+			for (var i = 0; i <table.rows.length; i++) {
+				debugger
+				if($("#Quantity01_" + i).val()!=0 && $("#Quantity01_" + i).val()!=null ||$("#Quantity02_" + i).val()!=0 &&$("#Quantity02_" + i).val()!=null ||$("#Quantity03_" + i).val()!=null && $("#Quantity03_" + i).val()!=0 
+					||$("#Quantity04_" + i).val()!=null && $("#Quantity04_" + i).val()!=0||$("#Quantity05_" + i).val()!=null && $("#Quantity05_" + i).val()!=0||$("#Quantity06_" + i).val()!=null && $("#Quantity06_" + i).val()!=0||$("#Quantity07_" + i).val()!=null && $("#Quantity07_" + i).val()!=0||$("#Quantity08_" + i).val()!=null && $("#Quantity08_" + i).val()!=0||$("#Quantity09_" + i).val()!=null && $("#Quantity09_" + i).val()!=0||$("#Quantity10_" + i).val()!=null && $("#Quantity10_" + i).val()!=0||$("#Quantity11_" + i).val()!=null && $("#Quantity11_" + i).val()!=0||$("#Quantity12_" + i).val()!=null && $("#Quantity12_" + i).val()!=0||$("#Quantity13_" + i).val()!=null && $("#Quantity13_" + i).val()!=0||$("#Quantity14_" + i).val()!=null && $("#Quantity14_" + i).val()!=0||$("#Quantity15_" + i).val()!=null && $("#Quantity15_" + i).val()!=0||$("#Quantity16_" + i).val()!=null && $("#Quantity16_" + i).val()!=0||$("#Quantity17_" + i).val()!=null && $("#Quantity17_" + i).val()!=0||$("#Quantity18_" + i).val()!=null && $("#Quantity18_" + i).val()!=0||$("#Quantity19_" + i).val()!=null && $("#Quantity19_" + i).val()!=0||$("#Quantity20_" + i).val()!=null && $("#Quantity20_" + i).val()!=0||$("#Quantity21_" + i).val()!=null && $("#Quantity21_" + i).val()!=0||$("#Quantity22_" + i).val()!=null && $("#Quantity22_" + i).val()!=0||$("#Quantity23_" + i).val()!=null && $("#Quantity23_" + i).val()!=0||$("#Quantity24_" + i).val()!=null && $("#Quantity24_" + i).val()!=0||$("#Quantity25_" + i).val()!=null && $("#Quantity25_" + i).val()!=0||$("#Quantity26_" + i).val()!=null && $("#Quantity27_" + i).val()!=0||$("#Quantity27_" + i).val()!=null && $("#Quantity28_" + i).val()!=0||$("#Quantity29_" + i).val()!=null && $("#Quantity29_" + i).val()!=0||$("#Quantity30_" + i).val()!=null && $("#Quantity30_" + i).val()!=0){
+					ReceiptItems.push({
+						ReceiptOrderId: id,
+						ProductId: $("#ProductId_"+i).val(),
+						Quantity01: $("#Quantity01_" + i).val(),
+						Quantity02: $("#Quantity02_" + i).val(),
+						Quantity03: $("#Quantity03_" + i).val(),
+						Quantity04: $("#Quantity04_" + i).val(),
+						Quantity05: $("#Quantity05_" + i).val(),
+						Quantity06: $("#Quantity06_" + i).val(),
+						Quantity07: $("#Quantity07_" + i).val(),
+						Quantity08: $("#Quantity08_" + i).val(),
+						Quantity09: $("#Quantity09_" + i).val(),
+						Quantity10: $("#Quantity10_" + i).val(),
+						Quantity11: $("#Quantity11_" + i).val(),
+						Quantity12: $("#Quantity12_" + i).val(),
+						Quantity13: $("#Quantity13_" + i).val(),
+						Quantity14: $("#Quantity14_" + i).val(),
+						Quantity15: $("#Quantity15_" + i).val(),
+						Quantity16: $("#Quantity16_" + i).val(),
+						Quantity17: $("#Quantity17_" + i).val(),
+						Quantity18: $("#Quantity18_" + i).val(),
+						Quantity19: $("#Quantity19_" + i).val(),
+						Quantity20: $("#Quantity20_" + i).val(),
+						Quantity21: $("#Quantity21_" + i).val(),
+						Quantity22: $("#Quantity22_" + i).val(),
+						Quantity23: $("#Quantity23_" + i).val(),
+						Quantity24: $("#Quantity24_" + i).val(),
+						Quantity25: $("#Quantity25_" + i).val(),
+						Quantity26: $("#Quantity26_" + i).val(),
+						Quantity27: $("#Quantity27_" + i).val(),
+						Quantity28: $("#Quantity28_" + i).val(),
+						Quantity29: $("#Quantity29_" + i).val(),
+						Quantity30: $("#Quantity30_" + i).val(),
+						Cost01: $("#costSize_Quantity1_" + i).val(),
+						Cost02: $("#costSize_Quantity2_" + i).val(),
+						Cost03: $("#costSize_Quantity3_" + i).val(),
+						Cost04: $("#costSize_Quantity4_" + i).val(),
+						Cost05: $("#costSize_Quantity5_" + i).val(),
+						Cost06: $("#costSize_Quantity6_" + i).val(),
+						Cost07: $("#costSize_Quantity7_" + i).val(),
+						Cost08: $("#costSize_Quantity8_" + i).val(),
+						Cost09: $("#costSize_Quantity9_" + i).val(),
+						Cost10: $("#costSize_Quantity10_" + i).val(),
+						Cost11: $("#costSize_Quantity11_" + i).val(),
+						Cost12: $("#costSize_Quantity12_" + i).val(),
+						Cost13: $("#costSize_Quantity13_" + i).val(),
+						Cost14: $("#costSize_Quantity14_" + i).val(),
+						Cost15: $("#costSize_Quantity15_" + i).val(),
+						Cost16: $("#costSize_Quantity16_" + i).val(),
+						Cost17: $("#costSize_Quantity17_" + i).val(),
+						Cost18: $("#costSize_Quantity18_" + i).val(),
+						Cost19: $("#costSize_Quantity19_" + i).val(),
+						Cost20: $("#costSize_Quantity20_" + i).val(),
+						Cost21: $("#costSize_Quantity21_" + i).val(),
+						Cost22: $("#costSize_Quantity22_" + i).val(),
+						Cost23: $("#costSize_Quantity23_" + i).val(),
+						Cost24: $("#costSize_Quantity24_" + i).val(),
+						Cost25: $("#costSize_Quantity25_" + i).val(),
+						Cost26: $("#costSize_Quantity26_" + i).val(),
+						Cost27: $("#costSize_Quantity27_" + i).val(),
+						Cost28: $("#costSize_Quantity28_" + i).val(),
+						Cost29: $("#costSize_Quantity29_" + i).val(),
+						Cost30: $("#costSize_Quantity30_" + i).val(),
+						IsActive:true
+					});
+				}
+			}
+			if(obj.ReceiptOrderItems.length>0)
+			{
+				$.ajax({
+					url: '/Admin/Receipt/ViewPending/'+id,
+					type: "GET",
+					//data: obj,
+					success: function (result) {
+						debugger;
+						$('#demo').html(result);
+					
+					}
+				})
+			}
+			else{
+				alert("Please enter product quantity.");
+			}
+			
+		}
+		$(document).ready(function () {
+			debugger
+			$(".toggle-btn").click(function () {
+				$("#demo").collapse('toggle');
+			});
+		});
+    //$('#myTable').append('<tbody><tr id="AddNewItem"><td colspan="4" class="text-right"><i class="fa fa-plus-circle" onclick="AddRow(this)" aria-hidden="true"></i></td></tr>  ');
+		function AddReceiptOrder(id) {
+			debugger;
+			var obj = {};
+			obj.Id = id;
+			obj.ReceiptOrderId = id;
+			obj.PurchaseOrderId=$("#PurchaseOrderId").val();
+			obj.IsActive = true;
+			var table = document.getElementById("myTable");
+			//var table=$("tbody#myTable1").find("tr");
+			var ReceiptItems = [];
+			obj.ReceiptOrderItems = ReceiptItems;
+			for (var i = 0; i <table.rows.length; i++) {
+				debugger
+				if($("#Quantity01_" + i).val()!=0 && $("#Quantity01_" + i).val()!=null ||$("#Quantity02_" + i).val()!=0 &&$("#Quantity02_" + i).val()!=null ||$("#Quantity03_" + i).val()!=null && $("#Quantity03_" + i).val()!=0 
+					||$("#Quantity04_" + i).val()!=null && $("#Quantity04_" + i).val()!=0||$("#Quantity05_" + i).val()!=null && $("#Quantity05_" + i).val()!=0||$("#Quantity06_" + i).val()!=null && $("#Quantity06_" + i).val()!=0||$("#Quantity07_" + i).val()!=null && $("#Quantity07_" + i).val()!=0||$("#Quantity08_" + i).val()!=null && $("#Quantity08_" + i).val()!=0||$("#Quantity09_" + i).val()!=null && $("#Quantity09_" + i).val()!=0||$("#Quantity10_" + i).val()!=null && $("#Quantity10_" + i).val()!=0||$("#Quantity11_" + i).val()!=null && $("#Quantity11_" + i).val()!=0||$("#Quantity12_" + i).val()!=null && $("#Quantity12_" + i).val()!=0||$("#Quantity13_" + i).val()!=null && $("#Quantity13_" + i).val()!=0||$("#Quantity14_" + i).val()!=null && $("#Quantity14_" + i).val()!=0||$("#Quantity15_" + i).val()!=null && $("#Quantity15_" + i).val()!=0||$("#Quantity16_" + i).val()!=null && $("#Quantity16_" + i).val()!=0||$("#Quantity17_" + i).val()!=null && $("#Quantity17_" + i).val()!=0||$("#Quantity18_" + i).val()!=null && $("#Quantity18_" + i).val()!=0||$("#Quantity19_" + i).val()!=null && $("#Quantity19_" + i).val()!=0||$("#Quantity20_" + i).val()!=null && $("#Quantity20_" + i).val()!=0||$("#Quantity21_" + i).val()!=null && $("#Quantity21_" + i).val()!=0||$("#Quantity22_" + i).val()!=null && $("#Quantity22_" + i).val()!=0||$("#Quantity23_" + i).val()!=null && $("#Quantity23_" + i).val()!=0||$("#Quantity24_" + i).val()!=null && $("#Quantity24_" + i).val()!=0||$("#Quantity25_" + i).val()!=null && $("#Quantity25_" + i).val()!=0||$("#Quantity26_" + i).val()!=null && $("#Quantity27_" + i).val()!=0||$("#Quantity27_" + i).val()!=null && $("#Quantity28_" + i).val()!=0||$("#Quantity29_" + i).val()!=null && $("#Quantity29_" + i).val()!=0||$("#Quantity30_" + i).val()!=null && $("#Quantity30_" + i).val()!=0){
+				ReceiptItems.push({
+					ReceiptOrderId: id,
+					ProductId: $("#ProductId_"+i).val(),
+					Quantity01: $("#Quantity01_" + i).val(),
+					Quantity02: $("#Quantity02_" + i).val(),
+					Quantity03: $("#Quantity03_" + i).val(),
+					Quantity04: $("#Quantity04_" + i).val(),
+					Quantity05: $("#Quantity05_" + i).val(),
+					Quantity06: $("#Quantity06_" + i).val(),
+					Quantity07: $("#Quantity07_" + i).val(),
+					Quantity08: $("#Quantity08_" + i).val(),
+					Quantity09: $("#Quantity09_" + i).val(),
+					Quantity10: $("#Quantity10_" + i).val(),
+					Quantity11: $("#Quantity11_" + i).val(),
+					Quantity12: $("#Quantity12_" + i).val(),
+					Quantity13: $("#Quantity13_" + i).val(),
+					Quantity14: $("#Quantity14_" + i).val(),
+					Quantity15: $("#Quantity15_" + i).val(),
+					Quantity16: $("#Quantity16_" + i).val(),
+					Quantity17: $("#Quantity17_" + i).val(),
+					Quantity18: $("#Quantity18_" + i).val(),
+					Quantity19: $("#Quantity19_" + i).val(),
+					Quantity20: $("#Quantity20_" + i).val(),
+					Quantity21: $("#Quantity21_" + i).val(),
+					Quantity22: $("#Quantity22_" + i).val(),
+					Quantity23: $("#Quantity23_" + i).val(),
+					Quantity24: $("#Quantity24_" + i).val(),
+					Quantity25: $("#Quantity25_" + i).val(),
+					Quantity26: $("#Quantity26_" + i).val(),
+					Quantity27: $("#Quantity27_" + i).val(),
+					Quantity28: $("#Quantity28_" + i).val(),
+					Quantity29: $("#Quantity29_" + i).val(),
+					Quantity30: $("#Quantity30_" + i).val(),
+					Cost01: $("#costSize_Quantity1_" + i).val(),
+					Cost02: $("#costSize_Quantity2_" + i).val(),
+					Cost03: $("#costSize_Quantity3_" + i).val(),
+					Cost04: $("#costSize_Quantity4_" + i).val(),
+					Cost05: $("#costSize_Quantity5_" + i).val(),
+					Cost06: $("#costSize_Quantity6_" + i).val(),
+					Cost07: $("#costSize_Quantity7_" + i).val(),
+					Cost08: $("#costSize_Quantity8_" + i).val(),
+					Cost09: $("#costSize_Quantity9_" + i).val(),
+					Cost10: $("#costSize_Quantity10_" + i).val(),
+					Cost11: $("#costSize_Quantity11_" + i).val(),
+					Cost12: $("#costSize_Quantity12_" + i).val(),
+					Cost13: $("#costSize_Quantity13_" + i).val(),
+					Cost14: $("#costSize_Quantity14_" + i).val(),
+					Cost15: $("#costSize_Quantity15_" + i).val(),
+					Cost16: $("#costSize_Quantity16_" + i).val(),
+					Cost17: $("#costSize_Quantity17_" + i).val(),
+					Cost18: $("#costSize_Quantity18_" + i).val(),
+					Cost19: $("#costSize_Quantity19_" + i).val(),
+					Cost20: $("#costSize_Quantity20_" + i).val(),
+					Cost21: $("#costSize_Quantity21_" + i).val(),
+					Cost22: $("#costSize_Quantity22_" + i).val(),
+					Cost23: $("#costSize_Quantity23_" + i).val(),
+					Cost24: $("#costSize_Quantity24_" + i).val(),
+					Cost25: $("#costSize_Quantity25_" + i).val(),
+					Cost26: $("#costSize_Quantity26_" + i).val(),
+					Cost27: $("#costSize_Quantity27_" + i).val(),
+					Cost28: $("#costSize_Quantity28_" + i).val(),
+					Cost29: $("#costSize_Quantity29_" + i).val(),
+					Cost30: $("#costSize_Quantity30_" + i).val(),
+					IsActive:true
+				});
+				}
+			}
+			if(obj.ReceiptOrderItems.length>0)
+			{
+				$.ajax(
+					  {
+					  	type: "POST", //HTTP POST Method
+					  	url: '/Admin/Receipt/Create',
+					  	data: obj,
+					  	success: function (result) {
+					  		if(result==true){
+					  			alert("Receipt Item saved Successfully.")
+					  			$("#SaveData").attr("disabled", true);
+					  		}
+					  		// window.location.href = "/Admin/Receipt/Index";
+					  	},
+					  	error: function (errormessage) {
+					  		alert(errormessage.responseText);
+					  	}
+					  });
+			}else{
+				alert("Please enter product quantity.")
+			}
+        }
+        
+    
+    function AddRow(id) {
+        debugger;
+        var i = id.parentNode.parentNode.rowIndex-1;
+        if (i <= 30)
+            $('#myTable,#FirstBody:last-child').append('<tr id="Row' + i + '"><td style="width:70px;" class="text-right"><input type="button" value="Add" id="button_' + i + '" onclick="AddReceiptOrderItem(this)" class="btn btn-success popup-savebtn" /><i class="fa fa-trash" id="DeletePrice" onclick="del(this)"></i></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity01_' + i + '" " /><span style="display:none" value="" id="span_Quantity01_' + i + '""></span></td> <td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity02_' + i + '" " /><span style="display:none" value="" id="span_Quantity02_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity03_' + i + '" " /><span style="display:none" value="" id="span_Quantity03_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity04_' + i + '" " /><span style="display:none" value="" id="span_Quantity04_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity05_' + i + '" " /><span style="display:none;" value="" id="span_Quantity05_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity06_' + i + '" " /><span style="display:none;" value="" id="span_Quantity06_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity07_' + i + '" " /><span style="display:none;" value="" id="span_Quantity07_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity08_' + i + '" " /><span style="display:none;" value="" id="span_Quantity08_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity09_' + i + '" " /><span style="display:none;" value="" id="span_Quantity09_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity10_' + i + '" " /><span style="display:none;" value="" id="span_Quantity10_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " ,onchange = "CalculationCheck(this)" id="Quantity11_' + i + ' " /><span style="display:none;" value="" id="span_Quantity11_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " ,onchange = "CalculationCheck(this)" id="Quantity12_' + i + '" " /><span value="" style="display:none;" id="span_Quantity12_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control ",onchange = "CalculationCheck(this)"  id="Quantity13_' + i + '' + i + '" " /><span style="display:none;" id="span_Quantity13_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity14_' + i + '" " /><span style="display:none;" value="" id="span_Quantity14_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity15_' + i + '" " /><span style="display:none;" value="" id="span_Quantity15_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity16_' + i + '" " /><span value="" style="display:none;" id="span_Quantity16_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity17_' + i + '" " /><span style="display:none;" value="" id="span_Quantity17_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity18_' + i + '" " /><span style="display:none;" value="" id="span_Quantity18_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity19_' + i + '" " /><span style="display:none;" value="" id="span_Quantity19_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity20_' + i + '" " /><span value="" id="span_Quantity20_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity21" " /><span style="display:none;" value="" id="span_Quantity21_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity22_' + i + '" " /><span style="display:none;" value="" id="span_Quantity22_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)"  id="Quantity23_' + i + '" " /><span value="" style="display:none;" id="span_Quantity23_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)"  id="Quantity24_' + i + '" " /><span style="display:none;" value="" id="span_Quantity24_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity25_' + i + '" " /><span style="display:none;" value="" id="span_Quantity25_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity26_' + i + '" " /><span value="" style="display:none;" id="span_Quantity26_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control "onchange = "CalculationCheck(this)"  id="Quantity27_' + i + '" " /><span value="" style="display:none;" id="span_Quantity27_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity28_' + i + '" " /><span style="display:none;" value="" id="span_Quantity28_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control ",onchange = "CalculationCheck(this)" id="Quantity29_' + i + ' " " /><span style="display:none;" value="" id="span_Quantity29_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control ",onchange = "CalculationCheck(this)" id="Quantity30_' + i + '" " /><span value="" style="display:none;" id="span_Quantity30_' + i + '""></span></td></tr></tbody>');
+        else { alert("Items limit reached..."); }
+      //  GridNumberList = GridNumberList;
+        //var count = GridNumberList[0].sizeList.length;
+       // for (var i = 0; i < count; i++) {
+         //   ItemList[i] = GridNumberList[0].sizeList[i];
+       // }
+    }
+    setTimeout(function () {
+        
+        $('#mas').fadeOut('slow');
+
+    }, 5000);
+    function AddReceiptOrderItem(id) {
+        debugger;
+        var i = id.parentNode.parentNode.rowIndex - 1;
+        var obj = {};
+        obj.ReceiptOrderId = $('#ReceiptOrderId').val();
+        obj.autoCompleteProductName = $('#autoCompleteProductName').val();
+        obj.autoCompleteProductStyleName = $('#autoCompleteProductStyleName').val();
+        obj.Quantity01 = $('#Quantity01_' + i).val();
+        obj.Quantity02 = $('#Quantity02_' + i).val();
+        obj.Quantity03 = $('#Quantity03_' + i).val();
+        obj.Quantity04 = $('#Quantity04_' + i).val();
+        obj.Quantity05 = $('#Quantity05_' + i).val();
+        obj.Quantity06 = $('#Quantity06_' + i).val();
+        obj.Quantity07 = $('#Quantity07_' + i).val();
+        obj.Quantity08 = $('#Quantity08_' + i).val();
+        obj.Quantity09 = $('#Quantity09_' + i).val();
+        obj.Quantity10 = $('#Quantity10_' + i).val();
+        obj.Quantity11 = $('#Quantity11_' + i).val();
+        obj.Quantity12 = $('#Quantity12_' + i).val();
+        obj.Quantity13 = $('#Quantity13_' + i).val();
+        obj.Quantity14 = $('#Quantity14_' + i).val();
+        obj.Quantity15 = $('#Quantity15_' + i).val();
+        obj.Quantity16 = $('#Quantity16_' + i).val();
+        obj.Quantity17 = $('#Quantity17_' + i).val();
+        obj.Quantity18 = $('#Quantity18_' + i).val();
+        obj.Quantity19 = $('#Quantity19_' + i).val();
+        obj.Quantity20 = $('#Quantity20_' + i).val();
+        obj.Quantity21 = $('#Quantity21_' + i).val();
+        obj.Quantity22 = $('#Quantity22_' + i).val();
+        obj.Quantity23 = $('#Quantity23_' + i).val();
+        obj.Quantity24 = $('#Quantity24_' + i).val();
+        obj.Quantity25 = $('#Quantity25_' + i).val();
+        obj.Quantity26 = $('#Quantity26_' + i).val();
+        obj.Quantity27 = $('#Quantity27_' + i).val();
+        obj.Quantity28 = $('#Quantity28_' + i).val();
+        obj.Quantity29 = $('#Quantity29_' + i).val();
+        obj.Quantity30 = $('#Quantity30_' + i).val();
+        obj.Cost01 = $('#costSize_Quantity01').text();
+        obj.Cost02 = $('#costSize_Quantity02').text();
+        obj.Cost03 = $('#costSize_Quantity03').text();
+        obj.Cost04 = $('#costSize_Quantity04').text();
+        obj.Cost05 = $('#costSize_Quantity05').text();
+        obj.Cost06 = $('#costSize_Quantity06').text();
+        obj.Cost07 = $('#costSize_Quantity07').text();
+        obj.Cost08 = $('#costSize_Quantity08').text();
+        obj.Cost09 = $('#costSize_Quantity09').text();
+        obj.Cost10 = $('#costSize_Quantity10').text();
+        obj.Cost11 = $('#costSize_Quantity11').text();
+        obj.Cost12 = $('#costSize_Quantity12').text();
+        obj.Cost13 = $('#costSize_Quantity13').text();
+        obj.Cost14 = $('#costSize_Quantity14').text();
+        obj.Cost15 = $('#costSize_Quantity15').text();
+        obj.Cost16 = $('#costSize_Quantity16').text();
+        obj.Cost17 = $('#costSize_Quantity17').text();
+        obj.Cost18 = $('#costSize_Quantity18').text();
+        obj.Cost19 = $('#costSize_Quantity19').text();
+        obj.Cost20 = $('#costSize_Quantity20').text();
+        obj.Cost21 = $('#costSize_Quantity21').text();
+        obj.Cost22 = $('#costSize_Quantity22').text();
+        obj.Cost23 = $('#costSize_Quantity23').text();
+        obj.Cost24 = $('#costSize_Quantity24').text();
+        obj.Cost25 = $('#costSize_Quantity25').text();
+        obj.Cost26 = $('#costSize_Quantity26').text();
+        obj.Cost27 = $('#costSize_Quantity27').text();
+        obj.Cost28 = $('#costSize_Quantity28').text();
+        obj.Cost29 = $('#costSize_Quantity29').text();
+        obj.Cost30 = $('#costSize_Quantity30').text();
+        
+        if (obj.Quantity01 == "") {
+            obj.Quantity01 = 0;
+        }
+        if (isNaN(obj.Quantity01)) {
+            obj.Quantity01 = 0;
+        }
+        if (obj.Quantity02 == "") {
+            obj.Quantity02 = 0;
+        }
+        if (isNaN(obj.Quantity02)) {
+            obj.Quantity02 = 0;
+        }
+        if (obj.Quantity03 == "") {
+            obj.Quantity03 = 0;
+        }
+        if (isNaN(obj.Quantity03)) {
+            obj.Quantity03= 0;
+        }
+        if (obj.Quantity04 == "") {
+            obj.Quantity04 = 0;
+        }
+        if (isNaN(obj.Quantity04)) {
+            obj.Quantity04 = 0;
+        }
+        if (obj.Quantity05 == "") {
+            obj.Quantity05 = 0;
+        }
+        if (isNaN(obj.Quantity05)) {
+            obj.Quantity05 = 0;
+        }
+        if (obj.Quantity06 == "") {
+            obj.Quantity06 = 0;
+        }
+        if (isNaN(obj.Quantity06)) {
+            obj.Quantity06 = 0;
+        }
+        if (obj.Quantity07 == "") {
+            obj.Quantity07 = 0;
+        }
+        if (isNaN(obj.Quantity07)) {
+            obj.Quantity07 = 0;
+        }
+        if (obj.Quantity08 == "") {
+            obj.Quantity08 = 0;
+        }
+        if (isNaN(obj.Quantity08)) {
+            obj.Quantity08 = 0;
+        }
+        if (obj.Quantity09 == "") {
+            obj.Quantity09= 0;
+        }
+        if (isNaN(obj.Quantity09)) {
+            obj.Quantity09 = 0;
+        }
+        if (obj.Quantity10 == "") {
+            obj.Quantity10 = 0;
+        }
+        if (isNaN(obj.Quantity10)) {
+            obj.Quantity10 = 0;
+        }
+        if (obj.Quantity11 == "") {
+            obj.Quantity11 = 0;
+        }
+        if (isNaN(obj.Quantity11)) {
+            obj.Quantity11 = 0;
+        }
+        if (obj.Quantity12 == "") {
+            obj.Quantity12 = 0;
+        }
+        if (isNaN(obj.Quantity12)) {
+            obj.Quantity12 = 0;
+        }
+        if (obj.Quantity13 == "") {
+            obj.Quantity13= 0;
+        }
+        if (isNaN(obj.Quantity13)) {
+            obj.Quantity13 = 0;
+        }
+        if (obj.Quantity14 == "") {
+            obj.Quantity14 = 0;
+        }
+        if (isNaN(obj.Quantity14)) {
+            obj.Quantity14= 0;
+        }
+        if (obj.Quantity15 == "") {
+            obj.Quantity15= 0;
+        }
+        if (isNaN(obj.Quantity15)) {
+            obj.Quantity15 = 0;
+        }
+        if (obj.Quantity16 == "") {
+            obj.Quantity16 = 0;
+        }
+        if (isNaN(obj.Quantity16)) {
+            obj.Quantity16 = 0;
+        }
+        if (obj.Quantity17 == "") {
+            obj.Quantity17 = 0;
+        }
+        if (isNaN(obj.Quantity17)) {
+            obj.Quantity17 = 0;
+        }
+        if (obj.Quantity18 == "") {
+            obj.Quantity18 = 0;
+        }
+        if (isNaN(obj.Quantity18)) {
+            obj.Quantity18 = 0;
+        }
+        if (obj.Quantity19 == "") {
+            obj.Quantity19 = 0;
+        }
+        if (isNaN(obj.Quantity19)) {
+            obj.Quantity19 = 0;
+        }
+       
+        if (obj.Quantity20 == "") {
+            obj.Quantity20 = 0;
+        }
+        if (isNaN(obj.Quantity20)) {
+            obj.Quantity20 = 0;
+        }
+        if (obj.Quantity21 == "") {
+            obj.Quantity21 = 0;
+        }
+        if (isNaN(obj.Quantity21)) {
+            obj.Quantity21 = 0;
+        }
+        if (obj.Quantity22 == "") {
+            obj.Quantity22 = 0;
+        }
+        if (isNaN(obj.Quantity22)) {
+            obj.Quantity22= 0;
+        }
+        if (obj.Quantity23 == "") {
+            obj.Quantity23 = 0;
+        }
+        if (isNaN(obj.Quantity23)) {
+            obj.Quantity23= 0;
+        }
+        if (obj.Quantity24== "") {
+            obj.Quantity24= 0;
+        }
+        if (isNaN(obj.Quantity24)) {
+            obj.Quantity24= 0;
+        }
+        if (obj.Quantity25== "") {
+            obj.Quantity25 = 0;
+        }
+        if (isNaN(obj.Quantity25)) {
+            obj.Quantity25 = 0;
+        }
+        if (obj.Quantity26 == "") {
+            obj.Quantity26 = 0;
+        }
+        if (isNaN(obj.Quantity26)) {
+            obj.Quantity26= 0;
+        }
+        if (obj.Quantity27 == "") {
+            obj.Quantity27 = 0;
+        }
+        if (isNaN(obj.Quantity27)) {
+            obj.Quantity27 = 0;
+        }
+        if (obj.Quantity28 == "") {
+            obj.Quantity28 = 0;
+        }
+        if (isNaN(obj.Quantity28)) {
+            obj.Quantity28 = 0;
+        }
+        if (obj.Quantity29 == "") {
+            obj.Quantity29= 0;
+        }
+        if (isNaN(obj.Quantity29)) {
+            obj.Quantity29 = 0;
+        }
+        if (obj.Quantity30== "") {
+            obj.Quantity30 = 0;
+        }
+        if (isNaN(obj.Quantity30)) {
+            obj.Quantity30 = 0;
+        }
+        if (obj.Cost01 == "") {
+            obj.Cost01 = 0;
+        }
+        if (isNaN(obj.Cost01)) {
+            obj.Cost01 = 0;
+        }
+        if (obj.Cost02 == "") {
+            obj.Cost02 = 0;
+        }
+        if (isNaN(obj.Cost02)) {
+            obj.Cost02 = 0;
+        }
+        if (obj.Cost03 == "") {
+            obj.Cost03 = 0;
+        }
+        if (isNaN(obj.Cost03)) {
+            obj.Cost03= 0;
+        }
+        if (obj.Cost04 == "") {
+            obj.Cost04 = 0;
+        }
+        if (isNaN(obj.Cost04)) {
+            obj.Cost04 = 0;
+        }
+        if (obj.Cost05 == "") {
+            obj.Cost05= 0;
+        }
+        if (isNaN(obj.Cost05)) {
+            obj.Cost05 = 0;
+        }
+        if (obj.Cost06 == "") {
+            obj.Cost06 = 0;
+        }
+        if (isNaN(obj.Cost06)) {
+            obj.Cost06 = 0;
+        }
+        if (obj.Cost07 == "") {
+            obj.Cost07 = 0;
+        }
+        if (isNaN(obj.Cost07)) {
+            obj.Cost07 = 0;
+        }
+        if (obj.Cost08 == "") {
+            obj.Cost08 = 0;
+        }
+        if (isNaN(obj.Cost08)) {
+            obj.Cost08 = 0;
+        }
+        if (obj.Cost09 == "") {
+            obj.Cost09 = 0;
+        }
+        if (isNaN(obj.Cost09)) {
+            obj.Cost09 = 0;
+        }
+        if (obj.Cost10 == "") {
+            obj.Cost10 = 0;
+        }
+        if (isNaN(obj.Cost10)) {
+            obj.Cost10= 0;
+        }
+        if (obj.Cost11 == "") {
+            obj.Cost11 = 0;
+        }
+        if (isNaN(obj.Cost11)) {
+            obj.Cost11 = 0;
+        }
+        if (obj.Cost12 == "") {
+            obj.Cost12 = 0;
+        }
+        if (isNaN(obj.Cost12)) {
+            obj.Cost12 = 0;
+        }
+        if (obj.Cost13== "") {
+            obj.Cost13= 0;
+        }
+        if (isNaN(obj.Cost13)) {
+            obj.Cost13 = 0;
+        }
+        if (obj.Cost14 == "") {
+            obj.Cost14= 0;
+        }
+        if (isNaN(obj.Cost14)) {
+            obj.Cost14= 0;
+        }
+        if (obj.Cost15 == "") {
+            obj.Cost15 = 0;
+        }
+        if (isNaN(obj.Cost15)) {
+            obj.Cost15 = 0;
+        }
+        if (obj.Cost16== "") {
+            obj.Cost16 = 0;
+        }
+        if (isNaN(obj.Cost16)) {
+            obj.Cost16= 0;
+        }
+        if (obj.Cost17== "") {
+            obj.Cost17 = 0;
+        }
+        if (isNaN(obj.Cost17)) {
+            obj.Cost17= 0;
+        }
+        if (obj.Cost18 == "") {
+            obj.Cost18 = 0;
+        }
+        if (isNaN(obj.Cost18)) {
+            obj.Cost18 = 0;
+        }
+        if (obj.Cost19 == "") {
+            obj.Cost19 = 0;
+        }
+        if (isNaN(obj.Cost19)) {
+            obj.Cost19= 0;
+        }
+        if (obj.Cost20 == "") {
+            obj.Cost20 = 0;
+        }
+        if (isNaN(obj.Cost20)) {
+            obj.Cost20 = 0;
+        }
+        if (obj.Cost21 == "") {
+            obj.Cost21 = 0;
+        }
+        if (isNaN(obj.Cost21)) {
+            obj.Cost21 = 0;
+        }
+        if (obj.Cost22 == "") {
+            obj.Cost22 = 0;
+        }
+        if (isNaN(obj.Cost22)) {
+            obj.Cost22 = 0;
+        }
+        if (obj.Cost23 == "") {
+            obj.Cost23 = 0;
+        }
+        if (isNaN(obj.Cost23)) {
+            obj.Cost23 = 0;
+        }
+        if (obj.Cost24 == "") {
+            obj.Cost24 = 0;
+        }
+        if (isNaN(obj.Cost24)) {
+            obj.Cost24 = 0;
+        }
+        if (obj.Cost25 == "") {
+            obj.Cost25 = 0;
+        }
+        if (isNaN(obj.Cost25)) {
+            obj.Cost25= 0;
+        }
+        if (obj.Cost26 == "") {
+            obj.Cost26 = 0;
+        }
+        if (isNaN(obj.Cost26)) {
+            obj.Cost26= 0;
+        }
+        if (obj.Cost27 == "") {
+            obj.Cost27 = 0;
+        }
+        if (isNaN(obj.Cost27)) {
+            obj.Cost27 = 0;
+        }
+        if (obj.Cost28 == "") {
+            obj.Cost28 = 0;
+        }
+        if (isNaN(obj.Cost28)) {
+            obj.Cost28 = 0;
+        }
+        if (obj.Cost29 == "") {
+            obj.Cost29 = 0;
+        }
+        if (isNaN(obj.Cost29)) {
+            obj.Cost29 = 0;
+        }
+        if (obj.Cost30 == "") {
+            obj.Cost30 = 0;
+        }
+        if (isNaN(obj.Cost30)) {
+            obj.Cost30 = 0;
+        }
+        
+        obj.IsActive = true;
+        if (obj.Quantity01 == 0 && obj.Quantity02 == 0 && obj.Quantity03 == 0 && obj.Quantity04 == 0 && obj.Quantity05 == 0 && obj.Quantity06 == 0 && obj.Quantity07 == 0 && obj.Quantity08 == 0 && obj.Quantity09 == 0 && obj.Quantity10 == 0 && obj.Quantity11 == 0 && obj.Quantity12 == 0 && obj.Quantity14 == 0 && obj.Quantity15 == 0 && obj.Quantity16 == 0 && obj.Quantity17 ==0 && obj.Quantity18 == 0 && obj.Quantity19 == 0 && obj.Quantity20 == 0 && obj.Quantity21 == 0 && obj.Quantity22 == 0 && obj.Quantity23 == 0 && obj.Quantity24 == 0 && obj.Quantity25 == 0 && obj.Quantity26 == 0 && obj.Quantity27 == 0 && obj.Quantity28 == 0 && obj.Quantity29 == 0 && obj.Quantity30 == 0) {
+            //$("#mas").text("Please Enter Product Sizes.");
+            //$("#mas").css("color", "red");
+            alert("Please Enter Product Size Quantity.");
+        } else {
+            $.ajax(
+                   {
+                       type: "POST", //HTTP POST Method
+                       url: '/Admin/Receipt/AddReceiptOrderItem',
+                       data: obj,
+                       success: function (result) {
+                           event.preventDefault();
+                           alert("data save successfully......");
+
+                           $("#Quantity01_" + i).prop("disabled", true);
+                           $("#Quantity02_" + i).prop("disabled", true);
+                           $("#Quantity03_" + i).prop("disabled", true);
+                           $("#Quantity04_" + i).prop("disabled", true);
+                           $("#Quantity05_" + i).prop("disabled", true);
+                           $("#Quantity06_" + i).prop("disabled", true);
+                           $("#Quantity07_" + i).prop("disabled", true);
+                           $("#Quantity08_" + i).prop("disabled", true);
+                           $("#Quantity09_" + i).prop("disabled", true);
+                           $("#Quantity10_" + i).prop("disabled", true);
+                           $("#Quantity11_" + i).prop("disabled", true);
+                           $("#Quantity12_" + i).prop("disabled", true);
+                           $("#Quantity13_" + i).prop("disabled", true);
+                           $("#Quantity14_" + i).prop("disabled", true);
+                           $("#Quantity15_" + i).prop("disabled", true);
+                           $("#Quantity16_" + i).prop("disabled", true);
+                           $("#Quantity17_" + i).prop("disabled", true);
+                           $("#Quantity18_" + i).prop("disabled", true);
+                           $("#Quantity19_" + i).prop("disabled", true);
+                           $("#Quantity20_" + i).prop("disabled", true);
+                           $("#Quantity21_" + i).prop("disabled", true);
+                           $("#Quantity22_" + i).prop("disabled", true);
+                           $("#Quantity23_" + i).prop("disabled", true);
+                           $("#Quantity24_" + i).prop("disabled", true);
+                           $("#Quantity25_" + i).prop("disabled", true);
+                           $("#Quantity26_" + i).prop("disabled", true);
+                           $("#Quantity27_" + i).prop("disabled", true);
+                           $("#Quantity28_" + i).prop("disabled", true);
+                           $("#Quantity29_" + i).prop("disabled", true);
+                           $("#Quantity30_" + i).prop("disabled", true);
+                           $("#button_" + i).prop("disabled", true);
+                           $("#AddReceipt").disabled = false;
+                       },
+                       error: function (errormessage) {
+                           alert(errormessage.responseText);
+                       }
+                   });
+        }
+    }
+    function CalculationCheck(ctrl) {
+        debugger;
+       // var initValue = $(ctrl).parents('td').find('.spanval').text();
+        var inputValue = $(ctrl).val();
+        var ctrlId = $(ctrl).attr("id");
+        var itemNumber = ctrlId.substring(0, 10);
+        var hiddenCtrl = $("#span_" + ctrlId + "");
+        var spanV = hiddenCtrl.text();
+        if (spanV == "") {
+            spanV = 0;
+        }
+        var wareHouseCtrl = $("#quantitySize_" + ctrlId + "");
+        var whareHouse = wareHouseCtrl.text();
+        var temp = whareHouse;
+        if (whareHouse == "")
+            whareHouse = 0;
+        if (inputValue == "") {
+            inputValue = 0;
+            whareHouse = temp;
+        }
+       var span = jQuery("#span_" + ctrlId + "").text(inputValue);
+        var value = inputValue - spanV;
+        if (parseInt(whareHouse) >= parseInt(value)) {
+            whareHouse = parseInt(whareHouse) - parseInt(value);
+            wareHouseCtrl.text(whareHouse);
+        }
+        else {
+            alert("please enter Quantity of Receipt is less than Quantity of purchase Order.");
+            $(ctrl).val(0);
+            hiddenCtrl.text(0);
+            var ware = parseInt(spanV) + parseInt(whareHouse);
+            wareHouseCtrl.text(ware);
+        }
+        
+
+    }
+    function del(id) {
+        debugger;
+        var Id = id.parentNode.parentNode.rowIndex;
+        var quantity = parseFloat($(id).parents("tr").find("[id^='Quantity']").val());
+        if (isNaN(quantity)) { quantity = 0; }
+        var unitCost = parseFloat($(id).parents("tr").find("[id^='UnitCost']").val());
+        if (isNaN(unitCost)) { unitCost = 0; }
+        var price = parseFloat($(".ItemAmount").val()).toFixed(2);
+        if (isNaN(price)) { price = 0; }
+        price -= quantity * unitCost;
+        $(id).parents("tr").remove();
+        $(".ItemAmount").val(price);
+
+    };
+   
+    function getPurchaseOrderValues() {
+        debugger;
+        var obj={};
+        obj.autoCompleteProductStyleName = $('#autoCompleteProductStyleName').val();
+        obj.autoCompleteProductName = $('#autoCompleteProductName').val();
+        obj.PurchaseOrderId = $('#Id').val();
+        obj.IsActive = true;
+        $.ajax({
+            url: '/Admin/Receipt/GetPurchaseOrder',
+            type: 'POST',
+            data: obj,
+            success: function (result) {
+                debugger;
+                // $('.dvUserDetails').html(result);
+                // alert(result);
+                if (result.Quantity01 == "") {
+                    result.Quantity01 = 0;
+                }
+                if (isNaN(result.Quantity01)) {
+                    result.Quantity01 = 0;
+                }
+                if (result.Quantity02 == "") {
+                    result.Quantity02 = 0;
+                }
+                if (isNaN(result.Quantity02)) {
+                    result.Quantity02 = 0;
+                }
+                if (result.Quantity03 == "") {
+                    result.Quantity03 = 0;
+                }
+                if (isNaN(result.Quantity03)) {
+                    result.Quantity03 = 0;
+                }
+                if (result.Quantity04 == "") {
+                    result.Quantity04 = 0;
+                }
+                if (isNaN(result.Quantity04)) {
+                    result.Quantity04 = 0;
+                }
+                if (result.Quantity05 == "") {
+                    result.Quantity05 = 0;
+                }
+                if (isNaN(result.Quantity05)) {
+                    result.Quantity05 = 0;
+                }
+                if (result.Quantity06 == "") {
+                    result.Quantity06 = 0;
+                }
+                if (isNaN(result.Quantity06)) {
+                    result.Quantity06 = 0;
+                }
+                if (result.Quantity07 == "") {
+                    result.Quantity07 = 0;
+                }
+                if (isNaN(result.Quantity07)) {
+                    result.Quantity07 = 0;
+                }
+                if (result.Quantity08 == "") {
+                    result.Quantity08= 0;
+                }
+                if (isNaN(result.Quantity08)) {
+                    result.Quantity08 = 0;
+                }
+                if (result.Quantity09 == "") {
+                    result.Quantity09 = 0;
+                }
+                if (isNaN(result.Quantity09)) {
+                    result.Quantity09 = 0;
+                }
+                if (result.Quantity10 == "") {
+                    result.Quantity10 = 0;
+                }
+                if (isNaN(result.Quantity10)) {
+                    result.Quantity10 = 0;
+
+                }
+                if (result.Quantity11 == "") {
+                    result.Quantity11 = 0;
+                }
+                if (isNaN(result.Quantity11)) {
+                    result.Quantity11 = 0;
+                }
+                if (result.Quantity12 == "") {
+                    result.Quantity12 = 0;
+                }
+                if (isNaN(result.Quantity12)) {
+                    result.Quantity12= 0;
+                }
+                if (result.Quantity13 == "") {
+                    result.Quantity13 = 0;
+                }
+                if (isNaN(result.Quantity13)) {
+                    result.Quantity13= 0;
+                }
+                if (result.Quantity14 == "") {
+                    result.Quantity14= 0;
+                }
+                if (isNaN(result.Quantity14)) {
+                    result.Quantity14 = 0;
+                }
+                if (result.Quantity15 == "") {
+                    result.Quantity15 = 0;
+                }
+                if (isNaN(result.Quantity15)) {
+                    result.Quantity15= 0;
+                }
+                if (result.Quantity16 == "") {
+                    result.Quantity16 = 0;
+                }
+                if (isNaN(result.Quantity16)) {
+                    result.Quantity16 = 0;
+                }
+                if (result.Quantity17 == "") {
+                    result.Quantity17 = 0;
+                }
+                if (isNaN(result.Quantity17)) {
+                    result.Quantity17 = 0;
+                }
+                if (result.Quantity18 == "") {
+                    result.Quantity18 = 0;
+                }
+                if (isNaN(result.Quantity18)) {
+                    result.Quantity18 = 0;
+                }
+                if (result.Quantity19== "") {
+                    result.Quantity19 = 0;
+                }
+                if (isNaN(result.Quantity19)) {
+                    result.Quantity19 = 0;
+                }
+                if (result.Quantity20 == "") {
+                    result.Quantity20 = 0;
+                }
+                if (isNaN(result.Quantity20)) {
+                    result.Quantity20 = 0;
+                }
+                if (result.Quantity21 == "") {
+                    result.Quantity21 = 0;
+                }
+                if (isNaN(result.Quantity21)) {
+                    result.Quantity21= 0;
+                }
+                if (result.Quantity22 == "") {
+                    result.Quantity22 = 0;
+                }
+                if (isNaN(result.Quantity22)) {
+                    result.Quantity22 = 0;
+                }
+                if (result.Quantity23 == "") {
+                    result.Quantity23 = 0;
+                }
+                if (isNaN(result.Quantity23)) {
+                    result.Quantity23 = 0;
+                }
+                if (result.Quantity24 == "") {
+                    result.Quantity24 = 0;
+                }
+                if (isNaN(result.Quantity24)) {
+                    result.Quantity24 = 0;
+                }
+                if (result.Quantity25 == "") {
+                    result.Quantity25 = 0;
+                }
+                if (isNaN(result.Quantity25)) {
+                    result.Quantity25 = 0;
+                }
+                if (result.Quantity26== "") {
+                    result.Quantity26 = 0;
+                }
+                if (isNaN(result.Quantity26)) {
+                    result.Quantity26 = 0;
+                }
+                if (result.Quantity27== "") {
+                    result.Quantity27 = 0;
+                }
+                if (isNaN(result.Quantity27)) {
+                    result.Quantity27 = 0;
+                }
+                if (result.Quantity28 == "") {
+                    result.Quantity28 = 0;
+                }
+                if (isNaN(result.Quantity28)) {
+                    result.Quantity28 = 0;
+                }
+                if (result.Quantity29 == "") {
+                    result.Quantity29 = 0;
+                }
+                if (isNaN(result.Quantity29)) {
+                    result.Quantity29 = 0;
+                }
+                if (result.Quantity30 == "") {
+                    result.Quantity30 = 0;
+                }
+                if (isNaN(result.Quantity30)) {
+                    result.Quantity30 = 0;
+                }
+                if (result.QuantitySize1 == null && result.QuantitySize2 == null && result.QuantitySize3 == null && result.QuantitySize4 == null && result.QuantitySize5 == null && result.QuantitySize6 == null && result.QuantitySize7 == null && result.QuantitySize8 == null && result.QuantitySize9 == null && result.QuantitySize10 == null && result.QuantitySize11 == null && result.QuantitySize12 == null && result.QuantitySize13 == null && result.QuantitySize14 == null && result.QuantitySize15 == null && result.QuantitySize16 == null && result.QuantitySize17 == null && result.QuantitySize18 == null && result.QuantitySize19 == null && result.QuantitySize20 == null && result.QuantitySize21 == null &&
+                    result.QuantitySize22 == null && result.QuantitySize23 == null && result.QuantitySize24 == null && result.QuantitySize25 == null && result.QuantitySize26 == null && result.QuantitySize27 == null && result.QuantitySize28 == null && result.QuantitySize29 == null && result.QuantitySize30 == null) {
+                        debugger
+                        $('#autoCompleteProductStyleName').val('');
+                        $('#autoCompleteProductName').val('');
+                        document.getElementById('lable').innerHTML = 'Data does not found.';
+                        $("#quantitySize_Quantity01").text('');
+                        $("#quantitySize_Quantity02").text('');
+                        $("#quantitySize_Quantity03").text('');
+                        $("#quantitySize_Quantity04").text('');
+                        $("#quantitySize_Quantity05").text('');
+                        $("#quantitySize_Quantity06").text('');
+                        $("#quantitySize_Quantity07").text('');
+                        $("#quantitySize_Quantity08").text('');
+                        $("#quantitySize_Quantity09").text('');
+                        $("#quantitySize_Quantity10").text('');
+                        $("#quantitySize_Quantity11").text('');
+                        $("#quantitySize_Quantity12").text('');
+                        $("#quantitySize_Quantity13").text('');
+                        $("#quantitySize_Quantity14").text('');
+                        $("#quantitySize_Quantity15").text('');
+                        $("#quantitySize_Quantity16").text('');
+                        $("#quantitySize_Quantity17").text('');
+                        $("#quantitySize_Quantity18").text('');
+                        $("#quantitySize_Quantity19").text('');
+                        $("#quantitySize_Quantity20").text('');
+                        $("#quantitySize_Quantity21").text('');
+                        $("#quantitySize_Quantity22").text('');
+                        $("#quantitySize_Quantity23").text('');
+                        $("#quantitySize_Quantity24").text('');
+                        $("#quantitySize_Quantity25").text('');
+                        $("#quantitySize_Quantity26").text('');
+                        $("#quantitySize_Quantity27").text('');
+                        $("#quantitySize_Quantity28").text('');
+                        $("#quantitySize_Quantity29").text('');
+                        $("#quantitySize_Quantity30").text('');
+                    }
+                        // alert(result[0].ID);
+                else {
+                    $("#lable").text("");
+                        debugger
+                        $("#quantitySize_Quantity01").text(result.QuantitySize1);
+
+                        $("#quantitySize_Quantity02").text(result.QuantitySize2);
+                        $("#quantitySize_Quantity03").text(result.QuantitySize3);
+                        $("#quantitySize_Quantity04").text(result.QuantitySize4);
+                        $("#quantitySize_Quantity05").text(result.QuantitySize5);
+                        $("#quantitySize_Quantity06").text(result.QuantitySize6);
+                        $("#quantitySize_Quantity07").text(result.QuantitySize7);
+                        $("#quantitySize_Quantity08").text(result.QuantitySize8);
+                        $("#quantitySize_Quantity09").text(result.QuantitySize9);
+                        $("#quantitySize_Quantity10").text(result.QuantitySize10);
+                        $("#quantitySize_Quantity11").text(result.QuantitySize11);
+                        $("#quantitySize_Quantity12").text(result.QuantitySize12);
+                        $("#quantitySize_Quantity13").text(result.QuantitySize13);
+                        $("#quantitySize_Quantity14").text(result.QuantitySize14);
+                        $("#quantitySize_Quantity15").text(result.QuantitySize15);
+                        $("#quantitySize_Quantity16").text(result.QuantitySize16);
+                        $("#quantitySize_Quantity17").text(result.QuantitySize17);
+                        $("#quantitySize_Quantity18").text(result.QuantitySize18);
+                        $("#quantitySize_Quantity19").text(result.QuantitySize19);
+                        $("#quantitySize_Quantity20").text(result.QuantitySize20);
+                        $("#quantitySize_Quantity21").text(result.QuantitySize21);
+                        $("#quantitySize_Quantity22").text(result.QuantitySize22);
+                        $("#quantitySize_Quantity23").text(result.QuantitySize23);
+                        $("#quantitySize_Quantity24").text(result.QuantitySize24);
+                        $("#quantitySize_Quantity25").text(result.QuantitySize25);
+                        $("#quantitySize_Quantity26").text(result.QuantitySize26);
+                        $("#quantitySize_Quantity27").text(result.QuantitySize27);
+                        $("#quantitySize_Quantity28").text(result.QuantitySize28);
+                        $("#quantitySize_Quantity29").text(result.QuantitySize29);
+                        $("#quantitySize_Quantity30").text(result.QuantitySize30);
+                        $("#costSize_Quantity01").text(result.CostSize1);
+                        $("#costSize_Quantity02").text(result.CostSize2);
+                        $("#costSize_Quantity03").text(result.CostSize3);
+                        $("#costSize_Quantity04").text(result.CostSize4);
+                        $("#costSize_Quantity05").text(result.CostSize5);
+                        $("#costSize_Quantity06").text(result.CostSize6);
+                        $("#costSize_Quantity07").text(result.CostSize7);
+                        $("#costSize_Quantity08").text(result.CostSize8);
+                        $("#costSize_Quantity09").text(result.CostSize9);
+                        $("#costSize_Quantity10").text(result.CostSize10);
+                        $("#costSize_Quantity11").text(result.CostSize11);
+                        $("#costSize_Quantity12").text(result.CostSize12);
+                        $("#costSize_Quantity13").text(result.CostSize13);
+                        $("#costSize_Quantity14").text(result.CostSize14);
+                        $("#costSize_Quantity15").text(result.CostSize15);
+                        $("#costSize_Quantity16").text(result.CostSize16);
+                        $("#costSize_Quantity17").text(result.CostSize17);
+                        $("#costSize_Quantity18").text(result.CostSize18);
+                        $("#costSize_Quantity19").text(result.CostSize19);
+                        $("#costSize_Quantity20").text(result.CostSize20);
+                        $("#costSize_Quantity21").text(result.CostSize21);
+                        $("#costSize_Quantity22").text(result.CostSize22);
+                        $("#costSize_Quantity23").text(result.CostSize23);
+                        $("#costSize_Quantity24").text(result.CostSize24);
+                        $("#costSize_Quantity25").text(result.CostSize25);
+                        $("#costSize_Quantity26").text(result.CostSize26);
+                        $("#costSize_Quantity27").text(result.CostSize27);
+                        $("#costSize_Quantity28").text(result.CostSize28);
+                        $("#costSize_Quantity29").text(result.CostSize29);
+                        $("#costSize_Quantity30").text(result.CostSize30);
+                    }
+               
+             
+            },
+            error: function (xhr, status) {
+                alert(status)
+            }
+
+        });
+        return false;
+    }
+    $(document).ready(function () {
+        debugger
+        var ProductSKUList = {};
+     //   var ProductStyleList = [];
+        $("#autoCompleteProductName").autocomplete({
+            source: function (request, response) {
+                debugger
+                $.ajax({
+                    url: "/Admin/Receipt/AutoCompleteProductSKUList",
+                    type: "GET",
+                    data: { name: request.term },
+                    success: function (result) {
+                        debugger
+                        ProductSKUList = $.map(result, function (value, key) { return { value: value.ID, label: value }; });
+                        response(ProductSKUList);
+
+                    },
+                    error: function (xhr, status) {
+                        alert(status)
+                    }
+                });
+            },
+            select: function (event, ui) {
+                debugger
+                event.preventDefault();
+                $("#autoCompleteProductName").val(ui.item.label);
+                $("#autoCompleteProductId").val(ui.item.value);
+                var productName = $("#autoCompleteProductName").val();
+              //  GetProductStyle(productName);
+              //  ProductStyleList = ui.item.ProductStyleSKU;
+            },
+            minLength: 1
+        });
+    })
+    $(document).ready(function () {
+        debugger
+        var StyleSKUList = {};
+        
+              $("#autoCompleteProductStyleName").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    var id = $('#autoCompleteProductName').val();
+            //$("#autoCompleteProductStyleName").autocomplete({
+            //    source: function (request, response) {
+                  
+            $.ajax({
+                url: "/Admin/Receipt/AutoCompleteStyleSKUList/"+id,
+                type: "GET",
+                data: { name: request.term },
+                success: function (result) {
+                    debugger
+                    StyleSKUList = $.map(result, function (value, key) { return { value: value.ID, label: value.StyleSKU }; });
+                    //StyleSKUList = ProductStyleList;
+                     response(StyleSKUList);
+                         
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            
+            });
+       },
+      select: function (event, ui) {
+      debugger
+      event.preventDefault();
+      $("#autoCompleteProductStyleName").val(ui.item.label);
+      $("#autoCompleteProductStyleId").val(ui.item.value);
+       },
+              minLength: 1
+        }); 
+        
+    });
+
+    $(document).ready(function () {
+    	debugger
+    	$(".toggle-btn").click(function () {
+    		$("#demo").collapse('toggle');
+    	});
+    });
+    function ViewDistribution() {
+    	debugger
+    	var purchaseId = $('#purchaseId').val();
+    	$.ajax({
+    		url: "Admin/Receipt/ViewDistribution/" + purchaseId,
+    		type: "GET",
+    		dataType: 'html',
+    		success: function (result) {
+
+    			$('#demo').html(result);
+    		},
+    		error: function (xhr, status) {
+    			alert(status)
+    		}
+    	})
+
+    }
+    </script>
+

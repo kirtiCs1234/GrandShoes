@@ -1,0 +1,227 @@
+﻿@model IEnumerable<Model.CartonDetailModel>
+@foreach (var tag in Model)
+{
+    int? total = 0;
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+
+        <div class="modal-body">
+
+            <div class="row  mrgn-b-lg">
+               
+                    <div class="col-sm-12 col-md-12 col-xs-12">
+                        <div class="forms">
+                            
+                                <div class="prtm-block-content mrgn-b-md">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" >
+
+                                            <thead>
+                                                <tr>
+
+                                                    <th>Carton No</th>
+                                                    <th>@Html.DisplayFor(modelItem => tag.CartonManagementID)</th>
+                                                    <th>Total Item</th>
+                                                    <th>@ViewBag.TotalItems </th>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <th>Delete</th>
+                                                    <th>ProductId</th>
+                                                    
+                                                    <th>Total</th>
+                                                    <th>Quantity01</th>
+                                                    <th>Quantity02</th>
+                                                    <th>Quantity03</th>
+                                                    <th>Quantity04</th>
+                                                    <th>Quantity05</th>
+                                                    <th>Quantity06</th>
+                                                    <th>Quantity07</th>
+                                                    <th>Quantity08</th>
+                                                    <th>Quantity09</th>
+                                                    <th>Quantity10</th>
+                                                    <th>Quantity11</th>
+                                                    <th>Quantity12</th>
+                                                    <th>Quantity13</th>
+                                                    <th>Quantity14</th>
+                                                    <th>Quantity15</th>
+                                                    <th>Quantity16</th>
+                                                    <th>Quantity17</th>
+                                                    <th>Quantity18</th>
+                                                    <th>Quantity19</th>
+                                                    <th>Quantity20</th>
+                                                    <th>Quantity21</th>
+                                                    <th>Quantity22</th>
+                                                    <th>Quantity23</th>
+                                                    <th>Quantity24</th>
+                                                    <th>Quantity25</th>
+                                                    <th>Quantity26</th>
+                                                    <th>Quantity27</th>
+                                                    <th>Quantity28</th>
+                                                    <th>Quantity29</th>
+
+                                                    <th>Quantity30</th>
+                                                </tr>
+  
+                                                                                      </thead>
+<tbody class="tbodyIndex" id="table1">
+   
+    @foreach (var item in tag.Tags)
+    {
+        
+
+        total += item.Total;
+   <th style="display:none;">@total</th>
+        <tr id="StockDistribution">
+            
+            <td style="display:none;">
+                @if (item.Total < 24)
+                {
+                    <input type="button" style="background-color:red;" value="Add" onclick="edit(@item.Id)" class="btn btn-success popup-savebtn" />
+                }
+                else
+                {
+                    <input type="button" id="SubmitButton" value="Full" onclick="edit(@item.Id)" class="btn btn-success popup-savebtn" />
+
+                }
+
+            </td>
+            <td><i class="fa fa-trash" onclick="del(@item.Id)"></i></td>
+            <td style="display:none;">
+                @Html.HiddenFor(modelItem => item.Id)
+            </td>
+            <td style="display:none;">
+                @Html.HiddenFor(modelItem => item.Product.Id)
+            </td>
+            <td>
+
+                @Html.DisplayFor(modelItem => item.Product.ProductSKU)
+
+            </td>
+            <td style="display:none;">
+                @Html.DisplayFor(modelItem => item.CartonManagementID)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Z01)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z02)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z03)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z04)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Z05)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z06)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z07)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z08)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z09)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z10)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z11)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z12)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z13)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Z14)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Z15)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Z16)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z17)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Z18)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Z19)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z20)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z21)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Z22)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Z23)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z24)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Z25)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z26)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z27)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Z28)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Z29)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Z30)
+            </td>
+        </tr>
+    }
+    </tbody>
+                                  </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+              
+                    </div>
+                </div>
+
+ </div>
+                        </div>
+      
+
+    }            

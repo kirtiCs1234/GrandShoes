@@ -1,0 +1,76 @@
+﻿@model List<Model.DiscountModel>
+<div class="table-style">
+
+
+    <div class="modal-body">
+
+        <div class="row  mrgn-b-lg">
+
+            <div class="col-sm-12 col-md-12 col-xs-12">
+                <div class="forms">
+
+                    <div class="prtm-block-content mrgn-b-md">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+
+                                <thead>
+                                    <tr>
+
+
+                                        <th>ProductSKU </th>
+                                        <th>Style SKU</th>
+                                        <th>Minimum Quantity</th>
+                                        <th>Date From</th>
+                                        <th>Date To</th>
+                                        <th>Percent Discount</th>
+                                        <th>Text</th>
+                                        <th>Branches</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody class="tbodyIndex" id="table1">
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ProductSKU)
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.StyleSKU)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.MinimumQuantity)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DateFrom)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DateTo)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PercentDiscount)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Text)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem=>item.Branches)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+
+
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

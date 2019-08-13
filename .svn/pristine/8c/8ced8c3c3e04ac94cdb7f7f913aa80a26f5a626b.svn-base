@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Model
+{
+    public class AllProductDetailModel
+    {
+        public int Id { get; set; }
+        public string ProductSKU { get; set; }
+        public string ProductStyleSKU { get; set; }
+        public string LongDescription { get; set; }
+        public string ShortDescription { get; set; }
+        public string PrimaryImage { get; set; }
+        public virtual ProductStyleModel ProductStyle { get; set; }
+    }
+}

@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3BFD8D31-4224-44A0-9765-35D1353AC664}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Model</RootNamespace>
+    <AssemblyName>Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EPPlus, Version=4.5.2.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.2.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader, Version=3.4.2.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.4.2\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="LinqToExcel, Version=1.11.0.0, Culture=neutral, PublicKeyToken=9c8ea65a58f03f1f, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqToExcel.1.11.0\lib\LinqToExcel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.0.0\lib\net451\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.0.0\lib\net451\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="Remotion, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqToExcel.1.11.0\lib\Remotion.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Data.Linq, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqToExcel.1.11.0\lib\Remotion.Data.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Interfaces, Version=1.13.52.2, Culture=neutral, PublicKeyToken=0669cf0452175907, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinqToExcel.1.11.0\lib\Remotion.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Mvc.Extensions, Version=1.1.0.6, Culture=neutral, PublicKeyToken=d631f4e4b226a032, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Web.Mvc.Extensions.1.1.1.2\lib\net45\System.Web.Mvc.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionExistence\ActionExistence.cs" />
+    <Compile Include="ActionLog\ActionLog.cs" />
+    <Compile Include="ActionName\ActionName.cs" />
+    <Compile Include="ActionPage\ActionPage.cs" />
+    <Compile Include="AllProductDetail\AllProductDetailModel.cs" />
+    <Compile Include="AreaPaging\AreaPaginationModel.cs" />
+    <Compile Include="AreaPaging\Paging.cs" />
+    <Compile Include="Area\Area.cs" />
+    <Compile Include="Area\AreaSearch.cs" />
+    <Compile Include="BaseModel.cs" />
+    <Compile Include="BranchDiscount\BranchDiscount.cs" />
+    <Compile Include="BranchStockReport\BranchStockReport.cs" />
+    <Compile Include="BranchStockReport\StockDistributionSearch.cs" />
+    <Compile Include="Branch\Branch.cs" />
+    <Compile Include="Branch\BranchSearch.cs" />
+    <Compile Include="Buyer\Buyer.cs" />
+    <Compile Include="Buyer\BuyerSearch.cs" />
+    <Compile Include="CartonManagementReport\CartonManagementReport.cs" />
+    <Compile Include="CartonManagement\CartonManagemenetStock.cs" />
+    <Compile Include="CartonManagement\CartonManagementForEdit.cs" />
+    <Compile Include="CartonManagement\CartonManagementModel.cs" />
+    <Compile Include="CartonManagement\SearchForCarton.cs" />
+    <Compile Include="CartonManagement\StockDistribution.cs" />
+    <Compile Include="CartonMangementDetails\AddItemModel.cs" />
+    <Compile Include="CartonMangementDetails\CartonDetailModel.cs" />
+    <Compile Include="CartonMangementDetails\CartonDistributionModel.cs" />
+    <Compile Include="CartonMangementDetails\CartonManagementDetailModel.cs" />
+    <Compile Include="Change.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="Color\Color.cs" />
+    <Compile Include="Color\ColorSearch.cs" />
+    <Compile Include="Controllers\jsTree3Controller.cs" />
+    <Compile Include="Designation\Designation.cs" />
+    <Compile Include="Discount\Discount.cs" />
+    <Compile Include="Discount\DiscountAdd.cs" />
+    <Compile Include="ExcelUpload\ExcelUploadModel.cs" />
+    <Compile Include="Image\ImageModel.cs" />
+    <Compile Include="LengthMeasure\LengthMeasure.cs" />
+    <Compile Include="Log\Change.cs" />
+    <Compile Include="Log\Log.cs" />
+    <Compile Include="Log\LogSearch.cs" />
+    <Compile Include="MarkDownBranch\MarkDownBranch.cs" />
+    <Compile Include="MarkDown\MarkDown.cs" />
+    <Compile Include="MarkDown\MarkDownA.cs" />
+    <Compile Include="MarkDown\MarkDownAdd.cs" />
+    <Compile Include="Message\Message.cs" />
+    <Compile Include="Models\jsTree3Node.cs" />
+    <Compile Include="Offrers\Offers.cs" />
+    <Compile Include="PageName\PageName.cs" />
+    <Compile Include="Page\Page.cs" />
+    <Compile Include="PagingModel.cs" />
+    <Compile Include="PendingItemReceipt\PendingItemReceipt.cs" />
+    <Compile Include="ProductCategory\ProductCategoryModel.cs" />
+    <Compile Include="ProductCategory\ProductCategorySearch.cs" />
+    <Compile Include="ProductGroupModel\ProductGroupModel.cs" />
+    <Compile Include="ProductOperation\ProductOperationModel.cs" />
+    <Compile Include="ProductSize\ProductSizeModel.cs" />
+    <Compile Include="ProductSize\ProductSizeSearch.cs" />
+    <Compile Include="ProductSource\ProductSourceModel.cs" />
+    <Compile Include="ProductSource\ProductSourceSearch.cs" />
+    <Compile Include="ProductStyle\ProductStyle.cs" />
+    <Compile Include="ProductStyle\ProductStyleSearch.cs" />
+    <Compile Include="ProductVariance\ProductVarianceModel.cs" />
+    <Compile Include="Product\MarkDownProduct.cs" />
+    <Compile Include="Product\ProdSearch.cs" />
+    <Compile Include="Product\Product.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseOrderItems\ItemsDetails.cs" />
+    <Compile Include="PurchaseOrderItems\PurchaseOrderItems.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrder.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderSearch.cs" />
+    <Compile Include="PurchaseOrder\PurchaseOrderStatus.cs" />
+    <Compile Include="ReceiptOrderItem\EditReceiptOrder.cs" />
+    <Compile Include="ReceiptOrderItem\PurchaseOrderSearch.cs" />
+    <Compile Include="ReceiptOrderItem\ReceiptOrderItem.cs" />
+    <Compile Include="ReceiveOrder\ReceiptOrderViewModel.cs" />
+    <Compile Include="ReceiveOrder\ReceiptSearch.cs" />
+    <Compile Include="ReceiveOrder\ReceiveOrder.cs" />
+    <Compile Include="ReceiveOrder\ReceiveOrderStatus.cs" />
+    <Compile Include="Role\Role.cs" />
+    <Compile Include="Season\SeasonModel.cs" />
+    <Compile Include="Season\SeasonSearch.cs" />
+    <Compile Include="ServiceResult.cs" />
+    <Compile Include="SizeGrid\SizeGrid.cs" />
+    <Compile Include="SizeGrid\SizeGridSearch.cs" />
+    <Compile Include="SizeParameter\SizeParameter.cs" />
+    <Compile Include="SMIBranchDefault\SMIBranchDefault.cs" />
+    <Compile Include="StaffCommission\StaffCommition.cs" />
+    <Compile Include="StaffMemberSearch.cs" />
+    <Compile Include="StaffMember\StaffMember.cs" />
+    <Compile Include="StaffRole\StaffRole.cs" />
+    <Compile Include="StaffStatus\StaffStatus.cs" />
+    <Compile Include="Staff\Staff.cs" />
+    <Compile Include="Staff\StaffSerach.cs" />
+    <Compile Include="StockAudit\StockAudit.cs" />
+    <Compile Include="StockBranchInventory\StockBranchInventory.cs" />
+    <Compile Include="StockDistributionConfirmData\StockDistributionConfirmData.cs" />
+    <Compile Include="StockDistributionStatus\StockDistributionStatusModel.cs" />
+    <Compile Include="StockDistributionSummary\StockDistributionSummary.cs" />
+    <Compile Include="StockDistributionView\StockDistributionView.cs" />
+    <Compile Include="StockDistribution\StockDistribution.cs" />
+    <Compile Include="StockDistribution\StockDistributionCarton.cs" />
+    <Compile Include="StockEnquiry\SearchData.cs" />
+    <Compile Include="StockEnquiry\StockEnquiry.cs" />
+    <Compile Include="StockEnquiry\ViewAllEnquiryDataModel.cs" />
+    <Compile Include="StockInventory\StockInventory.cs" />
+    <Compile Include="StockTape\FormDataModel.cs" />
+    <Compile Include="StockTape\StockTape.cs" />
+    <Compile Include="StockVariance\StockVariance.cs" />
+    <Compile Include="StoreDeliveryReport\StoreDeliveryReport.cs" />
+    <Compile Include="Supplier\Supplier.cs" />
+    <Compile Include="Supplier\SupplierExcelData.cs" />
+    <Compile Include="Supplier\SupplierProd.cs" />
+    <Compile Include="Supplier\SupplierSearch.cs" />
+    <Compile Include="Template\BarcodeDesignModel.cs" />
+    <Compile Include="Template\ManageTemplate.cs" />
+    <Compile Include="Template\TemplateModel.cs" />
+    <Compile Include="UserSearch\UserSearch.cs" />
+    <Compile Include="User\User.cs" />
+    <Compile Include="User\UserCrud.cs" />
+    <Compile Include="User\UserLoginModel.cs" />
+    <Compile Include="User\UserResetPassword.cs" />
+    <Compile Include="ViewDistribution\ViewDistribution.cs" />
+    <Compile Include="Year\YearModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Scripts\jquery-1.9.1.min.map" />
+    <None Include="Views\jsTree3\AJAXDemo.cshtml" />
+    <None Include="Views\jsTree3\Demo.cshtml" />
+    <None Include="Views\Shared\_jsTreeDemo.cshtml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Content\jsTree\docs.css" />
+    <Content Include="Content\jsTree\themes\default-dark\32px.png" />
+    <Content Include="Content\jsTree\themes\default-dark\40px.png" />
+    <Content Include="Content\jsTree\themes\default-dark\style.css" />
+    <Content Include="Content\jsTree\themes\default-dark\style.min.css" />
+    <Content Include="Content\jsTree\themes\default-dark\throbber.gif" />
+    <Content Include="Content\jsTree\themes\default\32px.png" />
+    <Content Include="Content\jsTree\themes\default\40px.png" />
+    <Content Include="Content\jsTree\themes\default\style.css" />
+    <Content Include="Content\jsTree\themes\default\style.min.css" />
+    <Content Include="Content\jsTree\themes\default\throbber.gif" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\themes\default-dark\32px.png" />
+    <Content Include="Content\themes\default-dark\40px.png" />
+    <Content Include="Content\themes\default-dark\style.css" />
+    <Content Include="Content\themes\default-dark\style.min.css" />
+    <Content Include="Content\themes\default-dark\throbber.gif" />
+    <Content Include="Content\themes\default\32px.png" />
+    <Content Include="Content\themes\default\40px.png" />
+    <Content Include="Content\themes\default\style.css" />
+    <Content Include="Content\themes\default\style.min.css" />
+    <Content Include="Content\themes\default\throbber.gif" />
+    <Content Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\jstree.js" />
+    <Content Include="Scripts\jstree.min.js" />
+    <Content Include="Scripts\jsTree3\jstree.js" />
+    <Content Include="Scripts\jsTree3\jstree.min.js" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

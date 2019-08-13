@@ -1,0 +1,199 @@
+﻿@model Model.StockEnquiryModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+        <div class="prtm-block-title pad-all-md ">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">Stock Enquiry</h3>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                   @Html.TextBoxFor(model => model.ProductSKU, new { @class = "form-control",@placeholder="Product SKU" })
+                    @Html.ValidationMessageFor(m => m.ProductSKU, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+					@Html.TextBoxFor(m => m.StyleSKU,new { @class = "form-control", @placeholder = "Style SKU" })
+                    @Html.ValidationMessageFor(m => m.StyleSKU, "", new { @class = "text-danger" })
+                </div>
+				<div class="col-md-2 col-xs-12 col-sm-2">
+					@Html.TextBoxFor(m => m.ColorCode, new { @class = "form-control", @placeholder = "Color Code" })
+					@Html.ValidationMessageFor(m => m.ColorCode, "", new { @class = "text-danger" })
+				</div>
+                <div class="col-md-4 col-xs-12 col-sm-2">
+					@Html.TextBoxFor(m => m.BranchName,new { @class = "form-control", @placeholder = "Branch Name" })
+                    @Html.ValidationMessageFor(m => m.BranchName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <button type="button" class="btn btn-primary export-btn" onclick="searchData()">Search</button>
+                </div>
+            </div>
+            </div>
+        </div>
+            <div class="row marg-btn-20">
+
+                <div class="dvUserDetails">
+
+                </div>
+            </div>
+        </div>
+        @section scripts{
+
+            <script type="text/javascript">
+                $('#BranchId').append($('<option>', {
+                    value: 0,
+                    text: 'Warehouse'
+                }));
+                function searchData() {
+                    debugger;
+                    var obj = {};
+                    var crud = "";
+                    obj.ProductSKU = $('#ProductSKU').val();
+                    obj.StyleSKU= $('#StyleSKU').val();
+                    obj.BranchName = $('#BranchName').val();
+                    obj.ColorCode = $('#ColorCode').val();
+                    if (obj.BranchName == "WAREHOUSE") {
+                    	crud = '/Admin/StockEnquiry/StockData';
+                    }
+                    else {
+                    	crud = '/Admin/StockEnquiry/GetData';
+                    }
+                    $.ajax({
+                        url: crud,
+                        type: 'POST',
+                        data: obj,
+                        success: function (result) {
+                            // alert('ssss');
+                            $('.dvUserDetails').html(result);
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+
+                    });
+                    return false;
+                }
+                var ProductLists = {};
+                $("#ProductSKU").autocomplete({
+                	source: function (request, response) {
+                		debugger
+                		$.ajax({
+                			url: "/admin/purchaseOrder/AutoCompleteProductList",
+                			type: 'GET',
+                			data: { name: request.term },
+                			success: function (result) {
+                				debugger
+                				ProductLists = $.map(result, function (value, key) { return { value: key, label: value }; });
+                				response(ProductLists);
+                			},
+                			error: function (xhr, status) {
+                				alert(status)
+                			}
+                		});
+                	},
+                	select: function (event, ui) {
+                		event.preventDefault();
+                		$("#ProductSKU").val(ui.item.label);
+                	},
+                	minLength: 1
+                });
+                var StyleList = {};
+                $("#StyleSKU").autocomplete({
+                	source: function (request, response) {
+                		var id = $('#ProductSKU').val();
+                		debugger
+                		$.ajax({
+                			url: "/admin/purchaseOrder/AutoCompleteProductStyle/" + id,
+                			type: 'GET',
+                			data: { name: request.term },
+                			success: function (result) {
+                				debugger
+                				StyleList = $.map(result, function (value, key) {
+                					debugger
+                					return {
+                						value: value.Id,
+                						label: value.StyleSKU,
+                					};
+                				});
+                				response(StyleList);
+
+                			},
+                			error: function (xhr, status) {
+                				alert(status)
+                			}
+                		});
+                	},
+
+                	select: function (event, ui) {
+                		debugger;
+                		event.preventDefault();
+                		$("#StyleSKU").val(ui.item.label);
+                	},
+                	minLength: 0
+                });
+                var ColorLists = {};
+                $("#ColorCode").autocomplete({
+                	source: function (request, response) {
+                		debugger
+                		$.ajax({
+                			url: "/admin/Product/AutoCompleteColorList",
+                			type: 'GET',
+                			data: { name: request.term },
+                			success: function (result) {
+                				debugger
+                				ColorLists = $.map(result, function (value, key) { return { value: key, label: value.Code }; });
+                				response(ColorLists);
+                			},
+                			error: function (xhr, status) {
+                				alert(status)
+                			}
+                		});
+                	},
+                	select: function (event, ui) {
+                		event.preventDefault();
+                		$("#ColorCode").val(ui.item.label);
+                	},
+                	minLength: 1
+                });
+
+                $(document).ready(function () {
+                	debugger
+                	var BranchList = {};
+                	$("#BranchName").autocomplete({
+                		source: function (request, response) {
+                			debugger
+                			$.ajax({
+                				url: "/Admin/IBTCarton/AutoCompleteBranch",
+                				type: "GET",
+                				data: { name: request.term },
+                				success: function (result) {
+                					debugger
+
+                					BranchList = $.map(result, function (value, key) { return { value: value.ID, label: value.Name }; });
+                					response(BranchList);
+                				},
+                				error: function (xhr, status) {
+                					alert(status)
+                				}
+                			});
+                		},
+                		select: function (event, ui) {
+                			debugger
+                			event.preventDefault();
+                			$("#BranchName").val(ui.item.label);
+                			$("#BranchID").val(ui.item.value);
+                		},
+                		minLength: 1
+                	});
+                });
+            </script>
+        }
+

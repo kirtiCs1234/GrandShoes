@@ -1,0 +1,211 @@
+﻿
+@model List<Model.Report.TransactionEnquiryModel>
+
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<style>
+    .ul.pagination {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.pagination li {
+        display: inline;
+    }
+
+        ul.pagination li a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+            ul.pagination li a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+            ul.pagination li a:hover:not(.active) {
+                background-color: #ddd;
+            }
+</style>
+<div class="row">
+    <div class="prtm-page-bar col-md-5 col-lg-3 col-sm-12 col-12" style="background:none;">
+        <ul class="breadcrumb" style="background:none;">
+            <li class="breadcrumb-item text-capitalize">
+                <h3>Transaction Enquiry Report</h3>
+            </li>
+            @*<li class="breadcrumb-item"><a href="#">Dashboard</a></li>*@
+        </ul>
+    </div>
+    @*@using (Html.BeginForm("Index", "User") new { @class = "formuser" })*@
+    @*@using (Html.BeginForm("Index", "User", FormMethod.Post, new { @class = "formuser" }))
+        {*@
+    <!--------advanced search-->
+    <div class="col-md-4 col-lg-6 col-sm-8 col-xs-12 search-container">
+        <div class="top-search-navbar-search smallsearch search-marg col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <input class="top-search-navbar-input col-md-8 col-lg-10 col-sm-8 col-xs-8 searchAnyItem" type="text" placeholder="open advance search" name="" disabled>
+                <button class="advance-search col-md-2 col-lg-1 col-sm-2 col-xs-2"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-xs-2" name="iSupplierName" onclick="searchData(true)"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+        </div>
+        <div class="advance-search-container col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <div class="advance-content">
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <h5 style="margin-bottom:20px;color:#000;font-weight:normal">Advanse Keyword Search</h5>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xg-4">
+                    <label>Branch Range</label>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xg-4">
+                    <label>From</label>
+                    <input type="text" name="BranchRangef" class="form-control advance-supplier-name branch-from" />
+                </div>
+                <div class="col-md-4 col-lg-4 col-xg-4">
+                    <label>To</label>
+                    <input type="text" name="BranchRanget" class="form-control advance-supplier-name branch-to" />
+                </div>
+                <div class="col-md-4 col-lg-4 col-xg-4">
+                    <label>ProductSKU Range</label>
+                    @*<input type="text" name="SupplierName" class="form-control advance-supplier-name searchName" />*@
+                </div>
+                <div class="col-md-4 col-lg-4 col-xg-4">
+                    <label>From</label>
+                    <input type="text" name="ProductSKUf" class="form-control advance-supplier-name productsku-from" />
+                </div>
+                <div class="col-md-4 col-lg-4 col-xg-4">
+                    <label>To</label>
+                    <input type="text" name="ProductSKUt" class="form-control advance-supplier-name productsku-to" />
+                </div>
+                <div class="col-md-4 col-lg-4 col-xg-4">
+                    <label>StyleSKU Range</label>
+                    @*<input type="text" name="SupplierName" class="form-control advance-supplier-name searchName" />*@
+                </div>
+                <div class="col-md-4 col-lg-4 col-xg-4">
+                    <label>From</label>
+                    <input type="text" name="StyleSKUf" class="form-control advance-supplier-name stylesku-from" />
+                </div>
+                <div class="col-md-4 col-lg-4 col-xg-4">
+                    <label>To</label>
+                    <input type="text" name="StyleSKUt" class="form-control advance-supplier-name stylesku-to" />
+                </div>
+                <div class="col-md-4 col-lg-4 col-xg-4">
+                    <label>Date Range</label>
+                    @*<input type="text" name="SupplierName" class="form-control advance-supplier-name searchName" />*@
+                </div>
+                <div class="col-md-4 col-lg-4 col-xg-4">
+                    <label>From</label>
+                    <input type="text" name="dateFrom" id="dateFrom" class="form-control advance-supplier-name date-from" />
+                </div>
+                <div class="col-md-4 col-lg-4 col-xg-4">
+                    <label>To</label>
+                    <input type="text" name="dateTo" id="dateTo" class="form-control advance-supplier-name date-to" />
+                </div>
+
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <button type="submit" onclick="searchData(false)" class="btn btn-success advance-search-btn">Search</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!------------------>
+    @*}*@
+    <div class="add-btn-div col-md-4 col-lg-3 col-sm-4 col-12 text-right">
+    </div>
+</div>
+<div class="table-style">
+    @if (TempData["Success"] != null)
+    {
+        <p class="alert alert-success" id="successMessage" style="width: 300px;height: 25px;color: #fff;text-align: center; padding-bottom: 2em;">
+            @TempData["Success"]
+        </p>
+    }
+    <script>
+        setTimeout(function () {
+            $('#successMessage').fadeOut('slow');
+        }, 5000);
+    </script>
+    <div class="dvUserDetails">
+        @{
+
+            Html.RenderPartial("_TransactionEnquiryReport", Model);
+        }
+
+    </div>
+
+</div>
+<div class="modal fade" id="myModal">
+    <div id="dvCreatedetails">
+    </div>
+</div>
+<div class="modal fade" id="myCancelModal">
+    <div id="Canceldiv">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Confirm Cancel</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you need to close without save!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" id="cancelyesbtn" class="btn btn-success popup-savebtn" data-dismiss="modal">yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*@section script{*@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dateFrom').datepicker({
+            // minDate: new Date(currentYear, currentMonth, currentDate),
+            dateFormat: 'yy-mm-dd'
+        });
+        $('#dateTo').datepicker({
+            // minDate: new Date(currentYear, currentMonth, currentDate),
+            dateFormat: 'yy-mm-dd'
+        });
+    });
+        function searchData()
+        {
+        debugger;
+            obj = {};
+        obj.branchFrom = $('.branch-from').val();
+        obj.branchTo = $('.branch-to').val();
+        obj.productSKUFrom = $('.productsku-from').val();
+        obj.productSKUTo = $('.productsku-to').val();
+        obj.styleSKUFrom = $('.stylesku-from').val();
+        obj.styleSKUTo = $('.stylesku-to').val();
+        obj.startDate = $('.date-from').val();
+        obj.endDate = $('.date-to').val();
+
+             $.ajax({
+                type: "POST",
+                url: '/Admin/Report/_TransactionEnquiryReport',
+
+                data: obj,
+                success: function (result) {
+                    $('.dvUserDetails').html(result);
+                    //  alert('hdfjdhfj');
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+        }
+
+</script>
+
+
+

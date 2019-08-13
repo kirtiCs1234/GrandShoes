@@ -1,0 +1,254 @@
+﻿using Helper;
+using Model;
+using Newtonsoft.Json;
+using OfficeOpenXml;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+
+namespace POS.Areas.Admin.Controllers
+{
+    [CustomAuth]
+    public class SizeGridController : BaseController
+    {
+        // GET: Admin/SizeGrid
+        public ActionResult Index(int? page)
+
+        {
+            int TotalCount = 0;
+            var pageSize = 10;
+            var pageNumber = page ?? 1;
+            int CurrentPage = pageNumber;
+            var endPage = CurrentPage + 4;
+            int PagesToShow = 10;
+
+
+            ViewBag.PageSize = pageSize;
+            var SizeGridModelList = Services.SizeGridService.GetPaging(page, out TotalCount);
+
+            //  var AreaModelList = Services.AreaService.GetSearchData(areaSearch, page, out TotalCount);
+            ViewBag.TotalCount = TotalCount;
+
+            var result = Helper.CommonFunction.GetPages(TotalCount, pageSize, CurrentPage, PagesToShow);
+            int totalPages = (TotalCount / pageSize) + (TotalCount % pageSize == 0 ? 0 : 1);
+            ViewBag.result = result;
+            ViewBag.totalPages = totalPages;
+            ViewBag.CurrentPage = CurrentPage;
+            var pageCount = result.Count();
+            ViewBag.pageCount = pageCount;
+
+            ViewBag.endPage = endPage;
+            return View(SizeGridModelList); ;
+
+        }
+        public ActionResult _Index1(SizeGridSearch sizeGridSearch,int? page)
+
+        {
+            int TotalCount = 0;
+            var pageSize = 10;
+            var pageNumber = page ?? 1;
+            int CurrentPage = pageNumber;
+            var endPage = CurrentPage + 4;
+            int PagesToShow = 10;
+
+            ViewBag.PageSize = pageSize;
+            var SizeGridModelList = Services.SizeGridService.GetSearchData(sizeGridSearch, page, out TotalCount);
+            ViewBag.TotalCount = TotalCount;
+
+            ViewBag.TotalCount = TotalCount;
+            var result = Helper.CommonFunction.GetPages(TotalCount, pageSize, CurrentPage, PagesToShow);
+            int totalPages = (TotalCount / pageSize) + (TotalCount % pageSize == 0 ? 0 : 1);
+            ViewBag.result = result;
+            ViewBag.totalPages = totalPages;
+            ViewBag.CurrentPage = CurrentPage;
+            var pageCount = result.Count();
+            ViewBag.pageCount = pageCount;
+
+            ViewBag.endPage = endPage;
+            return View(SizeGridModelList);
+
+        }
+
+        public ActionResult ExcelUpload()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ExcelUpload(SizeGridModel sizeGrid, HttpPostedFileBase file)
+        {
+
+            if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+            {
+                string fileName = file.FileName;
+                string fileContentType = file.ContentType;
+                byte[] fileBytes = new byte[file.ContentLength];
+                var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+                //var usersList = new ColorModel();
+                using (var package = new ExcelPackage(file.InputStream))
+                {
+                    var currentSheet = package.Workbook.Worksheets;
+                    var workSheet = currentSheet.First();
+                    var noOfCol = workSheet.Dimension.End.Column;
+                    var noOfRow = workSheet.Dimension.End.Row;
+
+                    for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                    {
+                       
+                            //var supplier = new SupplierModel();
+                            sizeGrid.GridNumber = workSheet.GetCellValue(rowIterator,1);
+                            sizeGrid.Z01 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 2));
+                            sizeGrid.Z02 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 3));
+                            sizeGrid.Z03 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 4));
+                            sizeGrid.Z04 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 5));
+                            sizeGrid.Z05 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 6));
+                            sizeGrid.Z06 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 7));
+                            sizeGrid.Z07 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 8));
+                            sizeGrid.Z08 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 9));
+                            sizeGrid.Z09 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 10));
+                            sizeGrid.Z10 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 11));
+                            sizeGrid.Z11 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 12));
+                            sizeGrid.Z12 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 13));
+                            sizeGrid.Z13 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 14));
+                            sizeGrid.Z14 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 15));
+                            sizeGrid.Z15 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 16));
+                            sizeGrid.Z16 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 17));
+                            sizeGrid.Z17 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 18));
+                            sizeGrid.Z18 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 19));
+                            sizeGrid.Z19 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 20));
+                            sizeGrid.Z20 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 21));
+                            sizeGrid.Z21 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 22));
+                            sizeGrid.Z22 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 23));
+                            sizeGrid.Z23 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 24));
+                            sizeGrid.Z24 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 25));
+                            sizeGrid.Z25 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 26));
+                            sizeGrid.Z26 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 27));
+                            sizeGrid.Z27 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 28));
+                            sizeGrid.Z28 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 29));
+                            sizeGrid.Z29 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 30));
+                            sizeGrid.Z30 = Convert.ToDecimal(workSheet.GetCellValue(rowIterator, 31));
+                            sizeGrid.IsActive = true;
+                       
+                        string chk = workSheet.GetCellValue(rowIterator, 1);
+                        bool isexists = Services.SizeGridService.CheckGridNo1(chk);
+                        if (!isexists)
+                        {
+                            bool status = Services.SizeGridService.Create(sizeGrid);
+                        }
+                        else
+                        {
+
+                        }
+
+                        //    usersList = Services.SupplierService.Create(supplier);
+                    }
+                    return RedirectToAction("Index", "SizeGrid");
+
+                }
+            }
+            return View(sizeGrid);
+        }
+
+        public ActionResult ExportList()
+        {
+            var data = Services.ColorService.GetAll();
+            ExcelPackage excel = new ExcelPackage();
+            var workSheet = excel.Workbook.Worksheets.Add("Sheet1");
+            workSheet.Cells[1, 1].LoadFromCollection(data, true);
+            using (var memoryStream = new MemoryStream())
+            {
+                Response.ContentType = "application/vnd.ms-excel";
+                Response.AddHeader("content-disposition", "attachment;  filename=Color.xlsx");
+                excel.SaveAs(memoryStream);
+                memoryStream.WriteTo(Response.OutputStream);
+                Response.Flush();
+                //Response.End();
+            }
+            return View();
+        }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SizeGridModel SizeGridModelById = Services.SizeGridService.GetById(id);
+            return View(SizeGridModelById);
+        }
+        public ActionResult Create()
+        {
+           
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(SizeGridModel sizeGrid)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+                // user.IsActive = true;
+                bool SizeGridCreate = Services.SizeGridService.Create(sizeGrid);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "SizeGrid");
+            }
+            return View(sizeGrid);
+
+        }
+        public ActionResult Edit(int? id)
+
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SizeGridModel SizeGridModelById = Services.SizeGridService.GetById(id);
+            return View(SizeGridModelById);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(SizeGridModel sizeGrid)
+        {
+            if (ModelState.IsValid)
+            {
+                SizeGridModel SizeGridEdit = Services.SizeGridService.Edit(sizeGrid);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "SizeGrid");
+            }
+            return View(sizeGrid);
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SizeGridModel SizeGridModelById = Services.SizeGridService.GetById(id);
+
+            if  (SizeGridModelById == null)
+            {
+                return HttpNotFound();
+            }
+            return View(SizeGridModelById);
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(SizeGridModel sizeGrid)
+        {
+            if (sizeGrid.Id > 0)
+            {
+                SizeGridModel SizeGridDelete = Services.SizeGridService.Delete(sizeGrid);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "SizeGrid");
+            }
+            return View(sizeGrid);
+        }
+        public JsonResult CheckGridNo(SizeGridModel model)
+        {
+            var iExist = Services.SizeGridService.CheckGridNo(model);
+            return Json(!iExist, JsonRequestBehavior.AllowGet);
+        }
+    }
+}

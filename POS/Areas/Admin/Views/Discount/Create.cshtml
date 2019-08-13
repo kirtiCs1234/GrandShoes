@@ -1,0 +1,122 @@
+﻿@model Model.DiscountSummaryModel
+@{
+    Layout = null;
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div class="table-style">
+    @using (Html.BeginForm("Create", "Discount", FormMethod.Post, new { id = "createForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="prtm-full-block pos-relative col-md-10">
+            <div class="prtm-block-content mrgn-b-md col-md-12 padding-section">
+                <div class="">
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                        </div>
+                        <div class="col-md-4 col-sm-3 col-xs-12">
+                            <label>From</label>
+                        </div>
+                        <div class="col-md-4 col-sm-3 col-xs-12">
+                            <label>To</label>
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            <label>Product SKU</label>
+                        </div>
+                        <div class="col-md-4 col-sm-3 col-xs-12">
+                            @Html.EditorFor(model => model.FromProductSKU, new { htmlAttributes = new { @class = "form-control", type = "text" ,@placeholder="From ProductSKU"} })
+                            @Html.ValidationMessageFor(model => model.FromProductSKU, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4 col-sm-3 col-xs-12">
+                            @Html.EditorFor(model => model.ToProductSKU, new { htmlAttributes = new { @class = "form-control", type = "text", @placeholder = "To ProductSKU" } })
+                            @Html.ValidationMessageFor(model => model.ToProductSKU, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            <label>Style SKU</label>
+                        </div>
+                        <div class="col-md-4 col-sm-3 col-xs-12">
+                            @Html.EditorFor(model => model.FromStyleSKU, new { htmlAttributes = new { @class = "form-control", type = "text",@placeholder="From StyleSKU" } })
+                            @Html.ValidationMessageFor(model => model.FromStyleSKU, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4 col-sm-3 col-xs-12">
+                            @Html.EditorFor(model => model.ToStyleSKU, new { htmlAttributes = new { @class = "form-control", type = "text",@placeholder="To StyleSKU" } })
+                            @Html.ValidationMessageFor(model => model.ToStyleSKU, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            <label>Start Date</label>
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            @Html.EditorFor(model => model.FromDate, new { htmlAttributes = new { @class = "form-control date-picker", @id = "FromDate", placeholder = "Date From" } })
+                            @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            @Html.EditorFor(model => model.ToDate, new { htmlAttributes = new { @class = "form-control date-picker", @id = "ToDate", placeholder = "Date To" } })
+                            @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            <label>Price </label>
+                        </div>
+                        <div class="col-md-4 col-sm-3 col-xs-12">
+                            @Html.EditorFor(model => model.FromPrice, new { htmlAttributes = new { @class = "form-control", placeholder = "From Price" } })
+                            @Html.ValidationMessageFor(model => model.FromPrice, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-4 col-sm-3 col-xs-12">
+                            @Html.EditorFor(model => model.ToPrice, new { htmlAttributes = new { @class = "form-control", placeholder = "To Price" } })
+                            @Html.ValidationMessageFor(model => model.ToPrice, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            <label>Rand or Perc</label>
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            <select class="form-control" id="DiscountType">
+                                <option value="">Select</option>
+                                <option value="Percent">Percent</option>
+                                <option value="Rupee">Rupees</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            <label>Sales Per Discount</label>
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            @Html.EditorFor(model => model.DiscountValue, new { htmlAttributes = new { @class = "form-control", placeholder = "Discount Value" } })
+                            @Html.ValidationMessageFor(model => model.DiscountValue, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            <label><input type="checkbox" />Exclude Area MarkDown</label>
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            @Html.EditorFor(model => model.TemplateID, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TemplateID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 padding-section">
+            <input type="button" value="Accept" id="SubmitButton" class="btn btn-success popup-savebtn form-control branch-btn-input" onclick="Submit()"/>
+            <button type="button" class="btn btn-outline-inverse cancel form-control mrgn-b-md branch-btn" onclick="History()">History</button>
+            <button type="button" class="btn btn-outline-inverse cancel form-control" onclick="Clear()">Clear</button>
+        </div>
+    }
+    </div>
+<script>
+    window.onload = function () {
+        $.validator.unobtrusive.parse($("#createForm"))
+    }
+</script>

@@ -1,0 +1,195 @@
+﻿@model List<Model.StockDistributionModel>
+<style>
+    img {
+        border-radius: 50%;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+        <div class="forms">
+            <div class="row">
+                <div class="prtm-block-content mrgn-b-md">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+
+                            <thead>
+                                <tr>
+
+                                    <th style="min-width:155px;">Product Image</th>
+                                    <th style="display:none;">Id</th>
+                                    <th>Total</th>
+                                    <th>Quantity01</th>
+                                    <th>Quantity02</th>
+                                    <th>Quantity03</th>
+                                    <th>Quantity04</th>
+                                    <th>Quantity05</th>
+                                    <th>Quantity06</th>
+                                    <th>Quantity07</th>
+                                    <th>Quantity08</th>
+                                    <th>Quantity09</th>
+                                    <th>Quantity10</th>
+                                    <th>Quantity11</th>
+                                    <th>Quantity12</th>
+                                    <th>Quantity13</th>
+                                    <th>Quantity14</th>
+                                    <th>Quantity15</th>
+                                    <th>Quantity16</th>
+                                    <th>Quantity17</th>
+                                    <th>Quantity18</th>
+                                    <th>Quantity19</th>
+                                    <th>Quantity20</th>
+                                    <th>Quantity21</th>
+                                    <th>Quantity22</th>
+                                    <th>Quantity23</th>
+                                    <th>Quantity24</th>
+                                    <th>Quantity25</th>
+                                    <th>Quantity26</th>
+                                    <th>Quantity27</th>
+                                    <th>Quantity28</th>
+                                    <th>Quantity29</th>
+
+                                    <th>Quantity30</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="tbodyIndex" id="table">
+                                @for (var i = 0; i < Model.Count; i++)
+                                {
+                                    <tr id="StockDistribution">
+                                        <td>
+                                            <img id="file" src="/Image/product/@Model[i].Product.PrimaryImage" />
+
+                                            <span class="img-content">@Html.DisplayFor(modelItem => Model[i].Product.Color.Code)</span>
+                                            <span class="img-content">@Html.DisplayFor(modelItem => Model[i].Product.ProductSKU)</span>
+                                            <span class="img-content">@Html.DisplayFor(modelItem => Model[i].Product.ProductStyle.StyleSKU)</span>
+
+                                        </td>
+                                        <td style="display:none;">
+                                            @Html.HiddenFor(modelItem => Model[i].Product.Id, new { @Id = "item_Id_" + i })
+                                        </td>
+
+                                        <td id="item_Total_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Total, new { @class = "CheckCalculation1", @Id = "Total_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity01_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity01, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                                        </td>
+                                        <td id="item_Quantity02_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity02, new { @class = "CheckCalculation1", @Id = "item_Quantity02_" + i, @readonly = "readonly" })
+                                        </td>
+                                        <td id="item_Quantity03_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity03, new { @class = "CheckCalculation1", @Id = "item_Quantity03_" + i, @readonly = "readonly" })
+                                        </td>
+                                        <td id="item_Quantity04_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity04, new { @class = "CheckCalculation1", @Id = "item_Quantity04_" + i, @readonly = "readonly" })
+                                        </td>
+
+
+                                        <td id="item_Quantity05_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity05, new { @class = "CheckCalculation1", @Id = "item_Quantity05_" + i, @readonly = "readonly" })
+                                        </td>
+                                        <td id="item_Quantity06_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity06, new { @class = "CheckCalculation1", @Id = "item_Quantity06_" + i, @readonly = "readonly" })
+                                        </td>
+                                        <td id="item_Quantity07_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity07, new { @class = "CheckCalculation1", @Id = "item_Quantity07_" + i, @readonly = "readonly" })
+                                        </td>
+                                        <td id="item_Quantity08_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity08, new { @class = "CheckCalculation1", @Id = "item_Quantity08_" + i, @readonly = "readonly" })
+                                        </td>
+                                        <td id="item_Quantity09_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity09, new { @class = "CheckCalculation1", @Id = "item_Quantity09_" + i, @readonly = "readonly" })
+                                        </td>
+                                        <td id="item_Quantity10_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity10, new { @class = "CheckCalculation1", @Id = "item_Quantity10_" + i, @readonly = "readonly" })
+                                        </td>
+                                        <td id="item_Quantity11_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity11, new { @class = "CheckCalculation1", @Id = "item_Quantity11_" + i, @readonly = "readonly" })
+                                        </td>
+                                        <td id="item_Quantity12_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity12, new { @class = "CheckCalculation1", @Id = "item_Quantity12_" + i, @readonly = "readonly" })
+                                        </td>
+                                        <td id="item_Quantity13_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity13, new { @class = "CheckCalculation1", @Id = "item_Quantity13_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity14_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity14, new { @class = "CheckCalculation1", @Id = "item_Quantity14_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity15_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity15, new { @class = "CheckCalculation1", @Id = "item_Quantity15_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity16_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity16, new { @class = "CheckCalculation1", @Id = "item_Quantity16_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity17_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity17, new { @class = "CheckCalculation1", @Id = "item_Quantity17_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity18_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity18, new { @class = "CheckCalculation1", @Id = "item_Quantity18_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity19_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity19, new { @class = "CheckCalculation1", @Id = "item_Quantity19_" + i, @readonly = "readonly" })
+                                        </td>
+                                        <td id="item_Quantity20_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity20, new { @class = "CheckCalculation1", @Id = "item_Quantity20_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity21_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity21, new { @class = "CheckCalculation1", @Id = "item_Quantity21_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity22_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity22, new { @class = "CheckCalculation1", @Id = "item_Quantity22_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity23_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity23, new { @class = "CheckCalculation1", @Id = "item_Quantity23_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity24_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity24, new { @class = "CheckCalculation1", @Id = "item_Quantity24_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity25_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity25, new { @class = "CheckCalculation1", @Id = "item_Quantity25_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity26_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity26, new { @class = "CheckCalculation1", @Id = "item_Quantity26_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity27_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity27, new { @class = "CheckCalculation1", @Id = "item_Quantity27_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity28_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity28, new { @class = "CheckCalculation1", @Id = "item_Quantity28_" + i, @readonly = "readonly" })
+                                        </td>
+
+                                        <td id="item_Quantity29_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity29, new { @class = "CheckCalculation1", @Id = "item_Quantity29_" + i, @readonly = "readonly" })
+                                        </td>
+                                        <td id="item_Quantity30_@i">
+                                            @Html.DisplayFor(modelItem => Model[i].Quantity30, new { @class = "CheckCalculation1", @Id = "item_Quantity30_" + i, @readonly = "readonly" })
+                                        </td>
+
+
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,280 @@
+﻿@model Model.CartonManagementStockModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div class="row">
+    <div class="prtm-page-bar col-md-5 col-lg-3 col-sm-12 col-12" style="background:none;">
+        <ul class="breadcrumb" style="background:none;">
+            <li class="breadcrumb-item text-capitalize">
+                <h3>Carton</h3>
+            </li>
+            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        </ul>
+    </div>
+    <div class="col-md-8 col-lg-6 col-sm-8 col-12 search-container">
+        <div class="top-search-navbar-search smallsearch col-md-12 col-lg-12 col-sm-12 col-12">
+            <div class="row">
+
+                <input class="top-search-navbar-input col-md-8 col-lg-10 col-sm-8 col-xs-8 searchiFirstName" type="text" placeholder="Search Accounts" Id="Name" name="iFirstName">
+
+                @*<input type="submit" value="Add" class="btn btn-success popup-savebtn" />*@
+
+                <button class="advance-search col-md-2 col-lg-1 col-sm-2 col-xs-2" type="button">
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </button>
+
+                <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-xs-2" onclick="searchData()">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+    <div class="add-btn-div col-md-4 col-lg-3 col-sm-4 col-12 text-right">
+        <button type="button" class="btn btn-primary import-btn">Import</button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary export-btn">Export</button>&nbsp;&nbsp;
+    </div>
+</div>
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+        <div class="prtm-block-title pad-all-md">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">Carton Management</h3>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.DropDownListFor(m => m.StockDistributionSummaryId, null, "--Distribution Summary Id--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.StockDistributionSummaryId, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.DropDownListFor(m => m.BranchId, null, "--Branch Name--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.BranchId, "", new { @class = "text-danger" })
+                </div>
+                
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <button type="button" class="btn btn-primary add-btn add-form create" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="searchData();">Add</button>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="prtm-block-content mrgn-b-md">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Branch ID</th>
+                            <th>Column Number</th>
+                            <th>Quantity</th>
+                            <th>Receipt</th>
+
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="tbodyIndex">
+
+                        @foreach (var item in Model.CartonList)
+                        {
+                            <tr>
+                                <td>
+                                   @Html.DisplayFor(modelItem => item.BranchID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalItems)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td style="min-width:85px;">
+
+                                    <i class="fa fa-pencil edit-form edit" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="edit(@item.Id)"></i>
+                                    &nbsp;
+                                    <i class="fa fa-trash delete delete-form" data-toggle="modal" data-target="#myModal" data-backdrop="static" onclick="del(@item.Id)"></i>
+                                    &nbsp;
+                                    <i class="fa fa-eye view-form details" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="details(@item.Id)"></i>
+
+                                </td>
+                                <td><i class="fa fa-chevron-down accordian-btn" data-toggle="collapse" onclick="showReceipt(@item.Id)" aria-hidden="true"></i></td> 
+
+                            </tr>
+                                    <tr>
+                                        <td colspan="9">
+                                            <div class="table-responsive accordian-bundling" style="display:none;" id="@item.Id">
+                                                <table class="table table-hover bundle-ppoup-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Carton Id</th>
+                                                            <th>Product</th>
+                                                            <th>Z01 </th>
+                                                            <th>Z02</th>
+                                                            <th>Z03 </th>
+                                                            <th>Z04</th>
+                                                            <th>Z05 </th>
+                                                            <th>Z06</th>
+                                                            <th>Z07 </th>
+                                                            <th>Z08</th>
+                                                            <th>Z09 </th>
+                                                            <th>Z10</th>
+                                                            <th>Z11 </th>
+                                                            <th>Z12</th>
+                                                            <th>Z13 </th>
+                                                            <th>Z14</th>
+                                                            <th>Z15</th>
+                                                            <th>Z16</th>
+                                                            <th>Z17 </th>
+                                                            <th>Z18</th>
+                                                            <th>Z19 </th>
+
+                                                            <th>Z20 </th>
+                                                            <th>Z21</th>
+                                                            <th>Z22</th>
+                                                            <th>Z22</th>
+                                                            <th>Z23</th>
+                                                            <th>Z24</th>
+                                                            <th>Z25</th>
+                                                            <th>Z26</th>
+                                                            <th>Z27</th>
+                                                            <th>Z28</th>
+                                                            <th>Z29</th>
+                                                            <th>Z30</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="CartonDetail-@item.Id"></tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal">
+    <div id="dvCreatedetails">
+
+    </div>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+@section scripts{
+
+
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"> </script>
+    <script type="text/javascript">
+
+        function showReceipt(id) {
+            debugger
+          //  alert(id);
+           $("#ReceiptDetail-" + id).html('<tr><td colspan = "5" style="background-color:white;"><img src="/Image/bars.gif" style="width:55px; height:47px;margin-left:40%; z-index:200" /></td></tr>');
+
+            $.ajax(
+             {
+                 url: '/Admin/CartonManagement/GetCartonDetailByCartonId/' + id,
+                 type: "GET",
+                success: function (result) {
+                    debugger
+                    $("#CartonDetail-" + id).html(result);
+                   // alert("dgfhdf");
+           },
+           error: function (xhr, status) {
+             alert(status)
+           }
+           });
+        }
+        $(".accordian-btn").click(function () {
+            $(this).toggleClass("accordian-reverse");
+            $(this).parent().parent().next().find(".accordian-bundling").toggle(500);
+        });
+        var id1;
+        function del(del){
+            debugger
+            id1=del;
+            Data(0);
+        }
+        
+        function Data(ch) {
+           debugger
+            var crud = "";
+            switch (ch) {
+                
+                case 0:
+                    crud='/Admin/CartonManagement/Delete/'+id1;
+                    break;
+              
+            }
+            $.ajax({
+                url: crud,
+                //data: obj,
+                success: function (result) {
+                    debugger;
+                    // alert('ssss');
+                    $('#dvCreatedetails').html(result);
+                    //loadData();
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+            return false;
+
+        }
+        var id2;
+        function edit(edit){
+            debugger
+            id2=edit;
+            var obj={};
+
+            obj.BranchId=$(".tbodyIndex")[0].children[0].cells[0].innerText,
+            
+            $.ajax({
+                url: '/Admin/CartonManagement/Edit/'+id2,
+                type: 'GET',
+                data: obj,
+                success: function (result) {
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            })
+            return false;
+        }
+        
+        function searchData() {
+            debugger;
+            var obj = {};
+            obj.StockDistributionSummaryId = $('#StockDistributionSummaryId').val();
+
+            obj.BranchId = $('#BranchId').val();
+            $.ajax({
+                url: "/Admin/CartonManagement/Create",
+                type: 'POST',
+                data: obj,
+                success: function (result) {
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            })
+            return false;
+        }
+    </script>
+}

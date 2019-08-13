@@ -1,0 +1,268 @@
+﻿@model Model.StockDistributionViewModel
+@{
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="table-style">
+
+    <div class="prtm-block-title pad-all-md">
+        <div class="pos-relative">
+            <div class="caption">
+                <h3 class="text-capitalize">Stock</h3>
+            </div>
+        </div>
+    </div>
+    <div class="prtm-full-block pos-relative">
+        <div class="row mrgn-b-lg">
+            <div class="col-md-6 col-xs-12 col-sm-6" style="margin-top:35px;">
+
+                <label>Product</label>
+
+                @Html.DropDownListFor(m => m.ProductId, null, "--Product--", htmlAttributes: new { @class = "form-control", onchange = "productName(this);" })
+                @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-6 col-xs-12 col-sm-6">
+
+                <div class="add-btn-div col-md-12 col-lg-12 col-sm-12 col-xs-12 text-right" style="padding-right:0px;padding-bottom:10px">
+
+                    <button type="button" class="btn btn-primary export-btn" onclick="confirm()">Confirm</button>
+
+                    <button type="button" class="btn btn-primary export-btn" id="hide" onclick="startDistribution()">Start Distribution</button>
+
+                </div>
+                <div>
+                    <input class="form-control" id="summary" value="@ViewBag.Id" />
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="table-style">
+                @if (TempData["Success"] != null)
+            {
+                    <p class="alert alert-success" id="successMessage" style="width: 300px;height: 25px;color: #fff;text-align: center; padding-bottom: 2em;">
+                        @TempData["Success"]
+                    </p>
+                }
+                <script>
+                    setTimeout(function () {
+                        $('#successMessage').fadeOut('slow');
+                    }, 5000);
+                </script>
+            </div>
+
+            @using (Html.BeginForm("SaveData", "StockInventory", FormMethod.Post, new { id = "StockForm" }))
+            {
+
+                <div id="dvStockInventory" class="col-md-12 col-xs-12 col-sm-12">
+                    @if (Model != null && Model.ProductInventory != null)
+                {
+                    Html.RenderPartial("_StockInventory", Model);
+                }
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+
+        $(document).on("click", "#cancelyesbtn", function () {
+            window.location = '/admin/Branch/index';
+        });
+        var id1;
+        function productName(ctrl) {
+            debugger
+            var product = $(ctrl).val();
+            id1 = product;
+            Data(0);
+        }
+
+        function Data(ch) {
+            debugger;
+            var obj = {};
+            obj.distributionId = $('#summary').val();
+
+            var crud = "";
+            switch (ch) {
+                case 0:
+                    if (obj.distributionId == "") {
+                        alert("Please generate stock summary Id.")
+                        $("#ProductId").val('');
+                    } else {
+                        crud = '/Admin/StockInventory/StockInventoryForProduct';
+                        break;
+                    }
+
+                case 1:
+                    crud = '/Admin/StockInventory/SaveData';
+                    break;
+
+            }
+            $.ajax({
+
+                url: crud,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                data: { ProductId: id1, distributionId: obj },
+                success: function (result) {
+                    debugger;
+                    $('#dvStockInventory').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+        function confirm() {
+            debugger
+            var obj = {};
+            obj.Id = $('#summary').val();
+            obj.IsActive = true;
+            if (obj.Id != "") {
+                $.ajax({
+
+                    type: "POST",
+                    url: '/Admin/StockInventory/Confirm',
+                    data: obj,
+
+                    success: function (result) {
+                        debugger;
+                        $("#summary").val('');
+                        $('#hide').removeAttr("disabled");
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            } else {
+                alert("Please first start distribution for generate distribtion no.")
+            }
+            //var x = document.getElementById("summary");
+            //if (x.style.display === "block") {
+            //    x.style.display = "none";
+            //} else {
+            //    x.style.display = "block";
+            //}
+
+            //var y = document.getElementById("hide");
+            //if (y.style.display === "none") {
+            //    y.style.display = "block";
+            //} else {
+            //    y.style.display = "none";
+            //}
+        }
+
+        function startDistribution() {
+            debugger
+            var value = $('#summary').val();
+            if (value == "") {
+                $.ajax({
+
+                    type: "GET",
+                    url: '/Admin/StockInventory/StartDistribution',
+                    success: function (result) {
+                        debugger
+                        $("#summary").val(result);
+                        $("#ProductId").removeAttr("disabled");
+                        $("#hide").attr("disabled", true);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            }
+            //function getStockSummeryId() {
+            //    debugger
+            //    $.ajax({
+
+            //        url: '/Admin/StockInventory/GetStockSummary',
+            //        dataType: "json",
+            //        method: 'GET',
+            //        success: function (data) {
+            //            debugger
+            //          // alert(data)
+            //          $('#summary').val(data);
+            //        },
+            //        error: function (err) {
+            //            console.log(err);
+            //        }
+            //    });
+            //}
+            //var x = document.getElementById("hide");
+            //if (x.style.display === "none") {
+            //    x.style.display = "block";
+            //} else {
+            //    x.style.display = "none";
+            //}
+        }
+        function getStockSummeryId() {
+            debugger
+            $.ajax({
+
+                url: '/Admin/StockInventory/GetDistribution',
+                dataType: "json",
+                method: 'GET',
+                success: function (data) {
+                    debugger
+                    // alert(data)
+                    $('#q1').val(data);
+                    $('#q2').val(data);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
+        function CalculationCheck(ctrl) {
+            debugger;
+
+            // var id = $("span.abc").attr('id');
+            var initValue = $(ctrl).parents('td').find('.spanval').text();
+
+            var branch = $(ctrl).val();
+           // var span = jQuery("#span_Quantity01").text()
+            var ctrlId = $(ctrl).attr("id");
+            var itemNumber = ctrlId.split("_")[3];
+            var i = ctrlId.split("_")[1];
+            
+            var hiddenCtrl = $("#span_" + itemNumber + "_" + i);
+            var spanV = hiddenCtrl.text();
+            if (spanV == "") {
+                spanV = 0;
+            }
+            var wareHouseCtrl = $("#ProductInventory_" + itemNumber + "");
+            var whareHouse = wareHouseCtrl.val();
+            var temp = whareHouse;
+            if (whareHouse == "")
+                whareHouse = 0;
+
+
+            if (branch == "") {
+                branch = 0;
+                whareHouse = temp;
+            }
+
+
+            var value = branch - initValue;
+            var span = $(ctrl).parents('td').find('.spanval').text(branch);
+
+            if (parseInt(whareHouse) >= parseInt(value)) {
+                whareHouse = parseInt(whareHouse) - parseInt(value);
+                wareHouseCtrl.val(whareHouse);
+               // hiddenCtrl.text(value);
+            }
+            else {
+                alert("please enter Quantity of Stock Distrubution is less than Quantity of Stock Invebtory ");
+                $(ctrl).val(0);
+            }
+
+        }
+
+    </script>
+}

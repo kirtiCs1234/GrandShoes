@@ -1,0 +1,48 @@
+﻿using Helper;
+using Model;
+using Newtonsoft.Json;
+using Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.Service
+{
+   public class RoleService:IRoleService
+    {
+        public List<RoleModel> GetAll()
+
+        {
+            var body = "";
+            List<RoleModel> RoleModelList = ServerResponse.Invoke<List<RoleModel>>("api/role/getDetails", body, "get");
+            return RoleModelList;
+        }
+        public RoleModel GetById(int? id)
+        {
+            var body = "";
+            RoleModel RoleById = ServerResponse.Invoke<RoleModel>("api/role/getDetail?id=" + id, body, "get");
+            return RoleById;
+        }
+        public RoleModel Create(RoleModel roleModel)
+        {
+            var body = JsonConvert.SerializeObject(roleModel);
+            RoleModel RoleCreate = ServerResponse.Invoke<RoleModel>("api/role/create", body, "Post");
+            return RoleCreate;
+        }
+        public RoleModel Edit(RoleModel roleModel)
+        {
+            var body = JsonConvert.SerializeObject(roleModel);
+            RoleModel RoleEdit = ServerResponse.Invoke<RoleModel>("api/role/edit?id=" + roleModel.Id, body, "POST");
+            return RoleEdit;
+        }
+        public RoleModel Delete(RoleModel roleModel)
+        {
+            var body = JsonConvert.SerializeObject(roleModel);
+            RoleModel RoleDelete = ServerResponse.Invoke<RoleModel>("api/role/Delete?id=" + roleModel.Id, body, "POST");
+            return RoleDelete;
+        }
+
+    }
+}

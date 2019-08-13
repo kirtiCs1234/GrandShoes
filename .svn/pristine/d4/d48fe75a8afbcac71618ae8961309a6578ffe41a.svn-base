@@ -1,0 +1,218 @@
+﻿@model Model.StoreDeliveryReportModel
+<div class="prtm-full-block pos-relative">
+    <div class="prtm-block-title pad-all-md">
+        <div class="pos-relative">
+            <div class="caption">
+                <h3 class="text-capitalize">Store Delievery Report</h3>
+            </div>
+        </div>
+    </div>
+    <div class="prtm-block-content mrgn-b-md">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Branch Name</th>
+                        <th>Product Name</th>
+                        <th>Quantity01</th>
+                        <th>Quantity02</th>
+                        <th>Quantity03</th>
+                        <th>Quantity04</th>
+                        <th>Quantity05</th>
+                        <th>Quantity06</th>
+                        <th>Quantity07</th>
+                        <th>Quantity08</th>
+                        <th>Quantity09</th>
+                        <th>Quantity10</th>
+                        <th>Quantity11</th>
+                        <th>Quantity12</th>
+                        <th>Quantity13</th>
+                        <th>Quantity14</th>
+                        <th>Quantity15</th>
+                        <th>Quantity16</th>
+                        <th>Quantity17</th>
+                        <th>Quantity18</th>
+                        <th>Quantity19</th>
+                        <th>Quantity20</th>
+                        <th>Quantity21</th>
+                        <th>Quantity22</th>
+                        <th>Quantity23</th>
+                        <th>Quantity24</th>
+                        <th>Quantity25</th>
+                        <th>Quantity26</th>
+                        <th>Quantity27</th>
+                        <th>Quantity28</th>
+                        <th>Quantity29</th>
+                        <th>Quantity30</th>
+                        <th>Total Item</th>
+                        <th> Date</th>
+
+                        @*<th>Stock Distribution Summary Number </th>*@
+                    </tr>
+                </thead>
+                <tbody class="tbodyIndex" id="table">
+                    @if (Model.listStoreDeleviry.Count != 0)
+                    {
+                        foreach (var item in Model.listStoreDeleviry)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Branch.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Product.ProductSKU)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity01)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity02)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity03)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity04)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity05)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity06)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity07)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity08)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity09)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity10)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity11)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity12)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity13)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity14)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity15)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity16)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity17)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity18)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity19)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity20)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity21)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity22)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity23)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity24)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity25)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity26)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity27)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity28)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity29)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity30)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Total)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DistributionDate)
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                    else
+                    {
+                        <tr>
+                            <td colspan="7">
+                                <p>No results found.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-12">
+    @if (ViewBag.endPage > 1)
+    {
+        <div class="pagination">
+
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li>
+                    <a href="/Admin/StoreDeliveryReport/_Index1?page=1">First</a>
+                </li>
+                <li>
+                    <a href="/Admin/StoreDeliveryReport/_Index1?page=@(ViewBag.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @foreach (var i in ViewBag.result)
+            {
+
+                var page = i;
+
+                <li class="@(page == ViewBag.CurrentPage ? "active" : "")">
+                    <a href="/Admin/StoreDeliveryReport/_Index1?page=@page">@page</a>
+                </li>
+
+            }
+            @if (ViewBag.CurrentPage < ViewBag.totalPages)
+            {
+                <li>
+                    <a href="/Admin/StoreDeliveryReport/_Index1?page=@(ViewBag.CurrentPage + 1)">Next</a>
+                </li>
+                <li>
+                    <a href="/Admin/StoreDeliveryReport/_Index1?page=@(ViewBag.totalPages)">Last</a>
+                </li>
+            }
+
+        </div>
+    }
+</div>
+
+

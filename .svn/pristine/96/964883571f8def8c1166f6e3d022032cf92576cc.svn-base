@@ -1,0 +1,34 @@
+﻿using Model;
+using Model.Product;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.IService
+{
+    public interface IProductService
+    {
+
+        List<ProductModel> GetAll();
+        OffersModel GetPaging(int? page, out int TotalCount);
+        bool Create(ProductModel productModel);
+        ProductModel GetById(int? id);
+        bool Edit(ProductModel productModel);
+        OffersModel GetProduct(ProdSearch prodSearch, int? page, out int TotalCount);
+        List<AllProductDetailModel> SearchProduct(ProdSearch prodSearch);
+        List<string> GetCode();
+        List<ProductModel> ProductAutocomplete(string name);
+        bool CheckProductSKU(ProductModel model);
+        List<AllProductDetailModel> GetAllProduct();
+        ProductModel Delete(ProductModel productModel);
+        List<ProductModel> GetFreeGift();
+        List<AllProductDetailModel> GetFreeGiftList();
+        bool CheckProductSKU(string chk);
+        YearModel GetYearId(string sku);
+        ProductModel GetValues(int? ProductSKU, string StyleSKU);
+        List<MarkDownProduct> GetAllProductMarkDown();
+        MarkDownProduct GetByIdMarkDown(int? id);
+    }
+}

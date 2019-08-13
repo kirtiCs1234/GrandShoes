@@ -1,0 +1,388 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+using Model;
+using PagedList;
+using System.Text.RegularExpressions;
+using POSApi.ExtensionMethod;
+
+namespace POSApi.Controllers.Admin
+{
+    [RoutePrefix("api/product")]
+    public class ProductsController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+        public ProductsController()
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            db.Configuration.ProxyCreationEnabled = false;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getFreeGift")]
+        public List<Product> GetFreeGift()
+        {
+            var list = db.Products.Where(x => x.IsActive == true && x.IsAllowZero == true).Include(x => x.Color).Include(x => x.Buyer).Include(x => x.ProductStyle).Include(x => x.ProductStyle).Include(x => x.Template).Include(x => x.ProductCategory).Include(x => x.ProductGroup).Include(x => x.ProductSource).Include(x => x.Season).Include(x => x.SizeGrid).Include(x => x.Supplier).Include(x => x.Year).ToList();
+            return list.RemoveReferences1();
+        }
+        // GET: api/Products
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<Product> GetProducts()
+        {
+            var list = db.Products.Where(x => x.IsActive == true ).OrderByDescending(x => x.Id).Include(x => x.Color).Include(x=>x.Buyer).Include(x => x.ProductStyle).Include(x=>x.Template).Include(x=>x.ProductCategory).Include(x=>x.ProductGroup).Include(x=>x.ProductSource).Include(x=>x.Season).Include(x=>x.SizeGrid).Include(x=>x.Supplier).Include(x=>x.Year).ToList();
+            return list.RemoveReferences1();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("checkProductSKU")]
+        public bool GetCode(string chk)
+        {
+
+            var data = db.Products.Any(x => x.ProductSKU == chk && x.IsActive == true);
+            return data;
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("checkBarcode")]
+        public bool GetBarCode(string chk)
+        {
+
+            var data = db.Products.Any(x => x.Barcode == chk && x.IsActive == true);
+            return data;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getProductDetails")]
+        public List<Product> GetAllProducts()
+        {
+            var list = db.Products.Where(x => x.IsActive == true).Include(x => x.Color).Include(x => x.Buyer).Include(x => x.ProductStyle).Include(x => x.Template).Include(x => x.ProductCategory).Include(x => x.ProductGroup).Include(x => x.ProductSource).Include(x => x.Season).Include(x => x.SizeGrid).Include(x => x.Supplier).Include(x => x.Year).Include(x => x.ProductStyle).ToList();
+
+            return list.RemoveReferences1();
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetail")]
+        [ResponseType(typeof(DAL.Product))]
+        public IHttpActionResult GetProduct(int id)
+        {
+            var product = db.Products.Where(x=>x.Id==id).Include(x=>x.ProductStyle).FirstOrDefault();
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getProductPaging")]
+        public ServiceResult<List<Product>> GetProductPaging([FromUri]Paging paging)
+
+        {
+            ServiceResult<List<Product>> model = new ServiceResult<List<Product>>();
+            var source = db.Products.Where(x => x.IsActive == true)
+                        .Include(x => x.Color).Include(x => x.ProductStyle)
+                        .OrderByDescending(x =>x.Id).ToList().RemoveReferences1();
+            int count = source.Count();
+           
+            // Parameter is passed from Query string if it is null then it default Value will be pageNumber:1  
+            int CurrentPage = paging.pageNumber;
+
+            // Parameter is passed from Query string if it is null then it default Value will be pageSize:20  
+            int PageSize = 4;
+
+            // Display TotalCount to Records to User  
+            int TotalCount = count;
+
+            // Calculating Totalpage by Dividing (No of Records / Pagesize)  
+            int TotalPages = (int)Math.Ceiling(count / (double)PageSize);
+
+            // Returns List of Customer after applying Paging   
+            var items = source.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+            model.TotalCount = count;
+            model.data = items;
+
+            return model;
+
+        }
+        [HttpGet]
+        [Route("ProductsAutocomplete")]
+        public IHttpActionResult ProductsAutocomplete(string name)
+        {
+            var data = db.Products.Include(s => s.SizeGrid).Where(x => x.IsActive == true && x.ProductSKU.Contains(name)).ToList().Select(m => new ProductModel
+            {
+                ProductSKU = m.ProductSKU,
+                Id = m.Id,
+                SupplierStyle = m.SupplierStyle,
+                SizeGridID = m.SizeGridID,
+                autoCompleteSizeGrid = m.SizeGrid?.GridNumber,
+                AvailableSize = m.AvailableSize,
+            }).ToList();
+            return Ok(data);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("getProducts")]
+        public ServiceResult<List<Product>> GetProducts(Model.ProdSearch prodSearch)
+        {
+            var pageSize = 4;
+            ServiceResult<List<Product>> model = new ServiceResult<List<Product>>();
+            //var list1 = db.Products.Where(x => x.IsActive == true)
+            //            .Include(x => x.Color).OrderByDescending(x => x.Id)
+            //            .Include(x => x.ProductStyle).ToList();
+
+            var list = db.Products.Where(x => x.IsActive == true && x.IsAllowZero==false)
+                        .Include(x => x.Color)
+                        .Include(x => x.ProductStyle).Include(x=>x.Season);
+            if (prodSearch != null)
+            {
+                if (prodSearch.IsActive == false)
+                {
+                    list = db.Products.Where(n => n.IsActive == false);
+                }
+                List<Product> Temp = new List<Product>();
+                if (!string.IsNullOrEmpty(prodSearch.Colors))
+                {
+
+                    string colors = prodSearch.Colors;
+                    string[] values = colors.Split(',');
+                    var l = values.Count();
+                    for (int i = 0; i < l; i++)
+                    {
+                        var k = 0;
+                        var vals = values[i];
+                        k = Convert.ToInt32(vals);
+                        if (vals != "")
+                        {
+                            Temp.AddRange(list.Where(x => x.ColorID == k));
+                            //Temp.AddRange(list.Where(x => x.Color.Code == vals));
+                        }
+
+                    }
+
+                }
+
+                if (!string.IsNullOrEmpty(prodSearch.AutocompleteProductSKU))
+                {
+                    Temp.AddRange(list.Where(x => x.ProductStyle.StyleSKU == prodSearch.StyleSKU));
+                }
+                if (!string.IsNullOrEmpty(prodSearch.AutocompleteSeason))
+                {
+                    Temp.AddRange(list.Where(x => x.Season.Code == prodSearch.AutocompleteSeason));
+                }
+                if (prodSearch.MaxPrice >= 0)
+                {
+                    list = list.Where(x => x.CostPrice <= prodSearch.MaxPrice);
+                }
+                if (prodSearch.MinPrice >= 0)
+                {
+                    list = list.Where(x => x.CostPrice >= prodSearch.MinPrice);
+                }
+            }
+            var result = list.ToList();
+            int count = result.Count();
+            var items = result.OrderByDescending(x => x.Id).Skip(((prodSearch.Page ?? 1) - 1) * pageSize).Take(pageSize).ToList();
+            model.data = items.Select(x => new Product
+            {
+                Id = x.Id,
+                PrimaryImage = x.PrimaryImage,
+                Color = x.Color,
+                CostPrice = x.CostPrice,
+                ProductSKU = x.ProductSKU,
+                Season = x.Season
+            }).ToList().RemoveReferences1();
+            model.TotalCount = count;
+
+            return model;
+
+        }
+        [HttpPost]
+        [Route("checkProductSKU")]
+        public bool GetEmail(Product model)
+        {
+            if (model.Id > 0)
+            {
+                var code = db.Products.Where(x => x.Id == model.Id && x.IsActive == true).FirstOrDefault();
+                if (code.ProductSKU.Equals(model.ProductSKU))
+                {
+                    return false;
+                }
+
+            }
+            var data = db.Products.Any(x => x.ProductSKU == model.ProductSKU && x.IsActive == true);
+            return data;
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("ProductSearch")]
+        public List<Product> GetProductSearch(Model.ProdSearch prodSearch)
+        {
+            var list = db.Products.Where(n => n.IsActive == true).OrderByDescending(x => x.Id).Include(x => x.Color).Include(x => x.ProductStyle);
+            var check = list.ToList();
+            if (prodSearch != null)
+            {
+
+              
+                if (!string.IsNullOrEmpty(prodSearch.ProductSKU))
+                {
+                    list = db.Products.OrderByDescending(x => x.Id).Where(x => x.ProductSKU.ToLower().Equals(prodSearch.ProductSKU.ToLower()) && x.IsActive==true).Include(x => x.Color).Include(x => x.ProductStyle);
+                }
+                if (!string.IsNullOrEmpty(prodSearch.StyleSKU))
+                {
+                    list = db.Products.OrderByDescending(x => x.Id).Where(x => x.ProductStyle.StyleSKU.ToLower().Contains(prodSearch.StyleSKU.ToLower()) && x.IsActive==true).Include(x => x.ProductStyle).Include(x => x.Color);
+                }
+
+            }
+           
+            return list.ToList();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getCode")]
+        public IQueryable<string> GetProductCode()
+        {
+            var list = from s in db.Products.Where(x => x.IsActive == true)
+                       select s.ProductSKU;
+            return list;
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutProduct(int id, DAL.Product product)
+        {
+            var model = db.Products.Where(x => x.IsActive == true && x.Id == product.Id).FirstOrDefault();
+            model.Id = product.Id;
+            model.Image1 = product.Image1;
+            model.Image2 = product.Image2;
+            model.Image3 = product.Image3;
+            model.Image4 = product.Image4;
+            model.IsActive = true;
+            model.IsAllowZero = product.IsAllowZero;
+            model.IsConsignment = product.IsConsignment;
+            model.IsDiscontinue = product.IsDiscontinue;
+            model.IsFreeGift = product.IsFreeGift;
+            model.IsMarkDown = product.IsMarkDown;
+            model.IsVPI = product.IsVPI;
+            model.LogId = product.LogId;
+            // model.Log = db.Logs.Where(x => x.IsActive == true).FirstOrDefault();
+            model.LongDescription = product.LongDescription;
+            model.MarkDownTemplateID = product.MarkDownTemplateID;
+            model.PrimaryImage = product.PrimaryImage;
+            model.ProductCategoryID = product.ProductCategoryID;
+            model.ProductCategory = db.ProductCategories.Where(x => x.IsActive == true && x.Id == model.ProductCategoryID).FirstOrDefault();
+            model.ProductGroupID = product.ProductGroupID;
+            model.ProductGroup = db.ProductGroups.Where(x => x.IsActive == true && x.Id == product.ProductGroupID).FirstOrDefault();
+            model.ProductSizes = product.ProductSizes;
+            model.ProductSKU = product.ProductSKU;
+            model.ProductSourceID = product.ProductSourceID;
+            model.ProductSource = db.ProductSources.Where(x => x.IsActive == true && x.Id == product.ProductSourceID).FirstOrDefault();
+            model.ProductStyleId = product.ProductStyleId;
+            model.ProductStyle = db.ProductStyles.Where(x => x.IsActive == true && x.Id == product.ProductStyleId).FirstOrDefault();
+            model.RecommendedSellingPrice = product.RecommendedSellingPrice;
+            model.SeasonID = product.SeasonID;
+            model.Season = db.Seasons.Where(x => x.IsActive == true && x.Id == product.SeasonID).FirstOrDefault();
+            model.ShortDescription = product.ShortDescription;
+            model.SizeGridID = product.SizeGridID;
+            model.SizeGrid = db.SizeGrids.Where(x => x.IsActive == true && x.Id == product.SizeGridID).FirstOrDefault();
+            model.SupplierID = product.SupplierID;
+            model.Supplier = db.Suppliers.Where(x => x.IsActive == true && x.Id == product.SupplierID).FirstOrDefault();
+            model.SupplierStyle = product.SupplierStyle;
+            model.UpdatedOn = product.UpdatedOn;
+            model.YearID = product.YearID;
+            model.Year = db.Years.Where(x => x.IsActive == true && x.Id == product.YearID).FirstOrDefault();
+            db.SaveChanges();
+            return Ok(true);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(DAL.Product))]
+        public IHttpActionResult PostProduct(DAL.Product product)
+        {
+            Product model = new Product();
+            model.ActualSellingPrice = product.ActualSellingPrice;
+            model.AvailableSize = product.AvailableSize;
+            model.Barcode = product.Barcode;
+            model.BuyerID = product.BuyerID;
+            model.ColorID = product.ColorID;
+            model.CostPrice = product.CostPrice;
+            model.CostPriceUSD = product.CostPriceUSD;
+            model.CreatedOn = product.CreatedOn;
+            model.DefaultTemplateID = product.DefaultTemplateID;
+            model.Image1 = product.Image1;
+            model.Image2 = product.Image2;
+            model.Image3 = product.Image3;
+            model.Image4 = product.Image4;
+            model.IsActive = true;
+            model.IsAllowZero = product.IsAllowZero;
+            model.IsConsignment = product.IsConsignment;
+            model.IsDiscontinue = product.IsDiscontinue;
+            model.IsFreeGift = product.IsFreeGift;
+            model.IsMarkDown = product.IsMarkDown;
+            model.PrimaryImage = product.PrimaryImage;
+            model.ProductCategoryID = product.ProductCategoryID;
+            model.ProductGroupID = product.ProductGroupID;
+            model.ProductSKU = product.ProductSKU;
+            model.ProductSourceID = product.ProductSourceID;
+            model.ProductStyleId = product.ProductStyleId;
+            model.SeasonID = product.SeasonID;
+            model.SizeGridID = product.SizeGridID;
+            model.ShortDescription = product.ShortDescription;
+            model.SupplierID = product.SupplierID;
+            model.SupplierStyle = product.SupplierStyle;
+            model.UpdatedOn = product.UpdatedOn;
+            model.YearID = product.YearID;
+            model.RecommendedSellingPrice = product.RecommendedSellingPrice;
+            model.LogId = product.LogId;
+            model.LongDescription = product.LongDescription;
+            db.Products.Add(model);
+            db.SaveChanges();
+            return Ok(true);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("delete")]
+        [ResponseType(typeof(Product))]
+        public IHttpActionResult DeleteProduct(int id)
+        {
+            Product product = db.Products.Find(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            product.IsActive = false;
+            //db.ProductCategories.Remove(productCategory);
+            db.SaveChanges();
+
+            return Ok(product);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool ProductExists(int id)
+        {
+            return db.Products.Count(e => e.Id == id) > 0;
+        }
+    }
+}

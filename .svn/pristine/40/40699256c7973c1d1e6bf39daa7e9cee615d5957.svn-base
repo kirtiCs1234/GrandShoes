@@ -1,0 +1,2652 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GrandShoesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ActionLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ActionLogType" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="ManagerID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BranchCode" Type="varchar" MaxLength="50" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Telephone" Type="varchar" MaxLength="50" />
+    <Property Name="ManagerId" Type="int" />
+    <Property Name="DateOpen" Type="datetime" />
+    <Property Name="DateClosed" Type="datetime" />
+    <Property Name="AddressLine1" Type="varchar" MaxLength="150" />
+    <Property Name="AddressLine2" Type="varchar" MaxLength="150" />
+    <Property Name="AddressLine3" Type="varchar" MaxLength="150" />
+    <Property Name="PostalCode" Type="varchar" MaxLength="50" />
+    <Property Name="AreaCode" Type="varchar" MaxLength="50" />
+    <Property Name="IsSendStock" Type="bit" />
+    <Property Name="IsClosed" Type="bit" />
+    <Property Name="IsHeadOffice" Type="bit" />
+    <Property Name="StoreSize" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="BranchDiscount">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BranchID" Type="int" />
+    <Property Name="DiscountID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="Buyer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="BuyLimit" Type="money" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="CartonManagement">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DistributionSummaryID" Type="int" />
+    <Property Name="TotalItems" Type="int" />
+    <Property Name="PackDate" Type="date" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="BranchID" Type="int" />
+  </EntityType>
+  <EntityType Name="CartonManagementDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CartonManagementID" Type="int" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="Z01" Type="int" />
+    <Property Name="Z02" Type="int" />
+    <Property Name="Z03" Type="int" />
+    <Property Name="Z04" Type="int" />
+    <Property Name="Z05" Type="int" />
+    <Property Name="Z06" Type="int" />
+    <Property Name="Z07" Type="int" />
+    <Property Name="Z08" Type="int" />
+    <Property Name="Z09" Type="int" />
+    <Property Name="Z10" Type="int" />
+    <Property Name="Z11" Type="int" />
+    <Property Name="Z12" Type="int" />
+    <Property Name="Z13" Type="int" />
+    <Property Name="Z14" Type="int" />
+    <Property Name="Z15" Type="int" />
+    <Property Name="Z16" Type="int" />
+    <Property Name="Z17" Type="int" />
+    <Property Name="Z18" Type="int" />
+    <Property Name="Z19" Type="int" />
+    <Property Name="Z20" Type="int" />
+    <Property Name="Z21" Type="int" />
+    <Property Name="Z22" Type="int" />
+    <Property Name="Z23" Type="int" />
+    <Property Name="Z24" Type="int" />
+    <Property Name="Z25" Type="int" />
+    <Property Name="Z26" Type="int" />
+    <Property Name="Z27" Type="int" />
+    <Property Name="Z28" Type="int" />
+    <Property Name="Z29" Type="int" />
+    <Property Name="Z30" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="Cluster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="ClusterBranch">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClusterId" Type="int" />
+    <Property Name="BranchId" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="Color">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="varchar" MaxLength="50" />
+    <Property Name="ColorLong" Type="varchar" MaxLength="50" />
+    <Property Name="ColorShort" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="Designation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DesignationName" Type="varchar" MaxLength="150" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="Discount">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductSKU" Type="varchar" MaxLength="50" />
+    <Property Name="StyleSKU" Type="varchar" MaxLength="50" />
+    <Property Name="IsFlatDiscount" Type="bit" />
+    <Property Name="IsQuantityDiscount" Type="bit" />
+    <Property Name="MinimumQuantity" Type="varchar" MaxLength="50" />
+    <Property Name="DateFrom" Type="date" />
+    <Property Name="DateTo" Type="date" />
+    <Property Name="PercentDiscount" Type="varchar" MaxLength="50" />
+    <Property Name="Text" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="Image">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="Image" Type="varchar(max)" />
+    <Property Name="IsPrimary" Type="bit" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="ActionLogId" Type="int" Nullable="false" />
+    <Property Name="LogDate" Type="date" />
+    <Property Name="Comment" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="PageId" Type="int" />
+  </EntityType>
+  <EntityType Name="MarkDown">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductSKU" Type="varchar" MaxLength="50" />
+    <Property Name="StyleSKU" Type="varchar" MaxLength="50" />
+    <Property Name="OriginalSellingPrice" Type="money" />
+    <Property Name="PercentageDecrease" Type="int" />
+    <Property Name="IsPercentageOriginalPrice" Type="bit" />
+    <Property Name="NewSellingPrice" Type="money" />
+    <Property Name="NewCashPrice" Type="money" />
+    <Property Name="EffectiveDate" Type="date" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="MarkDownBranches">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MarkDownID" Type="int" />
+    <Property Name="BranchID" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="Page">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="page" Type="varchar(max)" />
+    <Property Name="pageUrl" Type="varchar(max)" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductSKU" Type="varchar" MaxLength="50" />
+    <Property Name="ProductStyleId" Type="int" />
+    <Property Name="LongDescription" Type="varchar" MaxLength="250" />
+    <Property Name="ShortDescription" Type="varchar" MaxLength="250" />
+    <Property Name="SizeGridID" Type="int" />
+    <Property Name="RecommendedSellingPrice" Type="money" />
+    <Property Name="ActualSellingPrice" Type="money" />
+    <Property Name="IsVPI" Type="bit" />
+    <Property Name="IsMarkDown" Type="bit" />
+    <Property Name="SeasonID" Type="int" />
+    <Property Name="YearID" Type="int" />
+    <Property Name="ProductCategoryID" Type="int" />
+    <Property Name="ProductGroupID" Type="int" />
+    <Property Name="ProductSourceID" Type="int" />
+    <Property Name="SupplierStyle" Type="varchar" MaxLength="50" />
+    <Property Name="SupplierID" Type="int" />
+    <Property Name="BuyerID" Type="int" />
+    <Property Name="CostPriceUSD" Type="money" />
+    <Property Name="CostPrice" Type="money" />
+    <Property Name="IsAllowZero" Type="bit" />
+    <Property Name="DefaultTemplateID" Type="int" />
+    <Property Name="MarkDownTemplateID" Type="int" />
+    <Property Name="IsFreeGift" Type="bit" />
+    <Property Name="IsConsignment" Type="bit" />
+    <Property Name="IsDiscontinue" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedOn" Type="datetime" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="ColorID" Type="int" />
+    <Property Name="PrimaryImage" Type="varchar(max)" />
+    <Property Name="Image1" Type="varchar(max)" />
+    <Property Name="Image2" Type="varchar(max)" />
+    <Property Name="Image3" Type="varchar(max)" />
+    <Property Name="Image4" Type="varchar(max)" />
+    <Property Name="AvailableSize" Type="varchar" MaxLength="350" />
+    <Property Name="LogId" Type="int" />
+    <Property Name="Barcode" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="ProductCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="varchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="ProductGroup">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GroupName" Type="varchar" MaxLength="100" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="ProductSize">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="Size" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="ProductSource">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Source" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="ProductStyle">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StyleSKU" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="PurchaseOrder">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderNumber" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ClientInvoiceNumber" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SupplierId" Type="int" Nullable="false" />
+    <Property Name="BuyerId" Type="int" Nullable="false" />
+    <Property Name="OrderDate" Type="datetime" Nullable="false" />
+    <Property Name="ExpectedDeliveryDate" Type="datetime" />
+    <Property Name="FirstDeliveryDate" Type="datetime" />
+    <Property Name="OrderCompletionDate" Type="datetime" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="VatAmount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="PurchaseOrderStatusId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="PurchaseOrderItem">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PurchaseOrderId" Type="int" Nullable="false" />
+    <Property Name="ProductStyleId" Type="int" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="SizeGridId" Type="int" />
+    <Property Name="ColorId" Type="int" />
+    <Property Name="SuplierStyle" Type="varchar" MaxLength="50" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="ItemSize1" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize2" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize3" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize4" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize5" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize6" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize7" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize8" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize9" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize10" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize11" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize12" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize13" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize14" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize15" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize16" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize17" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize18" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize19" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize20" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize21" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize22" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize23" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize24" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize25" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize26" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize27" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize28" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize29" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize30" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="QuantitySize1" Type="int" />
+    <Property Name="QuantitySize2" Type="int" />
+    <Property Name="QuantitySize3" Type="int" />
+    <Property Name="QuantitySize4" Type="int" />
+    <Property Name="QuantitySize5" Type="int" />
+    <Property Name="QuantitySize6" Type="int" />
+    <Property Name="QuantitySize7" Type="int" />
+    <Property Name="QuantitySize8" Type="int" />
+    <Property Name="QuantitySize9" Type="int" />
+    <Property Name="QuantitySize10" Type="int" />
+    <Property Name="QuantitySize11" Type="int" />
+    <Property Name="QuantitySize12" Type="int" />
+    <Property Name="QuantitySize13" Type="int" />
+    <Property Name="QuantitySize14" Type="int" />
+    <Property Name="QuantitySize15" Type="int" />
+    <Property Name="QuantitySize16" Type="int" />
+    <Property Name="QuantitySize17" Type="int" />
+    <Property Name="QuantitySize18" Type="int" />
+    <Property Name="QuantitySize19" Type="int" />
+    <Property Name="QuantitySize20" Type="int" />
+    <Property Name="QuantitySize21" Type="int" />
+    <Property Name="QuantitySize22" Type="int" />
+    <Property Name="QuantitySize23" Type="int" />
+    <Property Name="QuantitySize24" Type="int" />
+    <Property Name="QuantitySize25" Type="int" />
+    <Property Name="QuantitySize26" Type="int" />
+    <Property Name="QuantitySize27" Type="int" />
+    <Property Name="QuantitySize28" Type="int" />
+    <Property Name="QuantitySize29" Type="int" />
+    <Property Name="QuantitySize30" Type="int" />
+    <Property Name="CostSize1" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize2" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize3" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize4" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize5" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize6" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize7" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize8" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize9" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize10" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize11" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize12" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize13" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize14" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize15" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize16" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize17" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize18" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize19" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize20" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize21" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize22" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize23" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize24" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize25" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize26" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize27" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize28" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize29" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize30" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="LogId" Type="int" />
+    <Property Name="OrderItemDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PurchaseOrderStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderStatus" Type="varchar" MaxLength="100" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="ReceiptOrderItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReceiptOrderId" Type="int" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="ColumnNumber" Type="int" />
+    <Property Name="SalesCost" Type="money" />
+    <Property Name="Quantity01" Type="int" />
+    <Property Name="Quantity02" Type="int" />
+    <Property Name="Quantity03" Type="int" />
+    <Property Name="Quantity04" Type="int" />
+    <Property Name="Quantity05" Type="int" />
+    <Property Name="Quantity06" Type="int" />
+    <Property Name="Quantity07" Type="int" />
+    <Property Name="Quantity08" Type="int" />
+    <Property Name="Quantity09" Type="int" />
+    <Property Name="Quantity10" Type="int" />
+    <Property Name="Quantity11" Type="int" />
+    <Property Name="Quantity12" Type="int" />
+    <Property Name="Quantity13" Type="int" />
+    <Property Name="Quantity14" Type="int" />
+    <Property Name="Quantity15" Type="int" />
+    <Property Name="Quantity16" Type="int" />
+    <Property Name="Quantity17" Type="int" />
+    <Property Name="Quantity18" Type="int" />
+    <Property Name="Quantity19" Type="int" />
+    <Property Name="Quantity20" Type="int" />
+    <Property Name="Quantity21" Type="int" />
+    <Property Name="Quantity22" Type="int" />
+    <Property Name="Quantity23" Type="int" />
+    <Property Name="Quantity24" Type="int" />
+    <Property Name="Quantity25" Type="int" />
+    <Property Name="Quantity26" Type="int" />
+    <Property Name="Quantity27" Type="int" />
+    <Property Name="Quantity28" Type="int" />
+    <Property Name="Quantity29" Type="int" />
+    <Property Name="Quantity30" Type="int" />
+    <Property Name="Cost01" Type="money" />
+    <Property Name="Cost02" Type="money" />
+    <Property Name="Cost03" Type="money" />
+    <Property Name="Cost04" Type="money" />
+    <Property Name="Cost05" Type="money" />
+    <Property Name="Cost06" Type="money" />
+    <Property Name="Cost07" Type="money" />
+    <Property Name="Cost08" Type="money" />
+    <Property Name="Cost09" Type="money" />
+    <Property Name="Cost10" Type="money" />
+    <Property Name="Cost11" Type="money" />
+    <Property Name="Cost12" Type="money" />
+    <Property Name="Cost13" Type="money" />
+    <Property Name="Cost14" Type="money" />
+    <Property Name="Cost15" Type="money" />
+    <Property Name="Cost16" Type="money" />
+    <Property Name="Cost17" Type="money" />
+    <Property Name="Cost18" Type="money" />
+    <Property Name="Cost19" Type="money" />
+    <Property Name="Cost20" Type="money" />
+    <Property Name="Cost21" Type="money" />
+    <Property Name="Cost22" Type="money" />
+    <Property Name="Cost23" Type="money" />
+    <Property Name="Cost24" Type="money" />
+    <Property Name="Cost25" Type="money" />
+    <Property Name="Cost26" Type="money" />
+    <Property Name="Cost27" Type="money" />
+    <Property Name="Cost28" Type="money" />
+    <Property Name="Cost29" Type="money" />
+    <Property Name="Cost30" Type="money" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+    <Property Name="ProductStyleId" Type="int" />
+  </EntityType>
+  <EntityType Name="ReceiveOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReceiptNumber" Type="varchar" MaxLength="100" />
+    <Property Name="PurchaseOrderId" Type="int" />
+    <Property Name="TotalQuantity" Type="int" />
+    <Property Name="TotalCost" Type="money" />
+    <Property Name="TotalVAT" Type="money" />
+    <Property Name="SupplierInvoice" Type="varchar" MaxLength="50" />
+    <Property Name="ReceiptDate" Type="datetime" />
+    <Property Name="ReceiptStatusId" Type="bit" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="Season">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="varchar" MaxLength="250" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="SizeGrid">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GridNumber" Type="varchar" MaxLength="10" />
+    <Property Name="Z01" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z02" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z03" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z04" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z05" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z06" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z07" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z08" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z09" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z10" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z11" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z12" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z13" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z14" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z15" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z16" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z17" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z18" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z19" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z20" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z21" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z22" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z23" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z24" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z25" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z26" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z27" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z28" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z29" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Z30" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="SMIBranchDefault">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FromBranchId" Type="int" />
+    <Property Name="ToBranchId" Type="int" />
+    <Property Name="Distance" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="IsPreferredRoute" Type="bit" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="DesignationID" Type="int" />
+    <Property Name="BranchID" Type="int" />
+    <Property Name="JoiningDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+    <Property Name="FingerPrintAccess" Type="bit" />
+  </EntityType>
+  <EntityType Name="StaffCommition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="SaleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TransactionDate" Type="date" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="4" />
+    <Property Name="SaleStatusId" Type="int" />
+    <Property Name="IsPaid" Type="bit" />
+    <Property Name="PaymentDate" Type="date" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="StaffMember">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" />
+    <Property Name="StaffRoleId" Type="int" />
+    <Property Name="JoiningDate" Type="date" />
+    <Property Name="ProfilePic" Type="varchar(max)" />
+    <Property Name="StaffStatusId" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="IsFingurPrintAccess" Type="bit" Nullable="false" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="StaffRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="varchar" MaxLength="100" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="StaffStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StatusName" Type="varchar" MaxLength="100" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="StockAudit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="Barcode" Type="varchar" MaxLength="50" />
+    <Property Name="BranchId" Type="int" />
+    <Property Name="Quantity01" Type="int" />
+    <Property Name="Quantity02" Type="int" />
+    <Property Name="Quantity03" Type="int" />
+    <Property Name="Quantity04" Type="int" />
+    <Property Name="Quantity05" Type="int" />
+    <Property Name="Quantity06" Type="int" />
+    <Property Name="Quantity07" Type="int" />
+    <Property Name="Quantity08" Type="int" />
+    <Property Name="Quantity09" Type="int" />
+    <Property Name="Quantity10" Type="int" />
+    <Property Name="Quantity11" Type="int" />
+    <Property Name="Quantity12" Type="int" />
+    <Property Name="Quantity13" Type="int" />
+    <Property Name="Quantity14" Type="int" />
+    <Property Name="Quantity15" Type="int" />
+    <Property Name="Quantity16" Type="int" />
+    <Property Name="Quantity17" Type="int" />
+    <Property Name="Quantity18" Type="int" />
+    <Property Name="Quantity19" Type="int" />
+    <Property Name="Quantity20" Type="int" />
+    <Property Name="Quantity21" Type="int" />
+    <Property Name="Quantity22" Type="int" />
+    <Property Name="Quantity23" Type="int" />
+    <Property Name="Quantity24" Type="int" />
+    <Property Name="Quantity25" Type="int" />
+    <Property Name="Quantity26" Type="int" />
+    <Property Name="Quantity27" Type="int" />
+    <Property Name="Quantity28" Type="int" />
+    <Property Name="Quantity29" Type="int" />
+    <Property Name="Quantity30" Type="int" />
+    <Property Name="LogId" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="Date" Type="date" />
+  </EntityType>
+  <EntityType Name="StockBranchInventory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="Barcode" Type="varchar" MaxLength="50" />
+    <Property Name="BranchId" Type="int" />
+    <Property Name="Quantity01" Type="int" />
+    <Property Name="Quantity02" Type="int" />
+    <Property Name="Quantity03" Type="int" />
+    <Property Name="Quantity04" Type="int" />
+    <Property Name="Quantity05" Type="int" />
+    <Property Name="Quantity06" Type="int" />
+    <Property Name="Quantity07" Type="int" />
+    <Property Name="Quantity08" Type="int" />
+    <Property Name="Quantity09" Type="int" />
+    <Property Name="Quantity10" Type="int" />
+    <Property Name="Quantity11" Type="int" />
+    <Property Name="Quantity12" Type="int" />
+    <Property Name="Quantity13" Type="int" />
+    <Property Name="Quantity14" Type="int" />
+    <Property Name="Quantity15" Type="int" />
+    <Property Name="Quantity16" Type="int" />
+    <Property Name="Quantity17" Type="int" />
+    <Property Name="Quantity18" Type="int" />
+    <Property Name="Quantity19" Type="int" />
+    <Property Name="Quantity20" Type="int" />
+    <Property Name="Quantity21" Type="int" />
+    <Property Name="Quantity22" Type="int" />
+    <Property Name="Quantity23" Type="int" />
+    <Property Name="Quantity24" Type="int" />
+    <Property Name="Quantity25" Type="int" />
+    <Property Name="Quantity26" Type="int" />
+    <Property Name="Quantity27" Type="int" />
+    <Property Name="Quantity28" Type="int" />
+    <Property Name="Quantity29" Type="int" />
+    <Property Name="Quantity30" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+    <Property Name="UpdateTime" Type="date" />
+  </EntityType>
+  <EntityType Name="StockBranchTransaction">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="StockTransactionTypeId" Type="int" />
+    <Property Name="TransactionDate" Type="date" />
+    <Property Name="BranchId" Type="int" />
+    <Property Name="Quantity01" Type="int" />
+    <Property Name="Quantity02" Type="int" />
+    <Property Name="Quantity03" Type="int" />
+    <Property Name="Quantity04" Type="int" />
+    <Property Name="Quantity05" Type="int" />
+    <Property Name="Quantity06" Type="int" />
+    <Property Name="Quantity07" Type="int" />
+    <Property Name="Quantity08" Type="int" />
+    <Property Name="Quantity10" Type="int" />
+    <Property Name="Quantity11" Type="int" />
+    <Property Name="Quantity12" Type="int" />
+    <Property Name="Quantity13" Type="int" />
+    <Property Name="Quantity14" Type="int" />
+    <Property Name="Quantity15" Type="int" />
+    <Property Name="Quantity16" Type="int" />
+    <Property Name="Quantity17" Type="int" />
+    <Property Name="Quantity18" Type="int" />
+    <Property Name="Quantity19" Type="int" />
+    <Property Name="Quantity20" Type="int" />
+    <Property Name="Quantity21" Type="int" />
+    <Property Name="Quantity22" Type="int" />
+    <Property Name="Quantity23" Type="int" />
+    <Property Name="Quantity24" Type="int" />
+    <Property Name="Quantity25" Type="int" />
+    <Property Name="Quantity26" Type="int" />
+    <Property Name="Quantity27" Type="int" />
+    <Property Name="Quantity28" Type="int" />
+    <Property Name="Quantity29" Type="int" />
+    <Property Name="Quantity30" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="StockDistribution">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BranchId" Type="int" />
+    <Property Name="InvoiceId" Type="int" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="DistributionDate" Type="date" />
+    <Property Name="StockDistributionStatusId" Type="int" />
+    <Property Name="Quantity01" Type="int" />
+    <Property Name="Quantity02" Type="int" />
+    <Property Name="Quantity03" Type="int" />
+    <Property Name="Quantity04" Type="int" />
+    <Property Name="Quantity05" Type="int" />
+    <Property Name="Quantity06" Type="int" />
+    <Property Name="Quantity07" Type="int" />
+    <Property Name="Quantity08" Type="int" />
+    <Property Name="Quantity09" Type="int" />
+    <Property Name="Quantity10" Type="int" />
+    <Property Name="Quantity11" Type="int" />
+    <Property Name="Quantity12" Type="int" />
+    <Property Name="Quantity13" Type="int" />
+    <Property Name="Quantity14" Type="int" />
+    <Property Name="Quantity15" Type="int" />
+    <Property Name="Quantity16" Type="int" />
+    <Property Name="Quantity17" Type="int" />
+    <Property Name="Quantity18" Type="int" />
+    <Property Name="Quantity19" Type="int" />
+    <Property Name="Quantity20" Type="int" />
+    <Property Name="Quantity21" Type="int" />
+    <Property Name="Quantity22" Type="int" />
+    <Property Name="Quantity23" Type="int" />
+    <Property Name="Quantity24" Type="int" />
+    <Property Name="Quantity25" Type="int" />
+    <Property Name="Quantity26" Type="int" />
+    <Property Name="Quantity27" Type="int" />
+    <Property Name="Quantity28" Type="int" />
+    <Property Name="Quantity29" Type="int" />
+    <Property Name="Quantity30" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="StockDistributionSummaryId" Type="int" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="StockDistributionStatus">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="StockDistributionSummary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DistributionNumber" Type="int" />
+    <Property Name="DateOpen" Type="datetime" />
+    <Property Name="DateClose" Type="datetime" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="InvoiceId" Type="int" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="StockInventory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="ProductStyleId" Type="int" />
+    <Property Name="BracketNumber" Type="int" />
+    <Property Name="ColumnNumber" Type="int" />
+    <Property Name="Quantity01" Type="int" />
+    <Property Name="Quantity02" Type="int" />
+    <Property Name="Quantity03" Type="int" />
+    <Property Name="Quantity04" Type="int" />
+    <Property Name="Quantity05" Type="int" />
+    <Property Name="Quantity06" Type="int" />
+    <Property Name="Quantity07" Type="int" />
+    <Property Name="Quantity08" Type="int" />
+    <Property Name="Quantity09" Type="int" />
+    <Property Name="Quantity10" Type="int" />
+    <Property Name="Quantity11" Type="int" />
+    <Property Name="Quantity12" Type="int" />
+    <Property Name="Quantity13" Type="int" />
+    <Property Name="Quantity14" Type="int" />
+    <Property Name="Quantity15" Type="int" />
+    <Property Name="Quantity16" Type="int" />
+    <Property Name="Quantity17" Type="int" />
+    <Property Name="Quantity18" Type="int" />
+    <Property Name="Quantity19" Type="int" />
+    <Property Name="Quantity20" Type="int" />
+    <Property Name="Quantity21" Type="int" />
+    <Property Name="Quantity22" Type="int" />
+    <Property Name="Quantity23" Type="int" />
+    <Property Name="Quantity24" Type="int" />
+    <Property Name="Quantity25" Type="int" />
+    <Property Name="Quantity26" Type="int" />
+    <Property Name="Quantity27" Type="int" />
+    <Property Name="Quantity28" Type="int" />
+    <Property Name="Quantity29" Type="int" />
+    <Property Name="Quantity30" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="StockSupplierTransaction">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" />
+    <Property Name="StockTransactionTypeId" Type="int" />
+    <Property Name="TransactionDate" Type="date" />
+    <Property Name="SupplierId" Type="int" />
+    <Property Name="InvoiceId" Type="int" />
+    <Property Name="Quantity01" Type="int" />
+    <Property Name="Quantity02" Type="int" />
+    <Property Name="Quantity03" Type="int" />
+    <Property Name="Quantity04" Type="int" />
+    <Property Name="Quantity05" Type="int" />
+    <Property Name="Quantity06" Type="int" />
+    <Property Name="Quantity07" Type="int" />
+    <Property Name="Quantity08" Type="int" />
+    <Property Name="Quantity09" Type="int" />
+    <Property Name="Quantity10" Type="int" />
+    <Property Name="Quantity11" Type="int" />
+    <Property Name="Quantity12" Type="int" />
+    <Property Name="Quantity13" Type="int" />
+    <Property Name="Quantity14" Type="int" />
+    <Property Name="Quantity15" Type="int" />
+    <Property Name="Quantity16" Type="int" />
+    <Property Name="Quantity17" Type="int" />
+    <Property Name="Quantity18" Type="int" />
+    <Property Name="Quantity19" Type="int" />
+    <Property Name="Quantity20" Type="int" />
+    <Property Name="Quantity21" Type="int" />
+    <Property Name="Quantity22" Type="int" />
+    <Property Name="Quantity23" Type="int" />
+    <Property Name="Quantity24" Type="int" />
+    <Property Name="Quantity25" Type="int" />
+    <Property Name="Quantity26" Type="int" />
+    <Property Name="Quantity27" Type="int" />
+    <Property Name="Quantity28" Type="int" />
+    <Property Name="Quantity29" Type="int" />
+    <Property Name="Quantity30" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="StockTape">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="BranchId" Type="int" />
+    <Property Name="Barcode" Type="varchar" MaxLength="50" />
+    <Property Name="Quantity01" Type="int" />
+    <Property Name="Quantity02" Type="int" />
+    <Property Name="Quantity03" Type="int" />
+    <Property Name="Quantity04" Type="int" />
+    <Property Name="Quantity05" Type="int" />
+    <Property Name="Quantity06" Type="int" />
+    <Property Name="Quantity07" Type="int" />
+    <Property Name="Quantity08" Type="int" />
+    <Property Name="Quantity09" Type="int" />
+    <Property Name="Quantity10" Type="int" />
+    <Property Name="Quantity11" Type="int" />
+    <Property Name="Quantity12" Type="int" />
+    <Property Name="Quantity13" Type="int" />
+    <Property Name="Quantity14" Type="int" />
+    <Property Name="Quantity15" Type="int" />
+    <Property Name="Quantity16" Type="int" />
+    <Property Name="Quantity17" Type="int" />
+    <Property Name="Quantity18" Type="int" />
+    <Property Name="Quantity19" Type="int" />
+    <Property Name="Quantity20" Type="int" />
+    <Property Name="Quantity21" Type="int" />
+    <Property Name="Quantity22" Type="int" />
+    <Property Name="Quantity23" Type="int" />
+    <Property Name="Quantity24" Type="int" />
+    <Property Name="Quantity25" Type="int" />
+    <Property Name="Quantity26" Type="int" />
+    <Property Name="Quantity27" Type="int" />
+    <Property Name="Quantity28" Type="int" />
+    <Property Name="Quantity29" Type="int" />
+    <Property Name="Quantity30" Type="int" />
+    <Property Name="LogId" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="Date" Type="date" />
+  </EntityType>
+  <EntityType Name="StockTransactionType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="varchar" MaxLength="50" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
+    <Property Name="PermanentAddress1" Type="varchar" MaxLength="50" />
+    <Property Name="PermanentAddress2" Type="varchar" MaxLength="50" />
+    <Property Name="PermanentAddress3" Type="varchar" MaxLength="50" />
+    <Property Name="PermanentCity" Type="varchar" MaxLength="50" />
+    <Property Name="PermanentCountry" Type="varchar" MaxLength="50" />
+    <Property Name="PermanentPostalCode" Type="varchar" MaxLength="50" />
+    <Property Name="CorrespondanceAddress1" Type="varchar" MaxLength="50" />
+    <Property Name="CorrespondanceAddress2" Type="varchar" MaxLength="50" />
+    <Property Name="CorrespondanceAddress3" Type="varchar" MaxLength="50" />
+    <Property Name="CorrespondanceCity" Type="varchar" MaxLength="50" />
+    <Property Name="CorrespondanceCountry" Type="varchar" MaxLength="50" />
+    <Property Name="CorrespondancePostalCode" Type="varchar" MaxLength="50" />
+    <Property Name="Limit" Type="money" />
+    <Property Name="ContactNumber" Type="varchar" MaxLength="50" />
+    <Property Name="FaxNumber" Type="varchar" MaxLength="50" />
+    <Property Name="RegistrationDate" Type="datetime" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="LogId" Type="int" />
+  </EntityType>
+  <EntityType Name="Template">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="150" />
+    <Property Name="Description" Type="varchar" MaxLength="250" />
+    <Property Name="Format" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" />
+    <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="Password" Type="varchar" MaxLength="50" />
+    <Property Name="RoleID" Type="int" />
+    <Property Name="BranchID" Type="int" />
+    <Property Name="IsVerified" Type="bit" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="PasswordHash" Type="varbinary(max)" />
+    <Property Name="PasswordSalt" Type="varbinary(max)" />
+    <Property Name="UserGuid" Type="varchar(max)" />
+    <Property Name="IsPrimaryAccountHolder" Type="bit" />
+  </EntityType>
+  <EntityType Name="Year">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Year" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <Association Name="FK__PurchaseO__Produ__0A9D95DB">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="PurchaseOrderItem" Type="Self.PurchaseOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItem">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PurchaseO__Purch__09A971A2">
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="1" />
+    <End Role="PurchaseOrderItem" Type="Self.PurchaseOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrder">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItem">
+        <PropertyRef Name="PurchaseOrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PurchaseO__Suppl__02FC7413">
+    <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Area_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Area" Type="Self.Area" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Area">
+        <PropertyRef Name="ManagerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Branch_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="Branch" Type="Self.Branch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Branch">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Branch_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Branch" Type="Self.Branch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Branch">
+        <PropertyRef Name="ManagerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BranchDiscount_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="BranchDiscount" Type="Self.BranchDiscount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BranchDiscount">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BranchDiscount_Discount">
+    <End Role="Discount" Type="Self.Discount" Multiplicity="0..1" />
+    <End Role="BranchDiscount" Type="Self.BranchDiscount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Discount">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BranchDiscount">
+        <PropertyRef Name="DiscountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Buyer_Buyer">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="Buyer" Type="Self.Buyer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Buyer">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartonManagement_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="CartonManagement" Type="Self.CartonManagement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartonManagement">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartonManagement_StockDistributionSummary">
+    <End Role="StockDistributionSummary" Type="Self.StockDistributionSummary" Multiplicity="0..1" />
+    <End Role="CartonManagement" Type="Self.CartonManagement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StockDistributionSummary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartonManagement">
+        <PropertyRef Name="DistributionSummaryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartonManagementDetails_CartonManagement">
+    <End Role="CartonManagement" Type="Self.CartonManagement" Multiplicity="0..1" />
+    <End Role="CartonManagementDetails" Type="Self.CartonManagementDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartonManagement">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartonManagementDetails">
+        <PropertyRef Name="CartonManagementID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartonManagementDetails_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="CartonManagementDetails" Type="Self.CartonManagementDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartonManagementDetails">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClusterBranch_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="ClusterBranch" Type="Self.ClusterBranch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClusterBranch">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClusterBranch_Cluster">
+    <End Role="Cluster" Type="Self.Cluster" Multiplicity="0..1" />
+    <End Role="ClusterBranch" Type="Self.ClusterBranch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cluster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClusterBranch">
+        <PropertyRef Name="ClusterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Designation_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="Designation" Type="Self.Designation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Designation">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Log_ActionLog">
+    <End Role="ActionLog" Type="Self.ActionLog" Multiplicity="1" />
+    <End Role="Log" Type="Self.Log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionLog">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Log">
+        <PropertyRef Name="ActionLogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Log_Page">
+    <End Role="Page" Type="Self.Page" Multiplicity="0..1" />
+    <End Role="Log" Type="Self.Log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Page">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Log">
+        <PropertyRef Name="PageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Log_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Log" Type="Self.Log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Log">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MarkDownBranches_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="MarkDownBranches" Type="Self.MarkDownBranches" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MarkDownBranches">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MarkDownBranches_MarkDown">
+    <End Role="MarkDown" Type="Self.MarkDown" Multiplicity="0..1" />
+    <End Role="MarkDownBranches" Type="Self.MarkDownBranches" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MarkDown">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MarkDownBranches">
+        <PropertyRef Name="MarkDownID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Buyer">
+    <End Role="Buyer" Type="Self.Buyer" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Buyer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="BuyerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Color">
+    <End Role="Color" Type="Self.Color" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Color">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="ColorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_ProductCategory">
+    <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="ProductCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_ProductGroup">
+    <End Role="ProductGroup" Type="Self.ProductGroup" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="ProductGroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_ProductSource">
+    <End Role="ProductSource" Type="Self.ProductSource" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductSource">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="ProductSourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_ProductStyle">
+    <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductStyle">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="ProductStyleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Season">
+    <End Role="Season" Type="Self.Season" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Season">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="SeasonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_SizeGrid">
+    <End Role="SizeGrid" Type="Self.SizeGrid" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SizeGrid">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="SizeGridID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Supplier">
+    <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="SupplierID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Template">
+    <End Role="Template" Type="Self.Template" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="DefaultTemplateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Year">
+    <End Role="Year" Type="Self.Year" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Year">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="YearID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductCategory_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductCategory">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductSize_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="ProductSize" Type="Self.ProductSize" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductSize">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrder_Buyer">
+    <End Role="Buyer" Type="Self.Buyer" Multiplicity="1" />
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Buyer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="BuyerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrder_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrder_PurchaseOrder">
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="1" />
+    <End Role="PurchaseOrder1" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrder">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PurchaseOrder1">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrder_PurchaseOrderStatus">
+    <End Role="PurchaseOrderStatus" Type="Self.PurchaseOrderStatus" Multiplicity="1" />
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrderStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="PurchaseOrderStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderItem_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="PurchaseOrderItem" Type="Self.PurchaseOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItem">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderItem_ProductStyle">
+    <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="0..1" />
+    <End Role="PurchaseOrderItem" Type="Self.PurchaseOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductStyle">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItem">
+        <PropertyRef Name="ProductStyleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderItem_PurchaseOrderItem">
+    <End Role="PurchaseOrderItem" Type="Self.PurchaseOrderItem" Multiplicity="1" />
+    <End Role="PurchaseOrderItem1" Type="Self.PurchaseOrderItem" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrderItem">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItem1">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderItems_Color">
+    <End Role="Color" Type="Self.Color" Multiplicity="0..1" />
+    <End Role="PurchaseOrderItem" Type="Self.PurchaseOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Color">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItem">
+        <PropertyRef Name="ColorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderItems_PurchaseOrderItems">
+    <End Role="PurchaseOrderItem" Type="Self.PurchaseOrderItem" Multiplicity="1" />
+    <End Role="PurchaseOrderItem1" Type="Self.PurchaseOrderItem" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrderItem">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItem1">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderItems_SizeGrid">
+    <End Role="SizeGrid" Type="Self.SizeGrid" Multiplicity="0..1" />
+    <End Role="PurchaseOrderItem" Type="Self.PurchaseOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SizeGrid">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItem">
+        <PropertyRef Name="SizeGridId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderStatus_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="PurchaseOrderStatus" Type="Self.PurchaseOrderStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrderStatus">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiptOrderItem_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="ReceiptOrderItem" Type="Self.ReceiptOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReceiptOrderItem">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiptOrderItem_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="ReceiptOrderItem" Type="Self.ReceiptOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReceiptOrderItem">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiptOrderItem_ProductStyle">
+    <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="0..1" />
+    <End Role="ReceiptOrderItem" Type="Self.ReceiptOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductStyle">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReceiptOrderItem">
+        <PropertyRef Name="ProductStyleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiptOrderItem_ReceiptOrderItem">
+    <End Role="ReceiveOrder" Type="Self.ReceiveOrder" Multiplicity="0..1" />
+    <End Role="ReceiptOrderItem" Type="Self.ReceiptOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ReceiveOrder">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReceiptOrderItem">
+        <PropertyRef Name="ReceiptOrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiveOrder_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="ReceiveOrder" Type="Self.ReceiveOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReceiveOrder">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiveOrder_PurchaseOrder">
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+    <End Role="ReceiveOrder" Type="Self.ReceiveOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrder">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ReceiveOrder">
+        <PropertyRef Name="PurchaseOrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Role_Role">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="Role" Type="Self.Role" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Role">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SMIBranchDefault_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="SMIBranchDefault" Type="Self.SMIBranchDefault" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SMIBranchDefault">
+        <PropertyRef Name="FromBranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SMIBranchDefault_Branch1">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="SMIBranchDefault" Type="Self.SMIBranchDefault" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SMIBranchDefault">
+        <PropertyRef Name="ToBranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SMIBranchDefault_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="SMIBranchDefault" Type="Self.SMIBranchDefault" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SMIBranchDefault">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Staff_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Staff">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Staff_Designation">
+    <End Role="Designation" Type="Self.Designation" Multiplicity="0..1" />
+    <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Designation">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Staff">
+        <PropertyRef Name="DesignationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Staff_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Staff">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Staff_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Staff">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffCommition_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="StaffCommition" Type="Self.StaffCommition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffCommition">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffCommition_StaffStatus">
+    <End Role="StaffStatus" Type="Self.StaffStatus" Multiplicity="0..1" />
+    <End Role="StaffCommition" Type="Self.StaffCommition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffCommition">
+        <PropertyRef Name="SaleStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffMember_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="StaffMember" Type="Self.StaffMember" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffMember">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffMember_StaffRole">
+    <End Role="StaffRole" Type="Self.StaffRole" Multiplicity="0..1" />
+    <End Role="StaffMember" Type="Self.StaffMember" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffRole">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffMember">
+        <PropertyRef Name="StaffRoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffMember_StaffStatus">
+    <End Role="StaffStatus" Type="Self.StaffStatus" Multiplicity="0..1" />
+    <End Role="StaffMember" Type="Self.StaffMember" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffMember">
+        <PropertyRef Name="StaffStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffMember_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="StaffMember" Type="Self.StaffMember" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffMember">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffRole_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="StaffRole" Type="Self.StaffRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffRole">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffStatus_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="StaffStatus" Type="Self.StaffStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffStatus">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockAudit_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="StockAudit" Type="Self.StockAudit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockAudit">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockAudit_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="StockAudit" Type="Self.StockAudit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockAudit">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockBranchInventory_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="StockBranchInventory" Type="Self.StockBranchInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockBranchInventory">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockBranchInventory_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="StockBranchInventory" Type="Self.StockBranchInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockBranchInventory">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockBranchTransaction_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="StockBranchTransaction" Type="Self.StockBranchTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockBranchTransaction">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockBranchTransaction_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="StockBranchTransaction" Type="Self.StockBranchTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockBranchTransaction">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockBranchTransaction_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="StockBranchTransaction" Type="Self.StockBranchTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockBranchTransaction">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockBranchTransaction_StockTransactionType">
+    <End Role="StockTransactionType" Type="Self.StockTransactionType" Multiplicity="0..1" />
+    <End Role="StockBranchTransaction" Type="Self.StockBranchTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StockTransactionType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockBranchTransaction">
+        <PropertyRef Name="StockTransactionTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistribution_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="StockDistribution" Type="Self.StockDistribution" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistribution">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistribution_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="StockDistribution" Type="Self.StockDistribution" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistribution">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistribution_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="StockDistribution" Type="Self.StockDistribution" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistribution">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistribution_StockDistributionStatus">
+    <End Role="StockDistributionStatus" Type="Self.StockDistributionStatus" Multiplicity="0..1" />
+    <End Role="StockDistribution" Type="Self.StockDistribution" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StockDistributionStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistribution">
+        <PropertyRef Name="StockDistributionStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistribution_StockDistributionSummary">
+    <End Role="StockDistributionSummary" Type="Self.StockDistributionSummary" Multiplicity="0..1" />
+    <End Role="StockDistribution" Type="Self.StockDistribution" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StockDistributionSummary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistribution">
+        <PropertyRef Name="StockDistributionSummaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistributionStatus_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="StockDistributionStatus" Type="Self.StockDistributionStatus" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistributionStatus">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistributionStatus_StockDistributionStatus">
+    <End Role="StockDistributionStatus" Type="Self.StockDistributionStatus" Multiplicity="1" />
+    <End Role="StockDistributionStatus1" Type="Self.StockDistributionStatus" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="StockDistributionStatus">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistributionStatus1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistributionSummary_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="StockDistributionSummary" Type="Self.StockDistributionSummary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistributionSummary">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockInventory_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="StockInventory" Type="Self.StockInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockInventory">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockInventory_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="StockInventory" Type="Self.StockInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockInventory">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockInventory_ProductStyle">
+    <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="0..1" />
+    <End Role="StockInventory" Type="Self.StockInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductStyle">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockInventory">
+        <PropertyRef Name="ProductStyleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockSupplierTransaction_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="StockSupplierTransaction" Type="Self.StockSupplierTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockSupplierTransaction">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockSupplierTransaction_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="StockSupplierTransaction" Type="Self.StockSupplierTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockSupplierTransaction">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockSupplierTransaction_StockSupplierTransaction">
+    <End Role="StockSupplierTransaction" Type="Self.StockSupplierTransaction" Multiplicity="1" />
+    <End Role="StockSupplierTransaction1" Type="Self.StockSupplierTransaction" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="StockSupplierTransaction">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockSupplierTransaction1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockSupplierTransaction_StockTransactionType">
+    <End Role="StockTransactionType" Type="Self.StockTransactionType" Multiplicity="0..1" />
+    <End Role="StockSupplierTransaction" Type="Self.StockSupplierTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StockTransactionType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockSupplierTransaction">
+        <PropertyRef Name="StockTransactionTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockSupplierTransaction_Supplier">
+    <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+    <End Role="StockSupplierTransaction" Type="Self.StockSupplierTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockSupplierTransaction">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockTape_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="StockTape" Type="Self.StockTape" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockTape">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockTape_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="StockTape" Type="Self.StockTape" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockTape">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockTransactionType_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="StockTransactionType" Type="Self.StockTransactionType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockTransactionType">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Supplier_Log">
+    <End Role="Log" Type="Self.Log" Multiplicity="0..1" />
+    <End Role="Supplier" Type="Self.Supplier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Supplier">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="GrandShoesModelStoreContainer">
+    <EntitySet Name="ActionLog" EntityType="Self.ActionLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BranchDiscount" EntityType="Self.BranchDiscount" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Buyer" EntityType="Self.Buyer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CartonManagement" EntityType="Self.CartonManagement" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CartonManagementDetails" EntityType="Self.CartonManagementDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cluster" EntityType="Self.Cluster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClusterBranch" EntityType="Self.ClusterBranch" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Designation" EntityType="Self.Designation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Discount" EntityType="Self.Discount" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MarkDown" EntityType="Self.MarkDown" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MarkDownBranches" EntityType="Self.MarkDownBranches" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductGroup" EntityType="Self.ProductGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductSize" EntityType="Self.ProductSize" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductSource" EntityType="Self.ProductSource" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductStyle" EntityType="Self.ProductStyle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PurchaseOrderItem" EntityType="Self.PurchaseOrderItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PurchaseOrderStatus" EntityType="Self.PurchaseOrderStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReceiptOrderItem" EntityType="Self.ReceiptOrderItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReceiveOrder" EntityType="Self.ReceiveOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Season" EntityType="Self.Season" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SizeGrid" EntityType="Self.SizeGrid" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SMIBranchDefault" EntityType="Self.SMIBranchDefault" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StaffCommition" EntityType="Self.StaffCommition" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StaffMember" EntityType="Self.StaffMember" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StaffRole" EntityType="Self.StaffRole" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StaffStatus" EntityType="Self.StaffStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockAudit" EntityType="Self.StockAudit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockBranchInventory" EntityType="Self.StockBranchInventory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockBranchTransaction" EntityType="Self.StockBranchTransaction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockDistribution" EntityType="Self.StockDistribution" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockDistributionStatus" EntityType="Self.StockDistributionStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockDistributionSummary" EntityType="Self.StockDistributionSummary" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockInventory" EntityType="Self.StockInventory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockSupplierTransaction" EntityType="Self.StockSupplierTransaction" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockTape" EntityType="Self.StockTape" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockTransactionType" EntityType="Self.StockTransactionType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Template" EntityType="Self.Template" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Year" EntityType="Self.Year" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__PurchaseO__Produ__0A9D95DB" Association="Self.FK__PurchaseO__Produ__0A9D95DB">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PurchaseO__Purch__09A971A2" Association="Self.FK__PurchaseO__Purch__09A971A2">
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+      <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PurchaseO__Suppl__02FC7413" Association="Self.FK__PurchaseO__Suppl__02FC7413">
+      <End Role="Supplier" EntitySet="Supplier" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Area_User" Association="Self.FK_Area_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Area" EntitySet="Area" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Branch_Log" Association="Self.FK_Branch_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="Branch" EntitySet="Branch" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Branch_User" Association="Self.FK_Branch_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Branch" EntitySet="Branch" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BranchDiscount_Branch" Association="Self.FK_BranchDiscount_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="BranchDiscount" EntitySet="BranchDiscount" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BranchDiscount_Discount" Association="Self.FK_BranchDiscount_Discount">
+      <End Role="Discount" EntitySet="Discount" />
+      <End Role="BranchDiscount" EntitySet="BranchDiscount" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Buyer_Buyer" Association="Self.FK_Buyer_Buyer">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="Buyer" EntitySet="Buyer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartonManagement_Branch" Association="Self.FK_CartonManagement_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="CartonManagement" EntitySet="CartonManagement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartonManagement_StockDistributionSummary" Association="Self.FK_CartonManagement_StockDistributionSummary">
+      <End Role="StockDistributionSummary" EntitySet="StockDistributionSummary" />
+      <End Role="CartonManagement" EntitySet="CartonManagement" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartonManagementDetails_CartonManagement" Association="Self.FK_CartonManagementDetails_CartonManagement">
+      <End Role="CartonManagement" EntitySet="CartonManagement" />
+      <End Role="CartonManagementDetails" EntitySet="CartonManagementDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartonManagementDetails_Product" Association="Self.FK_CartonManagementDetails_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="CartonManagementDetails" EntitySet="CartonManagementDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClusterBranch_Branch" Association="Self.FK_ClusterBranch_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="ClusterBranch" EntitySet="ClusterBranch" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClusterBranch_Cluster" Association="Self.FK_ClusterBranch_Cluster">
+      <End Role="Cluster" EntitySet="Cluster" />
+      <End Role="ClusterBranch" EntitySet="ClusterBranch" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Designation_Log" Association="Self.FK_Designation_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="Designation" EntitySet="Designation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Log_ActionLog" Association="Self.FK_Log_ActionLog">
+      <End Role="ActionLog" EntitySet="ActionLog" />
+      <End Role="Log" EntitySet="Log" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Log_Page" Association="Self.FK_Log_Page">
+      <End Role="Page" EntitySet="Page" />
+      <End Role="Log" EntitySet="Log" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Log_User" Association="Self.FK_Log_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Log" EntitySet="Log" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MarkDownBranches_Branch" Association="Self.FK_MarkDownBranches_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="MarkDownBranches" EntitySet="MarkDownBranches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MarkDownBranches_MarkDown" Association="Self.FK_MarkDownBranches_MarkDown">
+      <End Role="MarkDown" EntitySet="MarkDown" />
+      <End Role="MarkDownBranches" EntitySet="MarkDownBranches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Buyer" Association="Self.FK_Product_Buyer">
+      <End Role="Buyer" EntitySet="Buyer" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Color" Association="Self.FK_Product_Color">
+      <End Role="Color" EntitySet="Color" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_ProductCategory" Association="Self.FK_Product_ProductCategory">
+      <End Role="ProductCategory" EntitySet="ProductCategory" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_ProductGroup" Association="Self.FK_Product_ProductGroup">
+      <End Role="ProductGroup" EntitySet="ProductGroup" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_ProductSource" Association="Self.FK_Product_ProductSource">
+      <End Role="ProductSource" EntitySet="ProductSource" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_ProductStyle" Association="Self.FK_Product_ProductStyle">
+      <End Role="ProductStyle" EntitySet="ProductStyle" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Season" Association="Self.FK_Product_Season">
+      <End Role="Season" EntitySet="Season" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_SizeGrid" Association="Self.FK_Product_SizeGrid">
+      <End Role="SizeGrid" EntitySet="SizeGrid" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Supplier" Association="Self.FK_Product_Supplier">
+      <End Role="Supplier" EntitySet="Supplier" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Template" Association="Self.FK_Product_Template">
+      <End Role="Template" EntitySet="Template" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Year" Association="Self.FK_Product_Year">
+      <End Role="Year" EntitySet="Year" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductCategory_Log" Association="Self.FK_ProductCategory_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="ProductCategory" EntitySet="ProductCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductSize_Product" Association="Self.FK_ProductSize_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="ProductSize" EntitySet="ProductSize" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrder_Buyer" Association="Self.FK_PurchaseOrder_Buyer">
+      <End Role="Buyer" EntitySet="Buyer" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrder_Log" Association="Self.FK_PurchaseOrder_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrder_PurchaseOrder" Association="Self.FK_PurchaseOrder_PurchaseOrder">
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+      <End Role="PurchaseOrder1" EntitySet="PurchaseOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrder_PurchaseOrderStatus" Association="Self.FK_PurchaseOrder_PurchaseOrderStatus">
+      <End Role="PurchaseOrderStatus" EntitySet="PurchaseOrderStatus" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderItem_Log" Association="Self.FK_PurchaseOrderItem_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderItem_ProductStyle" Association="Self.FK_PurchaseOrderItem_ProductStyle">
+      <End Role="ProductStyle" EntitySet="ProductStyle" />
+      <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderItem_PurchaseOrderItem" Association="Self.FK_PurchaseOrderItem_PurchaseOrderItem">
+      <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItem" />
+      <End Role="PurchaseOrderItem1" EntitySet="PurchaseOrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderItems_Color" Association="Self.FK_PurchaseOrderItems_Color">
+      <End Role="Color" EntitySet="Color" />
+      <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderItems_PurchaseOrderItems" Association="Self.FK_PurchaseOrderItems_PurchaseOrderItems">
+      <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItem" />
+      <End Role="PurchaseOrderItem1" EntitySet="PurchaseOrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderItems_SizeGrid" Association="Self.FK_PurchaseOrderItems_SizeGrid">
+      <End Role="SizeGrid" EntitySet="SizeGrid" />
+      <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderStatus_Log" Association="Self.FK_PurchaseOrderStatus_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="PurchaseOrderStatus" EntitySet="PurchaseOrderStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiptOrderItem_Log" Association="Self.FK_ReceiptOrderItem_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="ReceiptOrderItem" EntitySet="ReceiptOrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiptOrderItem_Product" Association="Self.FK_ReceiptOrderItem_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="ReceiptOrderItem" EntitySet="ReceiptOrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiptOrderItem_ProductStyle" Association="Self.FK_ReceiptOrderItem_ProductStyle">
+      <End Role="ProductStyle" EntitySet="ProductStyle" />
+      <End Role="ReceiptOrderItem" EntitySet="ReceiptOrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiptOrderItem_ReceiptOrderItem" Association="Self.FK_ReceiptOrderItem_ReceiptOrderItem">
+      <End Role="ReceiveOrder" EntitySet="ReceiveOrder" />
+      <End Role="ReceiptOrderItem" EntitySet="ReceiptOrderItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiveOrder_Log" Association="Self.FK_ReceiveOrder_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="ReceiveOrder" EntitySet="ReceiveOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiveOrder_PurchaseOrder" Association="Self.FK_ReceiveOrder_PurchaseOrder">
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+      <End Role="ReceiveOrder" EntitySet="ReceiveOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Role_Role" Association="Self.FK_Role_Role">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="Role" EntitySet="Role" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SMIBranchDefault_Branch" Association="Self.FK_SMIBranchDefault_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="SMIBranchDefault" EntitySet="SMIBranchDefault" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SMIBranchDefault_Branch1" Association="Self.FK_SMIBranchDefault_Branch1">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="SMIBranchDefault" EntitySet="SMIBranchDefault" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SMIBranchDefault_Log" Association="Self.FK_SMIBranchDefault_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="SMIBranchDefault" EntitySet="SMIBranchDefault" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Staff_Branch" Association="Self.FK_Staff_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="Staff" EntitySet="Staff" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Staff_Designation" Association="Self.FK_Staff_Designation">
+      <End Role="Designation" EntitySet="Designation" />
+      <End Role="Staff" EntitySet="Staff" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Staff_Log" Association="Self.FK_Staff_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="Staff" EntitySet="Staff" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Staff_User" Association="Self.FK_Staff_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Staff" EntitySet="Staff" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffCommition_Log" Association="Self.FK_StaffCommition_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="StaffCommition" EntitySet="StaffCommition" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffCommition_StaffStatus" Association="Self.FK_StaffCommition_StaffStatus">
+      <End Role="StaffStatus" EntitySet="StaffStatus" />
+      <End Role="StaffCommition" EntitySet="StaffCommition" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffMember_Log" Association="Self.FK_StaffMember_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="StaffMember" EntitySet="StaffMember" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffMember_StaffRole" Association="Self.FK_StaffMember_StaffRole">
+      <End Role="StaffRole" EntitySet="StaffRole" />
+      <End Role="StaffMember" EntitySet="StaffMember" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffMember_StaffStatus" Association="Self.FK_StaffMember_StaffStatus">
+      <End Role="StaffStatus" EntitySet="StaffStatus" />
+      <End Role="StaffMember" EntitySet="StaffMember" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffMember_User" Association="Self.FK_StaffMember_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="StaffMember" EntitySet="StaffMember" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffRole_Log" Association="Self.FK_StaffRole_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="StaffRole" EntitySet="StaffRole" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffStatus_Log" Association="Self.FK_StaffStatus_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="StaffStatus" EntitySet="StaffStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockAudit_Branch" Association="Self.FK_StockAudit_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="StockAudit" EntitySet="StockAudit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockAudit_Product" Association="Self.FK_StockAudit_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="StockAudit" EntitySet="StockAudit" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockBranchInventory_Branch" Association="Self.FK_StockBranchInventory_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="StockBranchInventory" EntitySet="StockBranchInventory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockBranchInventory_Product" Association="Self.FK_StockBranchInventory_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="StockBranchInventory" EntitySet="StockBranchInventory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockBranchTransaction_Branch" Association="Self.FK_StockBranchTransaction_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="StockBranchTransaction" EntitySet="StockBranchTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockBranchTransaction_Log" Association="Self.FK_StockBranchTransaction_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="StockBranchTransaction" EntitySet="StockBranchTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockBranchTransaction_Product" Association="Self.FK_StockBranchTransaction_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="StockBranchTransaction" EntitySet="StockBranchTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockBranchTransaction_StockTransactionType" Association="Self.FK_StockBranchTransaction_StockTransactionType">
+      <End Role="StockTransactionType" EntitySet="StockTransactionType" />
+      <End Role="StockBranchTransaction" EntitySet="StockBranchTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistribution_Branch" Association="Self.FK_StockDistribution_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="StockDistribution" EntitySet="StockDistribution" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistribution_Log" Association="Self.FK_StockDistribution_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="StockDistribution" EntitySet="StockDistribution" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistribution_Product" Association="Self.FK_StockDistribution_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="StockDistribution" EntitySet="StockDistribution" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistribution_StockDistributionStatus" Association="Self.FK_StockDistribution_StockDistributionStatus">
+      <End Role="StockDistributionStatus" EntitySet="StockDistributionStatus" />
+      <End Role="StockDistribution" EntitySet="StockDistribution" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistribution_StockDistributionSummary" Association="Self.FK_StockDistribution_StockDistributionSummary">
+      <End Role="StockDistributionSummary" EntitySet="StockDistributionSummary" />
+      <End Role="StockDistribution" EntitySet="StockDistribution" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistributionStatus_Log" Association="Self.FK_StockDistributionStatus_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="StockDistributionStatus" EntitySet="StockDistributionStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistributionStatus_StockDistributionStatus" Association="Self.FK_StockDistributionStatus_StockDistributionStatus">
+      <End Role="StockDistributionStatus" EntitySet="StockDistributionStatus" />
+      <End Role="StockDistributionStatus1" EntitySet="StockDistributionStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistributionSummary_Log" Association="Self.FK_StockDistributionSummary_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="StockDistributionSummary" EntitySet="StockDistributionSummary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockInventory_Log" Association="Self.FK_StockInventory_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="StockInventory" EntitySet="StockInventory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockInventory_Product" Association="Self.FK_StockInventory_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="StockInventory" EntitySet="StockInventory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockInventory_ProductStyle" Association="Self.FK_StockInventory_ProductStyle">
+      <End Role="ProductStyle" EntitySet="ProductStyle" />
+      <End Role="StockInventory" EntitySet="StockInventory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockSupplierTransaction_Log" Association="Self.FK_StockSupplierTransaction_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="StockSupplierTransaction" EntitySet="StockSupplierTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockSupplierTransaction_Product" Association="Self.FK_StockSupplierTransaction_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="StockSupplierTransaction" EntitySet="StockSupplierTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockSupplierTransaction_StockSupplierTransaction" Association="Self.FK_StockSupplierTransaction_StockSupplierTransaction">
+      <End Role="StockSupplierTransaction" EntitySet="StockSupplierTransaction" />
+      <End Role="StockSupplierTransaction1" EntitySet="StockSupplierTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockSupplierTransaction_StockTransactionType" Association="Self.FK_StockSupplierTransaction_StockTransactionType">
+      <End Role="StockTransactionType" EntitySet="StockTransactionType" />
+      <End Role="StockSupplierTransaction" EntitySet="StockSupplierTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockSupplierTransaction_Supplier" Association="Self.FK_StockSupplierTransaction_Supplier">
+      <End Role="Supplier" EntitySet="Supplier" />
+      <End Role="StockSupplierTransaction" EntitySet="StockSupplierTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockTape_Branch" Association="Self.FK_StockTape_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="StockTape" EntitySet="StockTape" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockTape_Product" Association="Self.FK_StockTape_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="StockTape" EntitySet="StockTape" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockTransactionType_Log" Association="Self.FK_StockTransactionType_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="StockTransactionType" EntitySet="StockTransactionType" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Supplier_Log" Association="Self.FK_Supplier_Log">
+      <End Role="Log" EntitySet="Log" />
+      <End Role="Supplier" EntitySet="Supplier" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Branch" Association="Self.FK_User_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

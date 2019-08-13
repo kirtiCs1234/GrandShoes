@@ -1,0 +1,256 @@
+﻿using Helper;
+using Model;
+using Newtonsoft.Json;
+using OfficeOpenXml;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+
+namespace POS.Areas.Admin.Controllers
+{
+    [CustomAuth]
+    public class BranchController : BaseController
+    {
+        // GET: Admin/Branch
+        public ActionResult Index(int? page)
+
+        {
+            int TotalCount = 0;
+            var pageSize = 10;
+            var pageNumber = page ?? 1;
+            int CurrentPage = pageNumber;
+            
+            var endPage = CurrentPage + 4;
+
+            int PagesToShow = 10;
+            var BranchModelList = Services.BranchService.GetPaging(page, out TotalCount);
+            ViewBag.TotalCount = TotalCount;
+            ViewBag.PageSize = pageSize;
+            var result = Helper.CommonFunction.GetPages(TotalCount, pageSize, CurrentPage, PagesToShow);
+            int totalPages = (TotalCount / pageSize) + (TotalCount % pageSize == 0 ? 0 : 1);
+            ViewBag.result = result;
+            ViewBag.totalPages = totalPages;
+            ViewBag.CurrentPage = CurrentPage;
+            var pageCount = result.Count();
+            ViewBag.pageCount = pageCount;
+            ViewBag.endPage = endPage;
+            return View(BranchModelList);
+
+        }
+       
+        public ActionResult _Index1(BranchSearch branchSearch,int? page)
+        {
+            int TotalCount = 0;
+            var pageSize = 10;
+            var pageNumber = page ?? 1;
+            int CurrentPage = pageNumber;
+            var endPage = CurrentPage + 4;
+            int PagesToShow = 10;
+           
+            
+             var BranchModelList = Services.BranchService.GetSearchData(branchSearch, page, out TotalCount);
+           
+            ViewBag.TotalCount = TotalCount;
+            ViewBag.PageSize = pageSize;
+            var result = Helper.CommonFunction.GetPages(TotalCount, pageSize, CurrentPage, PagesToShow);
+            int totalPages = (TotalCount / pageSize) + (TotalCount % pageSize == 0 ? 0 : 1);
+            ViewBag.result = result;
+            ViewBag.totalPages = totalPages;
+            ViewBag.CurrentPage = CurrentPage;
+            var pageCount = result.Count();
+            ViewBag.pageCount = pageCount;
+
+            ViewBag.endPage = endPage;
+            return View(BranchModelList);
+
+        }
+
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<UserModel> UserModelList = Services.UserService.GetAll();
+            ViewBag.ManagerId = new SelectList(UserModelList, "Id", "FullName");
+            BranchModel BranchModelById = Services.BranchService.GetById(id);
+            return View(BranchModelById);
+        }
+        public ActionResult ExcelUpload()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ExcelUpload(BranchModel branch, HttpPostedFileBase file)
+        {
+
+            if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+            {
+                string fileName = file.FileName;
+                string fileContentType = file.ContentType;
+                byte[] fileBytes = new byte[file.ContentLength];
+                var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+               // bool usersList = new BranchModel();
+                using (var package = new ExcelPackage(file.InputStream))
+                {
+                    var currentSheet = package.Workbook.Worksheets;
+                    var workSheet = currentSheet.First();
+                    var noOfCol = workSheet.Dimension.End.Column;
+                    var noOfRow = workSheet.Dimension.End.Row;
+
+                    for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                    {
+                        try
+                        {
+                            //var supplier = new SupplierModel();
+                            branch.BranchCode = workSheet.GetCellValue(rowIterator, 1);
+                            branch.Name = workSheet.GetCellValue(rowIterator, 2);
+                            branch.Telephone = workSheet.GetCellValue(rowIterator, 3);
+                            var userName= workSheet.GetCellValue(rowIterator, 4);
+                            branch.ManagerId = Services.UserService.GetUserId(userName).Id;
+                            branch.DateOpen = Convert.ToDateTime(workSheet.GetCellValue(rowIterator, 5));
+                            branch.DateClosed = Convert.ToDateTime(workSheet.GetCellValue(rowIterator, 6));
+                            branch.AddressLine1 = workSheet.GetCellValue(rowIterator, 7);
+                            branch.AddressLine2 = workSheet.GetCellValue(rowIterator, 8);
+                            branch.AddressLine3 = workSheet.GetCellValue(rowIterator, 9);
+                            branch.PostalCode = workSheet.GetCellValue(rowIterator, 10);
+                            branch.AreaCode = workSheet.GetCellValue(rowIterator, 11);
+                            branch.IsSendStock =workSheet.GetCellValue(rowIterator, 12).Equals("1")?true:false;
+                            branch.IsClosed = workSheet.GetCellValue(rowIterator,13).Equals("1") ? true : false;
+                            branch.IsHeadOffice = workSheet.GetCellValue(rowIterator,14).Equals("1") ? true : false;
+                            branch.StoreSize = workSheet.GetCellValue(rowIterator,15);
+
+                            branch.LogId = Convert.ToInt32(workSheet.GetCellValue(rowIterator,16));
+                            branch.IsActive = true;
+                        }
+                        catch (FormatException ex)
+                        {
+
+                        }
+                        string chk = workSheet.GetCellValue(rowIterator,1);
+                        bool isexists = Services.BranchService.CheckBranchCode(chk);
+                        if (!isexists)
+                        {
+                           bool usersList = Services.BranchService.Create(branch);
+                        }
+                        else
+                        {
+
+                        }
+
+                        //    usersList = Services.SupplierService.Create(supplier);
+                    }
+                    TempData["Success"] = "File uploaded successfully!";
+                    return RedirectToAction("Index", "Branch");
+
+                }
+            }
+            return View(branch);
+        }
+
+        public ActionResult ExportList()
+        {
+            var data = Services.BranchService.GetAll();
+            ExcelPackage excel = new ExcelPackage();
+            var workSheet = excel.Workbook.Worksheets.Add("Sheet1");
+            workSheet.Cells[1, 2].LoadFromCollection(data, true);
+            using (var memoryStream = new MemoryStream())
+            {
+                Response.ContentType = "application/vnd.ms-excel";
+                Response.AddHeader("content-disposition", "attachment;  filename=BranchExport.xlsx");
+                excel.SaveAs(memoryStream);
+                memoryStream.WriteTo(Response.OutputStream);
+                Response.Flush();
+                //Response.End();
+            }
+            return View();
+        }
+        public ActionResult Create()
+        {
+            List<UserModel> UserModelList = Services.UserService.GetAll();
+            ViewBag.ManagerId = new SelectList(UserModelList, "Id", "FullName");
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(BranchModel branch)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+
+                branch.IsActive = true;
+                 bool BranchCreate = Services.BranchService.Create(branch);
+                TempData["Success"] = "Data Saved Successfully!";
+                return RedirectToAction("Index", "Branch");
+            }
+            return View(branch);
+
+        }
+        public ActionResult CheckBranchCode(BranchModel branch)
+        {
+            var iExist = Services.BranchService.CheckBranchCode(branch);
+            return Json(!iExist, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult CheckBranchName(BranchModel branch)
+        {
+            var iExist = Services.BranchService.CheckBranchName(branch);
+            return Json(!iExist, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Edit(int? id)
+
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<UserModel> UserModelList = Services.UserService.GetAll();
+            ViewBag.ManagerId = new SelectList(UserModelList, "Id", "FullName");
+            BranchModel BranchModelById = Services.BranchService.GetById(id);
+            return View(BranchModelById);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(BranchModel branch)
+        {
+            if (ModelState.IsValid)
+            {
+
+                bool BranchEdit = Services.BranchService.Edit(branch);
+                TempData["Success"] = "Data Saved Successfully!";
+                return RedirectToAction("Index", "Branch");
+            }
+            return View(branch);
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BranchModel BranchModelById = Services.BranchService.GetById(id);
+
+            if (BranchModelById == null)
+            {
+                return HttpNotFound();
+            }
+            return View(BranchModelById);
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(BranchModel branch)
+        {
+            if (branch.Id > 0)
+            {
+                BranchModel BranchDelete = Services.BranchService.Delete(branch);
+                TempData["Success"] = "Data Deleted Successfully!";
+                return RedirectToAction("Index", "Branch");
+            }
+            return View(branch);
+        }
+    
+}
+}

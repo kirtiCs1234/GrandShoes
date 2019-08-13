@@ -1,0 +1,142 @@
+﻿@model Model.UserModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <div class="user-container">
+            @*<div class="row">
+                <div class="col-lg-2 col-sm-3 col-xs-12">
+                </div>
+                <div class="col-lg-10 col-sm-9 col-xs-12 right-section-user">
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-12 mrgn-b-lg">
+                            <label>FirstName</label>
+                            <div class="user-icon"><i class="fa fa-user-circle" aria-hidden="true"></i></div>
+                            <div class="user-detail">@Model.FirstName</div>
+                        </div>
+                        <div class="col-sm-6 col-xs-12 mrgn-b-lg">
+                            <label>LastName</label>
+                            <div class="user-icon"><i class="fa fa-user-circle" aria-hidden="true"></i></div>
+                            <div class="user-detail">@Model.LastName</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-12 mrgn-b-lg">
+                            <label>ContactNumber</label>
+                            <div class="user-icon"><i class="fa fa-mobile" aria-hidden="true"></i></div>
+                            <div class="user-detail">@Model.Phone</div>
+                        </div>
+                        <div class="col-sm-6 col-xs-12 mrgn-b-lg">
+                            <label>Email</label>
+                            <div class="user-icon"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+                            <div class="user-detail">@Model.Email</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-12 mrgn-b-lg">
+                            <label>CompanyName</label>
+                            <div class="user-icon"><i class="fa fa-building" aria-hidden="true"></i></div>
+                            <div class="user-detail">@ViewBag.BranchName</div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        @if (!string.IsNullOrEmpty(ViewBag.PageName))
+                        {
+                            <span style="color:brown;font-size:15px;">You are not access <p1 style="color:red">@ViewBag.PageName</p1> page</span>
+                        }
+
+
+                    </div>
+                </div>
+            </div>*@
+            <div class="prtm-block">
+                <div class="row mrgn-b-md">
+                    <div class="col-sm-12 col-xs-12 text-center welcome-user"><h3>Welcome! <span class="user-name">@Model.FirstName @Model.LastName</span></h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                        <div class="stock-list prtm-card-box bg-primary mrgn-b-lg">
+                            <div class="clearfix">
+                                <div class="stk-icon"> <span class="show stock-main"><i class="fa fa-phone"></i></span></div>
+                                <div class="prtm-stk-des">
+                                    <div class="brand-info clearfix">
+                                        <h6 class="prtm-brand-name text-uppercase">Contact Number</h6>
+                                    </div>
+                                    <div class="clearfix">
+                                        @Model.Phone
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                        <div class="stock-list prtm-card-box bg-danger mrgn-b-lg">
+                            <div class="clearfix">
+                                <div class="stk-icon"> <span class="show stock-main"><i class="fa fa-envelope"></i></span></div>
+                                <div class="prtm-stk-des">
+                                    <div class="brand-info clearfix">
+                                        <h6 class="prtm-brand-name text-uppercase">Email</h6>
+                                    </div>
+                                    <div class="clearfix">
+                                        @Model.Email
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                        <div class="stock-list prtm-card-box bg-info mrgn-b-lg">
+                            <div class="clearfix">
+                                <div class="stk-icon"> <span class="show stock-main"><i class="fa fa-building"></i></span></div>
+                                <div class="prtm-stk-des">
+                                    <div class="brand-info clearfix">
+                                        <h6 class="prtm-brand-name text-uppercase">Branch Name</h6>
+                                    </div>
+                                    <div class="clearfix">
+                                        @ViewBag.BranchName
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*@section script{*@
+
+    <script type="text/javascript">
+
+        getBill();
+
+        function getBill() {
+            $.ajax({
+                type: "GET",
+                url: '/Admin/CreateBillPdf/Index',
+                success: function (result) {
+                    debugger;
+                    $.ajax({
+                        type: "POST",
+                        data: { html: result },
+                        url: '/Admin/CreateBillPdf/CreatePdfInvoice',
+                        success: function (result) {
+                            debugger
+                        }
+                    });
+
+                },
+                error: function (xhr, status) {
+                    alert(status);
+                }
+            });
+        }
+
+
+    </script>
+@*}*@

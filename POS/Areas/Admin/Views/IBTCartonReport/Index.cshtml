@@ -1,0 +1,119 @@
+﻿@model List<Model.CartonManagementModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div class="row">
+    <div class="prtm-page-bar col-md-5 col-lg-3 col-sm-12 col-12" style="background:none;">
+        <ul class="breadcrumb" style="background:none;">
+            <li class="breadcrumb-item text-capitalize">
+                <h3>IBT Carton Report</h3>
+            </li>
+            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-8 col-lg-6 col-sm-8 col-12 search-container">
+        <div class="top-search-navbar-search smallsearch col-md-12 col-lg-12 col-sm-12 col-12">
+            <div class="row">
+
+                <input class="top-search-navbar-input col-md-8 col-lg-10 col-sm-8 col-xs-8 searchiFirstName" type="text" placeholder="Search Carton" Id="CNumber" name="iFirstName">
+                <button class="advance-search col-md-2 col-lg-1 col-sm-2 col-xs-2" type="button"></button>
+
+                <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-xs-2" onclick="searchData()">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    
+</div>
+<div class="dvUserDetails">
+    @{
+
+        Html.RenderPartial("_Index1", Model);
+    }
+</div>
+<div class="modal fade" id="myModal">
+    <div id="dvCreatedetails">
+
+    </div>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+@section scripts{
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script type="text/javascript">
+        function searchData() {
+            debugger;
+            var obj = {};
+
+            obj.DistributionSummaryID = $('#CNumber').val();
+            obj.BranchName = $('#CNumber').val();
+            obj.IsActive = true;
+            $.ajax({
+                url: '/Admin/IBTCartonReport/_Index1',
+                type: 'POST',
+                data: obj,
+                success: function (result) {
+                    $('.dvUserDetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+            return false;
+        }
+
+        $(document).on("click", "a[href^='/Admin/IBTCartonReport/_Index1?page']", function () {
+            debugger
+            var obj = {};
+
+            obj.Id = $('#CNumber').val();
+            obj.BranchName = $('#CNumber').val();
+            obj.IsActive = true;
+            $.ajax({
+                type: "POST",
+                url: $(this).attr("href"),
+                // data: JSON.stringify(obj),
+                data: obj,
+                success: function (result) {
+                    $('.dvUserDetails').html(result);
+                    //  alert('hdfjdhfj');
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+            return false;
+        });
+            function showReceipt(id) {
+            debugger
+            //  alert(id);
+            $("#ReceiptDetail-" + id).html('<tr><td colspan = "5" style="background-color:white;"><img src="/Image/bars.gif" style="width:55px; height:47px;margin-left:40%; z-index:200" /></td></tr>');
+
+            $.ajax(
+                {
+                    url: '/Admin/IBTCartonReport/GetCartonById/' + id,
+                    type: "GET",
+                    success: function (result) {
+                        debugger
+                        $("#ReceiptDetail-" + id).html(result);
+                        // alert("dgfhdf");
+                    },
+                    error: function (xhr, status) {
+                        alert(status)
+                    }
+                });
+        }
+        $(".accordian-btn").click(function () {
+            $(this).toggleClass("accordian-reverse");
+            $(this).parent().parent().next().find(".accordian-bundling").toggle(500);
+        });
+</script>
+}

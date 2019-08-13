@@ -1,0 +1,101 @@
+﻿@model List<Model.StockAuditModel>
+<div class="row marg-btn-20">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+        <div class="forms">
+            <div class="row marg-btn-20">
+                <div class="prtm-block-content mrgn-b-md">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+
+                            <thead>
+                                <tr>
+
+                                    <th>Product Barcode</th>
+                                    <th>Total</th>
+                                    <th>Quantity01</th>
+                                    <th>Quantity02</th>
+                                    <th>Quantity03</th>
+                                    <th>Quantity04</th>
+                                    <th>Quantity05</th>
+                                    <th>Quantity06</th>
+                                    <th>Quantity07</th>
+                                    <th>Quantity08</th>
+                                    <th>Quantity09</th>
+                                    <th>Quantity10</th>
+                                    <th>Quantity11</th>
+                                    <th>Quantity12</th>
+                                    <th>Quantity13</th>
+                                    <th>Quantity14</th>
+                                    <th>Quantity15</th>
+                                    <th>Quantity16</th>
+                                    <th>Quantity17</th>
+                                    <th>Quantity18</th>
+                                    <th>Quantity19</th>
+                                    <th>Quantity20</th>
+                                    <th>Quantity21</th>
+                                    <th>Quantity22</th>
+                                    <th>Quantity23</th>
+                                    <th>Quantity24</th>
+                                    <th>Quantity25</th>
+                                    <th>Quantity26</th>
+                                    <th>Quantity27</th>
+                                    <th>Quantity28</th>
+                                    <th>Quantity29</th>
+
+                                    <th>Quantity30</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyIndex" id="table">
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td style="display:none">@Html.HiddenFor(modelItem => item.BranchId)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Barcode)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Total)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity01)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity02)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity03)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity04)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity05)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity06)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity07)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity08)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity09)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity10)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity11)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity12)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity13)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity14)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity15)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity16)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity17)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity18)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity19)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity20)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity21)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity22)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity23)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity24)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity25)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity26)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity27)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity28)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity29)</td>
+                                        <td>@Html.DisplayFor(modelItem => item.Quantity30)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                <div class="modal-footer col-md-4 col-xs-12 col-sm-4">
+                    
+                    <button type="button" class="btn btn-primary import-btn " data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="ShowVariance()">Show Variance</button>&nbsp;&nbsp;
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

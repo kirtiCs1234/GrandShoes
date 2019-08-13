@@ -1,0 +1,47 @@
+﻿using Helper;
+using Model;
+using Newtonsoft.Json;
+using Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.Service
+{
+   public class StaffService :IStaffService
+    {
+        public List<StaffModel> GetAll()
+        {
+            var body = "";
+            List<StaffModel> StaffModelList = ServerResponse.Invoke<List<StaffModel>>("api/staff/getDetails", body, "get");
+            return StaffModelList;
+        }
+        public StaffModel GetById(int? id)
+        {
+            var body = "";
+            StaffModel StaffById = ServerResponse.Invoke<StaffModel>("api/staff/getDetail?id=" + id, body, "get");
+            return StaffById;
+        }
+        public StaffModel Create(StaffModel staffModel)
+        {
+            var body = JsonConvert.SerializeObject(staffModel);
+            StaffModel StaffCreate = ServerResponse.Invoke<StaffModel>("api/staff/create", body, "Post");
+            return StaffCreate;
+        }
+        public StaffModel Edit(StaffModel staffModel)
+        {
+            var body = JsonConvert.SerializeObject(staffModel);
+            StaffModel StaffEdit = ServerResponse.Invoke<StaffModel>("api/staff/edit?id=" + staffModel.Id, body, "POST");
+            return StaffEdit;
+        }
+        public StaffModel Delete(StaffModel staffModel)
+        {
+            var body = JsonConvert.SerializeObject(staffModel);
+            StaffModel StaffDelete = ServerResponse.Invoke<StaffModel>("api/staff/Delete?id=" + staffModel.Id, body, "POST");
+            return StaffDelete;
+        }
+
+    }
+}

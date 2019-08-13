@@ -1,0 +1,107 @@
+﻿
+@model List<Model.Report.BranchStockStatusReport>
+@{
+    var branch = ViewData["AllBranch"] as Dictionary<int, string>;
+}
+<div class="prtm-full-block pos-relative">
+    <div class="prtm-block-title pad-all-md">
+        <div class="pos-relative">
+            <div class="caption">
+                @*<h5>ProductSKU: @product.ProductSKU</h5>
+                <h5>StyleSKU: @product.StyleSKU</h5>
+                <h4>@Model.Sum(x => x.Quantity)</h4>*@
+
+            </div>
+            <button type="button" onclick="getFilterData()">Search</button>
+        </div>
+    </div>
+    <div class="prtm-block-content mrgn-b-md">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Products</th>
+                        <th>Color</th>
+                        <th>Cost Price</th>
+                        <th>Original Sale</th>
+                        <th>Current Price</th>
+                        <th>Cost Value</th>
+                        <th>Current Sale Value</th>
+                        <th>Total</th>
+                        <th>MarkDown Template</th>
+                        @foreach (var iteml in branch)
+                        {
+                            <th>@iteml.Value</th>
+                        }
+                        <th>Warehouse</th>
+                        @*  *@
+                    </tr>
+                </thead>
+                <tbody class="tbodyIndex">
+                    @if (Model.Count != 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Color)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CostPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OriginalPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CurrentPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CostValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CurrentSaleValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TotalQuantiy)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MarkdownTemplate)
+                        </td>
+                        @foreach (var itemk in item.BranchId)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => itemk.Value)
+                            </td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.WarehoustQuantity)
+                        </td>
+                        @*<td style="min-width:85px;">
+
+            <i class="fa fa-pencil edit-form edit" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="edit(@item.Id)"></i>
+            &nbsp;
+            <i class="fa fa-trash delete delete-form" data-toggle="modal" data-target="#myModal" data-backdrop="static" onclick="del(@item.Id)"></i>
+            &nbsp;
+            <i class="fa fa-eye view-form details" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="details(@item.Id)"></i>
+
+        </td>*@
+                    </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7">
+                                <p>No record found.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

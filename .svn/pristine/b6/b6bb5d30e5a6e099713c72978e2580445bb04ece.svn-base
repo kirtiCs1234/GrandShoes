@@ -1,0 +1,1911 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GrandShoesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="ManagerID" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchCode" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Telephone" Type="varchar" MaxLength="50" />
+          <Property Name="ManagerId" Type="int" />
+          <Property Name="DateOpen" Type="datetime" />
+          <Property Name="DateClosed" Type="datetime" />
+          <Property Name="AddressLine1" Type="varchar" MaxLength="150" />
+          <Property Name="AddressLine2" Type="varchar" MaxLength="150" />
+          <Property Name="AddressLine3" Type="varchar" MaxLength="150" />
+          <Property Name="PostalCode" Type="varchar" MaxLength="50" />
+          <Property Name="AreaCode" Type="varchar" MaxLength="50" />
+          <Property Name="IsSendStock" Type="bit" />
+          <Property Name="IsClosed" Type="bit" />
+          <Property Name="IsHeadOffice" Type="bit" />
+          <Property Name="StoreSize" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Buyer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="BuyLimit" Type="money" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+          <Property Name="ColorLong" Type="varchar" MaxLength="50" />
+          <Property Name="ColorShort" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Designation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DesignationName" Type="varchar" MaxLength="150" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="Image" Type="varchar(max)" />
+          <Property Name="IsPrimary" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductSKU" Type="varchar" MaxLength="50" />
+          <Property Name="ProductStyleId" Type="int" />
+          <Property Name="LongDescription" Type="varchar" MaxLength="250" />
+          <Property Name="ShortDescription" Type="varchar" MaxLength="250" />
+          <Property Name="SizeGridID" Type="int" />
+          <Property Name="RecommendedSellingPrice" Type="money" />
+          <Property Name="ActualSellingPrice" Type="money" />
+          <Property Name="IsVPI" Type="bit" />
+          <Property Name="IsMarkDown" Type="bit" />
+          <Property Name="SeasonID" Type="int" />
+          <Property Name="YearID" Type="int" />
+          <Property Name="ProductCategoryID" Type="int" />
+          <Property Name="ProductGroupID" Type="int" />
+          <Property Name="ProductSourceID" Type="int" />
+          <Property Name="SupplierStyle" Type="varchar" MaxLength="50" />
+          <Property Name="SupplierID" Type="int" />
+          <Property Name="BuyerID" Type="int" />
+          <Property Name="CostPriceUSD" Type="money" />
+          <Property Name="CostPrice" Type="money" />
+          <Property Name="IsAllowZero" Type="bit" />
+          <Property Name="DefaultTemplateID" Type="int" />
+          <Property Name="MarkDownTemplateID" Type="int" />
+          <Property Name="IsFreeGift" Type="bit" />
+          <Property Name="IsConsignment" Type="bit" />
+          <Property Name="IsDiscontinue" Type="bit" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProductGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="varchar" MaxLength="100" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProductSize">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="Size" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProductSource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Source" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProductStyle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StyleSKU" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ClientInvoiceNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SupplierId" Type="int" Nullable="false" />
+          <Property Name="BuyerId" Type="int" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" Nullable="false" />
+          <Property Name="ExpectedDeliveryDate" Type="datetime" />
+          <Property Name="FirstDeliveryDate" Type="datetime" />
+          <Property Name="LastDeliveryDate" Type="datetime" />
+          <Property Name="OrderCompletionDate" Type="datetime" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="VatAmount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PurchaseOrderStatusId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderItems">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PurchaseOrderId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="QuantitySize01" Type="int" />
+          <Property Name="QuantitySize02" Type="int" />
+          <Property Name="QuantitySize03" Type="int" />
+          <Property Name="QuantitySize04" Type="int" />
+          <Property Name="QuantitySize05" Type="int" />
+          <Property Name="QuantitySize06" Type="int" />
+          <Property Name="QuantitySize07" Type="int" />
+          <Property Name="QuantitySize08" Type="int" />
+          <Property Name="QuantitySize09" Type="int" />
+          <Property Name="QuantitySize10" Type="int" />
+          <Property Name="QuantitySize11" Type="int" />
+          <Property Name="QuantitySize12" Type="int" />
+          <Property Name="QuantitySize13" Type="int" />
+          <Property Name="QuantitySize14" Type="int" />
+          <Property Name="QuantitySize15" Type="int" />
+          <Property Name="QuantitySize16" Type="int" />
+          <Property Name="QuantitySize17" Type="int" />
+          <Property Name="QuantitySize18" Type="int" />
+          <Property Name="QuantitySize19" Type="int" />
+          <Property Name="QuantitySize20" Type="int" />
+          <Property Name="QuantitySize21" Type="int" />
+          <Property Name="QuantitySize22" Type="int" />
+          <Property Name="QuantitySize23" Type="int" />
+          <Property Name="QuantitySize24" Type="int" />
+          <Property Name="QuantitySize25" Type="int" />
+          <Property Name="QuantitySize26" Type="int" />
+          <Property Name="QuantitySize27" Type="int" />
+          <Property Name="QuantitySize28" Type="int" />
+          <Property Name="QuantitySize29" Type="int" />
+          <Property Name="QuantitySize30" Type="int" />
+          <Property Name="CostSize01" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize02" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize03" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize04" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize05" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize06" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize07" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize08" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize09" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize10" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize11" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize12" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize13" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize14" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize15" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize16" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize17" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize18" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize19" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize20" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize21" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize22" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize23" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize24" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize25" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize26" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize27" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize28" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize29" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize30" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderStatus" Type="varchar" MaxLength="100" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Season">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="SizeGrid">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GridNumber" Type="varchar" MaxLength="10" />
+          <Property Name="Z01" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z02" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z03" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z04" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z05" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z06" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z07" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z08" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z09" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z10" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z11" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z12" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z13" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z14" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z15" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z16" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z17" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z18" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z19" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z20" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z21" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z22" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z23" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z24" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z25" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z26" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z27" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z28" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z29" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Z30" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="DesignationID" Type="int" />
+          <Property Name="FingerPrintAccess" Type="varchar(max)" />
+          <Property Name="BranchID" Type="int" />
+          <Property Name="JoiningDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="PermanentAddress1" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentAddress2" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentAddress3" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentCity" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentCountry" Type="varchar" MaxLength="50" />
+          <Property Name="PermanentPostalCode" Type="varchar" MaxLength="50" />
+          <Property Name="CorrespondanceAddress1" Type="varchar" MaxLength="50" />
+          <Property Name="CorrespondanceAddress2" Type="varchar" MaxLength="50" />
+          <Property Name="CorrespondanceAddress3" Type="varchar" MaxLength="50" />
+          <Property Name="CorrespondanceCity" Type="varchar" MaxLength="50" />
+          <Property Name="CorrespondanceCountry" Type="varchar" MaxLength="50" />
+          <Property Name="CorrespondancePostalCode" Type="varchar" MaxLength="50" />
+          <Property Name="Limit" Type="money" />
+          <Property Name="ContactNumber" Type="varchar" MaxLength="50" />
+          <Property Name="FaxNumber" Type="varchar" MaxLength="50" />
+          <Property Name="RegistrationDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Template">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="150" />
+          <Property Name="Description" Type="varchar" MaxLength="250" />
+          <Property Name="Format" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="BranchID" Type="int" />
+          <Property Name="IsVerified" Type="bit" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="PasswordHash" Type="varbinary(max)" />
+          <Property Name="PasswordSalt" Type="varbinary(max)" />
+          <Property Name="UserGuid" Type="varchar(max)" />
+          <Property Name="IsPrimaryAccountHolder" Type="bit" />
+        </EntityType>
+        <EntityType Name="Year">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Year" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <Association Name="FK__PurchaseO__Produ__0A9D95DB">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="PurchaseOrderItems" Type="Self.PurchaseOrderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrderItems">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseO__Purch__09A971A2">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="1" />
+          <End Role="PurchaseOrderItems" Type="Self.PurchaseOrderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderItems">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseO__Suppl__02FC7413">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Area_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Area" Type="Self.Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Buyer">
+          <End Role="Buyer" Type="Self.Buyer" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Buyer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="BuyerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductGroup">
+          <End Role="ProductGroup" Type="Self.ProductGroup" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductSource">
+          <End Role="ProductSource" Type="Self.ProductSource" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductSourceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductStyle">
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductStyle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductStyleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_SizeGrid">
+          <End Role="SizeGrid" Type="Self.SizeGrid" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SizeGrid">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="SizeGridID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Template">
+          <End Role="Template" Type="Self.Template" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Template">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="DefaultTemplateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Year">
+          <End Role="Year" Type="Self.Year" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Year">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="YearID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSize_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="ProductSize" Type="Self.ProductSize" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductSize">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrder_PurchaseOrderStatus">
+          <End Role="PurchaseOrderStatus" Type="Self.PurchaseOrderStatus" Multiplicity="1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrderStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Branch">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Designation">
+          <End Role="Designation" Type="Self.Designation" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Designation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="DesignationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Branch">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GrandShoesModelStoreContainer">
+          <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Buyer" EntityType="Self.Buyer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Designation" EntityType="Self.Designation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductGroup" EntityType="Self.ProductGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSize" EntityType="Self.ProductSize" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSource" EntityType="Self.ProductSource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductStyle" EntityType="Self.ProductStyle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrderItems" EntityType="Self.PurchaseOrderItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrderStatus" EntityType="Self.PurchaseOrderStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Season" EntityType="Self.Season" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SizeGrid" EntityType="Self.SizeGrid" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Template" EntityType="Self.Template" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Year" EntityType="Self.Year" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__PurchaseO__Produ__0A9D95DB" Association="Self.FK__PurchaseO__Produ__0A9D95DB">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="PurchaseOrderItems" EntitySet="PurchaseOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseO__Purch__09A971A2" Association="Self.FK__PurchaseO__Purch__09A971A2">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+            <End Role="PurchaseOrderItems" EntitySet="PurchaseOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseO__Suppl__02FC7413" Association="Self.FK__PurchaseO__Suppl__02FC7413">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Area_User" Association="Self.FK_Area_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Area" EntitySet="Area" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Buyer" Association="Self.FK_Product_Buyer">
+            <End Role="Buyer" EntitySet="Buyer" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductCategory" Association="Self.FK_Product_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductGroup" Association="Self.FK_Product_ProductGroup">
+            <End Role="ProductGroup" EntitySet="ProductGroup" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductSource" Association="Self.FK_Product_ProductSource">
+            <End Role="ProductSource" EntitySet="ProductSource" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductStyle" Association="Self.FK_Product_ProductStyle">
+            <End Role="ProductStyle" EntitySet="ProductStyle" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_SizeGrid" Association="Self.FK_Product_SizeGrid">
+            <End Role="SizeGrid" EntitySet="SizeGrid" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Supplier" Association="Self.FK_Product_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Template" Association="Self.FK_Product_Template">
+            <End Role="Template" EntitySet="Template" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Year" Association="Self.FK_Product_Year">
+            <End Role="Year" EntitySet="Year" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSize_Product" Association="Self.FK_ProductSize_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductSize" EntitySet="ProductSize" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrder_PurchaseOrderStatus" Association="Self.FK_PurchaseOrder_PurchaseOrderStatus">
+            <End Role="PurchaseOrderStatus" EntitySet="PurchaseOrderStatus" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Branch" Association="Self.FK_Staff_Branch">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Designation" Association="Self.FK_Staff_Designation">
+            <End Role="Designation" EntitySet="Designation" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_User" Association="Self.FK_Staff_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Branch" Association="Self.FK_User_Branch">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GrandShoesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ManagerID" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Area_User" FromRole="Area" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ManagerId" Type="Int32" />
+          <Property Name="DateOpen" Type="DateTime" Precision="3" />
+          <Property Name="DateClosed" Type="DateTime" Precision="3" />
+          <Property Name="AddressLine1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="AddressLine2" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="AddressLine3" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AreaCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsSendStock" Type="Boolean" />
+          <Property Name="IsClosed" Type="Boolean" />
+          <Property Name="IsHeadOffice" Type="Boolean" />
+          <Property Name="StoreSize" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Staffs" Relationship="Self.FK_Staff_Branch" FromRole="Branch" ToRole="Staff" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_Branch" FromRole="Branch" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Buyer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BuyLimit" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Buyer" FromRole="Buyer" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ColorLong" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ColorShort" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Designation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DesignationName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Staffs" Relationship="Self.FK_Staff_Designation" FromRole="Designation" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="Image1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsPrimary" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductSKU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProductStyleId" Type="Int32" />
+          <Property Name="LongDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="ShortDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="SizeGridID" Type="Int32" />
+          <Property Name="RecommendedSellingPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ActualSellingPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsVPI" Type="Boolean" />
+          <Property Name="IsMarkDown" Type="Boolean" />
+          <Property Name="SeasonID" Type="Int32" />
+          <Property Name="YearID" Type="Int32" />
+          <Property Name="ProductCategoryID" Type="Int32" />
+          <Property Name="ProductGroupID" Type="Int32" />
+          <Property Name="ProductSourceID" Type="Int32" />
+          <Property Name="SupplierStyle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SupplierID" Type="Int32" />
+          <Property Name="BuyerID" Type="Int32" />
+          <Property Name="CostPriceUSD" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CostPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="IsAllowZero" Type="Boolean" />
+          <Property Name="DefaultTemplateID" Type="Int32" />
+          <Property Name="MarkDownTemplateID" Type="Int32" />
+          <Property Name="IsFreeGift" Type="Boolean" />
+          <Property Name="IsConsignment" Type="Boolean" />
+          <Property Name="IsDiscontinue" Type="Boolean" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Buyer" Relationship="Self.FK_Product_Buyer" FromRole="Product" ToRole="Buyer" />
+          <NavigationProperty Name="PurchaseOrderItems" Relationship="Self.FK__PurchaseO__Produ__0A9D95DB" FromRole="Product" ToRole="PurchaseOrderItems" />
+          <NavigationProperty Name="ProductCategory" Relationship="Self.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
+          <NavigationProperty Name="ProductGroup" Relationship="Self.FK_Product_ProductGroup" FromRole="Product" ToRole="ProductGroup" />
+          <NavigationProperty Name="ProductSource" Relationship="Self.FK_Product_ProductSource" FromRole="Product" ToRole="ProductSource" />
+          <NavigationProperty Name="ProductStyle" Relationship="Self.FK_Product_ProductStyle" FromRole="Product" ToRole="ProductStyle" />
+          <NavigationProperty Name="SizeGrid" Relationship="Self.FK_Product_SizeGrid" FromRole="Product" ToRole="SizeGrid" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_Product_Supplier" FromRole="Product" ToRole="Supplier" />
+          <NavigationProperty Name="Template" Relationship="Self.FK_Product_Template" FromRole="Product" ToRole="Template" />
+          <NavigationProperty Name="Year" Relationship="Self.FK_Product_Year" FromRole="Product" ToRole="Year" />
+          <NavigationProperty Name="ProductSizes" Relationship="Self.FK_ProductSize_Product" FromRole="Product" ToRole="ProductSize" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ProductGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductGroup" FromRole="ProductGroup" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ProductSize">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_ProductSize_Product" FromRole="ProductSize" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ProductSource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Source" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductSource" FromRole="ProductSource" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ProductStyle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StyleSKU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductStyle" FromRole="ProductStyle" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClientInvoiceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SupplierId" Type="Int32" Nullable="false" />
+          <Property Name="BuyerId" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExpectedDeliveryDate" Type="DateTime" Precision="3" />
+          <Property Name="FirstDeliveryDate" Type="DateTime" Precision="3" />
+          <Property Name="LastDeliveryDate" Type="DateTime" Precision="3" />
+          <Property Name="OrderCompletionDate" Type="DateTime" Precision="3" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="VatAmount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PurchaseOrderStatusId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PurchaseOrderItems" Relationship="Self.FK__PurchaseO__Purch__09A971A2" FromRole="PurchaseOrder" ToRole="PurchaseOrderItems" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK__PurchaseO__Suppl__02FC7413" FromRole="PurchaseOrder" ToRole="Supplier" />
+          <NavigationProperty Name="PurchaseOrderStatu" Relationship="Self.FK_PurchaseOrder_PurchaseOrderStatus" FromRole="PurchaseOrder" ToRole="PurchaseOrderStatus" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurchaseOrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="QuantitySize01" Type="Int32" />
+          <Property Name="QuantitySize02" Type="Int32" />
+          <Property Name="QuantitySize03" Type="Int32" />
+          <Property Name="QuantitySize04" Type="Int32" />
+          <Property Name="QuantitySize05" Type="Int32" />
+          <Property Name="QuantitySize06" Type="Int32" />
+          <Property Name="QuantitySize07" Type="Int32" />
+          <Property Name="QuantitySize08" Type="Int32" />
+          <Property Name="QuantitySize09" Type="Int32" />
+          <Property Name="QuantitySize10" Type="Int32" />
+          <Property Name="QuantitySize11" Type="Int32" />
+          <Property Name="QuantitySize12" Type="Int32" />
+          <Property Name="QuantitySize13" Type="Int32" />
+          <Property Name="QuantitySize14" Type="Int32" />
+          <Property Name="QuantitySize15" Type="Int32" />
+          <Property Name="QuantitySize16" Type="Int32" />
+          <Property Name="QuantitySize17" Type="Int32" />
+          <Property Name="QuantitySize18" Type="Int32" />
+          <Property Name="QuantitySize19" Type="Int32" />
+          <Property Name="QuantitySize20" Type="Int32" />
+          <Property Name="QuantitySize21" Type="Int32" />
+          <Property Name="QuantitySize22" Type="Int32" />
+          <Property Name="QuantitySize23" Type="Int32" />
+          <Property Name="QuantitySize24" Type="Int32" />
+          <Property Name="QuantitySize25" Type="Int32" />
+          <Property Name="QuantitySize26" Type="Int32" />
+          <Property Name="QuantitySize27" Type="Int32" />
+          <Property Name="QuantitySize28" Type="Int32" />
+          <Property Name="QuantitySize29" Type="Int32" />
+          <Property Name="QuantitySize30" Type="Int32" />
+          <Property Name="CostSize01" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize02" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize03" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize04" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize05" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize06" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize07" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize08" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize09" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize10" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize11" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize12" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize13" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize14" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize15" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize16" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize17" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize18" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize19" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize20" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize21" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize22" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize23" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize24" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize25" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize26" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize27" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize28" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize29" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CostSize30" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__PurchaseO__Produ__0A9D95DB" FromRole="PurchaseOrderItems" ToRole="Product" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="Self.FK__PurchaseO__Purch__09A971A2" FromRole="PurchaseOrderItems" ToRole="PurchaseOrder" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK_PurchaseOrder_PurchaseOrderStatus" FromRole="PurchaseOrderStatus" ToRole="PurchaseOrder" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Season">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="SizeGrid">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GridNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Z01" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z02" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z03" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z04" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z05" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z06" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z07" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z08" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z09" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z10" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z11" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z12" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z13" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z14" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z15" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z16" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z17" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z18" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z19" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z20" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z21" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z22" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z23" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z24" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z25" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z26" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z27" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z28" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z29" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Z30" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_SizeGrid" FromRole="SizeGrid" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="DesignationID" Type="Int32" />
+          <Property Name="FingerPrintAccess" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="BranchID" Type="Int32" />
+          <Property Name="JoiningDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK_Staff_Branch" FromRole="Staff" ToRole="Branch" />
+          <NavigationProperty Name="Designation" Relationship="Self.FK_Staff_Designation" FromRole="Staff" ToRole="Designation" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Staff_User" FromRole="Staff" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAddress1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAddress2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentAddress3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PermanentPostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorrespondanceAddress1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorrespondanceAddress2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorrespondanceAddress3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorrespondanceCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorrespondanceCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CorrespondancePostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Limit" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ContactNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FaxNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Supplier" FromRole="Supplier" ToRole="Product" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="Self.FK__PurchaseO__Suppl__02FC7413" FromRole="Supplier" ToRole="PurchaseOrder" />
+        </EntityType>
+        <EntityType Name="Template">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Format" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Template" FromRole="Template" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="BranchID" Type="Int32" />
+          <Property Name="IsVerified" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="PasswordHash" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="PasswordSalt" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="UserGuid" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsPrimaryAccountHolder" Type="Boolean" />
+          <NavigationProperty Name="Areas" Relationship="Self.FK_Area_User" FromRole="User" ToRole="Area" />
+          <NavigationProperty Name="Branch" Relationship="Self.FK_User_Branch" FromRole="User" ToRole="Branch" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Staffs" Relationship="Self.FK_Staff_User" FromRole="User" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Year">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Year1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Year" FromRole="Year" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Area_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Area" Type="Self.Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="ManagerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Branch">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Branch">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Buyer">
+          <End Role="Buyer" Type="Self.Buyer" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Buyer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="BuyerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Designation">
+          <End Role="Designation" Type="Self.Designation" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Designation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="DesignationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseO__Produ__0A9D95DB">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="PurchaseOrderItems" Type="Self.PurchaseOrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrderItems">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductGroup">
+          <End Role="ProductGroup" Type="Self.ProductGroup" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductGroup">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductSource">
+          <End Role="ProductSource" Type="Self.ProductSource" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductSourceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductStyle">
+          <End Role="ProductStyle" Type="Self.ProductStyle" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductStyle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductStyleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_SizeGrid">
+          <End Role="SizeGrid" Type="Self.SizeGrid" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SizeGrid">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="SizeGridID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Template">
+          <End Role="Template" Type="Self.Template" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Template">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="DefaultTemplateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Year">
+          <End Role="Year" Type="Self.Year" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Year">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="YearID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSize_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="ProductSize" Type="Self.ProductSize" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductSize">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseO__Purch__09A971A2">
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="1" />
+          <End Role="PurchaseOrderItems" Type="Self.PurchaseOrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderItems">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PurchaseO__Suppl__02FC7413">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrder_PurchaseOrderStatus">
+          <End Role="PurchaseOrderStatus" Type="Self.PurchaseOrderStatu" Multiplicity="1" />
+          <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrderStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GrandShoesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Areas" EntityType="Self.Area" />
+          <EntitySet Name="Branches" EntityType="Self.Branch" />
+          <EntitySet Name="Buyers" EntityType="Self.Buyer" />
+          <EntitySet Name="Colors" EntityType="Self.Color" />
+          <EntitySet Name="Designations" EntityType="Self.Designation" />
+          <EntitySet Name="Images" EntityType="Self.Image" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductCategories" EntityType="Self.ProductCategory" />
+          <EntitySet Name="ProductGroups" EntityType="Self.ProductGroup" />
+          <EntitySet Name="ProductSizes" EntityType="Self.ProductSize" />
+          <EntitySet Name="ProductSources" EntityType="Self.ProductSource" />
+          <EntitySet Name="ProductStyles" EntityType="Self.ProductStyle" />
+          <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrder" />
+          <EntitySet Name="PurchaseOrderItems" EntityType="Self.PurchaseOrderItem" />
+          <EntitySet Name="PurchaseOrderStatus" EntityType="Self.PurchaseOrderStatu" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Seasons" EntityType="Self.Season" />
+          <EntitySet Name="SizeGrids" EntityType="Self.SizeGrid" />
+          <EntitySet Name="Staffs" EntityType="Self.Staff" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <EntitySet Name="Templates" EntityType="Self.Template" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Years" EntityType="Self.Year" />
+          <AssociationSet Name="FK_Area_User" Association="Self.FK_Area_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Area" EntitySet="Areas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Branch" Association="Self.FK_Staff_Branch">
+            <End Role="Branch" EntitySet="Branches" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Branch" Association="Self.FK_User_Branch">
+            <End Role="Branch" EntitySet="Branches" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Buyer" Association="Self.FK_Product_Buyer">
+            <End Role="Buyer" EntitySet="Buyers" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Designation" Association="Self.FK_Staff_Designation">
+            <End Role="Designation" EntitySet="Designations" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseO__Produ__0A9D95DB" Association="Self.FK__PurchaseO__Produ__0A9D95DB">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="PurchaseOrderItems" EntitySet="PurchaseOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductCategory" Association="Self.FK_Product_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductGroup" Association="Self.FK_Product_ProductGroup">
+            <End Role="ProductGroup" EntitySet="ProductGroups" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductSource" Association="Self.FK_Product_ProductSource">
+            <End Role="ProductSource" EntitySet="ProductSources" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductStyle" Association="Self.FK_Product_ProductStyle">
+            <End Role="ProductStyle" EntitySet="ProductStyles" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_SizeGrid" Association="Self.FK_Product_SizeGrid">
+            <End Role="SizeGrid" EntitySet="SizeGrids" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Supplier" Association="Self.FK_Product_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Template" Association="Self.FK_Product_Template">
+            <End Role="Template" EntitySet="Templates" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Year" Association="Self.FK_Product_Year">
+            <End Role="Year" EntitySet="Years" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSize_Product" Association="Self.FK_ProductSize_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductSize" EntitySet="ProductSizes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseO__Purch__09A971A2" Association="Self.FK__PurchaseO__Purch__09A971A2">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+            <End Role="PurchaseOrderItems" EntitySet="PurchaseOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PurchaseO__Suppl__02FC7413" Association="Self.FK__PurchaseO__Suppl__02FC7413">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrder_PurchaseOrderStatus" Association="Self.FK_PurchaseOrder_PurchaseOrderStatus">
+            <End Role="PurchaseOrderStatus" EntitySet="PurchaseOrderStatus" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_User" Association="Self.FK_Staff_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GrandShoesModelStoreContainer" CdmEntityContainer="GrandShoesEntities">
+          <EntitySetMapping Name="Areas">
+            <EntityTypeMapping TypeName="GrandShoesModel.Area">
+              <MappingFragment StoreEntitySet="Area">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Branches">
+            <EntityTypeMapping TypeName="GrandShoesModel.Branch">
+              <MappingFragment StoreEntitySet="Branch">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BranchCode" ColumnName="BranchCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+                <ScalarProperty Name="DateOpen" ColumnName="DateOpen" />
+                <ScalarProperty Name="DateClosed" ColumnName="DateClosed" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="AreaCode" ColumnName="AreaCode" />
+                <ScalarProperty Name="IsSendStock" ColumnName="IsSendStock" />
+                <ScalarProperty Name="IsClosed" ColumnName="IsClosed" />
+                <ScalarProperty Name="IsHeadOffice" ColumnName="IsHeadOffice" />
+                <ScalarProperty Name="StoreSize" ColumnName="StoreSize" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Buyers">
+            <EntityTypeMapping TypeName="GrandShoesModel.Buyer">
+              <MappingFragment StoreEntitySet="Buyer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BuyLimit" ColumnName="BuyLimit" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Colors">
+            <EntityTypeMapping TypeName="GrandShoesModel.Color">
+              <MappingFragment StoreEntitySet="Color">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ColorLong" ColumnName="ColorLong" />
+                <ScalarProperty Name="ColorShort" ColumnName="ColorShort" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Designations">
+            <EntityTypeMapping TypeName="GrandShoesModel.Designation">
+              <MappingFragment StoreEntitySet="Designation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DesignationName" ColumnName="DesignationName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="GrandShoesModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Image1" ColumnName="Image" />
+                <ScalarProperty Name="IsPrimary" ColumnName="IsPrimary" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="GrandShoesModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductSKU" ColumnName="ProductSKU" />
+                <ScalarProperty Name="ProductStyleId" ColumnName="ProductStyleId" />
+                <ScalarProperty Name="LongDescription" ColumnName="LongDescription" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="SizeGridID" ColumnName="SizeGridID" />
+                <ScalarProperty Name="RecommendedSellingPrice" ColumnName="RecommendedSellingPrice" />
+                <ScalarProperty Name="ActualSellingPrice" ColumnName="ActualSellingPrice" />
+                <ScalarProperty Name="IsVPI" ColumnName="IsVPI" />
+                <ScalarProperty Name="IsMarkDown" ColumnName="IsMarkDown" />
+                <ScalarProperty Name="SeasonID" ColumnName="SeasonID" />
+                <ScalarProperty Name="YearID" ColumnName="YearID" />
+                <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />
+                <ScalarProperty Name="ProductGroupID" ColumnName="ProductGroupID" />
+                <ScalarProperty Name="ProductSourceID" ColumnName="ProductSourceID" />
+                <ScalarProperty Name="SupplierStyle" ColumnName="SupplierStyle" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="BuyerID" ColumnName="BuyerID" />
+                <ScalarProperty Name="CostPriceUSD" ColumnName="CostPriceUSD" />
+                <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+                <ScalarProperty Name="IsAllowZero" ColumnName="IsAllowZero" />
+                <ScalarProperty Name="DefaultTemplateID" ColumnName="DefaultTemplateID" />
+                <ScalarProperty Name="MarkDownTemplateID" ColumnName="MarkDownTemplateID" />
+                <ScalarProperty Name="IsFreeGift" ColumnName="IsFreeGift" />
+                <ScalarProperty Name="IsConsignment" ColumnName="IsConsignment" />
+                <ScalarProperty Name="IsDiscontinue" ColumnName="IsDiscontinue" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="GrandShoesModel.ProductCategory">
+              <MappingFragment StoreEntitySet="ProductCategory">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductGroups">
+            <EntityTypeMapping TypeName="GrandShoesModel.ProductGroup">
+              <MappingFragment StoreEntitySet="ProductGroup">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSizes">
+            <EntityTypeMapping TypeName="GrandShoesModel.ProductSize">
+              <MappingFragment StoreEntitySet="ProductSize">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSources">
+            <EntityTypeMapping TypeName="GrandShoesModel.ProductSource">
+              <MappingFragment StoreEntitySet="ProductSource">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Source" ColumnName="Source" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductStyles">
+            <EntityTypeMapping TypeName="GrandShoesModel.ProductStyle">
+              <MappingFragment StoreEntitySet="ProductStyle">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StyleSKU" ColumnName="StyleSKU" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrders">
+            <EntityTypeMapping TypeName="GrandShoesModel.PurchaseOrder">
+              <MappingFragment StoreEntitySet="PurchaseOrder">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="ClientInvoiceNumber" ColumnName="ClientInvoiceNumber" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="BuyerId" ColumnName="BuyerId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="ExpectedDeliveryDate" ColumnName="ExpectedDeliveryDate" />
+                <ScalarProperty Name="FirstDeliveryDate" ColumnName="FirstDeliveryDate" />
+                <ScalarProperty Name="LastDeliveryDate" ColumnName="LastDeliveryDate" />
+                <ScalarProperty Name="OrderCompletionDate" ColumnName="OrderCompletionDate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="VatAmount" ColumnName="VatAmount" />
+                <ScalarProperty Name="PurchaseOrderStatusId" ColumnName="PurchaseOrderStatusId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrderItems">
+            <EntityTypeMapping TypeName="GrandShoesModel.PurchaseOrderItem">
+              <MappingFragment StoreEntitySet="PurchaseOrderItems">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="QuantitySize01" ColumnName="QuantitySize01" />
+                <ScalarProperty Name="QuantitySize02" ColumnName="QuantitySize02" />
+                <ScalarProperty Name="QuantitySize03" ColumnName="QuantitySize03" />
+                <ScalarProperty Name="QuantitySize04" ColumnName="QuantitySize04" />
+                <ScalarProperty Name="QuantitySize05" ColumnName="QuantitySize05" />
+                <ScalarProperty Name="QuantitySize06" ColumnName="QuantitySize06" />
+                <ScalarProperty Name="QuantitySize07" ColumnName="QuantitySize07" />
+                <ScalarProperty Name="QuantitySize08" ColumnName="QuantitySize08" />
+                <ScalarProperty Name="QuantitySize09" ColumnName="QuantitySize09" />
+                <ScalarProperty Name="QuantitySize10" ColumnName="QuantitySize10" />
+                <ScalarProperty Name="QuantitySize11" ColumnName="QuantitySize11" />
+                <ScalarProperty Name="QuantitySize12" ColumnName="QuantitySize12" />
+                <ScalarProperty Name="QuantitySize13" ColumnName="QuantitySize13" />
+                <ScalarProperty Name="QuantitySize14" ColumnName="QuantitySize14" />
+                <ScalarProperty Name="QuantitySize15" ColumnName="QuantitySize15" />
+                <ScalarProperty Name="QuantitySize16" ColumnName="QuantitySize16" />
+                <ScalarProperty Name="QuantitySize17" ColumnName="QuantitySize17" />
+                <ScalarProperty Name="QuantitySize18" ColumnName="QuantitySize18" />
+                <ScalarProperty Name="QuantitySize19" ColumnName="QuantitySize19" />
+                <ScalarProperty Name="QuantitySize20" ColumnName="QuantitySize20" />
+                <ScalarProperty Name="QuantitySize21" ColumnName="QuantitySize21" />
+                <ScalarProperty Name="QuantitySize22" ColumnName="QuantitySize22" />
+                <ScalarProperty Name="QuantitySize23" ColumnName="QuantitySize23" />
+                <ScalarProperty Name="QuantitySize24" ColumnName="QuantitySize24" />
+                <ScalarProperty Name="QuantitySize25" ColumnName="QuantitySize25" />
+                <ScalarProperty Name="QuantitySize26" ColumnName="QuantitySize26" />
+                <ScalarProperty Name="QuantitySize27" ColumnName="QuantitySize27" />
+                <ScalarProperty Name="QuantitySize28" ColumnName="QuantitySize28" />
+                <ScalarProperty Name="QuantitySize29" ColumnName="QuantitySize29" />
+                <ScalarProperty Name="QuantitySize30" ColumnName="QuantitySize30" />
+                <ScalarProperty Name="CostSize01" ColumnName="CostSize01" />
+                <ScalarProperty Name="CostSize02" ColumnName="CostSize02" />
+                <ScalarProperty Name="CostSize03" ColumnName="CostSize03" />
+                <ScalarProperty Name="CostSize04" ColumnName="CostSize04" />
+                <ScalarProperty Name="CostSize05" ColumnName="CostSize05" />
+                <ScalarProperty Name="CostSize06" ColumnName="CostSize06" />
+                <ScalarProperty Name="CostSize07" ColumnName="CostSize07" />
+                <ScalarProperty Name="CostSize08" ColumnName="CostSize08" />
+                <ScalarProperty Name="CostSize09" ColumnName="CostSize09" />
+                <ScalarProperty Name="CostSize10" ColumnName="CostSize10" />
+                <ScalarProperty Name="CostSize11" ColumnName="CostSize11" />
+                <ScalarProperty Name="CostSize12" ColumnName="CostSize12" />
+                <ScalarProperty Name="CostSize13" ColumnName="CostSize13" />
+                <ScalarProperty Name="CostSize14" ColumnName="CostSize14" />
+                <ScalarProperty Name="CostSize15" ColumnName="CostSize15" />
+                <ScalarProperty Name="CostSize16" ColumnName="CostSize16" />
+                <ScalarProperty Name="CostSize17" ColumnName="CostSize17" />
+                <ScalarProperty Name="CostSize18" ColumnName="CostSize18" />
+                <ScalarProperty Name="CostSize19" ColumnName="CostSize19" />
+                <ScalarProperty Name="CostSize20" ColumnName="CostSize20" />
+                <ScalarProperty Name="CostSize21" ColumnName="CostSize21" />
+                <ScalarProperty Name="CostSize22" ColumnName="CostSize22" />
+                <ScalarProperty Name="CostSize23" ColumnName="CostSize23" />
+                <ScalarProperty Name="CostSize24" ColumnName="CostSize24" />
+                <ScalarProperty Name="CostSize25" ColumnName="CostSize25" />
+                <ScalarProperty Name="CostSize26" ColumnName="CostSize26" />
+                <ScalarProperty Name="CostSize27" ColumnName="CostSize27" />
+                <ScalarProperty Name="CostSize28" ColumnName="CostSize28" />
+                <ScalarProperty Name="CostSize29" ColumnName="CostSize29" />
+                <ScalarProperty Name="CostSize30" ColumnName="CostSize30" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrderStatus">
+            <EntityTypeMapping TypeName="GrandShoesModel.PurchaseOrderStatu">
+              <MappingFragment StoreEntitySet="PurchaseOrderStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="GrandShoesModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seasons">
+            <EntityTypeMapping TypeName="GrandShoesModel.Season">
+              <MappingFragment StoreEntitySet="Season">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SizeGrids">
+            <EntityTypeMapping TypeName="GrandShoesModel.SizeGrid">
+              <MappingFragment StoreEntitySet="SizeGrid">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GridNumber" ColumnName="GridNumber" />
+                <ScalarProperty Name="Z01" ColumnName="Z01" />
+                <ScalarProperty Name="Z02" ColumnName="Z02" />
+                <ScalarProperty Name="Z03" ColumnName="Z03" />
+                <ScalarProperty Name="Z04" ColumnName="Z04" />
+                <ScalarProperty Name="Z05" ColumnName="Z05" />
+                <ScalarProperty Name="Z06" ColumnName="Z06" />
+                <ScalarProperty Name="Z07" ColumnName="Z07" />
+                <ScalarProperty Name="Z08" ColumnName="Z08" />
+                <ScalarProperty Name="Z09" ColumnName="Z09" />
+                <ScalarProperty Name="Z10" ColumnName="Z10" />
+                <ScalarProperty Name="Z11" ColumnName="Z11" />
+                <ScalarProperty Name="Z12" ColumnName="Z12" />
+                <ScalarProperty Name="Z13" ColumnName="Z13" />
+                <ScalarProperty Name="Z14" ColumnName="Z14" />
+                <ScalarProperty Name="Z15" ColumnName="Z15" />
+                <ScalarProperty Name="Z16" ColumnName="Z16" />
+                <ScalarProperty Name="Z17" ColumnName="Z17" />
+                <ScalarProperty Name="Z18" ColumnName="Z18" />
+                <ScalarProperty Name="Z19" ColumnName="Z19" />
+                <ScalarProperty Name="Z20" ColumnName="Z20" />
+                <ScalarProperty Name="Z21" ColumnName="Z21" />
+                <ScalarProperty Name="Z22" ColumnName="Z22" />
+                <ScalarProperty Name="Z23" ColumnName="Z23" />
+                <ScalarProperty Name="Z24" ColumnName="Z24" />
+                <ScalarProperty Name="Z25" ColumnName="Z25" />
+                <ScalarProperty Name="Z26" ColumnName="Z26" />
+                <ScalarProperty Name="Z27" ColumnName="Z27" />
+                <ScalarProperty Name="Z28" ColumnName="Z28" />
+                <ScalarProperty Name="Z29" ColumnName="Z29" />
+                <ScalarProperty Name="Z30" ColumnName="Z30" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="GrandShoesModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DesignationID" ColumnName="DesignationID" />
+                <ScalarProperty Name="FingerPrintAccess" ColumnName="FingerPrintAccess" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="GrandShoesModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PermanentAddress1" ColumnName="PermanentAddress1" />
+                <ScalarProperty Name="PermanentAddress2" ColumnName="PermanentAddress2" />
+                <ScalarProperty Name="PermanentAddress3" ColumnName="PermanentAddress3" />
+                <ScalarProperty Name="PermanentCity" ColumnName="PermanentCity" />
+                <ScalarProperty Name="PermanentCountry" ColumnName="PermanentCountry" />
+                <ScalarProperty Name="PermanentPostalCode" ColumnName="PermanentPostalCode" />
+                <ScalarProperty Name="CorrespondanceAddress1" ColumnName="CorrespondanceAddress1" />
+                <ScalarProperty Name="CorrespondanceAddress2" ColumnName="CorrespondanceAddress2" />
+                <ScalarProperty Name="CorrespondanceAddress3" ColumnName="CorrespondanceAddress3" />
+                <ScalarProperty Name="CorrespondanceCity" ColumnName="CorrespondanceCity" />
+                <ScalarProperty Name="CorrespondanceCountry" ColumnName="CorrespondanceCountry" />
+                <ScalarProperty Name="CorrespondancePostalCode" ColumnName="CorrespondancePostalCode" />
+                <ScalarProperty Name="Limit" ColumnName="Limit" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="FaxNumber" ColumnName="FaxNumber" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Templates">
+            <EntityTypeMapping TypeName="GrandShoesModel.Template">
+              <MappingFragment StoreEntitySet="Template">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Format" ColumnName="Format" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="GrandShoesModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+                <ScalarProperty Name="IsPrimaryAccountHolder" ColumnName="IsPrimaryAccountHolder" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Years">
+            <EntityTypeMapping TypeName="GrandShoesModel.Year">
+              <MappingFragment StoreEntitySet="Year">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Year1" ColumnName="Year" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

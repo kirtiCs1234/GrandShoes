@@ -1,0 +1,96 @@
+﻿@model Model.UserModel
+
+@{
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Edit User</h4>
+        </div>
+        @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { id = "editForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            @*@Html.HiddenFor(model => model.RoleId)
+                @Html.HiddenFor(model => model.CompanyId)
+            @Html.HiddenFor(model => model.PasswordHash)
+            @Html.HiddenFor(model => model.PasswordSalt)
+            @Html.HiddenFor(model => model.IsActive)
+            @Html.HiddenFor(model => model.IsVerified)*@
+
+        <div class="modal-body">
+
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>First Name</label>
+                    @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "First Name" } })
+                    @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Middle Name</label>
+                    @Html.EditorFor(model => model.MiddleName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
+                    @Html.ValidationMessageFor(model => model.MiddleName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Last Name</label>
+                    @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Last Name" } })
+                    @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>Email</label>
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+
+                    <label>Phone</label>
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", placeholder = "Phone" } })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Role</label>
+                    @Html.DropDownListFor(m => m.RoleID, null, "--Role--", htmlAttributes: new { @class = "form-control", onchange = "GetCountry(this);" })
+                    @Html.ValidationMessageFor(model => model.RoleID, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Branch</label>
+                    @Html.DropDownListFor(m => m.BranchID, null, "--Branch--", htmlAttributes: new { @class = "form-control", onchange = "GetCountry(this);" })
+                    @Html.ValidationMessageFor(model => model.BranchID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>IVerified</label>
+                    @Html.EditorFor(model => model.IsVerified, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.IsVerified, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+           
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel">Cancel</button>
+                <input type="submit" value="Update" class="btn btn-success popup-savebtn" />
+            </div>
+            }
+        </div>
+</div>
+
+<script type="text/javascript">
+
+    $.validator.unobtrusive.parse($("#editForm"));
+
+</script>

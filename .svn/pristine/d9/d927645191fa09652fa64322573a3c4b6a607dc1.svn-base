@@ -1,0 +1,242 @@
+﻿@model DAL.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductSKU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductSKU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LongDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LongDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShortDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecommendedSellingPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecommendedSellingPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActualSellingPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActualSellingPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsVPI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsVPI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsMarkDown)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsMarkDown)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SeasonID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SeasonID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SupplierStyle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SupplierStyle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CostPriceUSD)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CostPriceUSD)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CostPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CostPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAllowZero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAllowZero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MarkDownTemplateID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MarkDownTemplateID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsFreeGift)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsFreeGift)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsConsignment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsConsignment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDiscontinue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDiscontinue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Buyer.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Buyer.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductCategory.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductCategory.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductGroup.GroupName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductGroup.GroupName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductSource.Source)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductSource.Source)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductStyle.StyleSKU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductStyle.StyleSKU)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SizeGrid.GridNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SizeGrid.GridNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Supplier.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supplier.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Template.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Template.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Year.Year1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Year.Year1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

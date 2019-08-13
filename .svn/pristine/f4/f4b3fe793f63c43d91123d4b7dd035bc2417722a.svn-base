@@ -1,0 +1,152 @@
+﻿using Helper;
+using POS.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Model;
+using System.Web.Mvc;
+using Newtonsoft.Json;
+using PagedList;
+using System.Net;
+using Model.User;
+using POS.Controllers;
+
+namespace POS.Areas.Admin.Controllers
+{
+    public class UserController : BaseController
+    {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        public ActionResult Index()
+        {
+            List<UserModel> UserModelList = Services.UserService.GetAll();
+            return View(UserModelList);
+        }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<BranchModel> BranchModelList = Services.BranchService.GetAll();
+            List<RoleModel> RoleModelList = Services.RoleService.GetAll();
+            ViewBag.BranchId = new SelectList(BranchModelList, "Id", "Name");
+            ViewBag.RoleId = new SelectList(RoleModelList, "Id", "RoleName");
+
+            UserModel UserModelById = Services.UserService.GetById(id);
+            return View(UserModelById);
+        }
+        public ActionResult Create()
+        {
+            List<BranchModel> BranchModelList = Services.BranchService.GetAll();
+            List<RoleModel> RoleModelList = Services.RoleService.GetAll();
+            ViewBag.BranchId = new SelectList(BranchModelList, "Id", "Name");
+            ViewBag.RoleId = new SelectList(RoleModelList, "Id", "RoleName");
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(UserModel user)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+                user.IsActive = true;
+                List<BranchModel> BranchModelList = Services.BranchService.GetAll();
+                List<RoleModel> RoleModelList = Services.RoleService.GetAll();
+                ViewBag.BranchId = new SelectList(BranchModelList, "Id", "Name");
+                ViewBag.RoleId = new SelectList(RoleModelList, "Id", "RoleName");
+                UserModel UserCreate = Services.UserService.Create(user);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "User");
+            }
+           return View(user);
+
+        }
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<BranchModel> BranchModelList = Services.BranchService.GetAll();
+            List<RoleModel> RoleModelList = Services.RoleService.GetAll();
+            ViewBag.BranchId = new SelectList(BranchModelList, "Id", "Name");
+            ViewBag.RoleId = new SelectList(RoleModelList, "Id", "RoleName");
+            UserModel UserModelById = Services.UserService.GetById(id);
+            return View(UserModelById);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(UserModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                UserModel UserEdit = Services.UserService.Edit(user);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "User");
+            }
+            return View(user);
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            UserModel UserModelById = Services.UserService.GetById(id);
+
+            if (UserModelById == null)
+            {
+                return HttpNotFound();
+            }
+            return View(UserModelById);
+        }
+        public ActionResult Approve(int? id)
+        {
+            UserModel UserModelById = Services.UserService.GetById(id);
+            UserModelById.IsVerified = true;
+            UserModel UserEdit = Services.UserService.Edit(UserModelById);
+            return Json(new { id = id }, JsonRequestBehavior.AllowGet);
+            //return View();
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(UserModel user)
+        {
+            if (user.Id > 0)
+            {
+                UserModel UserDelete = Services.UserService.Delete(user);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "User");
+            }
+            return View(user);
+        }
+        public ActionResult CheckUserPhoneNumber(UserModel user)
+        {
+            var iExist = Services.UserService.CheckUserPhone(user);
+            return Json(!iExist, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult CheckCustomerEmail(UserModel user)
+        {
+            var iExist = Services.UserService.CheckUserEmail(user);
+            return Json(!iExist, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult ResetPassword(int? id)
+        {
+            UserModel UserModelById = Services.UserService.GetById(id);
+            ViewBag.Id = id;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ResetPassword(UserResetPassword urp)
+        {
+            var body = JsonConvert.SerializeObject(urp);
+            var model = ServerResponse.Invoke<UserModel>("api/user/resetPassword?id=" + urp.Id, body, "Post");
+
+            TempData["Success"] = "Data saved successfully!";
+            return RedirectToAction("Index", "User");
+        }
+     
+    }
+}

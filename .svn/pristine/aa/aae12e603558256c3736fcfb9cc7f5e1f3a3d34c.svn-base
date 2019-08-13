@@ -1,0 +1,101 @@
+﻿using Model;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+
+namespace POS.Areas.Admin.Controllers
+{
+    public class BuyerController : BaseController
+    {
+        // GET: Admin/Buyer
+        public ActionResult Index()
+        {
+            List<BuyerModel> BuyerModelList = Services.BuyerService.GetAll();
+
+            return View(BuyerModelList);
+        }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            BuyerModel BuyerModelById = Services.BuyerService.GetById(id);
+            return View(BuyerModelById);
+        }
+        public ActionResult Create()
+        {
+           
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(BuyerModel buyer)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+
+                buyer.IsActive = true;
+                BuyerModel BuyerCreate = Services.BuyerService.Create(buyer);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Buyer");
+            }
+            return View(buyer);
+
+        }
+        public ActionResult Edit(int? id)
+
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            BuyerModel BuyerModelById = Services.BuyerService.GetById(id);
+            return View(BuyerModelById);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(BuyerModel buyer)
+        {
+            if (ModelState.IsValid)
+            {
+
+                BuyerModel BuyerEdit = Services.BuyerService.Edit(buyer);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Buyer");
+            }
+            return View(buyer);
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BuyerModel BuyerModelById = Services.BuyerService.GetById(id);
+
+            if (BuyerModelById == null)
+            {
+                return HttpNotFound();
+            }
+            return View(BuyerModelById);
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(BuyerModel buyer)
+        {
+            if (buyer.Id > 0)
+            {
+                BuyerModel BuyerDelete = Services.BuyerService.Delete(buyer);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Buyer");
+            }
+            return View(buyer);
+        }
+    }
+}

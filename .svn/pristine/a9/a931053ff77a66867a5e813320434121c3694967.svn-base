@@ -1,0 +1,142 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+using Model;
+
+namespace Helper.Controllers.Admin
+{
+    [RoutePrefix("api/discount")]
+    public class DiscountsController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+        public DiscountsController()
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            db.Configuration.ProxyCreationEnabled = false;
+        }
+        [HttpGet]
+        [Route("getDetails")]
+        // GET: api/Discounts
+        public List<Discount> GetDiscounts()
+        {
+            var list=db.Discounts.ToList();
+            return list;
+        }
+
+        // GET: api/Discounts/5
+        [ResponseType(typeof(Discount))]
+        public IHttpActionResult GetDiscount(int id)
+        {
+            Discount discount = db.Discounts.Find(id);
+            if (discount == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(discount);
+        }
+
+        // PUT: api/Discounts/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutDiscount(int id, Discount discount)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != discount.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(discount).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DiscountExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        [HttpPost]
+        [Route("create")]
+        // POST: api/Discounts
+        [ResponseType(typeof(Discount))]
+        public IHttpActionResult PostDiscount(DiscountAddModel discount)
+        {
+            Discount model = new Discount();
+            model.ProductSKU = discount.Discounts.ProductSKU;
+            model.StyleSKU = discount.Discounts.StyleSKU;
+            model.IsFlatDiscount = discount.Discounts.IsFlatDiscount;
+            model.IsQuantityDiscount = discount.Discounts.IsQuantityDiscount;
+            model.MinimumQuantity = discount.Discounts.MinimumQuantity;
+            model.DateFrom = discount.Discounts.DateFrom;
+            model.DateTo = discount.Discounts.DateTo;
+            model.PercentDiscount = discount.Discounts.PercentDiscount;
+            model.Text = discount.Discounts.Text;
+            model.IsActive = true;
+            if(discount.BranchList !=null)
+            {
+                model.BranchDiscounts = discount.BranchList.Select(x => new BranchDiscount
+                {
+                    BranchID = Convert.ToInt16(x),
+                    IsActive = true
+                }).ToList();
+                db.Discounts.Add(model);
+                db.SaveChanges();
+                return Ok(true);
+            }
+            return Ok(false);
+        }
+
+        // DELETE: api/Discounts/5
+        [ResponseType(typeof(Discount))]
+        public IHttpActionResult DeleteDiscount(int id)
+        {
+            Discount discount = db.Discounts.Find(id);
+            if (discount == null)
+            {
+                return NotFound();
+            }
+
+            db.Discounts.Remove(discount);
+            db.SaveChanges();
+
+            return Ok(discount);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool DiscountExists(int id)
+        {
+            return db.Discounts.Count(e => e.Id == id) > 0;
+        }
+    }
+}

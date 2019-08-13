@@ -1,0 +1,84 @@
+﻿using Helper;
+using Model;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace POS.Areas.Admin.Controllers
+{
+    [CustomAuth]
+    public class DiscountController : BaseController
+    {
+        // GET: Admin/Discount
+        public ActionResult Index()
+        {
+            int id = Convert.ToInt32(Request.QueryString["id"]);
+            if (id != 0)
+            {
+                ViewBag.Id = id;
+                var data = Services.ProductService.GetAll();
+                var dataById = data.Where(x => x.Id == id).FirstOrDefault();
+                ViewBag.ProductSKU = dataById.ProductSKU;
+
+               // ViewBag.StyleSKU = dataById.ProductStyle.StyleSKU;
+            }
+            DiscountAddModel model = new DiscountAddModel();
+            var BranchList = Services.BranchService.GetAll();
+          //  var discount = Services.DiscountService.GetAll();
+          //  model.DiscountList = discount;
+            model.BranchList1 = BranchList;
+            return View(model);
+            
+        }
+        public ActionResult Create()
+        {
+            int id = Convert.ToInt32(Request.QueryString["id"]);
+            if (id != 0)
+            {
+                var data = Services.ProductService.GetAll();
+                var dataById = data.Where(x => x.Id == id).FirstOrDefault();
+                ViewBag.ProductSKU = dataById.ProductSKU;
+               // ViewBag.StyleSKU = dataById.ProductStyle.StyleSKU;
+            }
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(DiscountAddModel discount)
+        {
+            bool status = Services.DiscountService.Create(discount);
+            TempData["Success"] = "Data Saved successfully!";
+
+            return View(discount);
+        }
+        public JsonResult AutoCompleteProductSKUList(string name)
+        {
+            var ProductSKUList = Services.ProductService.ProductAutocomplete(name);
+            return Json(ProductSKUList, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult AutoCompleteProductStyleSKUList(string name)
+        {
+            var StyleSKUList = Services.ProductStyleService.ProductStyleAutocomplete(name);
+            return Json(StyleSKUList, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Detail(int? id)
+        {
+            //int id = Convert.ToInt32(Request.QueryString["id"]);
+            var DiscountList = Services.DiscountService.GetAll();
+            if (id != 0) {
+                var ProductSKUbyId = Services.ProductService.GetById(id).ProductSKU;
+                DiscountList=DiscountList.Where(x => x.ProductSKU == ProductSKUbyId).ToList();
+            }
+            TempData["Success"] = "Data Saved successfully!";
+
+            return View(DiscountList);
+        }
+        public ActionResult History()
+        {
+            var DiscountList = Services.DiscountService.GetAll();
+            return View(DiscountList);
+        }
+    }
+}

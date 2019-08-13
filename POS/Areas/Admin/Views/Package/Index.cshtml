@@ -1,0 +1,125 @@
+﻿@model IEnumerable<Model.Package>
+
+@{
+    ViewBag.Title = "PackageList";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="prtm-page-bar col-md-7 col-lg-3 col-sm-12 col-12" style="background:none;">
+        <ul class="breadcrumb" style="background:none;">
+            <li class="breadcrumb-item text-capitalize">
+                <h3>Manage Packages</h3>
+            </li>
+            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        </ul>
+    </div>
+
+    <!--------advanced search-->
+    <div class="col-md-4 col-lg-6 col-sm-12 col-12 search-container">
+        <div class="top-search-navbar-search smallsearch col-md-12 col-lg-12 col-sm-12 col-12">
+            <div class="row">
+                <input class="top-search-navbar-input col-md-10 col-lg-11 col-sm-10 col-12" type="text" placeholder="Search Packages" name="">
+                <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-12"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </div>
+        </div>
+
+    </div>
+    <!------------------>
+
+    <div class="add-btn-div col-md-5 col-lg-3 col-sm-12 col-12 text-right">
+        <button type="button" class="btn btn-primary import-btn">Import</button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary export-btn">Export</button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary add-btn add-form">Add</button>
+        
+    </div>
+</div>
+
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+        <div class="prtm-block-title pad-all-md">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">Manage Packages</h3>
+                </div>
+            </div>
+        </div>
+        <div class="prtm-block-content mrgn-b-md">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NumberOfAllowedEmployees)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NumberOfAllowedStores)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CostPerMonth)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AdditionalEmployeeCost)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.AdditionalStoreCost)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NumberOfAllowedEmployees)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NumberOfAllowedStores)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CostPerMonth)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AdditionalEmployeeCost)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AdditionalStoreCost)
+                                    </td>
+
+                                    <td>
+                                        @Html.ActionLink("", "Edit", new { id = item.Id }, new { @class = "fa fa-pencil edit-form" }) |
+                                        @Html.ActionLink("", "Details", new { id = item.Id }, new { @class = "fa fa-eye view-form" }) |
+                                        @Html.ActionLink("", "Delete", new { id = item.Id }, new { @class = "fa fa-trash " })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7">
+                                    <p>No record is found.</p>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+    @*Pagination*@
+</div>
+@section scripts{
+}

@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Model
+{
+    public partial class UserModel
+    { 
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+        [Required(ErrorMessage = "User Email is required")]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", ErrorMessage = "Please enter a valid e-mail adress")]
+     
+        public string Email { get; set; }
+        [Required(ErrorMessage = "User Phone Number is required")]
+        [RegularExpression("^[0-9]{10}$", ErrorMessage = "Enter 10 digits number")]
+        public string Phone { get; set; }
+        public string Password { get; set; }
+     
+        public Nullable<int> RoleID { get; set; }
+        public Nullable<int> BranchID { get; set; }
+        public Nullable<bool> IsVerified { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+       
+          public virtual AreaModel Area { get; set; }
+        // // [ForeignKey("BranchID")]
+         public virtual BranchModel Branch { get; set; }
+        ////  [ForeignKey("RoleID")]
+         public virtual RoleModel Role { get; set; }
+
+    }
+}

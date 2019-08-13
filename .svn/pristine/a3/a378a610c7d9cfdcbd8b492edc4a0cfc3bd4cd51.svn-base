@@ -1,0 +1,84 @@
+﻿@model List<Model.ProductStyleModel>
+<div class="prtm-full-block pos-relative">
+    <div class="prtm-block-title pad-all-md">
+        <div class="pos-relative">
+            <div class="caption">
+                <h3 class="text-capitalize">Product Style</h3>
+            </div>
+        </div>
+    </div>
+    <div class="prtm-block-content mrgn-b-md">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Style SKU</th>
+
+                        <th style="min-width:125px;">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="tbodyIndex">
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StyleSKU)
+                            </td>
+
+                            <td style="min-width:85px;">
+
+                                <i class="fa fa-pencil edit-form edit" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="edit(@item.Id)"></i>
+                                &nbsp;
+                                <i class="fa fa-trash delete delete-form" data-toggle="modal" data-target="#myModal" data-backdrop="static" onclick="del(@item.Id)"></i>
+                                &nbsp;
+                                <i class="fa fa-eye view-form details" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="details(@item.Id)"></i>
+
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    <div class="col-md-12">
+    @if (ViewBag.endPage > 1)
+    {
+        <div class="pagination">
+
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li>
+                    <a href="/Admin/ProductStyle/_Index1?page=1">First</a>
+                </li>
+                <li>
+                    <a href="/Admin/ProductStyle/_Index1?page=@(ViewBag.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @foreach (var i in ViewBag.result)
+            {
+
+                var page = i;
+
+                <li class="@(page == ViewBag.CurrentPage ? "active" : "")">
+                    <a href="/Admin/ProductStyle/_Index1?page=@page">@page</a>
+                </li>
+
+            }
+            @if (ViewBag.CurrentPage < ViewBag.totalPages)
+            {
+                <li>
+                    <a href="/Admin/ProductStyle/_Index1?page=@(ViewBag.CurrentPage + 1)">Next</a>
+                </li>
+                <li>
+                    <a href="/Admin/ProductStyle/_Index1?page=@(ViewBag.totalPages)">Last</a>
+                </li>
+            }
+
+        </div>
+    }
+</div>
+
+

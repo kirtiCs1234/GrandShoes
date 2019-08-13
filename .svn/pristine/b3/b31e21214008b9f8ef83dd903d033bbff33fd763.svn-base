@@ -1,0 +1,118 @@
+﻿@model List<Model.CartonManagementModel>
+<div class="table-style">
+    <div class="row  mrgn-b-lg">
+        <div class="col-sm-12 col-md-12 col-xs-12">
+            <div class="forms">
+                <div class="table-responsive" style="height:270px;border: 1px solid #eeeeee">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Branch Name</th>
+                                <th>IBT No</th>
+                                <th>Packing Slip</th>
+                                <th>Carton No</th>
+                                <th>IBT Total</th>
+                                <th>Carton Total</th>
+                                <th>Scan Count</th>
+                                
+                                <th>Dispatched</th>
+                                <th>Add</th>
+                            </tr>
+
+                        </thead>
+                        <tbody class="tbodyIndex" id="table11">
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td style="display:none">
+                                       @ViewBag.cartonCount 
+                                        </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Branch.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IBTNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DistributionSummaryID)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CartonNumber)
+                                    </td>
+                                    <td>
+                                        24
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TotalItems)
+                                    </td>
+                                    <td>
+                                        0
+                                    </td>
+                                    <td id="tdApproveUser" data-id="@item.Id" class="account-table-btns approved">
+                                        @if (item.IsDispatched == true)
+                                        {
+                                            <Span>Dispatched</Span>
+                                        }
+                                        else
+                                        {
+                                            <button class="btn btn-success approve-btn approve" type="button" value="Approve" onclick="Dispatch(this)" data-id="@item.Id">NotDispatch</button>
+                                        }
+                                    </td>
+                                    <td><i class="fa fa-chevron-down accordian-btn" data-toggle="collapse" onclick="showReceipt(@item.Id)" aria-hidden="true"></i></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9">
+                                        <div class="table-responsive accordian-bundling" style="display:none;" id="@item.Id">
+                                            <table class="table table-hover bundle-ppoup-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product SKU</th>
+                                                        <th>Style SKU</th>
+                                                        <th>Z01</th>
+                                                        <th>Z02</th>
+                                                        <th>Z03</th>
+                                                        <th>Z04</th>
+                                                        <th>Z05</th>
+                                                        <th>Z06</th>
+                                                        <th>Z07</th>
+                                                        <th>Z08</th>
+                                                        <th>Z09</th>
+                                                        <th>Z10</th>
+                                                        <th>Z11</th>
+                                                        <th>Z12</th>
+                                                        <th>Z13</th>
+                                                        <th>Z14</th>
+                                                        <th>Z15</th>
+                                                        <th>Z16</th>
+                                                        <th>Z17</th>
+                                                        <th>Z18</th>
+                                                        <th>Z19</th>
+                                                        <th>Z20</th>
+                                                        <th>Z21</th>
+                                                        <th>Z22</th>
+                                                        <th>Z23</th>
+                                                        <th>Z24</th>
+                                                        <th>Z25</th>
+                                                        <th>Z26</th>
+                                                        <th>Z27</th>
+                                                        <th>Z28</th>
+                                                        <th>Z29</th>
+                                                        <th>Z30</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="ReceiptDetail-@item.Id"></tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                         
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

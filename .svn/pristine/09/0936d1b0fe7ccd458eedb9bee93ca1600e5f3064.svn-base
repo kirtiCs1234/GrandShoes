@@ -1,0 +1,193 @@
+﻿using Helper;
+using POS.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Model;
+using System.Web.Mvc;
+using Newtonsoft.Json;
+using PagedList;
+using System.Net;
+using Model.User;
+using POS.Controllers;
+
+namespace POS.Areas.Admin.Controllers
+{
+    [CustomAuth]
+    public class UserController : BaseController
+    {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        public ActionResult Index(int? page)
+        {
+            int TotalCount = 0;
+            var pageSize = 10;
+            var pageNumber = page ?? 1;
+            int CurrentPage = pageNumber;
+            var endPage = CurrentPage + 4;
+            int PagesToShow = 10;
+            var UserModelList = Services.UserService.GetPaging(page, out TotalCount);
+            ViewBag.TotalCount = TotalCount;
+            ViewBag.PageSize = pageSize;
+            var result = Helper.CommonFunction.GetPages(TotalCount, pageSize, CurrentPage, PagesToShow);
+            int totalPages = (TotalCount / pageSize) + (TotalCount % pageSize == 0 ? 0 : 1);
+            ViewBag.result = result;
+            ViewBag.totalPages = totalPages;
+            ViewBag.CurrentPage = CurrentPage;
+            var pageCount = result.Count();
+            ViewBag.pageCount = pageCount;
+
+            ViewBag.endPage = endPage;
+
+            return View(UserModelList);
+        }
+       
+        public ActionResult _Index1(UserSearch userSearch, int? page)
+        {
+            int TotalCount = 0;
+            var pageSize = 10;
+            var pageNumber = page ?? 1;
+            int CurrentPage = pageNumber;
+            var endPage = CurrentPage + 4;
+            int PagesToShow = 10;
+            
+            ViewBag.TotalCount = TotalCount;
+            ViewBag.PageSize = pageSize;
+            
+                var body = JsonConvert.SerializeObject(userSearch);
+               var UserModelList = Services.UserService.GetSearchData(userSearch, page, out TotalCount);
+            
+            var result = Helper.CommonFunction.GetPages(TotalCount, pageSize, CurrentPage, PagesToShow);
+            int totalPages = (TotalCount / pageSize) + (TotalCount % pageSize == 0 ? 0 : 1);
+            ViewBag.result = result;
+            ViewBag.totalPages = totalPages;
+            ViewBag.CurrentPage = CurrentPage;
+            var pageCount = result.Count();
+            ViewBag.pageCount = pageCount;
+
+            ViewBag.endPage = endPage;
+
+            return View(UserModelList);
+        }
+
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<BranchModel> BranchModelList = Services.BranchService.GetAll();
+            List<RoleModel> RoleModelList = Services.RoleService.GetAll();
+            ViewBag.BranchId = new SelectList(BranchModelList, "Id", "Name");
+            ViewBag.RoleId = new SelectList(RoleModelList, "Id", "RoleName");
+
+            UserModel UserModelById = Services.UserService.GetById(id);
+            return View(UserModelById);
+        }
+        public ActionResult Create()
+        {
+            List<BranchModel> BranchModelList = Services.BranchService.GetAll();
+            List<RoleModel> RoleModelList = Services.RoleService.GetAll();
+            ViewBag.BranchId = new SelectList(BranchModelList, "Id", "Name");
+            ViewBag.RoleId = new SelectList(RoleModelList, "Id", "RoleName");
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(UserModel user)
+        {
+           
+                user.IsActive = true;
+                List<BranchModel> BranchModelList = Services.BranchService.GetAll();
+                List<RoleModel> RoleModelList = Services.RoleService.GetAll();
+                ViewBag.BranchId = new SelectList(BranchModelList, "Id", "Name");
+                ViewBag.RoleId = new SelectList(RoleModelList, "Id", "RoleName");
+                bool UserCreate = Services.UserService.Create(user);
+                TempData["Success"] = "Data Saved Successfully!";
+                return RedirectToAction("Index", "User");
+           
+        }
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<BranchModel> BranchModelList = Services.BranchService.GetAll();
+            List<RoleModel> RoleModelList = Services.RoleService.GetAll();
+            ViewBag.BranchId = new SelectList(BranchModelList, "Id", "Name");
+            ViewBag.RoleId = new SelectList(RoleModelList, "Id", "RoleName");
+            UserModel UserModelById = Services.UserService.GetById(id);
+            return View(UserModelById);
+        }
+   
+        [HttpPost]
+        public ActionResult Edit(UserModel user)
+        {
+           
+                bool UserEdit = Services.UserService.Edit(user);
+                TempData["Success"] = "Data Saved Successfully!";
+                return RedirectToAction("Index", "User");
+          
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            UserModel UserModelById = Services.UserService.GetById(id);
+
+            if (UserModelById == null)
+            {
+                return HttpNotFound();
+            }
+            return View(UserModelById);
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(UserModel user)
+        {
+            if (user.Id > 0)
+            {
+                UserModel UserDelete = Services.UserService.Delete(user);
+                TempData["Success"] = "Data Saved Successfully!";
+                return RedirectToAction("Index", "User");
+            }
+            return View(user);
+        }
+        public ActionResult Approve(int? id)
+        {
+            UserModel UserModelById = Services.UserService.GetById(id);
+            UserModelById.IsVerified = true;
+            bool UserEdit = Services.UserService.Edit(UserModelById);
+            return Json(new { id = id }, JsonRequestBehavior.AllowGet);
+            //return View();
+        }
+
+        public ActionResult CheckUserPhoneNumber(UserModel user)
+        {
+            var iExist = Services.UserService.CheckUserPhone(user);
+            return Json(!iExist, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult CheckUserEmail(UserModel user)
+        {
+            var iExist = Services.UserService.CheckUserEmail(user);
+            return Json(!iExist, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult ResetPassword(int? id)
+        {
+            UserModel UserModelById = Services.UserService.GetById(id);
+            ViewBag.Id = id;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ResetPassword(UserResetPassword urp)
+        {
+            bool UserResetPassword = Services.UserService.ResetPassword(urp);
+            TempData["Success"] = "Data Deleted Successfully!";
+            return RedirectToAction("Index", "User");
+        }
+     
+    }
+}

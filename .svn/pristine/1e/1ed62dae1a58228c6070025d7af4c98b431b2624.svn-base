@@ -1,0 +1,92 @@
+﻿@model PagedList.IPagedList<Model.PurchaseOrderModel>
+@using PagedList.Mvc;
+@using PagedList;
+
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+        <div class="prtm-block-title pad-all-md">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">Receipt Order</h3>
+                </div>
+            </div>
+        </div>
+        <div class="prtm-block-content mrgn-b-md">
+            <div class="table-responsive">
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Order Number</th>
+                            <th>Quantity</th>
+                            <th>Amount</th>
+
+                            <th>VatAmount</th>
+                            <th>Supplier Name</th>
+                            <th>Add</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="tbodyIndex">
+                        @if (Model.Count != 0) {
+                            foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Amount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.VatAmount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SupplierName)
+                                </td>
+                                <td><button type="button" class="btn btn-primary add-btn add-form create" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="create(@item.Id)">Add</button></td>
+                                <td><i class="fa fa-chevron-down accordian-btn" data-toggle="collapse" onclick="showReceipt(@item.Id)" aria-hidden="true"></i></td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="9">
+                                    <div class="table-responsive accordian-bundling" style="display:none;" id="@item.Id">
+                                        <table class="table table-hover bundle-ppoup-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Receipt Number</th>
+                                                    <th>Total Quantity</th>
+                                                    <th>Total Cost </th>
+                                                    <th>Total VAT</th>
+                                                    <th>Receipt Date</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="ReceiptDetail-@item.Id"></tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        }else
+                        {
+                            <tr>
+                                <td colspan="7">
+                                    <p>No results found.</p>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("_Index1",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

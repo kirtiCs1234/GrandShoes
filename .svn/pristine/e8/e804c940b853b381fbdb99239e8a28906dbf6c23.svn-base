@@ -1,0 +1,45 @@
+﻿using Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Model.PurchaseOrderItems;
+using Helper;
+using Newtonsoft.Json;
+
+namespace Services.Service
+{
+    class PurchaseOrderItemsService : IPurchaseOrderItemsService
+    {
+        public int AddPurchaseOrderItems(PurchaseOrderItems orderItems)
+        {
+            return ServerResponse.Invoke<int>("/api/PurchaseOrderItems/AddPurchaseOrderItems", JsonConvert.SerializeObject(orderItems), "post");
+        }
+
+        public bool DeletePurchaseOrderItems(int id)
+        {
+            return ServerResponse.Invoke<bool>("/api/PurchaseOrderItems/DeletePurchaseOrderItems?id=" + id, "", "post");
+        }
+
+        public List<PurchaseOrderItems> GetAllPurchaseOrderItems()
+        {
+            return ServerResponse.Invoke<List<PurchaseOrderItems>>("/api/PurchaseOrderItems/GetAllPurchaseOrderItems", "", "get");
+        }
+
+        public List<PurchaseOrderItems> GetItemsByPurchaseOrderId(int PurchaseOrderId)
+        {
+            return ServerResponse.Invoke<List<PurchaseOrderItems>>("/api/PurchaseOrderItems/GetAllPurchaseOrderItemsByPurchaseOrderId?PurchaseOrderId=" + PurchaseOrderId, "", "get");
+        }
+
+        public PurchaseOrderItems GetPurchaseOrderItemsById(int id)
+        {
+            return ServerResponse.Invoke<Model.PurchaseOrderItems.PurchaseOrderItems>("/api/PurchaseOrderItems/GetPurchaseOrderItemsById?id=" + id, "", "get");
+        }
+
+        public int UpdatePurchaseOrderItems(PurchaseOrderItems orderItems)
+        {
+            return ServerResponse.Invoke<int>("/api/PurchaseOrderItems/UpdatePurchaseOrderItems", JsonConvert.SerializeObject(orderItems), "post");
+        }
+    }
+}

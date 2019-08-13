@@ -1,0 +1,101 @@
+﻿@model List<Model.ViewDistribution>
+@using System.Web.UI.WebControls
+@using POS.Models
+@{
+    /**/
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .ScrollStyle {
+        max-height: 220px;
+        overflow-y: scroll;
+    }
+</style>
+
+
+<h2>View Distribution</h2>
+<div class="form-body ">
+    <link href="~/Content/jsTree/themes/default/style.min.css" rel="stylesheet" />
+    <div id="jstree1" class="ScrollStyle">
+        @(Html.TreeView(Model)
+                                                                              .EmptyContent("root")
+                                                                              .Children(m => m.Childs)
+                                                                              .HtmlAttributes(new { id = "tree" })
+                                                                              .ChildrenHtmlAttributes(new { @class = "subItem" })
+                                                                              .ItemText(m => m.Name)
+                                                                              .ItemTemplate(
+                                                                                @<text>
+                                                                                    <a href="@item.ID" onclick="getDetails(@item.ID)" desc="@item.Name">@item.Name     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @item.TransactionDate</a>
+                                                                                </text>)
+        )
+    </div>
+    <div class="row marg-btn-20">
+
+        <div id="dvCreatedetails">
+
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/jsTree3/jstree.js"></script>
+    <script>
+        $(function () {
+            debugger;
+            $('#jstree1').jstree({
+                "core": {
+                    "multiple": true,
+                    "check_callback": false,
+                    'themes': {
+                        "responsive": true,
+                        'variant': 'larg',
+                        'stripes': false,
+                        'dots': false
+                    }
+                },
+                "types": {
+                    "default": {
+                        "icon": "fa fa-folder icon-state-warning icon-lg"
+                    },
+                    "file": {
+                        "icon": "fa fa-file icon-state-warning icon-lg"
+                    }
+                },
+                "plugins": ["dnd", "state", "types"]
+            });
+        });
+        var id1;
+        function getDetails(value) {
+            id1 = value;//$(this).data("id");
+            Data(0);
+        }
+        function Data(ch) {
+            debugger;
+
+            var crud = "";
+            switch (ch) {
+                case 0:
+                    crud = '/Admin/TreeView/GetDetail/' + id1;
+                    break;
+            }
+            $.ajax({
+
+                url: crud,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+
+                dataType: 'html',
+                success: function (result) {
+
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+
+    </script>
+}   

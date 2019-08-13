@@ -1,0 +1,207 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="prtm-content">
+    <div class="row">
+        <div class="prtm-page-bar col-md-7 col-lg-3 col-sm-12 col-xs-12" style="background:none;">
+            <ul class="breadcrumb" style="background:none;">
+                <li class="breadcrumb-item text-capitalize">
+                    <h3>Purchase Orders</h3>
+                </li>
+                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+            </ul>
+        </div>
+
+        <!--------advanced search-->
+        <div class="col-md-4 col-lg-6 col-sm-12 col-xs-12 search-container">
+            <div class="top-search-navbar-search smallsearch col-md-12 col-lg-12 col-sm-12 col-xs-12" id="inner-page-search">
+                <div class="row">
+                    <input class="top-search-navbar-input col-md-10 col-lg-11 col-sm-10 col-xs-10" type="text" placeholder="Search. . ." name="">
+                    <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-xs-2"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </div>
+
+        </div>
+        <!------------------>
+
+        <div class="add-btn-div col-md-5 col-lg-3 col-sm-12 col-xs-12 text-right">
+            <button type="button" class="btn btn-primary add-btn add-form" data-toggle="modal" data-backdrop="static" data-keyboard="false" onclick="create()" data-target="#myModal">Add</button>
+        </div>
+    </div>
+
+    <div class="table-style">
+        <div class="prtm-full-block pos-relative">
+            <div class="prtm-block-title pad-all-md">
+                <div class="pos-relative">
+                    <div class="caption">
+                        <h3 class="text-capitalize">Purchase Orders</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <div class="purchase-div" style="padding: 0 15px;">
+                        <div class="row mrgn-b-lg">
+                            <div class="col-md-4 col-xs-12 col-sm-4">
+                                <label>Order No.</label>
+                                <div class="inverse-select  text-left">
+                                    <input class="form-control" type="text" placeholder="Order No.">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-12 col-sm-4">
+                                <label>Order Date</label>
+                                <input class="form-control" type="Date" placeholder="Order Date">
+                            </div>
+                            <div class="col-md-4 col-xs-12 col-sm-4">
+                                <label>Supplier Name</label>
+                                <input class="form-control" type="text" placeholder="Supplier Name">
+                            </div>
+                        </div>
+                        <div class="row  mrgn-b-lg">
+                            <div class="col-md-4 col-xs-12 col-sm-4">
+                                <label>Buyer Name</label>
+                                <div class="inverse-select  text-left">
+                                    <input class="form-control" type="text" placeholder="Buyer Name">
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-12 col-sm-4">
+                                <label>Order Date</label>
+                                <input class="form-control" type="Date" placeholder="Order Date">
+                            </div>
+                            <div class="col-md-4 col-xs-12 col-sm-4">
+                                <label>VPI</label>
+                                <input class="form-control" type="text" placeholder="Buyer Name">
+                            </div>
+                        </div>
+                        <div class="row  mrgn-b-lg">
+                            <div class="col-md-4 col-xs-12 col-sm-4">
+                                <label>Sell Normal</label>
+                                <input class="form-control" type="text" placeholder="Buyer Name">
+                            </div>
+                        </div>
+                        <div class="row  mrgn-b-lg">
+                            <div class="col-md-12 col-xs-12 col-sm-12 text-right">
+                                <button type="submit" class="btn btn-success exception-btn">Exception</button>
+                                <button type="button" data-dismiss="modal" class="btn btn-outline-inverse">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-style">
+        <div class="prtm-full-block pos-relative">
+            <div class="prtm-block-title pad-all-md">
+                <div class="pos-relative">
+                    <div class="caption">
+                        <h3 class="text-capitalize">Purchase Orders</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="prtm-block-content mrgn-b-md">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Colour</th>
+                                <th>Units</th>
+                                <th>Cost</th>
+                                <th>Amount</th>
+                                <th>Supplier Inv.</th>
+                                <th>Lb 01</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Package 1</td>
+                                <td>20</td>
+                                <td>15</td>
+                                <td>$ 200.52</td>
+                                <td>20.65</td>
+                                <td>540.01</td>
+                                <td>&nbsp;</td>
+                                <td style="width:70px;">
+                                    <i class="fa fa-pencil edit-form" data-toggle="modal" data-target="#myModal"></i>&nbsp;&nbsp;
+                                    <i class="fa fa-trash "></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <a href="javascript:;" aria-label="Previous">
+                                <span aria-hidden="true"><i class="fa fa-angle-double-left fa-lg" aria-hidden="true"></i></span>
+                            </a>
+                        </li>
+                        <li class="active"><a href="javascript:;">1</a></li>
+                        <li><a href="javascript:;">2</a></li>
+                        <li><a href="javascript:;">3</a></li>
+                        <li><a href="javascript:;">4</a></li>
+                        <li><a href="javascript:;">5</a></li>
+                        <li>
+                            <a href="javascript:;" aria-label="Next">
+                                <span aria-hidden="true">
+                                    <i class="fa fa-angle-double-right fa-lg" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal">
+        <div id="dvCreatedetails">
+
+
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+    var id1;
+    function create() {
+    Data(0);
+        }
+        function Data(ch) {
+            debugger;
+            var crud = "";
+            switch (ch) {
+                case 0:
+                    crud = '/Admin/PurchaseOrder/Create';
+                    break;
+            }
+            $.ajax({
+                
+                url: crud,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                // data: {page : page} ,
+                dataType: 'html',
+                success: function (result) {
+
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+    </script>
+}
+

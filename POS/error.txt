@@ -1,0 +1,1 @@
+Object reference not set to an instance of an object.---   at Helper.EmailHandler.SendMail(String Recipients, String RecipientsCC, String RecipientsBCC, String Subject, String Body, String Attachments, HttpPostedFileBase[] uploadedFile) in D:\GrandShoesData\GrandShoesLatest 28-1\Helper\EmailHandler.cs:line 28

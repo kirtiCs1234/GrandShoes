@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="db491a8ddf9a4c32b5f220018139995d" Name="Diagram1" ZoomLevel="116">
+        <EntityTypeShape EntityType="GrandShoesModel.Area" Width="1.5" PointX="7.5" PointY="25" />
+        <EntityTypeShape EntityType="GrandShoesModel.Branch" Width="1.5" PointX="3" PointY="19.375" />
+        <EntityTypeShape EntityType="GrandShoesModel.Buyer" Width="1.5" PointX="0.75" PointY="41.75" />
+        <EntityTypeShape EntityType="GrandShoesModel.Color" Width="1.5" PointX="0.75" PointY="47.5" />
+        <EntityTypeShape EntityType="GrandShoesModel.Designation" Width="1.5" PointX="5.25" PointY="16.75" />
+        <EntityTypeShape EntityType="GrandShoesModel.Image" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="GrandShoesModel.Product" Width="1.5" PointX="3" PointY="34" />
+        <EntityTypeShape EntityType="GrandShoesModel.ProductCategory" Width="1.5" PointX="0.75" PointY="30.5" />
+        <EntityTypeShape EntityType="GrandShoesModel.ProductGroup" Width="1.5" PointX="0.75" PointY="33.25" />
+        <EntityTypeShape EntityType="GrandShoesModel.ProductSize" Width="1.5" PointX="5.25" PointY="98.375" />
+        <EntityTypeShape EntityType="GrandShoesModel.ProductSource" Width="1.5" PointX="0.75" PointY="28" />
+        <EntityTypeShape EntityType="GrandShoesModel.ProductStyle" Width="1.5" PointX="0.75" PointY="38.5" />
+        <EntityTypeShape EntityType="GrandShoesModel.PurchaseOrder" Width="1.5" PointX="12" PointY="29.5" />
+        <EntityTypeShape EntityType="GrandShoesModel.PurchaseOrderItem" Width="1.5" PointX="14.25" PointY="29" />
+        <EntityTypeShape EntityType="GrandShoesModel.PurchaseOrderStatu" Width="1.5" PointX="9.75" PointY="30.75" />
+        <EntityTypeShape EntityType="GrandShoesModel.Role" Width="1.5" PointX="3" PointY="16.125" />
+        <EntityTypeShape EntityType="GrandShoesModel.Season" Width="1.5" PointX="0.75" PointY="53.125" />
+        <EntityTypeShape EntityType="GrandShoesModel.SizeGrid" Width="1.5" PointX="0.75" PointY="55.875" />
+        <EntityTypeShape EntityType="GrandShoesModel.Staff" Width="1.5" PointX="7.5" PointY="20.5" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockBranchInventory" Width="1.5" PointX="8.25" PointY="35.5" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockBranchTransaction" Width="1.5" PointX="5.25" PointY="45.5" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockDistribution" Width="1.5" PointX="5.25" PointY="25.375" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockDistributionStatu" Width="1.5" PointX="3" PointY="25.75" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockInventory" Width="1.5" PointX="5.25" PointY="35.5" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockSupplierTransaction" Width="1.5" PointX="11.25" PointY="35.125" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockTransactionType" Width="1.5" PointX="9" PointY="44.75" />
+        <EntityTypeShape EntityType="GrandShoesModel.Supplier" Width="1.5" PointX="0.75" PointY="21.75" />
+        <EntityTypeShape EntityType="GrandShoesModel.Template" Width="1.5" PointX="0.75" PointY="44.5" />
+        <EntityTypeShape EntityType="GrandShoesModel.User" Width="1.5" PointX="5.25" PointY="19.625" />
+        <EntityTypeShape EntityType="GrandShoesModel.Year" Width="1.5" PointX="0.75" PointY="50.625" />
+        <AssociationConnector Association="GrandShoesModel.FK_Area_User" />
+        <AssociationConnector Association="GrandShoesModel.FK_Staff_Branch" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockBranchInventory_Branch" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockBranchTransaction_Branch" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockDistribution_Branch" />
+        <AssociationConnector Association="GrandShoesModel.FK_User_Branch" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_Buyer" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_Color" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItems_Color" />
+        <AssociationConnector Association="GrandShoesModel.FK_Staff_Designation" />
+        <AssociationConnector Association="GrandShoesModel.FK__PurchaseO__Produ__0A9D95DB" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_ProductCategory" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_ProductGroup" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_ProductSource" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_ProductStyle" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_Season" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_SizeGrid" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_Supplier" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_Template" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_Year" />
+        <AssociationConnector Association="GrandShoesModel.FK_ProductSize_Product" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockBranchInventory_Product" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockBranchTransaction_Product" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockDistribution_Product" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockInventory_Product" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockSupplierTransaction_Product" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItems_ProductStyle" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockBranchInventory_ProductStyle" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockInventory_ProductStyle" />
+        <AssociationConnector Association="GrandShoesModel.FK__PurchaseO__Purch__09A971A2" />
+        <AssociationConnector Association="GrandShoesModel.FK__PurchaseO__Suppl__02FC7413" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrder_PurchaseOrderStatus" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItems_PurchaseOrderItems" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItems_SizeGrid" />
+        <AssociationConnector Association="GrandShoesModel.FK_User_Role" />
+        <AssociationConnector Association="GrandShoesModel.FK_Staff_User" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockBranchTransaction_StockTransactionType" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockDistribution_StockDistributionStatus" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockSupplierTransaction_StockSupplierTransaction" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockSupplierTransaction_StockTransactionType" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockSupplierTransaction_Supplier" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

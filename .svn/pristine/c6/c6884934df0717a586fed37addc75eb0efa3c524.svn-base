@@ -1,0 +1,53 @@
+﻿using Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Model.PurchaseOrder;
+using Helper;
+using Newtonsoft.Json;
+
+namespace Services.Service
+{
+    class PurchaseOrderService : IPurchaseOrderService
+    {
+        public int AddPurchaseOrder(PurchaseOrder order)
+        {
+            return ServerResponse.Invoke<int>("/api/PurchaseOrder/AddPurchaseOrder", JsonConvert.SerializeObject(order), "post");
+        }
+
+        public bool DeletePurchaseOrder(int id)
+        {
+            return ServerResponse.Invoke<bool>("/api/PurchaseOrder/DeletePurchaseOrder?id=" + id, "", "post");
+        }
+
+        public List<PurchaseOrder> GetAllPurchaseOrder()
+        {
+            return ServerResponse.Invoke<List<PurchaseOrder>>("/api/PurchaseOrder/GetAllPurchaseOrder", "", "get");
+        }
+
+        public PurchaseOrder GetPurchaseOrderById(int id)
+        {
+            return ServerResponse.Invoke<Model.PurchaseOrder.PurchaseOrder>("/api/PurchaseOrder/GetPurchaseOrderById?id=" + id, "", "get");
+        }
+
+        public List<PurchaseOrderStatus> GetPurchaseOrderStatus()
+        {
+            return ServerResponse.Invoke<List<PurchaseOrderStatus>>("/api/PurchaseOrder/GetAllPurchaseOrderStatus", "", "get");
+        }
+
+        public bool UpdatePurchaseOrder(PurchaseOrder order)
+        {
+            return ServerResponse.Invoke<bool>("/api/PurchaseOrder/UpdatePurchaseOrder", JsonConvert.SerializeObject(order), "post");
+        }
+
+        public bool IsOrderExist(string OrderNumber)
+        {
+            OrderNumber = System.Web.HttpUtility.UrlEncode(OrderNumber);
+            return ServerResponse.Invoke<bool>("/api/PurchaseOrder/isOrderNumberexist?OrderNumber=" + OrderNumber, "", "Get");
+        }
+    }
+}
+
+

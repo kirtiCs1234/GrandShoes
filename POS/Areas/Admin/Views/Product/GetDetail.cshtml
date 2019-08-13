@@ -1,0 +1,46 @@
+﻿@model List<Model.StockDistributionModel>
+@{
+
+    Layout = null;
+}
+@foreach (var item in Model)
+{
+
+    <tr>
+
+        <td>@Html.DisplayFor(modelItem => item.Branch.Name)</td>
+        <td>@Html.DisplayFor(modelItem=>item.DistributionDate)</td>
+        <td>@Html.DisplayFor(modelItem => item.StockDistributionStatu.Status)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity01)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity02)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity03)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity04)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity05)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity06)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity07)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity08)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity09)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity10)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity11)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity12)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity13)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity14)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity15)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity16)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity17)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity18)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity19)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity20)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity21)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity22)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity23)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity24)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity25)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity26)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity27)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity28)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity29)</td>
+        <td>@Html.DisplayFor(modelItem => item.Quantity30)</td>
+</tr>
+}
+

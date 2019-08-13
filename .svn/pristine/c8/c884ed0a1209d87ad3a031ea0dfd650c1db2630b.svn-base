@@ -1,0 +1,414 @@
+﻿@model Model.PurchaseOrderModel
+@{
+    ViewBag.Title = "CreatePurchaseOrder";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+@using (Html.BeginForm("EditPurchaseOrder", "PurchaseOrder", FormMethod.Post, new { id = "purchaseorderForm" }))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(m => m.Id)
+    <div class="prtm-content">
+        <div class="row">
+            <div class="prtm-page-bar col-md-7 col-lg-3 col-sm-12 col-xs-12" style="background:none;">
+                <ul class="breadcrumb" style="background:none;">
+                    <li class="breadcrumb-item text-capitalize">
+                        <h3>Edit Purchase Order</h3>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                </ul>
+            </div>
+
+           
+            <!------------------>
+            @*<div class="add-btn-div col-md-5 col-lg-3 col-sm-12 col-xs-12 text-right">
+                    <button type="button" class="btn btn-primary add-btn add-form" data-toggle="modal" data-backdrop="static" data-keyboard="false" onclick="create()" data-target="#myModal">Add</button>
+                </div>*@
+        </div>
+
+        <div class="table-style">
+            <div class="prtm-full-block pos-relative">
+                <div class="prtm-block-title pad-all-md">
+                    <div class="pos-relative">
+                        <div class="caption">
+                            <h3 class="text-capitalize">Purchase Orders</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-xs-12">
+                        <div class="purchase-div" style="padding: 0 15px;">
+                            <div class="row mrgn-b-lg">
+                                <div class="col-md-4 col-xs-12 col-sm-4">
+                                    <label>Order No.</label>
+                                    <div class="inverse-select  text-left">
+                                        @Html.TextBoxFor(model => model.OrderNumber, new { @class = "form-control", @readonly = "readonly" ,@Value= ViewBag.OrderNumber })
+                                        @Html.ValidationMessageFor(Model => Model.OrderNumber)
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xs-12 col-sm-4">
+                                    <label>Supplier Name</label>
+                                    @Html.TextBoxFor(model => model.SupplierName, new { id = "SupplierName", @class = "form-control", placeholder = "Supplier Name",@Value= ViewBag.SupplierName })
+                                    @*@Html.Hidden("SupplierId", new {@ViewBag.SupplierId })*@
+                                    <input type="hidden" id="SupplierId" value="@ViewBag.SupplierId"/>
+                                    @Html.ValidationMessageFor(Model => Model.SupplierName)
+                                </div>
+
+                                <div class="col-md-4 col-xs-12 col-sm-4">
+                                    <label>Buyer Name</label>
+                                    <div class="inverse-select  text-left">
+                                        @Html.DropDownListFor(m => m.BuyerId,ViewBag.BuyerList as SelectList, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(Model => Model.BuyerId)
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.HiddenFor(model => model.Id, new { @class = "form-control", placeholder = "Client Invoice Number", @Value = ViewBag.ID,@Id= "PurchareOrderId" })
+
+
+                            <div class="row  mrgn-b-lg">
+                                <div class="col-md-4 col-xs-12 col-sm-4">
+                                    <label>Client Invoice Number</label>
+                                    @Html.TextBoxFor(model => model.ClientInvoiceNumber, new { @class = "form-control", placeholder = "Client Invoice Number",@Value= ViewBag.ClientInvoiceNumber })
+                                    @Html.ValidationMessageFor(Model => Model.ClientInvoiceNumber)
+                                </div>
+                                <div class="col-md-4 col-xs-12 col-sm-4">
+                                    <label>Order Date</label>
+                                    @Html.TextBoxFor(model => model.OrderDate, " ", new { id = "OrderDate", @class = "form-control date-picker",@Value=ViewBag.OrderDate, autocomplete = "off" })
+                                    @Html.ValidationMessageFor(Model => Model.OrderDate)
+                                </div>
+                                <div class="col-md-4 col-xs-12 col-sm-4">
+                                    <label>First Delivery Date</label>
+                                    @Html.TextBoxFor(model => model.FirstDeliveryDate, " ", new { id = "FirstDeliveryDate", @class = "form-control date-picker",@Value= ViewBag.FirstDelieveryDate, autocomplete = "off" })
+                                    @Html.ValidationMessageFor(Model => Model.FirstDeliveryDate)
+                                </div>
+                            </div>
+                            <div class="row  mrgn-b-lg">
+                                <div class="col-md-4 col-xs-12 col-sm-4">
+                                    <label>Expected Delivery Date</label>
+                                    @Html.TextBoxFor(model => model.ExpectedDeliveryDate, " ", new { id = "ExpectedDeliveryDate", @class = "form-control date-picker",@Value= ViewBag.ExpectedDeliveryDate, autocomplete = "off" })
+                                    @Html.ValidationMessageFor(Model => Model.ExpectedDeliveryDate)
+                                </div>
+                                <div class="col-md-4 col-xs-12 col-sm-4">
+                                    <label>Order Completion Date</label>
+                                    @Html.TextBoxFor(model => model.OrderCompletionDate, " ", new { id = "OrderCompletionDate", @class = "form-control date-picker" ,@Value= ViewBag.OrderCompletionDate, autocomplete = "off" })
+                                    @Html.ValidationMessageFor(Model => Model.OrderCompletionDate)
+                                </div>
+                                <div class="col-md-4 col-xs-12 col-sm-4">
+                                    <label>Order Status</label>
+                                    @Html.DropDownListFor(m => m.PurchaseOrderStatusId, ViewBag.OrderStatusList as SelectList, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="row mrgn-b-lg">
+                                <div class="col-md-4 col-xs-12 col-sm-4">
+                                    <label>Quantity</label>
+                                    <div class="inverse-select  text-left">
+                                        @Html.TextBoxFor(model => model.Quantity, new { @class = "form-control", placeholder = "Quantity", @readonly = "readonly", @Value=ViewBag.Quantity })
+                                        @Html.ValidationMessageFor(Model => Model.Quantity)
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xs-12 col-sm-4">
+                                    <label>Amount</label>
+                                    @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", placeholder = "Amount", @readonly = "readonly",@Value=ViewBag.Amount})
+                                    @Html.ValidationMessageFor(Model => Model.Amount)
+                                </div>
+                                <div class="col-md-4 col-xs-12 col-sm-4">
+                                    <label>Vat Amount</label>
+                                    <div class="inverse-select  text-left">
+                                        @Html.TextBoxFor(model => model.VatAmount, new { @class = "form-control", placeholder = "Vat Amount", @readonly = "readonly"})
+                                        @Html.ValidationMessageFor(Model => Model.VatAmount)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row  mrgn-b-lg">
+                                <div class="col-md-12 col-xs-12 col-sm-12 text-right">
+                                    <button type="submit" class="btn btn-success exception-btn" onclick="editPurchaseOrder(@ViewBag.ID)">Edit</button>
+                                    <button type="button" data-dismiss="modal" class="btn btn-outline-inverse">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input id="PurchareOrderId" type="hidden" />
+            <button type="button" class="btn btn-primary add-btn add-form" style="float:right;margin-right:6%;" data-toggle="modal" data-backdrop="static" data-keyboard="false" onclick="create()" data-target="#myModal">Add Item</button><br />
+        </div>
+
+        <br />
+        <div class="table-style">
+            <div class="prtm-full-block pos-relative">
+                <div class="prtm-block-title pad-all-md">
+                    <div class="pos-relative">
+                        <div class="caption">
+                            <h3 class="text-capitalize">Purchase Orders</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="prtm-block-content mrgn-b-md">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="Itemtable">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Colour</th>
+                                    <th>Quantity</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            
+<tbody id="itemBody">
+    @foreach (var item in Model.OrderedItems)
+    {
+        <tr><td>@Html.DisplayFor(modelItem => item.Product.ProductSKU)</td>
+        <td>@Html.DisplayFor(modelItem => item.Color.Code)</td>
+        <td>@Html.DisplayFor(modelItem => item.ItemCount)</td>
+        <td>@Html.DisplayFor(modelItem => item.Amount)</td>
+        <td>
+            <i class="fa fa-pencil edit-form edit" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="editItem(@item.ID)"></i>
+            &nbsp;
+            <i class="fa fa-trash delete delete-form" data-toggle="modal" data-target="#myModal" data-backdrop="static" onclick="del(@item.ID)"></i>
+           
+        </td></tr>
+        
+    }
+     </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <input type="hidden" id="totalQuantity" />
+    </div>
+}
+<div class="modal fade" id="myModal">
+    <div id="dvCreatedetails">
+
+
+    </div>
+</div>
+@section scripts{
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+       
+        $(document).ready(function () {
+            var date = new Date();
+            var currentMonth = date.getMonth();
+            var currentDate = date.getDate();
+            var currentYear = date.getFullYear();
+
+            $('.date-picker').datepicker({
+                minDate: new Date(currentYear, currentMonth, currentDate),
+                dateFormat: 'yy/mm/dd'
+            });
+        });
+        $("#purchaseorderForm").submit(function (e) {
+            return false;
+        });
+        var id1;
+        function editPurchaseOrder(edit){
+            
+            debugger;
+            id1=edit;
+                //  if (!$("#purchaseorderForm").valid())
+                //      return false;
+                //  else {
+                var purchareOrder = {};
+                purchareOrder.OrderNumber = $('#OrderNumber').val();
+                purchareOrder.SupplierId = $('#SupplierId').val();
+                purchareOrder.SupplierName = $('#SupplierName').val();
+
+                purchareOrder.BuyerId = $('#BuyerId').val();
+                purchareOrder.ClientInvoiceNumber = $('#ClientInvoiceNumber').val();
+                purchareOrder.OrderDate = $('#OrderDate').val();
+                purchareOrder.FirstDeliveryDate = $('#FirstDeliveryDate').val();
+                purchareOrder.ExpectedDeliveryDate = $('#ExpectedDeliveryDate').val();
+                purchareOrder.OrderCompletionDate = $('#OrderCompletionDate').val();
+                purchareOrder.PurchaseOrderStatusId = $('#PurchaseOrderStatusId').val();
+                purchareOrder.Quantity = $('#Quantity').val();
+                purchareOrder.Amount = $('#Amount').val();
+                purchareOrder.VatAmount = $('#VatAmount').val();
+                debugger;
+                $.ajax({
+                    url: "/admin/PurchaseOrder/EditPurchaseOrderValues/"+id1,
+                    type: 'POST',
+                    data: { purchareOrder: purchareOrder },
+                    success: function (result) {
+                       
+                            $("#PurchareOrderId").val(result);
+                            alert("Updated successfully...");
+                       
+                    },
+                    error: function (xhr, status) {
+                        debugger;
+                        alert("Check Input Fields...")
+                    }
+                });
+          
+            //  }
+        }
+        function showItems(orderID) {
+            debugger
+            $.ajax({
+                url: "/admin/PurchaseOrder/showPurchaseOrderItem/" + orderID + "",
+                type: 'get',
+                success: function (result) {
+                    debugger;
+                    $("#Amount").val(result.Amount);
+                    $("#Quantity").val(result.Quantity);
+                    $("#VatAmount").val(result.VatAmount);
+                    var totalItems = result.Items.length;
+                    $("#Itemtable tbody tr").detach();
+                   // var count = $('#itemBody').children().length;
+                    for (var i = 0; i < totalItems; i++) {
+                        $('#Itemtable').append('<tr id="ItemRow' + i + '"><td>' + result.Items[i].autoCompleteProductName + '</td> <td>' + result.Items[i].autoCompleteColorName + ' </td> <td>' + result.Items[i].ItemCount + '</td> <td> ' + result.Items[i].Amount + '</td> <td><i class="fa fa-pencil edit-form" data-backdrop="static" data-toggle="modal" data-target="#myModal" onclick="editItem(' + result.Items[i].ID + ')"></i>&nbsp;&nbsp;<i class="fa fa-trash " data-backdrop="static" data-toggle="modal" data-target="#myModal" onclick="deleteItem(' + result.Items[i].ID + ',this)"></i></td><td><input type="hidden" id="ItemId" value=' + result.Items[i].ID + '></td></tr></tbody>');
+                    }
+                    updatePurchaseOrder();
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+ function updatePurchaseOrder() {
+            debugger;
+            if (!$("#purchaseorderForm").valid())
+                return false;
+            else {
+                var purchareOrder = {};
+                purchareOrder.ID = $("#PurchareOrderId").val();
+                purchareOrder.OrderNumber = $('#OrderNumber').val();
+                purchareOrder.SupplierId = $('#SupplierId').val();
+                purchareOrder.BuyerId = $('#BuyerId').val();
+                purchareOrder.ClientInvoiceNumber = $('#ClientInvoiceNumber').val();
+                purchareOrder.OrderDate = $('#OrderDate').val();
+                purchareOrder.FirstDeliveryDate = $('#FirstDeliveryDate').val();
+                purchareOrder.ExpectedDeliveryDate = $('#ExpectedDeliveryDate').val();
+                purchareOrder.OrderCompletionDate = $('#OrderCompletionDate').val();
+                purchareOrder.PurchaseOrderStatusId = $('#PurchaseOrderStatusId').val();
+                purchareOrder.Quantity = $('#Quantity').val();
+                purchareOrder.Amount = $('#Amount').val();
+                purchareOrder.VatAmount = $('#VatAmount').val();
+                debugger;
+                $.ajax({
+                    url: "/admin/PurchaseOrder/UpdatePurchaseOrder",
+                    type: 'POST',
+                    data: { purchareOrder: purchareOrder },
+                    success: function (result) {
+
+                    },
+                    error: function (xhr, status) {
+                        alert("Failed to update PurcahseOrder...")
+                    }
+                });
+                return false;
+            }
+        }
+        var SupplierLists = {};
+        $("#SupplierName").autocomplete({
+
+            source: function (request, response) {
+
+                $.ajax({
+                    url: "/admin/purchaseOrder/AutoCompleteSupplier",
+                    type: 'POST',
+                    data: { name: request.term },
+                    success: function (result) {
+
+                        // response($.map(result, function (item) {
+                        //     return { label: item.Name, value: item.Name};
+                        SupplierLists = $.map(result, function (value, key) {
+                            return { value: value.Id, label: value.Name };
+                        });
+                        response(SupplierLists);
+                        //  }))
+                        // alert(SupplierLists);
+
+                    },
+                    error: function (xhr, status) {
+                        alert(status)
+                    }
+                });
+
+            },
+            select: function (event, ui) {
+                event.preventDefault();
+                $("#SupplierName").val(ui.item.label);
+                $("#SupplierId").val(ui.item.value);
+            },
+
+            minLength: 1
+        });
+        function editItem(id) {
+            debugger;
+            var ActionUrl = "/admin/PurchaseOrder/EditItem/" + id + "";
+            $.ajax({
+                url: ActionUrl,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                dataType: 'html',
+                success: function (result) {
+                    debugger;
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+        var deleteRow = "";
+
+        function deleteItem(id, data) {
+            deleteRow = $(data).parents("tr");
+            debugger;
+            var ActionUrl = "/admin/PurchaseOrder/DeleteItem/" + id + "";
+            $.ajax({
+                url: ActionUrl,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                dataType: 'html',
+                success: function (result) {
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+        function create() {
+            Data(0);
+        }
+        function Data(ch) {
+            debugger;
+            var crud = "";
+            switch (ch) {
+                case 0:
+                    crud = '/Admin/PurchaseOrder/Create';
+                    break;
+            }
+            $.ajax({
+                url: crud,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                // data: {page : page} ,
+                dataType: 'html',
+                success: function (result) {
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+    </script>
+
+}
+

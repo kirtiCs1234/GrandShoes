@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout =null;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title add-heading">Add Purchase Order</h4>
+            <h4 class="modal-title edit-heading">Edit Purchase Order</h4>
+        </div>
+        <div class="row" style="margin:0px;">
+            <div class="prtm-full-block pos-relative">
+                <div class="col-sm-12 col-md-12 col-xs-12">
+                    <div class="prtm-block">
+                        <div class="row  mrgn-b-lg">
+                            <div class="col-md-6 col-xs-12 col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <label>SKU Style/Prod</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        <div class="row">
+                                            <div class="col-md12 col-xs-12 col-sm-12">
+                                                <input class="form-control" type="text" placeholder="Style" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        <div class="row">
+                                            <div class="col-md-12 col-xs-12 col-sm-12">
+                                                <input class="form-control" type="text" placeholder="Product" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-xs-12 col-sm-12">
+                                <label>Grid No.</label>
+                                <div class="inverse-select  text-left">
+                                    <input class="form-control" type="text" placeholder="Grid No." />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row  mrgn-b-lg">
+                            <div class="col-md-6 col-xs-12 col-sm-12">
+                                <label>Item Color</label>
+                                <div class="inverse-select  text-left">
+                                    <input class="form-control" type="text" placeholder="Item Color" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12 col-sm-12">
+                                <label>Supplier Style</label>
+                                <input class="form-control" type="text" placeholder="Supplier Style" />
+                            </div>
+                        </div>
+                        <div class="row  mrgn-b-lg">
+                            <div class="col-md-6 col-xs-12 col-sm-12">
+                                <label>Invoice</label>
+                                <div class="inverse-select  text-left">
+                                    <input class="form-control" type="text" placeholder="Invoice" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12 col-sm-12">
+                                <label>Price</label>
+                                <input class="form-control" type="text" placeholder="Price" />
+                            </div>
+                        </div>
+                        <div class="row  mrgn-b-lg">
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                                <div class="prtm-block-content mrgn-b-md">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Size</th>
+                                                    <th>Quantity Ordered</th>
+                                                    <th>Unit Cost</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Medium</td>
+                                                    <td>51</td>
+                                                    <td>$250.22</td>
+                                                    <td style="width:70px;" class="text-right">
+                                                        <i class="fa fa-trash "></i>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4" class="text-right"><i class="fa fa-plus-circle" aria-hidden="true"></i></td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-success popup-savebtn">Update</button>
+            <button type="button" data-dismiss="modal" class="btn btn-outline-inverse">Cancel</button>
+        </div>
+    </div>
+</div>
+

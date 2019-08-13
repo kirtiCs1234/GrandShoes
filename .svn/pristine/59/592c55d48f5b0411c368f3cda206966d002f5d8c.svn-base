@@ -1,0 +1,28 @@
+﻿using Helper;
+using Model;
+using Newtonsoft.Json;
+using Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.Service
+{
+   public class StockEnquiryService: IStockEnquiryService
+    {
+      public List<ViewAllEnquiryDataModel> GetSelectedData(Model.SearchData searchData)
+        {
+            var body = JsonConvert.SerializeObject(searchData);
+            var searchDataList = ServerResponse.Invoke<List<ViewAllEnquiryDataModel>>("api/stockDistributions/getSelectedData", body, "POST");
+            return searchDataList;
+        }
+        public List<ViewAllEnquiryDataModel> GetAll(Model.SearchData searchData)
+        {
+            var body = JsonConvert.SerializeObject(searchData);
+            var Searchlist = ServerResponse.Invoke<List<ViewAllEnquiryDataModel>>("api/stockInventory/getDetailList", body, "POST");
+            return Searchlist;
+        }
+    }
+}

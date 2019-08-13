@@ -1,0 +1,146 @@
+﻿
+@model List<Model.Report.DailySellSummaryModel>
+
+@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<style>
+    .ul.pagination {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.pagination li {
+        display: inline;
+    }
+
+        ul.pagination li a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+            ul.pagination li a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            ul.pagination li a:hover:not(.active) {
+                background-color: #ddd;
+            }
+</style>
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+        <div class="prtm-block-title pad-all-md ">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize"> Daily Status Report</h3>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <input class="form-control col-md-8 col-lg-10 col-sm-8 col-xs-8 searchiFirstName" type="text" placeholder="Select Date" Id="date" name="date">
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <Select name="TimeMethod" id="TimeMethod" class="form-control">
+                        <option value="day" selected>Day</option>
+                        <option value="month">Month</option>
+                        <option value="year">Year</option>
+                    </Select>
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <button class="btn btn-success" onclick="searchData()">
+                        Search
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!------------------>
+        @*}*@
+        <div class="add-btn-div col-md-4 col-lg-3 col-sm-4 col-12 text-right">
+        </div>
+    </div>
+    <div class="table-style">
+        @if (TempData["Success"] != null)
+        {
+            <p class="alert alert-success" id="successMessage" style="width: 300px;height: 25px;color: #fff;text-align: center; padding-bottom: 2em;">
+                @TempData["Success"]
+            </p>
+        }
+        <script>
+            setTimeout(function () {
+                $('#successMessage').fadeOut('slow');
+            }, 5000);
+        </script>
+        <div class="dvUserDetails">
+            @{
+
+                Html.RenderPartial("_DailySalesReportSummary", Model);
+            }
+
+        </div>
+
+    </div>
+    <div class="modal fade" id="myModal">
+        <div id="dvCreatedetails">
+        </div>
+    </div>
+    <div class="modal fade" id="myCancelModal">
+        <div id="Canceldiv">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Confirm Cancel</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you need to close without save!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        <button type="button" id="cancelyesbtn" class="btn btn-success popup-savebtn" data-dismiss="modal">yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#date').datepicker({
+                // minDate: new Date(currentYear, currentMonth, currentDate),
+                dateFormat: 'yy-mm-dd'
+            });
+        });
+        function searchData() {
+            debugger;
+            var obj = {};
+            obj.date = $('.searchiFirstName').val();
+            obj.TimeMethod = $('#TimeMethod').val();
+
+            $.ajax({
+                type: "POST",
+                url: '/Admin/Report/_DailySalesReportSummary',
+
+                data: obj,
+                success: function (result) {
+                    $('.dvUserDetails').html(result);
+                    //  alert('hdfjdhfj');
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+        }
+
+    </script>
+
+

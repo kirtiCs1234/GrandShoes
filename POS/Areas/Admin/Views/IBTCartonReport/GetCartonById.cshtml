@@ -1,0 +1,84 @@
+﻿@model List<Model.CartonManagementDetailModel>
+@{
+
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+
+<tr>
+    <td>
+        <ul>
+            <ol><b>Product SKU:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Product.ProductSKU)</ol>
+            <ol><b>Style SKU:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Product.StyleSKU)</ol>
+            <ol><b>Color Name:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Product.Color.ColorShort)</ol>
+            <ol><b>Cost Price:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Product.CostPrice)</ol>
+            <ol><b>Season:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Product.Season.Description)</ol>
+
+        </ul>
+    </td>
+    <td>
+        <ul>
+            <ol><b>Z01:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z01)</ol>
+            <ol><b>Z02:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z02)</ol>
+            <ol><b>Z03:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z03)</ol>
+            <ol><b>Z04:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z04)</ol>
+            <ol><b>Z05:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z05)</ol>
+
+        </ul>
+    </td>
+    <td>
+        <ul>
+            <ol><b>Z06:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z06)</ol>
+            <ol><b>Z07:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z07)</ol>
+            <ol><b>Z08:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z08)</ol>
+            <ol><b>Z09:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z09)</ol>
+            <ol><b>Z10:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z10)</ol>
+
+        </ul>
+    </td>
+    <td>
+        <ul>
+            <ol><b>Z11:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z11)</ol>
+            <ol><b>Z12:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z12)</ol>
+            <ol><b>Z13:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z13)</ol>
+            <ol><b>Z14:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z14)</ol>
+            <ol><b>Z15:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z15)</ol>
+
+        </ul>
+    </td>
+    <td>
+        <ul>
+            <ol><b>Z16:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z16)</ol>
+            <ol><b>Z17:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z17)</ol>
+            <ol><b>Z18:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z18)</ol>
+            <ol><b>Z19:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z19)</ol>
+            <ol><b>Z20:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z20)</ol>
+
+        </ul>
+    </td>
+    <td>
+        <ul>
+            <ol><b>Z21:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z21)</ol>
+            <ol><b>Z22:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z22)</ol>
+            <ol><b>Z23:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z23)</ol>
+            <ol><b>Z24:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z24)</ol>
+            <ol><b>Z25:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z25)</ol>
+
+        </ul>
+    </td>
+    <td>
+        <ul>
+            <ol><b>Z26:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z26)</ol>
+            <ol><b>Z27:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z27)</ol>
+            <ol><b>Z28:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z28)</ol>
+            <ol><b>Z29:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z29)</ol>
+            <ol><b>Z30:</b> &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(modelItem => item.Z30)</ol>
+
+        </ul>
+    </td>
+</tr>
+}
+
+

@@ -1,0 +1,321 @@
+﻿@model Model.MarkDownAddModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<style>
+    .radio-container {
+        box-sizing: border-box;
+        font-family: ‘Open Sans’, sans-serif;
+        font-size: 13px;
+        line-height: 30px;
+        margin: 0;
+        outline: 0;
+        overflow: hidden;
+        padding: 0;
+    }
+
+        .radio-container input {
+            box-sizing: border-box;
+            margin: 0;
+            outline: 0;
+            padding: 0;
+            position: relative;
+            top: 9px;
+            vertical-align: top;
+        }
+</style>
+
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+
+        <div class="modal-body">
+
+            <div class="row">
+                <div class="col-md-2 col-xs-12 col-sm-3">
+                    <label style="width:auto;float:left;margin-right:5px;
+padding-top:5px">Groups</label>
+                    <select class="form-control" style="width:auto;float:left;">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select>
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-3 radio-container text-center">
+                    <input name="selectedBranch1" type="radio" value="red" @*checked="checked"*@ class="branches1" id="select-all1">
+                    <label style="width:auto;">All Branches</label>
+                </div>
+
+
+                <div class="col-md-2 col-xs-12 col-sm-3 radio-container">
+                    <input name="selectedBranch1" type="radio" value="green" class="branches1" id="select-none1">
+                    <label style="width:auto;">Selective Branches</label>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-style">
+    <div class="prtm-full-block pos-relative col-md-4 padding-section">
+
+        <div class="prtm-block-title pad-all-md ">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">Mark Down</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="prtm-block-content mrgn-b-md ">
+            <div class="table-responsive" style="height:371px;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Branch</th>
+                            <th>Store</th>
+                            <th>Transit</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbodyIndex">
+
+                        @foreach (var item in Model.BranchList1)
+                        {
+                            <tr class="dataRow">
+                                <td>
+                                    <input type="checkbox" name="selectedBranch" class="branches" value="@item.Id">
+                                    @Html.DisplayFor(modelItem => item.BranchCode)
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.StoreSize)</td>
+                                <td>@Html.DisplayFor(modelItem => item.StoreSize)</td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="select-all" class="btn btn-outline-inverse cancel">All</button>
+            <button type="button" id="select-none" class="btn btn-outline-inverse cancel">None</button>
+        </div>
+    </div>
+    <div class="prtm-full-block pos-relative col-md-8 branch-right-section">
+        <div class="partial-render">
+            @Html.Action("Create")
+        </div>
+
+    </div>
+</div>
+<div class="dvCartonDetails" style="width:100%;float:left;">
+    @Html.Action("Detail")
+</div>
+
+
+
+@section scripts{
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script type="text/javascript">
+
+        function Submit() {
+            debugger
+            $('form').validate();
+            var obj = {};
+            obj.MarkDown = {};
+            obj.BranchList = [];
+            obj.MarkDown.ProductSKU = $("#MarkDown_ProductSKU").val(),
+                obj.MarkDown.StyleSKU = $("#MarkDown_StyleSKU").val(),
+                obj.MarkDown.OriginalSellingPrice = $("#OriginalSellingPrice").val(),
+                obj.MarkDown.PercentageDecrease = $("#PercentageDecrease").val(),
+                obj.MarkDown.IsPercentageOriginalPrice = $("#IsPercentageOriginalPrice").val(),
+                obj.MarkDown.NewSellingPrice = $("#NewSellingPrice").val(),
+                obj.MarkDown.NewCashPrice = $("#NewCashPrice").val(),
+                obj.MarkDown.EffectiveDate = $("#EffectiveDate").val(),
+                obj.MarkDown.IsActive = true
+
+
+            if ($('input:checked[name=selectedBranch]').length <= 0) {
+                alert('select atleast one branch !')
+            }
+            else {
+                $('input:checked[name=selectedBranch]').each(function () {
+                    if ($(this).is(':checked'))
+                        obj.BranchList.push($(this).val());
+                   
+                });
+                if ($('form').valid()) {
+                    $.ajax({
+                        type: "POST", //HTTP POST Method
+                        url: '/Admin/MarkDownBranch/Create',
+                        data: obj,
+                        success: function (result) {
+                            loadData();
+                        }
+                    });
+                }
+            }
+        }
+
+        function loadData() {
+            debugger;
+            $.ajax({
+                url: '/Admin/MarkDownBranch/Detail',
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: 'html',
+                success: function (result) {
+                    $('.dvCartonDetails').html(result);
+                    alert('@TempData["Success"]');
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+        //function create() {
+        //    Data(0);
+        //}
+        //function Data(ch) {
+        //    debugger;
+        //    $(".partial-render").remove();
+        //    var crud = "";
+        //    switch (ch) {
+        //        case 0:
+        //            crud = '/Admin/MarkDownBranch/Create';
+        //            break;
+        //    }
+        //    $.ajax({
+
+        //        url: crud,
+        //        contentType: 'application/html; charse=utf-8',
+        //        type: 'GET',
+        //        dataType: 'html',
+        //        success: function (result) {
+        //            debugger;
+        //            console.log(result);
+        //            $('#dvCreatedetails').html(result);
+        //        },
+        //        error: function (xhr, status) {
+        //            alert(status)
+        //        }
+        //    });
+        //}
+
+
+        $(document).ready(function () {
+            debugger
+            var ProductSKUList = {};
+            $("#AutocompleteProductSKU").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/MarkDownBranch/AutoCompleteProductSKUList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            ProductSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value.ProductSKU }; });
+                            response(ProductSKUList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#AutocompleteProductSKU").val(ui.item.label);
+                    $("#autoCompleteProductSKUId").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
+
+        $(document).ready(function () {
+            debugger
+            var costPrice = "";
+            var NoOfPrevMarkDown = "";
+            var DateOfPreMarkDown = "";
+            var StyleSKUList = {};
+            $("#AutocompleteProductStyleSKU").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/MarkDownBranch/AutoCompleteProductStyleSKUList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            StyleSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value.StyleSKU }; });
+                            response(StyleSKUList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#AutocompleteProductStyleSKU").val(ui.item.label);
+                    $("#autoCompleteProductStyleId").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
+
+        $('#select-all').click(function (event) {
+            debugger
+
+            // Iterate each checkbox
+            $('.branches:checkbox').each(function () {
+                this.checked = true;
+            });
+
+        });
+        $('#select-none').click(function (event) {
+            debugger
+            // Iterate each checkbox
+            $('.branches:checkbox').each(function () {
+                this.checked = false;
+            });
+
+        });
+
+        //for Radio btn
+        $('#select-all1').click(function (event) {
+            debugger
+
+            // Iterate each checkbox
+            $('.branches:checkbox').each(function () {
+                this.checked = true;
+            });
+
+        });
+        $('#select-none1').click(function (event) {
+            debugger
+
+            // Iterate each checkbox
+            $('.branches:checkbox').each(function () {
+                this.checked = false;
+            });
+
+        });
+
+    </script>
+}
+<style>
+    .ui-widget-content.ui-autocomplete {
+        z-index: 9999 !important;
+    }
+</style>

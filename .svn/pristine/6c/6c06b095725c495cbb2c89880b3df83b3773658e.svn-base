@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="POSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CountryId" Type="int" />
+          <Property Name="CityId" Type="int" />
+          <Property Name="Address" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="PostalCode" Type="varchar" MaxLength="100" />
+          <Property Name="Geography" Type="varchar" MaxLength="500" />
+          <Property Name="Logo" Type="varchar" MaxLength="300" />
+          <Property Name="WebsiteUrl" Type="varchar" MaxLength="200" />
+          <Property Name="TypeOfBusiness" Type="varchar" MaxLength="200" />
+          <Property Name="MainCurrencyId" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CostPerMonth" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="NumberOfAllowedEmployees" Type="int" Nullable="false" />
+          <Property Name="AdditionalEmployeeCost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="NumberOfAllowedStores" Type="int" Nullable="false" />
+          <Property Name="AdditionalStoreCost" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PackageSubscription">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PackageId" Type="int" />
+          <Property Name="NumberOfAdditionalEmployee" Type="int" />
+          <Property Name="NumberOfAdditionalStore" Type="int" />
+          <Property Name="SubscriptionStartDate" Type="datetime" />
+          <Property Name="SubscriptionEndDate" Type="datetime" />
+          <Property Name="PackageAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PackageSubscriptionTransaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PackageSubscriptionId" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransactionDate" Type="datetime" />
+          <Property Name="PaymentMode" Type="varchar" MaxLength="200" />
+          <Property Name="DueDate" Type="datetime" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__PackageSu__Compa__15502E78">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="PackageSubscription" Type="Self.PackageSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PackageSubscription">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PackageSu__Packa__145C0A3F">
+          <End Role="Package" Type="Self.Package" Multiplicity="0..1" />
+          <End Role="PackageSubscription" Type="Self.PackageSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PackageSubscription">
+              <PropertyRef Name="PackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PackageSu__Packa__182C9B23">
+          <End Role="PackageSubscription" Type="Self.PackageSubscription" Multiplicity="0..1" />
+          <End Role="PackageSubscriptionTransaction" Type="Self.PackageSubscriptionTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PackageSubscription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PackageSubscriptionTransaction">
+              <PropertyRef Name="PackageSubscriptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="POSModelStoreContainer">
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Package" EntityType="Self.Package" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PackageSubscription" EntityType="Self.PackageSubscription" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PackageSubscriptionTransaction" EntityType="Self.PackageSubscriptionTransaction" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__PackageSu__Compa__15502E78" Association="Self.FK__PackageSu__Compa__15502E78">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="PackageSubscription" EntitySet="PackageSubscription" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PackageSu__Packa__145C0A3F" Association="Self.FK__PackageSu__Packa__145C0A3F">
+            <End Role="Package" EntitySet="Package" />
+            <End Role="PackageSubscription" EntitySet="PackageSubscription" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PackageSu__Packa__182C9B23" Association="Self.FK__PackageSu__Packa__182C9B23">
+            <End Role="PackageSubscription" EntitySet="PackageSubscription" />
+            <End Role="PackageSubscriptionTransaction" EntitySet="PackageSubscriptionTransaction" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="POSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CountryId" Type="Int32" />
+          <Property Name="CityId" Type="Int32" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Geography" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Logo" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="WebsiteUrl" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TypeOfBusiness" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="MainCurrencyId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PackageSubscriptions" Relationship="Self.FK__PackageSu__Compa__15502E78" FromRole="Company" ToRole="PackageSubscription" />
+        </EntityType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CostPerMonth" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="NumberOfAllowedEmployees" Type="Int32" Nullable="false" />
+          <Property Name="AdditionalEmployeeCost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="NumberOfAllowedStores" Type="Int32" Nullable="false" />
+          <Property Name="AdditionalStoreCost" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PackageSubscriptions" Relationship="Self.FK__PackageSu__Packa__145C0A3F" FromRole="Package" ToRole="PackageSubscription" />
+        </EntityType>
+        <EntityType Name="PackageSubscription">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PackageId" Type="Int32" />
+          <Property Name="NumberOfAdditionalEmployee" Type="Int32" />
+          <Property Name="NumberOfAdditionalStore" Type="Int32" />
+          <Property Name="SubscriptionStartDate" Type="DateTime" Precision="3" />
+          <Property Name="SubscriptionEndDate" Type="DateTime" Precision="3" />
+          <Property Name="PackageAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__PackageSu__Compa__15502E78" FromRole="PackageSubscription" ToRole="Company" />
+          <NavigationProperty Name="Package" Relationship="Self.FK__PackageSu__Packa__145C0A3F" FromRole="PackageSubscription" ToRole="Package" />
+          <NavigationProperty Name="PackageSubscriptionTransactions" Relationship="Self.FK__PackageSu__Packa__182C9B23" FromRole="PackageSubscription" ToRole="PackageSubscriptionTransaction" />
+        </EntityType>
+        <EntityType Name="PackageSubscriptionTransaction">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PackageSubscriptionId" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="3" />
+          <Property Name="PaymentMode" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DueDate" Type="DateTime" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PackageSubscription" Relationship="Self.FK__PackageSu__Packa__182C9B23" FromRole="PackageSubscriptionTransaction" ToRole="PackageSubscription" />
+        </EntityType>
+        <Association Name="FK__PackageSu__Compa__15502E78">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="PackageSubscription" Type="Self.PackageSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PackageSubscription">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PackageSu__Packa__145C0A3F">
+          <End Role="Package" Type="Self.Package" Multiplicity="0..1" />
+          <End Role="PackageSubscription" Type="Self.PackageSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PackageSubscription">
+              <PropertyRef Name="PackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PackageSu__Packa__182C9B23">
+          <End Role="PackageSubscription" Type="Self.PackageSubscription" Multiplicity="0..1" />
+          <End Role="PackageSubscriptionTransaction" Type="Self.PackageSubscriptionTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PackageSubscription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PackageSubscriptionTransaction">
+              <PropertyRef Name="PackageSubscriptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="POSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Companies" EntityType="Self.Company" />
+          <EntitySet Name="Packages" EntityType="Self.Package" />
+          <EntitySet Name="PackageSubscriptions" EntityType="Self.PackageSubscription" />
+          <EntitySet Name="PackageSubscriptionTransactions" EntityType="Self.PackageSubscriptionTransaction" />
+          <AssociationSet Name="FK__PackageSu__Compa__15502E78" Association="Self.FK__PackageSu__Compa__15502E78">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="PackageSubscription" EntitySet="PackageSubscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PackageSu__Packa__145C0A3F" Association="Self.FK__PackageSu__Packa__145C0A3F">
+            <End Role="Package" EntitySet="Packages" />
+            <End Role="PackageSubscription" EntitySet="PackageSubscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PackageSu__Packa__182C9B23" Association="Self.FK__PackageSu__Packa__182C9B23">
+            <End Role="PackageSubscription" EntitySet="PackageSubscriptions" />
+            <End Role="PackageSubscriptionTransaction" EntitySet="PackageSubscriptionTransactions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="POSModelStoreContainer" CdmEntityContainer="POSEntities">
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="POSModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="Geography" ColumnName="Geography" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="WebsiteUrl" ColumnName="WebsiteUrl" />
+                <ScalarProperty Name="TypeOfBusiness" ColumnName="TypeOfBusiness" />
+                <ScalarProperty Name="MainCurrencyId" ColumnName="MainCurrencyId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Packages">
+            <EntityTypeMapping TypeName="POSModel.Package">
+              <MappingFragment StoreEntitySet="Package">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CostPerMonth" ColumnName="CostPerMonth" />
+                <ScalarProperty Name="NumberOfAllowedEmployees" ColumnName="NumberOfAllowedEmployees" />
+                <ScalarProperty Name="AdditionalEmployeeCost" ColumnName="AdditionalEmployeeCost" />
+                <ScalarProperty Name="NumberOfAllowedStores" ColumnName="NumberOfAllowedStores" />
+                <ScalarProperty Name="AdditionalStoreCost" ColumnName="AdditionalStoreCost" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PackageSubscriptions">
+            <EntityTypeMapping TypeName="POSModel.PackageSubscription">
+              <MappingFragment StoreEntitySet="PackageSubscription">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+                <ScalarProperty Name="NumberOfAdditionalEmployee" ColumnName="NumberOfAdditionalEmployee" />
+                <ScalarProperty Name="NumberOfAdditionalStore" ColumnName="NumberOfAdditionalStore" />
+                <ScalarProperty Name="SubscriptionStartDate" ColumnName="SubscriptionStartDate" />
+                <ScalarProperty Name="SubscriptionEndDate" ColumnName="SubscriptionEndDate" />
+                <ScalarProperty Name="PackageAmount" ColumnName="PackageAmount" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PackageSubscriptionTransactions">
+            <EntityTypeMapping TypeName="POSModel.PackageSubscriptionTransaction">
+              <MappingFragment StoreEntitySet="PackageSubscriptionTransaction">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PackageSubscriptionId" ColumnName="PackageSubscriptionId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Model;
+using DAL;
+
+namespace Services.IService
+{
+    public interface IUserService
+    {
+        List<UserModel> GetAll();
+        UserModel GetById(int? id);
+        UserModel Create(UserModel userModel);
+        UserModel Edit(UserModel userModel);
+        UserModel Delete(UserModel userModel);
+    }
+}

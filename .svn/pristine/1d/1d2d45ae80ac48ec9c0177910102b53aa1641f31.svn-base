@@ -1,0 +1,292 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+using Model;
+
+namespace POSApi.Controllers
+{
+    [RoutePrefix("api/branch")]
+    public class BranchesController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+        public BranchesController()
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            db.Configuration.ProxyCreationEnabled = false;
+        }
+        // GET: api/Branches
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<Branch> GetBranches()
+        {
+            var list= db.Branches.Where(x=>x.IsActive==true).OrderByDescending(x => x.Id).Include(x=>x.User).ToList();
+            return list;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getBranchPaging")]
+        public ServiceResult<List<Branch>> GetArea([FromUri]Paging paging)
+
+        {
+            ServiceResult<List<Branch>> model = new ServiceResult<List<Branch>>();
+            var source = db.Branches.Where(x => x.IsActive == true).Include(x=>x.User).OrderByDescending(x => x.Id).ToList();
+            int count = source.Count();
+
+            // Parameter is passed from Query string if it is null then it default Value will be pageNumber:1  
+            int CurrentPage = paging.pageNumber;
+
+            // Parameter is passed from Query string if it is null then it default Value will be pageSize:20  
+            int PageSize = paging.pageSize;
+
+            // Display TotalCount to Records to User  
+            int TotalCount = count;
+
+            // Calculating Totalpage by Dividing (No of Records / Pagesize)  
+            int TotalPages = (int)Math.Ceiling(count / (double)PageSize);
+
+            // Returns List of Customer after applying Paging   
+            var items = source.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+            model.TotalCount = count;
+            model.data = items;
+            model.pageSize = PageSize;
+            return model;
+
+        }
+        
+        [HttpPost]
+        [Route("getBranchAddress")]
+        public Branch GetBranchAddress(string name)
+        {
+            var data = db.Branches.Where(x => x.IsActive == true && x.Name == name).FirstOrDefault();
+            return data;
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("getSearchData")]
+        public ServiceResult<List<Branch>> GetSearchData(BranchSearch branchSearch)
+        {
+            ServiceResult<List<Branch>> model = new ServiceResult<List<Branch>>();
+            var source = db.Branches.Where(x => x.IsActive == true).Include(x=>x.User);
+            var pageSize = 10;
+            if (branchSearch != null)
+            {
+
+                if (!string.IsNullOrEmpty(branchSearch.BranchCode))
+
+                    source = db.Branches.Where(m => m.BranchCode.Contains(branchSearch.BranchCode.ToLower()));
+                if(!string.IsNullOrEmpty(branchSearch.Name))
+                    source = db.Branches.Where(m => m.Name.Contains(branchSearch.Name.ToLower()));
+            }
+ 
+            int count = source.Count();
+            var items = source.OrderByDescending(m => m.Id).Skip(((branchSearch.Page ?? 1) - 1) * pageSize).Take(pageSize).ToList();
+            model.data = items.Select(x => new Branch
+            {
+                Id = x.Id,
+                BranchCode = x.BranchCode,
+                AddressLine1 = x.AddressLine1,
+                AddressLine2 = x.AddressLine2,
+                AddressLine3 = x.AddressLine3,
+                AreaCode = x.AreaCode,
+                DateClosed = x.DateClosed,
+                DateOpen = x.DateOpen,
+                IsActive = true,
+                IsClosed = x.IsClosed,
+                IsHeadOffice = x.IsHeadOffice,
+                IsSendStock = x.IsSendStock,
+                LogId = x.LogId,
+                ManagerId = x.ManagerId,
+                PostalCode = x.PostalCode,
+                StoreSize = x.StoreSize,
+                Telephone = x.Telephone,
+                User = db.Users.Where(m => m.IsActive == true && m.Id == x.ManagerId).FirstOrDefault(),
+                Name = x.Name
+            }).ToList();
+            model.TotalCount = count;
+           
+            return model; ;
+        }
+
+        // GET: api/Branches/5
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetail")]
+        [ResponseType(typeof(Branch))]
+        public IHttpActionResult GetBranch(int id)
+        {
+            Branch branch = db.Branches.Find(id);
+            if (branch == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(branch);
+        }
+        [HttpPost]
+        [Route("BranchAutocomplete")]
+        public IHttpActionResult BranchAutocomplete(string name)
+        {
+           // var list = db.StockDistributions.Where(x => x.IsActive == true).ToList();
+            var data = db.Branches.Where(x => x.Name.StartsWith(name)).ToList().Select(m => new BranchModel
+            {
+                Id = m.Id,
+                Name=m.Name
+            }).ToList();
+            return Ok(data);
+        }
+        // PUT: api/Branches/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutBranch(int id, Branch branch)
+        {
+            Branch model = new Branch();
+            model = db.Branches.Where(x => x.IsActive == true && x.Id == id).FirstOrDefault();
+            model.AddressLine1 = branch.AddressLine1;
+            model.AddressLine2 = branch.AddressLine2;
+            model.AddressLine3 = branch.AddressLine3;
+            model.AreaCode = branch.AreaCode;
+            model.BranchCode = branch.BranchCode;
+
+            model.DateClosed = branch.DateClosed;
+            model.DateOpen = branch.DateOpen;
+            model.IsActive = true;
+            model.IsClosed = branch.IsClosed;
+            model.IsHeadOffice = branch.IsHeadOffice;
+            model.IsSendStock = branch.IsSendStock;
+            model.LogId = branch.LogId;
+            model.ManagerId = branch.ManagerId;
+            model.Name = branch.Name;
+            model.PostalCode = branch.PostalCode;
+            model.StoreSize = branch.StoreSize;
+            model.Telephone = branch.Telephone;
+            
+            db.SaveChanges();
+            return Ok(true);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("checkBranchCode")]
+        public bool GetCode(Branch branch)
+        {
+            if (branch.Id > 0)
+            {
+                var code = db.Branches.Where(x => x.Id == branch.Id && x.IsActive == true).FirstOrDefault();
+                if (code.BranchCode.Equals(branch.BranchCode))
+                {
+                    return false;
+                }
+
+            }
+            var data = db.Branches.Any(x => x.BranchCode == branch.BranchCode && x.IsActive == true);
+            return data;
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("checkBranchName")]
+        public bool GetName(Branch branch)
+        {
+            if (branch.Id > 0)
+            {
+                var name = db.Branches.Where(x => x.Id == branch.Id && x.IsActive == true).FirstOrDefault();
+                if (name.Name.Equals(branch.Name))
+                {
+                    return false;
+                }
+
+            }
+            var data = db.Branches.Any(x => x.Name == branch.Name && x.IsActive == true);
+            return data;
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("checkBranchCode")]
+        public bool GetCode(string chk)
+        {
+
+            var data = db.Branches.Any(x => x.BranchCode == chk && x.IsActive == true);
+            return data;
+        }
+      
+        // POST: api/Branches
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(Branch))]
+        public IHttpActionResult PostBranch(BranchModel branch)
+        {
+            
+                if (branch.Id == 0)
+                {
+                    Branch model = new Branch();
+                    model.AddressLine1 = branch.AddressLine1;
+                    model.AddressLine2 = branch.AddressLine2;
+                    model.AddressLine3 = branch.AddressLine3;
+                    model.AreaCode = branch.AreaCode;
+                    model.BranchCode = branch.BranchCode;
+                    model.DateClosed = branch.DateClosed;
+                    model.DateOpen = branch.DateOpen;
+                    model.IsActive = true;
+                    model.IsClosed = branch.IsClosed;
+                    model.IsHeadOffice = branch.IsHeadOffice;
+                    model.IsSendStock = branch.IsSendStock;
+                    model.LogId = branch.LogId;
+                    model.ManagerId = branch.ManagerId;
+                    model.Name = branch.Name;
+                    model.PostalCode = branch.PostalCode;
+                    model.StoreSize = branch.StoreSize;
+                    model.Telephone = branch.Telephone;
+                    db.Branches.Add(model);
+                }
+                else
+                    db.Entry(branch).State = EntityState.Modified;
+          
+            db.SaveChanges();
+            return Ok(true);
+           
+        }
+
+        // DELETE: api/Branches/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("Delete")]
+        [ResponseType(typeof(Branch))]
+        public IHttpActionResult DeleteBranch(int id)
+        {
+            Branch branch = db.Branches.Find(id);
+            if (branch == null)
+            {
+                return NotFound();
+            }
+            branch.IsActive = false;
+            //db.Branches.Remove(branch);
+            db.SaveChanges();
+
+            return Ok(branch);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool BranchExists(int id)
+        {
+            return db.Branches.Count(e => e.Id == id) > 0;
+        }
+    }
+}

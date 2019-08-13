@@ -1,0 +1,2 @@
+BranchCode,Name,Telephone,ManagerId,DateOpen,DateClosed,AddressLine1,AddressLine2,AddressLine3,PostalCode,AreaCode,IsSendStock,IsClosed,IsHeadOffice,StoreSize
+901,NICOL,878201860,Kirti l Sharma,00:00.0,00:00.0,322 PINE STREET,DURBAN,POLOKWANE,4001,1,FALSE,FALSE,FALSE,0

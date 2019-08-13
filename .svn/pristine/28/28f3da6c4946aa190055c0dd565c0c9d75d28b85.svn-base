@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Helper
+{
+    public class RandomNumberGenerator
+    {
+        public static string RandomNumberGeneration()
+        {
+            long ticks = DateTime.Now.Ticks;
+            byte[] bytes = BitConverter.GetBytes(ticks);
+            return Convert.ToBase64String(bytes).Replace('+', '_').Replace('/', '-').TrimEnd('=');
+        }
+    }
+}

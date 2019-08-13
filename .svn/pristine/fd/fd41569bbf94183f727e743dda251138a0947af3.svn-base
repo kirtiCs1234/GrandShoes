@@ -1,0 +1,20 @@
+﻿using Model;
+using PagedList;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.IService
+{
+    public interface IAreaService
+    {
+        // IPagedList<AreaModel> GetAll();
+        AreaPaginationModel GetAll(int? page);
+        AreaModel GetById(int? id);
+        AreaModel Create(AreaModel areaModel);
+        AreaModel Edit(AreaModel areaModel);
+        AreaModel Delete(AreaModel areaModel);
+    }
+}

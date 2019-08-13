@@ -1,0 +1,80 @@
+﻿@model Model.ImageModel
+@{
+    ViewBag.Title = "Create";
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Add Image</h4>
+        </div>
+        @using (Html.BeginForm("Create", "Image", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @*@Html.HiddenFor(m => m.Id)*@
+
+            <div class="modal-body">
+
+                <div class="row  mrgn-b-lg">
+                    <div class="col-md-6 col-xs-12 col-sm-12">
+                        <label>Product Id</label>
+                        @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                        @Html.EditorFor(model => model.ProductID, new { htmlAttributes = new { @class = "form-control", placeholder = "Buyer Name" } })
+                        @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-12">
+                        <label>Image</label>
+                        <div>
+                            <img id="user_img" src="" class="create-user-image" height="100" width="90" style="border:solid; margin-left:20px" />
+                        </div>
+
+                        <input type="file" title="search image" class="" id="file" name="file" onchange="show(this)" />
+                        @Html.ValidationMessageFor(model => model.Image1, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="row  mrgn-b-lg">
+                    <div class="col-md-6 col-xs-12 col-sm-12">
+                        <label>IsPrimary</label>
+                        @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                        @Html.EditorFor(model => model.IsPrimary, new { htmlAttributes = new { @class = "form-control", placeholder = "Buyer Name" } })
+                        @Html.ValidationMessageFor(model => model.IsPrimary, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-12">
+                        <label>IsActive</label>
+                        @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                        @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-control", placeholder = "Buy Limit" } })
+                        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel">Cancel</button>
+                <input type="submit" value="Add" class="btn btn-success popup-savebtn" />
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function show(input) {
+        debugger;
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                debugger;
+                $('.create-user-image').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+

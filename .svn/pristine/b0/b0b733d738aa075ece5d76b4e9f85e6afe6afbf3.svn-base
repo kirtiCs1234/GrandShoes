@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Model
+{
+    public partial class BranchModel
+    {
+        
+        public int Id { get; set; }
+        public string BranchCode { get; set; }
+        public string Name { get; set; }
+        public string Telephone { get; set; }
+        public Nullable<int> ManagerId { get; set; }
+        public Nullable<System.DateTime> DateOpen { get; set; }
+        public Nullable<System.DateTime> DateClosed { get; set; }
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
+        public string AddressLine3 { get; set; }
+        public string PostalCode { get; set; }
+        public string AreaCode { get; set; }
+        public Nullable<bool> IsSendStock { get; set; }
+        public Nullable<bool> IsClosed { get; set; }
+        public Nullable<bool> IsHeadOffice { get; set; }
+        public string StoreSize { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+
+        public virtual UserModel User { get; set; }
+    }
+}

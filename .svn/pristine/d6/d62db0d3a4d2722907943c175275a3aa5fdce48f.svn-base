@@ -1,0 +1,96 @@
+﻿using Model;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+
+namespace POS.Areas.Admin.Controllers
+{
+    public class SizeGridController : BaseController
+    {
+        // GET: Admin/SizeGrid
+        public ActionResult Index()
+        {
+            List<SizeGridModel> SizeGridModelList = Services.SizeGridService.GetAll();
+            return View(SizeGridModelList);
+        }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SizeGridModel SizeGridModelById = Services.SizeGridService.GetById(id);
+            return View(SizeGridModelById);
+        }
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(SizeGridModel sizeGrid)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+                // user.IsActive = true;
+                SizeGridModel SizeGridCreate = Services.SizeGridService.Create(sizeGrid);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "SizeGrid");
+            }
+            return View(sizeGrid);
+
+        }
+        public ActionResult Edit(int? id)
+
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SizeGridModel SizeGridModelById = Services.SizeGridService.GetById(id);
+            return View(SizeGridModelById);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(SizeGridModel sizeGrid)
+        {
+            if (ModelState.IsValid)
+            {
+                SizeGridModel SizeGridEdit = Services.SizeGridService.Edit(sizeGrid);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "SizeGrid");
+            }
+            return View(sizeGrid);
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            SizeGridModel SizeGridModelById = Services.SizeGridService.GetById(id);
+
+            if  (SizeGridModelById == null)
+            {
+                return HttpNotFound();
+            }
+            return View(SizeGridModelById);
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(SizeGridModel sizeGrid)
+        {
+            if (sizeGrid.Id > 0)
+            {
+                SizeGridModel SizeGridDelete = Services.SizeGridService.Delete(sizeGrid);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "SizeGrid");
+            }
+            return View(sizeGrid);
+        }
+
+    }
+}

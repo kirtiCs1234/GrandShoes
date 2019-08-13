@@ -1,0 +1,85 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Model
+{
+   public class LogModel
+    {
+        public void Log()
+        {
+            this.Branches = new List<BranchModel>();
+            this.Buyers = new List<BuyerModel>();
+            this.Designations = new List<DesignationModel>();
+            this.Products = new List<ProductModel>();
+            this.ProductCategories = new List<ProductCategoryModel>();
+       //     this.PurchaseOrders = new List<PurchaseOrder>();
+            this.PurchaseOrderItems = new List<PurchaseOrderItemModel>();
+     //       this.PurchaseOrderStatus = new List<PurchaseOrderStatuModel>();
+       //     this.ReceiptOrderItems = new List<ReceiptOrderItemModel>();
+      //      this.ReceiveOrders = new List<ReceiveOrderModel>();
+            this.Roles = new List<RoleModel>();
+            this.SMIBranchDefaults = new List<SMIBranchDefaultModel>();
+            this.Staffs = new List<StaffModel>();
+            this.StaffCommitions = new List<StaffCommitionModel>();
+            this.StaffMembers = new List<StaffMemberModel>();
+            this.StaffRoles = new List<StaffRoleModel>();
+            this.StaffStatus = new List<StaffStatusModel>();
+            //this.User = new List<UserModel>();
+            //this.Page = new List<PageModel>();
+        //    this.StockBranchInventories = new List<StockBranchInventory>();
+        //    this.StockBranchTransactions = new List<StockBranchTransaction>();
+            this.StockDistributions = new List<StockDistributionModel>();
+         //   this.StockDistributionStatus = new List<StockDistributionStatu>();
+        //    this.StockDistributionSummaries = new List<StockDistributionSummary>();
+            this.StockInventories = new List<StockInventoryModel>();
+         //   this.StockSupplierTransactions = new List<StockSupplierTransaction>();
+         //   this.StockTransactionTypes = new List<StockTransactionType>();
+            this.Suppliers = new List<SupplierModel>();
+            this.changeValue = new List<ChangeModel>();
+        }
+
+        public int Id { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public int ActionLogId { get; set; }
+        public Nullable<System.DateTime> LogDate { get; set; }
+        public string Comment { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<int> PageId { get; set; }
+
+        public virtual ActionLogModel ActionLog { get; set; }
+        public virtual List<BranchModel> Branches { get; set; }
+        public virtual List<BuyerModel> Buyers { get; set; }
+        public virtual List<DesignationModel> Designations { get; set; }
+        //public virtual List<PageModel> Page { get; set; }
+        //public virtual List<UserModel> User { get; set; }
+        public virtual List<ProductModel> Products { get; set; }
+        public virtual List<ProductCategoryModel> ProductCategories { get; set; }
+        //public virtual List<PurchaseOrderModel> PurchaseOrders { get; set; }
+        public virtual List<PurchaseOrderItemModel> PurchaseOrderItems { get; set; }
+      //  public virtual List<PurchaseOrderStatuModel> PurchaseOrderStatus { get; set; }
+      //  public virtual List<ReceiptOrderItemModel> ReceiptOrderItems { get; set; }
+      //  public virtual List<ReceiveOrderModel> ReceiveOrders { get; set; }
+        public virtual List<RoleModel> Roles { get; set; }
+        public virtual List<SMIBranchDefaultModel> SMIBranchDefaults { get; set; }
+        public virtual List<StaffModel> Staffs { get; set; }
+        public virtual List<StaffCommitionModel> StaffCommitions { get; set; }
+        public virtual List<StaffMemberModel> StaffMembers { get; set; }
+        public virtual List<StaffRoleModel> StaffRoles { get; set; }
+        public virtual List<StaffStatusModel> StaffStatus { get; set; }
+     //   public virtual List<StockBranchInventory> StockBranchInventories { get; set; }
+      //  public virtual List<StockBranchTransaction> StockBranchTransactions { get; set; }
+        public virtual List<StockDistributionModel> StockDistributions { get; set; }
+        public virtual List<StockDistributionModel> StockDistributionStatus { get; set; }
+     //   public virtual List<StockDistributionSummary> StockDistributionSummaries { get; set; }
+        public virtual List<StockInventoryModel> StockInventories { get; set; }
+     //   public virtual List<StockSupplierTransactionModel> StockSupplierTransactions { get; set; }
+   //     public virtual List<StockTransactionType> StockTransactionTypes { get; set; }
+        public virtual List<SupplierModel> Suppliers { get; set; }
+        public virtual UserModel User { get; set; }
+        public virtual PageModel Page { get; set; }
+        public virtual List<ChangeModel> changeValue { get; set; }
+    }
+}

@@ -1,0 +1,868 @@
+﻿@model List<Model.AddItemModel>
+    <div class="modal-dialog">
+        <div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Add Carton</h4>
+    </div>
+    @using (Html.BeginForm("Create", "CartonManagement", FormMethod.Post, new { id = "createForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*@Html.HiddenFor(m => m.Id)*@
+
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xs-12">
+                    <div class="forms">
+
+                        <div class="prtm-block-content mrgn-b-md">
+                            
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+
+                                    <thead>
+                                        <tr>
+                                       
+                                            <th style="min-width:155px;">Product Image</th>
+                                            <th style="display:none;">Id</th>
+                                            <th>Total</th>
+                                            <th>Quantity01</th>
+                                            <th>Quantity02</th>
+                                            <th>Quantity03</th>
+                                            <th>Quantity04</th>
+                                            <th>Quantity05</th>
+                                            <th>Quantity06</th>
+                                            <th>Quantity07</th>
+                                            <th>Quantity08</th>
+                                            <th>Quantity09</th>
+                                            <th>Quantity10</th>
+                                            <th>Quantity11</th>
+                                            <th>Quantity12</th>
+                                            <th>Quantity13</th>
+                                            <th>Quantity14</th>
+                                            <th>Quantity15</th>
+                                            <th>Quantity16</th>
+                                            <th>Quantity17</th>
+                                            <th>Quantity18</th>
+                                            <th>Quantity19</th>
+                                            <th>Quantity20</th>
+                                            <th>Quantity21</th>
+                                            <th>Quantity22</th>
+                                            <th>Quantity23</th>
+                                            <th>Quantity24</th>
+                                            <th>Quantity25</th>
+                                            <th>Quantity26</th>
+                                            <th>Quantity27</th>
+                                            <th>Quantity28</th>
+                                            <th>Quantity29</th>
+
+                                            <th>Quantity30</th>
+                                        </tr>
+                                    </thead>
+                                     
+                                    <tbody class="tbodyIndex" id="table">
+                                       
+
+                                        @for (var i = 0; i < Model.Count; i++)
+                                        {
+                                            <tr id="StockDistribution">
+                                                <td>
+                                                    <img id="file" src="/Image/product/@Model[i].Product.PrimaryImage" />
+
+                                                    <span class="img-content">@Html.DisplayFor(modelItem => Model[i].Product.Color.Code)</span>
+                                                    <span class="img-content">@Html.DisplayFor(modelItem => Model[i].Product.ProductSKU)</span>
+                                                    <span class="img-content">@Html.DisplayFor(modelItem => Model[i].Product.ProductStyle.StyleSKU)</span>
+
+                                                </td>
+                                                <td style="display:none;">
+                                                    @Html.HiddenFor(modelItem => Model[i].Id, new { @Id = "item_Id_" + i })
+                                                </td>
+
+                                                <td id="item_Total_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Total, new { @class = "CheckCalculation1", @Id = "Total_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity01_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity01, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                                                </td>
+                                                <td id="item_Quantity02_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity02, new { @class = "CheckCalculation1", @Id = "item_Quantity02_" + i, @readonly = "readonly" })
+                                                </td>
+                                                <td id="item_Quantity03_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity03, new { @class = "CheckCalculation1", @Id = "item_Quantity03_" + i, @readonly = "readonly" })
+                                                </td>
+                                                <td id="item_Quantity04_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity04, new { @class = "CheckCalculation1", @Id = "item_Quantity04_" + i, @readonly = "readonly" })
+                                                </td>
+
+
+                                                <td id="item_Quantity05_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity05, new { @class = "CheckCalculation1", @Id = "item_Quantity05_" + i, @readonly = "readonly" })
+                                                </td>
+                                                <td id="item_Quantity06_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity06, new { @class = "CheckCalculation1", @Id = "item_Quantity06_" + i, @readonly = "readonly" })
+                                                </td>
+                                                <td id="item_Quantity07_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity07, new { @class = "CheckCalculation1", @Id = "item_Quantity07_" + i, @readonly = "readonly" })
+                                                </td>
+                                                <td id="item_Quantity08_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity08, new { @class = "CheckCalculation1", @Id = "item_Quantity08_" + i, @readonly = "readonly" })
+                                                </td>
+                                                <td id="item_Quantity09_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity09, new { @class = "CheckCalculation1", @Id = "item_Quantity09_" + i, @readonly = "readonly" })
+                                                </td>
+                                                <td id="item_Quantity10_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity10, new { @class = "CheckCalculation1", @Id = "item_Quantity10_" + i, @readonly = "readonly" })
+                                                </td>
+                                                <td id="item_Quantity11_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity11, new { @class = "CheckCalculation1", @Id = "item_Quantity11_" + i, @readonly = "readonly" })
+                                                </td>
+                                                <td id="item_Quantity12_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity12, new { @class = "CheckCalculation1", @Id = "item_Quantity12_" + i, @readonly = "readonly" })
+                                                </td>
+                                                <td id="item_Quantity13_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity13, new { @class = "CheckCalculation1", @Id = "item_Quantity13_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity14_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity14, new { @class = "CheckCalculation1", @Id = "item_Quantity14_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity15_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity15, new { @class = "CheckCalculation1", @Id = "item_Quantity15_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity16_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity16, new { @class = "CheckCalculation1", @Id = "item_Quantity16_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity17_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity17, new { @class = "CheckCalculation1", @Id = "item_Quantity17_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity18_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity18, new { @class = "CheckCalculation1", @Id = "item_Quantity18_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity19_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity19, new { @class = "CheckCalculation1", @Id = "item_Quantity19_" + i, @readonly = "readonly" })
+                                                </td>
+                                                <td id="item_Quantity20_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity20, new { @class = "CheckCalculation1", @Id = "item_Quantity20_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity21_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity21, new { @class = "CheckCalculation1", @Id = "item_Quantity21_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity22_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity22, new { @class = "CheckCalculation1", @Id = "item_Quantity22_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity23_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity23, new { @class = "CheckCalculation1", @Id = "item_Quantity23_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity24_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity24, new { @class = "CheckCalculation1", @Id = "item_Quantity24_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity25_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity25, new { @class = "CheckCalculation1", @Id = "item_Quantity25_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity26_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity26, new { @class = "CheckCalculation1", @Id = "item_Quantity26_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity27_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity27, new { @class = "CheckCalculation1", @Id = "item_Quantity27_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity28_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity28, new { @class = "CheckCalculation1", @Id = "item_Quantity28_" + i, @readonly = "readonly" })
+                                                </td>
+
+                                                <td id="item_Quantity29_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity29, new { @class = "CheckCalculation1", @Id = "item_Quantity29_" + i, @readonly = "readonly" })
+                                                </td>
+                                                <td id="item_Quantity30_@i">
+                                                    @Html.DisplayFor(modelItem => Model[i].Quantity30, new { @class = "CheckCalculation1", @Id = "item_Quantity30_" + i, @readonly = "readonly" })
+                                                </td>
+
+
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-12 col-xs-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="myTable">
+
+                            <thead class="abc" id="abcd">
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Product</th>
+                                    <th>Total</th>
+                                    <th>Quantity01</th>
+                                    <th>Quantity02</th>
+                                    <th>Quantity03</th>
+                                    <th>Quantity04</th>
+                                    <th>Quantity05</th>
+                                    <th>Quantity06</th>
+                                    <th>Quantity07</th>
+                                    <th>Quantity08</th>
+                                    <th>Quantity09</th>
+                                    <th>Quantity10</th>
+                                    <th>Quantity11</th>
+                                    <th>Quantity12</th>
+                                    <th>Quantity13</th>
+                                    <th>Quantity14</th>
+                                    <th>Quantity15</th>
+                                    <th>Quantity16</th>
+                                    <th>Quantity17</th>
+                                    <th>Quantity18</th>
+                                    <th>Quantity19</th>
+                                    <th>Quantity20</th>
+                                    <th>Quantity21</th>
+                                    <th>Quantity22</th>
+                                    <th>Quantity23</th>
+                                    <th>Quantity24</th>
+                                    <th>Quantity25</th>
+                                    <th>Quantity26</th>
+                                    <th>Quantity27</th>
+                                    <th>Quantity28</th>
+                                    <th>Quantity29</th>
+
+                                    <th>Quantity30</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyIndex">
+                                <tr>
+
+                                    @*<td>
+                                            @Html.EditorFor(model => model.Quantity01, new { htmlAttributes = new { @class = "form-control",  @Id = "Quantity01", placeholder = "Z01", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity01"></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity02, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity02", placeholder = "Z02", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity02" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity03, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity03", placeholder = "Z03", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity03" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity04, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity04", placeholder = "Z04", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity04" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity05, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity05", placeholder = "Z05", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity05" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity06, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity06", placeholder = "Z06", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity06" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity07, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity07", placeholder = "Z07", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" style="display:none;" id="span_Quantity07" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity08, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity08", placeholder = "Z08", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" style="display:none;" id="span_Quantity08" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity09, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity09", placeholder = "Z09", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" style="display:none;" id="span_Quantity09" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity10, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity10", placeholder = "Z10", @onchange = "CalculationCheck(this)", type = "number",@Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity05" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity11, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity11", placeholder = "Z11", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity05" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity12, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity12", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity05" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity13, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity13", placeholder = "Z13", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity05" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity14, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity14", placeholder = "Z14", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity05" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity15, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity15", placeholder = "Z15", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity15" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity16, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity16", placeholder = "Z16", @onchange = "CalculationCheck(this)", type = "number",@Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity16" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity17, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity17", placeholder = "Z17", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity17" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity18, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity18", placeholder = "Z18", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity18" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity19, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity19", placeholder = "Z19", @onchange = "CalculationCheck(this)", type = "number",@Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity19" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity20, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity20", placeholder = "Z20", @onchange = "CalculationCheck(this)", type = "number",@Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity20" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity21, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity21", placeholder = "Z21", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity21" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity22, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity22", placeholder = "Z22", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity22" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity23, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity23", placeholder = "Z23", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity23" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity24, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity24", placeholder = "Z24", @onchange = "CalculationCheck(this)", type = "number",  @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity24" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity25, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity25", placeholder = "Z25", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity25" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity26, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity26", placeholder = "Z26", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity26" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity27, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity27", placeholder = "Z27", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity27" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity28, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity28", placeholder = "Z28", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity28" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity29, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity29", placeholder = "Z29", @onchange = "CalculationCheck(this)", type = "number", @Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity29" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Quantity30, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity30", placeholder = "Z30", @onchange = "CalculationCheck(this)", type = "number",@Value = 0 } })
+                                            <span style="display:none;" id="span_Quantity30" value=""></span>
+                                        </td>*@
+
+                                </tr>
+                            </tbody>
+
+                            <tbody id="FirstBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <input data-val="true"
+                   data-val-number="The field StudentId must be a number."
+                   data-val-required="The StudentId field is required."
+                   id="IsActive"
+                   name="IsActive"
+                   type="hidden"
+                   value="true" />
+
+        </div>
+            <div class="modal-footer">
+                <button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel">Cancel</button>
+                <input type="button" onclick="AddCartonManagement()" value="Add" class="btn btn-success popup-savebtn" />
+            </div>
+            }
+        </div>
+    </div>
+                <style>
+                    .ui-widget-content.ui-autocomplete {
+                        z-index: 9999 !important;
+                    }
+                </style>
+
+                <script type="text/javascript">
+    $('#myTable').append('<tbody><tr id="AddNewItem"><td colspan="4" class="text-right"><i class="fa fa-plus-circle" onclick="AddRow(this)" aria-hidden="true"></i></td></tr>  ');
+    function AddCartonManagement() {
+        debugger;
+        var obj = {};
+        obj.CartonManagementID = @ViewBag.CartonManagementID;
+        $.ajax(
+              {
+                  type: "GET", //HTTP POST Method
+                  url: '/Admin/CartonManagement/AddCarton',
+                  data: obj,
+                  success: function (result) {
+                      window.location.href = "/Admin/CartonManagement/Index";
+                  },
+                  error: function (errormessage) {
+                      alert(errormessage.responseText);
+                  }
+              });
+    }
+    function AddRow(id) {
+        debugger;
+        var i = id.parentNode.parentNode.rowIndex-2;
+        if (i <= 30)
+            $('#myTable,#FirstBody:last-child').append('<tr id="Row' + i + '"><td style="width:70px;" class="text-right"><input type="button" value="Add" id="button_' + i + '" onclick="AddCartonItem(this)" class="btn btn-success popup-savebtn" /><i class="fa fa-trash" id="DeletePrice" onclick="del(this)"></i></td><td><select style="width:120px;" id="productSelect_'+i+'" onclick="productList(this)" class="form-control"><option>Select Product</option></select></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Total_'+i+'" /><span value="" id="span_Total_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity01_' + i + '" " /><span  value="" id="span_Quantity01_' + i + '""></span></td> <td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity02_' + i + '" " /><span value="" id="span_Quantity02_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity03_' + i + '" " /><span value="" id="span_Quantity03_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity04_' + i + '" " /><span value="" id="span_Quantity04_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity05_' + i + '" " /><span value="" id="span_Quantity05_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity06_' + i + '" " /><span value="" id="span_Quantity06_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity07_' + i + '" " /><span value="" id="span_Quantity07_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity08_' + i + '" " /><span value="" id="span_Quantity08_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity09_' + i + '" " /><span value="" id="span_Quantity09_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity10_' + i + '" " /><span value="" id="span_Quantity10_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " ,onchange = "CalculationCheck(this)" id="Quantity11_' + i + ' " /><span value="" id="span_Quantity11_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " ,onchange = "CalculationCheck(this)" id="Quantity12_' + i + '" " /><span value=""  id="span_Quantity12_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control ",onchange = "CalculationCheck(this)"  id="Quantity13_' + i + '' + i + '" " /><span id="span_Quantity13_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity14_' + i + '" " /><span value="" id="span_Quantity14_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity15_' + i + '" " /><span value="" id="span_Quantity15_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity16_' + i + '" " /><span value="" id="span_Quantity16_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity17_' + i + '" " /><span value="" id="span_Quantity17_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity18_' + i + '" " /><span value="" id="span_Quantity18_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity19_' + i + '" " /><span value="" id="span_Quantity19_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity20_' + i + '" " /><span value="" id="span_Quantity20_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity21" " /><span value="" id="span_Quantity21_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)" id="Quantity22_' + i + '" " /><span value="" id="span_Quantity22_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)"  id="Quantity23_' + i + '" " /><span value="" style="display:none;" id="span_Quantity23_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control" onchange = "CalculationCheck(this)"  id="Quantity24_' + i + '" " /><span value="" id="span_Quantity24_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity25_' + i + '" " /><span style="display:none;" value="" id="span_Quantity25_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)"  id="Quantity26_' + i + '" " /><span value="" style="display:none;" id="span_Quantity26_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control "onchange = "CalculationCheck(this)"  id="Quantity27_' + i + '" " /><span value="" style="display:none;" id="span_Quantity27_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control " onchange = "CalculationCheck(this)" id="Quantity28_' + i + '" " /><span style="display:none;" value="" id="span_Quantity28_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control ",onchange = "CalculationCheck(this)" id="Quantity29_' + i + ' " " /><span style="display:none;" value="" id="span_Quantity29_' + i + '""></span></td><td><input type="text" style="width:120px;" class="form-control ",onchange = "CalculationCheck(this)" id="Quantity30_' + i + '" " /><span value="" style="display:none;" id="span_Quantity30_' + i + '""></span></td></tr></tbody>');
+        
+      //  GridNumberList = GridNumberList;
+        //var count = GridNumberList[0].sizeList.length;
+       // for (var i = 0; i < count; i++) {
+         //   ItemList[i] = GridNumberList[0].sizeList[i];
+        // }
+
+    }
+
+    var ProductSKUList={};
+    function productList(id) {
+        debugger;
+      //  var i = id.parentNode.parentNode.rowIndex;
+        var ctrlId = $(id).attr("id");
+        ctrlId= ctrlId.substring(14);
+        
+        var obj = {};
+        //var i=id;
+        obj.StockDistributionSummaryId = @ViewBag.StockDistributionSummaryId;
+
+        obj.BranchId = @ViewBag.BranchId;
+       
+            $.ajax(
+                  {
+                      type: "GET", //HTTP POST Method
+                      url: '/Admin/CartonManagement/productSelectList',
+                      data: obj,
+                      success: function (result) {
+                          // window.location.href = "/Admin/Receipt/Index";
+                          //alert("fgd");
+                          debugger;
+                          //$('#productSelect option').each(function(){
+                          //    if($.inArray(this.value, result) >-1){
+                          //        $(this).remove()
+                          //    }else{
+                          //        result.push(this.value);
+                          //    }
+                          //});
+                          for(var i=0;i<=ctrlId;i++){ 
+                              
+                              $('#productSelect_'+i).find('option').remove()
+                              for(var j=0;j<result.length;j++){
+                                  
+                             
+                                  $('#productSelect_'+i).append('<option value='+result[j].Id+'>'+result[j].Product.ProductSKU+'</option>');
+                              }  
+                          }
+                       //  $(this).find(result[j].Id).remove();
+                          
+                      },
+                      error: function (errormessage) {
+                          alert(errormessage.responseText);
+                      }
+                  });
+      
+    }
+                    function AddCartonItem(id){
+                        debugger
+                        var i = id.parentNode.parentNode.rowIndex-2;
+                        
+                        var Obj={};
+                        Obj.CartonManagementID=@ViewBag.CartonManagementID;
+                        Obj.Z01=$('#Quantity01_' + i).val();
+                        Obj.Z02=$('#Quantity02_' + i).val();
+                        Obj.Z03=$('#Quantity03_' + i).val();
+                        Obj.Z04=$('#Quantity04_' + i).val();
+                        Obj.Z05=$('#Quantity05_' + i).val();
+                        Obj.Z06=$('#Quantity06_' + i).val();
+                        Obj.Z07=$('#Quantity07_' + i).val();
+                        Obj.Z08=$('#Quantity08_' + i).val();
+                        Obj.Z09=$('#Quantity09_' + i).val();
+                        Obj.Z10=$('#Quantity10_' + i).val();
+                        Obj.Z11=$('#Quantity11_' + i).val();
+                        Obj.Z12=$('#Quantity12_' + i).val();
+                        Obj.Z13=$('#Quantity13_' + i).val();
+                        Obj.Z14=$('#Quantity14_' + i).val();
+                        Obj.Z15=$('#Quantity15_' + i).val();
+                        Obj.Z16=$('#Quantity16_' + i).val();
+                        Obj.Z17=$('#Quantity17_' + i).val();
+                        Obj.Z18=$('#Quantity18_' + i).val();
+                        Obj.Z19=$('#Quantity19_' + i).val();
+                        Obj.Z20=$('#Quantity20_' + i).val();
+                        Obj.Z21=$('#Quantity21_' + i).val();
+                        Obj.Z22=$('#Quantity22_' + i).val();
+                        Obj.Z23=$('#Quantity23_' + i).val();
+                        Obj.Z24=$('#Quantity24_' + i).val();
+                        Obj.Z25=$('#Quantity25_' + i).val();
+                        Obj.Z26=$('#Quantity26_' + i).val();
+                        Obj.Z27=$('#Quantity27_' + i).val();
+                        Obj.Z28=$('#Quantity28_' + i).val();
+                        Obj.Z29=$('#Quantity29_' + i).val();
+                        Obj.Z30=$('#Quantity30_' + i).val();
+                        Obj.StockDistributionId=$('#productSelect_'+i).val();
+                        var total=$('#Total_'+i).val();
+                        var totalId=$('#Total_'+i).attr("id");
+                        totalId=totalId.substring(6);
+                        var TotalCartonA=0;
+                            
+                        for(var k=0;k<=totalId;k++){
+                            var parseTotal= $('#Total_'+k).val();
+                            TotalCartonA +=parseInt(parseTotal);
+                        }
+                        
+                        if(TotalCartonA>24)
+                        {
+                            alert("Carton Is Full.");
+                        }
+                        else if(TotalCartonA<=24){
+                            //if (obj.Z01 == "") {
+                            //    obj.Z01 = 0;
+                            //}
+                            //if (isNaN(obj.Z01)) {
+                            //    obj.Z01 = 0;
+                            //}
+                            //if (obj.Z02 == "") {
+                            //    obj.Z02 = 0;
+                            //}
+                            //if (isNaN(obj.Z02)) {
+                            //    obj.Z02 = 0;
+                            //}
+                            //if (obj.Z03 == "") {
+                            //    obj.Z03 = 0;
+                            //}
+                            //if (isNaN(obj.Z03)) {
+                            //    obj.Z03 = 0;
+                            //}
+                            //if (obj.Z04 == "") {
+                            //    obj.Z04 = 0;
+                            //}
+                            //if (isNaN(obj.Z04)) {
+                            //    obj.Z04= 0;
+                            //}
+                            //if (obj.Z05== "") {
+                            //    obj.Z05= 0;
+                            //}
+                            //if (isNaN(obj.Z05)) {
+                            //    obj.Z05 = 0;
+                            //}
+                            //if (obj.Z06 == "") {
+                            //    obj.Z06 = 0;
+                            //}
+                            //if (isNaN(obj.Z06)) {
+                            //    obj.Z06= 0;
+                            //}
+                            //if (obj.Z07 == "") {
+                            //    obj.Z07 = 0;
+                            //}
+                            //if (isNaN(obj.Z07)) {
+                            //    obj.Z07= 0;
+                            //}
+                            //if (obj.Z08 == "") {
+                            //    obj.Z08 = 0;
+                            //}
+                            //if (isNaN(obj.Z08)) {
+                            //    obj.Z08 = 0;
+                            //}
+                            //if (obj.Z09 == "") {
+                            //    obj.Z09= 0;
+                            //}
+                            //if (isNaN(obj.Z09)) {
+                            //    obj.Z09= 0;
+                            //}
+                            //if (obj.Z10 == "") {
+                            //    obj.Z10= 0;
+                            //}
+                            //if (isNaN(obj.Z10)) {
+                            //    obj.Z10 = 0;
+                            //}
+                            //if (obj.Z12== "") {
+                            //    obj.Z12= 0;
+                            //}
+                            //if (isNaN(obj.Z12)) {
+                            //    obj.Z12 = 0;
+                            //}
+                            //if (obj.Z13 == "") {
+                            //    obj.Z13 = 0;
+                            //}
+                            //if (isNaN(obj.Z13)) {
+                            //    obj.Z13 = 0;
+                            //}
+                            //if (obj.Z14 == "") {
+                            //    obj.Z14= 0;
+                            //}
+                            //if (isNaN(obj.Z14)) {
+                            //    obj.Z14 = 0;
+                            //}
+                            //if (obj.Z15== "") {
+                            //    obj.Z15 = 0;
+                            //}
+                            //if (isNaN(obj.Z15)) {
+                            //    obj.Z15= 0;
+                            //}
+                            //if (obj.Z16 == "") {
+                            //    obj.Z16 = 0;
+                            //}
+                            //if (isNaN(obj.Z16)) {
+                            //    obj.Z16= 0;
+                            //}
+                            //if (obj.Z17 == "") {
+                            //    obj.Z17 = 0;
+                            //}
+                            //if (isNaN(obj.Z17)) {
+                            //    obj.Z17 = 0;
+                            //}
+                            //if (obj.Z18== "") {
+                            //    obj.Z18= 0;
+                            //}
+                            //if (isNaN(obj.Z18)) {
+                            //    obj.Z18 = 0;
+                            //}
+                            //if (obj.Z19== "") {
+                            //    obj.Z19 = 0;
+                            //}
+                            //if (isNaN(obj.Z19)) {
+                            //    obj.Z19 = 0;
+                            //}
+                            //if (obj.Z20 == "") {
+                            //    obj.Z20= 0;
+                            //}
+                            //if (isNaN(obj.Z20)) {
+                            //    obj.Z20 = 0;
+                            //}
+                            //if (obj.Z21 == "") {
+                            //    obj.Z21 = 0;
+                            //}
+                            //if (isNaN(obj.Z21)) {
+                            //    obj.Z21 = 0;
+                            //}
+                            //if (obj.Z22 == "") {
+                            //    obj.Z22 = 0;
+                            //}
+                            //if (isNaN(obj.Z22)) {
+                            //    obj.Z22 = 0;
+                            //}
+                            //if (obj.Z23 == "") {
+                            //    obj.Z23 = 0;
+                            //}
+                            //if (isNaN(obj.Z23)) {
+                            //    obj.Z23 = 0;
+                            //}
+                            //if (obj.Z24 == "") {
+                            //    obj.Z24= 0;
+                            //}
+                            //if (isNaN(obj.Z24)) {
+                            //    obj.Z24 = 0;
+                            //}
+                            //if (obj.Z25 == "") {
+                            //    obj.Z25 = 0;
+                            //}
+                            //if (isNaN(obj.Z25)) {
+                            //    obj.Z25= 0;
+                            //}
+                            //if (obj.Z26 == "") {
+                            //    obj.Z26= 0;
+                            //}
+                            //if (isNaN(obj.Z26)) {
+                            //    obj.Z26 = 0;
+                            //}
+                            //if (obj.Z27 == "") {
+                            //    obj.Z27= 0;
+                            //}
+                            //if (isNaN(obj.Z27)) {
+                            //    obj.Z27= 0;
+                            //}
+                            //if (obj.Z28 == "") {
+                            //    obj.Z28 = 0;
+                            //}
+                            //if (isNaN(obj.Z28)) {
+                            //    obj.Z28 = 0;
+                            //}
+                            //if (obj.Z29== "") {
+                            //    obj.Z29 = 0;
+                            //}
+                            //if (isNaN(obj.Z29)) {
+                            //    obj.Z29= 0;
+                            //}
+                            //if (obj.Z30 == "") {
+                            //    obj.Z30= 0;
+                            //}
+                            //if (isNaN(obj.Z30)) {
+                            //    obj.Z30 = 0;
+                            // }
+                            //obj.IsActive = true;
+                            $.ajax(
+                                   {
+                                       type: "POST", //HTTP POST Method
+                                       url: '/Admin/CartonManagement/AddCartonItem',
+                                       data: Obj,
+                                       success: function (result) {
+                                           event.preventDefault();
+                                           alert("data save successfully......");
+
+                                           $("#Quantity01_" + i).prop("disabled", true);
+                                           $("#Quantity02_" + i).prop("disabled", true);
+                                           $("#Quantity03_" + i).prop("disabled", true);
+                                           $("#Quantity04_" + i).prop("disabled", true);
+                                           $("#Quantity05_" + i).prop("disabled", true);
+                                           $("#Quantity06_" + i).prop("disabled", true);
+                                           $("#Quantity07_" + i).prop("disabled", true);
+                                           $("#Quantity08_" + i).prop("disabled", true);
+                                           $("#Quantity09_" + i).prop("disabled", true);
+                                           $("#Quantity10_" + i).prop("disabled", true);
+                                           $("#Quantity11_" + i).prop("disabled", true);
+                                           $("#Quantity12_" + i).prop("disabled", true);
+                                           $("#Quantity13_" + i).prop("disabled", true);
+                                           $("#Quantity14_" + i).prop("disabled", true);
+                                           $("#Quantity15_" + i).prop("disabled", true);
+                                           $("#Quantity16_" + i).prop("disabled", true);
+                                           $("#Quantity17_" + i).prop("disabled", true);
+                                           $("#Quantity18_" + i).prop("disabled", true);
+                                           $("#Quantity19_" + i).prop("disabled", true);
+                                           $("#Quantity20_" + i).prop("disabled", true);
+                                           $("#Quantity21_" + i).prop("disabled", true);
+                                           $("#Quantity22_" + i).prop("disabled", true);
+                                           $("#Quantity23_" + i).prop("disabled", true);
+                                           $("#Quantity24_" + i).prop("disabled", true);
+                                           $("#Quantity25_" + i).prop("disabled", true);
+                                           $("#Quantity26_" + i).prop("disabled", true);
+                                           $("#Quantity27_" + i).prop("disabled", true);
+                                           $("#Quantity28_" + i).prop("disabled", true);
+                                           $("#Quantity29_" + i).prop("disabled", true);
+                                           $("#Quantity30_" + i).prop("disabled", true);
+                                           $("#button_" + i ).prop("disabled", true);
+                                           $("#Total_" + i ).prop("disabled", true);
+                                           $('#productSelect_'+i).prop("disabled", true);
+                                       },
+                               
+                                       error: function (errormessage) {
+                                           alert(errormessage.responseText);
+                                       }
+                                   });
+                        
+                        }
+                    }
+  
+    function CalculationCheck(ctrl) {
+        debugger;
+        
+        var inputValue = $(ctrl).val();
+        var ctrlId = $(ctrl).attr("id");
+        var c = $(ctrl).closest("td").index();
+        var k=ctrlId.substring(11);
+        var itemNumber = ctrlId.split("_")[0];
+        var ProductId = $("#productSelect_"+k+"").attr("id");
+        var ProductIdValue = $("#productSelect_"+k+"").val();
+        //  var ProductIdValue = ProductIdValue1;
+        var childId = $("#table").attr("id");
+        var itemNumber = ctrlId.substring(0, 10);
+        var hiddenCtrl = $("#span_" + ctrlId + "");
+        var spanV = hiddenCtrl.text();
+        var count = $('#table').children().length;
+        var i = 0;
+        while (i < count) {
+            debugger
+            var ProductId2Value = $("#item_Id_" + i).val();
+            if (ProductId2Value == ProductIdValue) {
+               debugger
+                // var wareHouseCtrl = $("#item_" + itemNumber + "_" + i);
+                //  var whareHouse = wareHouseCtrl.val();
+                var wareHouseCtrl1 = $(".tbodyIndex")[1].children[i].cells[c].getAttribute("id");
+                var wareHouseCtrl = $("#" + wareHouseCtrl1);
+                var whareHouse = $(".tbodyIndex")[1].children[i].cells[c].innerText;
+                 var totalCtrl = $("#Total_" + k);
+                 var total = totalCtrl.val();
+            //  var wharehouse=$("#item_"+itemNumber +"_" + i).val();
+              var totalCtrl1 = $(".tbodyIndex")[1].children[i].children[2].getAttribute("id");
+                var totalCtrl = $("#" + totalCtrl1);
+               var total = $(".tbodyIndex")[1].children[i].children[2].innerText;
+              var totalCartonCtrl = $("#Total_"+k);
+              var hiddenCtrl = $("#span_" + ctrlId + "");
+                var spanV = hiddenCtrl.text();
+                if (spanV == "") {
+                    spanV = 0;
+                }
+                var totalCarton = totalCartonCtrl.val();
+                if (totalCarton == "") {
+                    totalCarton = 0;
+                }
+                if (isNaN(totalCarton)) {
+                    totalCarton = 0;
+                }
+                var temp = whareHouse;
+                if (whareHouse == "")
+                    whareHouse = 0;
+                if (inputValue == "") {
+                    inputValue = 0;
+                    whareHouse = temp;
+                }
+                var value = inputValue - spanV;
+                var cartonTotal = parseInt(totalCarton) + parseInt(value);
+                if (cartonTotal > 24) {
+                    alert("please store only 24 items in one carton.");
+                    if (spanV == "") {
+                        $(ctrl).val(0);
+                    }
+                    else {
+                        $(ctrl).val(spanV);
+                    }
+                }
+
+                else {
+                    var span = jQuery("#span_" + ctrlId + "").text(inputValue);
+
+                    if (parseInt(whareHouse) >= parseInt(inputValue)) {
+                        whareHouse = parseInt(whareHouse) - parseInt(value);
+                        total = parseInt(total) - parseInt(value);
+                        wareHouseCtrl.text(whareHouse);
+                        totalCtrl.text(total);
+                        totalCartonCtrl.val(cartonTotal);
+
+                    }
+                    else {
+                        alert("please enter Quantity of Stock Distrubution is less than Quantity of Stock Invebtory ");
+                        $(ctrl).val(0);
+                        $("#span_" + itemNumber + "").text(0);
+                    }
+
+                }
+                return 0;
+
+            }
+
+            i++;
+
+        }
+    }
+                     function del(id) {
+        debugger;
+        var Id = id.parentNode.parentNode.rowIndex;
+        var quantity = parseFloat($(id).parents("tr").find("[id^='Quantity']").val());
+        if (isNaN(quantity)) { quantity = 0; }
+        var unitCost = parseFloat($(id).parents("tr").find("[id^='UnitCost']").val());
+        if (isNaN(unitCost)) { unitCost = 0; }
+        var price = parseFloat($(".ItemAmount").val()).toFixed(2);
+        if (isNaN(price)) { price = 0; }
+        price -= quantity * unitCost;
+        $(id).parents("tr").remove();
+        $(".ItemAmount").val(price);
+
+    };
+</script>

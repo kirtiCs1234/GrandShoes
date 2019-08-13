@@ -1,0 +1,207 @@
+﻿@model Model.SupplierModel
+
+@{
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Edit Supplier</h4>
+        </div>
+        @using (Html.BeginForm("Edit", "Supplier", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+        <div class="modal-body">
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Supplier Code</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control"} })
+                    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Supplier Name</label>
+                    @*<input class="form-control" type="text" placeholder="Last Name" name="LastName" />*@
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Permanent Address1</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.PermanentAddress1, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PermanentAddress1, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Permanent Address2</label>
+                    @*<input class="form-control" type="text" placeholder="Last Name" name="LastName" />*@
+                    @Html.EditorFor(model => model.PermanentAddress2, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PermanentAddress2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Permanent Address3</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.PermanentAddress3, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PermanentAddress3, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Permanent City</label>
+                    @*<input class="form-control" type="text" placeholder="Last Name" name="LastName" />*@
+                    @Html.EditorFor(model => model.PermanentCity, new { htmlAttributes = new { @class = "form-control"} })
+                    @Html.ValidationMessageFor(model => model.PermanentCity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Permanent Country</label>
+                    @*<input class="form-control" type="text" placeholder="Last Name" name="LastName" />*@
+                    @Html.EditorFor(model => model.PermanentCountry, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PermanentCountry, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Permanent PostalCode</label>
+                    @*<input class="form-control" type="email" placeholder="Email" name="Email" />*@
+                    @Html.EditorFor(model => model.PermanentPostalCode, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PermanentPostalCode, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <div>
+                <input type="checkbox" id="filladdress" name="filladdress" checked/>
+                Are permanent address and correspondance address same ?
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Correspondance Address1</label>
+                    @*<input class="form-control" type="tel" placeholder="Phone" name="Phone" />*@
+                    @Html.EditorFor(model => model.CorrespondanceAddress1, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.CorrespondanceAddress1, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Correspondance Address2</label>
+                    @*<input class="form-control" type="password" placeholder="Password" name="Password" />*@
+                    @Html.EditorFor(model => model.CorrespondanceAddress2, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.CorrespondanceAddress2, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Correspondance Address3</label>
+                    @*<input class="form-control" type="password" placeholder="Confirm Password" name="ConfirmPassword" />*@
+                    @Html.EditorFor(model => model.CorrespondanceAddress3, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.CorrespondanceAddress3, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Correspondance City</label>
+                    @Html.EditorFor(model => model.CorrespondanceCity, new { htmlAttributes = new { @class = "form-control"  } })
+                    @Html.ValidationMessageFor(model => model.CorrespondanceCity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Correspondance Country</label>
+
+                    @Html.EditorFor(model => model.CorrespondanceCountry, new { htmlAttributes = new { @class = "form-control"} })
+
+                    @Html.ValidationMessageFor(model => model.CorrespondanceCountry, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Correspondance PostalCode</label>
+
+                    @Html.EditorFor(model => model.CorrespondancePostalCode, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.CorrespondancePostalCode, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Limit</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.Limit, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Limit, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Contact Number</label>
+                    @*<input class="form-control" type="text" placeholder="Last Name" name="LastName" />*@
+                    @Html.EditorFor(model => model.ContactNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ContactNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Fax Number</label>
+                    @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                    @Html.EditorFor(model => model.FaxNumber, new { htmlAttributes = new { @class = "form-control"} })
+                    @Html.ValidationMessageFor(model => model.FaxNumber, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-6">
+                    <label>Registration Date</label>
+                    @*<input class="form-control" type="text" placeholder="Last Name" name="LastName" />*@
+                    @Html.EditorFor(model => model.RegistrationDate, new { htmlAttributes = new { @class = "form-control date-pick" ,type = "text", autocomplete = "off"} })
+                    @Html.ValidationMessageFor(model => model.RegistrationDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+            <div class="modal-footer">
+                <button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel">Cancel</button>
+                <input type="submit" value="Update" class="btn btn-success popup-savebtn" />
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var date = new Date();
+        var currentMonth = date.getMonth();
+        var currentDate = date.getDate();
+        var currentYear = date.getFullYear();
+
+        $('#RegistrationDate').datepicker({
+            minDate: new Date(currentYear, currentMonth, currentDate),
+            dateFormat: 'yy/mm/dd'
+        });
+    });
+    $(document).ready(function () {
+        debugger;
+        $("input[type='checkbox']").click(function () {
+            debugger;
+            if (!this.checked) {
+                $("#CorrespondanceAddress1").val('');
+                $("#CorrespondanceAddress2").val('');
+                $("#CorrespondanceAddress3").val('');
+                $("#CorrespondanceCity").val('');
+                $("#CorrespondanceCountry").val('');
+                $("#CorrespondancePostalCode").val('');
+            }
+            else if (this.checked) {
+                $("#CorrespondanceAddress1").val($("#PermanentAddress1").val());
+                $("#CorrespondanceAddress2").val($("#PermanentAddress2").val());
+                $("#CorrespondanceAddress3").val($("#PermanentAddress3").val());
+                $("#CorrespondanceCity").val($("#PermanentCity").val());
+                $("#CorrespondanceCountry").val($("#PermanentCountry").val());
+                $("#CorrespondancePostalCode").val($("#PermanentPostalCode").val());
+            }
+        });
+    });
+</script>

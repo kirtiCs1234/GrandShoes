@@ -1,0 +1,219 @@
+﻿@model Model.CartonManagementDetailModel
+    @{ 
+        Layout = "null";
+    }
+<div class="row marg-btn-20">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+        @using (Html.BeginForm("Delete", "CartonManagementDetail", FormMethod.Post, new { id = "createForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="forms">
+                <div class="row marg-btn-20">
+                    <div class="prtm-block-content mrgn-b-md">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+
+                                <thead>
+                                    <tr>
+                                        <th>@ViewBag.CartonManagementID</th>
+                                        <th>Product</th>
+                                        <th>Total</th>
+                                        @*@Html.HiddenFor(m => m.Id)*@
+                                        <th>Quantity01</th>
+                                        <th>Quantity02</th>
+                                        <th>Quantity03</th>
+                                        <th>Quantity04</th>
+                                        <th>Quantity05</th>
+                                        <th>Quantity06</th>
+                                        <th>Quantity07</th>
+                                        <th>Quantity08</th>
+                                        <th>Quantity09</th>
+                                        <th>Quantity10</th>
+                                        <th>Quantity11</th>
+                                        <th>Quantity12</th>
+                                        <th>Quantity13</th>
+                                        <th>Quantity14</th>
+                                        <th>Quantity15</th>
+                                        <th>Quantity16</th>
+                                        <th>Quantity17</th>
+                                        <th>Quantity18</th>
+                                        <th>Quantity19</th>
+                                        <th>Quantity20</th>
+                                        <th>Quantity21</th>
+                                        <th>Quantity22</th>
+                                        <th>Quantity23</th>
+                                        <th>Quantity24</th>
+                                        <th>Quantity25</th>
+                                        <th>Quantity26</th>
+                                        <th>Quantity27</th>
+                                        <th>Quantity28</th>
+                                        <th>Quantity29</th>
+
+                                        <th>Quantity30</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="tbodyIndex">
+                                    <tr>
+
+                                        <td>
+                                            <input type="button" value="Edit" id="SubmitButton" class="btn btn-success popup-savebtn" onclick="Edit()" />
+                                        </td>
+                                        <td>
+                                            @Html.DropDownListFor(m => m.ProductID, null, "--ProductID--", htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
+                                        </td>
+                                        <td style="display:none;">
+                                            @Html.HiddenFor(m => m.CartonManagementID, new { @Value = ViewBag.CartonManagementID, name = "CartonManagementID" })
+
+                                            @Html.ValidationMessageFor(model => model.CartonManagementID, "", new { @class = "text-danger" })
+                                        </td>
+                                        <td>
+                                            @Html.TextBoxFor(model => model.Total, new { @class = "form-control", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z01, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity01", placeholder = "Z01", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            @Html.ValidationMessageFor(model => model.Z01, "", new { @class = "text-danger" })
+                                            <span id="span_Quantity01"></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z02, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity02", placeholder = "Z02", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            @Html.ValidationMessageFor(model => model.Z02, "", new { @class = "text-danger" })
+                                            <span id="span_Quantity02" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z03, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity03", placeholder = "Z03", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z04, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity04", placeholder = "Z04", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span id="span_Quantity04" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z05, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity05", placeholder = "Z05", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span id="span_Quantity05" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z06, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity06", placeholder = "Z06", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span id="span_Quantity06" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z07, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity07", placeholder = "Z07", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity07" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z08, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity08", placeholder = "Z08", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity08" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z09, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity09", placeholder = "Z09", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity09" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z10, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity10", placeholder = "Z10", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity05" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z11, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity11", placeholder = "Z11", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span id="span_Quantity05" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z12, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity12", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity05" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z13, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity13", placeholder = "Z13", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity05" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z14, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity14", placeholder = "Z14", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity05" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z15, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity15", placeholder = "Z15", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity15" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z16, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity16", placeholder = "Z16", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity16" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z17, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity17", placeholder = "Z17", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity17" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z18, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity18", placeholder = "Z18", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity18" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z19, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity19", placeholder = "Z19", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity19" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z20, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity20", placeholder = "Z20", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity20" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z21, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity21", placeholder = "Z21", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity21" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z22, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity22", placeholder = "Z22", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity22" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z23, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity23", placeholder = "Z23", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity23" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z24, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity24", placeholder = "Z24", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity24" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z25, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity25", placeholder = "Z25", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity25" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z26, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity26", placeholder = "Z26", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity26" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z27, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity27", placeholder = "Z27", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity27" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z28, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity28", placeholder = "Z28", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity28" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z29, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity29", placeholder = "Z29", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity29" value=""></span>
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model.Z30, new { htmlAttributes = new { @class = "form-control", @Id = "Quantity30", placeholder = "Z30", @onchange = "CalculationCheck(this)", type = "number" } })
+                                            <span style="display:none;" id="span_Quantity30" value=""></span>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                                <input data-val="true"
+                                       data-val-number="The field StudentId must be a number."
+                                       data-val-required="The StudentId field is required."
+                                       id="IsActive"
+                                       name="IsActive"
+                                       type="hidden"
+                                       value="true" />
+
+
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

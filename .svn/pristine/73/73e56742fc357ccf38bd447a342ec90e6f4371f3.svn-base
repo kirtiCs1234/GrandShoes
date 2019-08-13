@@ -1,0 +1,61 @@
+﻿using Helper;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace POS.Areas.Admin.Controllers
+{
+    [CustomAuth]
+    public class StockEnquiryController : BaseController
+    {
+        // GET: Admin/StockEnquiry
+        public ActionResult Index()
+        {
+            var ProductModelList = Services.ProductService.GetAll();
+            var ProductStyleList = Services.ProductStyleService.GetAll();
+            var ColorModelList = Services.ColorService.GetAll();
+            var BranchModelList = Services.BranchService.GetAll();
+            ViewBag.ProductId = new SelectList(ProductModelList, "Id", "ProductSKU");
+            ViewBag.ProductStyleId = new SelectList(ProductStyleList, "Id", "StyleSKU");
+            ViewBag.ColorID = new SelectList(ColorModelList, "Id", "Code");
+            ViewBag.BranchId = new SelectList(BranchModelList, "Id", "Name");
+            return View();
+        }
+        [HttpPost]
+        public ActionResult GetData(Model.SearchData searchData)
+        {
+            var StockDistributionModelList = Services.StockEnquiryService.GetSelectedData(searchData);
+            if (searchData.BranchId != null)
+            {
+                StockDistributionModelList = StockDistributionModelList.Where(x => x.BranchId == searchData.BranchId).ToList();
+
+                if (searchData.ProductId > 0 || searchData.ProductStyleId > 0 || searchData.ColorID > 0)
+                {
+                    StockDistributionModelList = StockDistributionModelList.ToList();
+
+                }
+
+            }
+            return View(StockDistributionModelList);
+        }
+
+        [HttpPost]
+        public ActionResult StockData(Model.SearchData searchData)
+        {
+            var StockInventories = Services.StockEnquiryService.GetAll(searchData);
+            if (searchData != null)
+            {
+                if (searchData.ProductId > 0 || searchData.ProductStyleId > 0 || searchData.ColorID > 0)
+                {
+                    StockInventories = StockInventories.ToList();
+
+                }
+            }
+
+                return View(StockInventories);
+        }
+    }
+}

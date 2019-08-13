@@ -1,0 +1,294 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+using Model;
+using POSApi.ExtensionMethod;
+
+namespace POSApi.Controllers.Admin
+{
+    [RoutePrefix("api/receiptOrderItems")]
+    public class ReceiptOrderItemsController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+        public ReceiptOrderItemsController()
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            db.Configuration.ProxyCreationEnabled = false;
+        }
+        // GET: api/ReceiptOrderItems
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<ReceiptOrderItem> GetReceiptOrderItems()
+        {
+           var list= db.ReceiptOrderItems.Where(x=>x.IsActive==true).Include(x=>x.Product).Include(x=>x.ProductStyle).ToList().RemoveReferences();
+            return list;
+        }
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetailByReceiptOrderId")]
+        public List<ReceiptOrderItem> GetReceiptOrderItemById(int ReceiptOrderId)
+        {
+            var list = db.ReceiptOrderItems.Where(x => x.ReceiptOrderId== ReceiptOrderId).Include(x => x.Product).ToList();
+            return list;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetailById")]
+        [ResponseType(typeof(StockDistribution))]
+        public List<ReceiptOrderItem> GetProducts(int? ProductId,int? ProductStyleId)
+        {
+              var receiptItem = db.ReceiptOrderItems.Where(x => x.ProductId==ProductId && x.ProductStyleId== ProductStyleId).Include(x => x.Product).Include(x=>x.ReceiveOrder).Include(x=>x.ReceiveOrder.PurchaseOrder).Include(x=>x.ProductStyle).ToList();
+            return receiptItem;
+        }
+        // GET: api/ReceiptOrderItems/5
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetail")]
+        [ResponseType(typeof(ReceiptOrderItem))]
+        public IHttpActionResult GetReceiptOrderItem(int id)
+        {
+            ReceiptOrderItem receiptOrderItem = db.ReceiptOrderItems.Find(id);
+            if (receiptOrderItem == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(receiptOrderItem);
+        }
+        //[Route("getDetailById")]
+        //public IHttpActionResult GetReceiptOrderItems(int id)
+        //{
+        //    var PurchaseOrderValue = db.ReceiptOrderItems.Where(x => x.IsActive == true && x.Id == id).Include(x => x.ReceiveOrder).Include(x => x.ReceiveOrder.PurchaseOrder).Include(x => x.ReceiveOrder.PurchaseOrder.PurchaseOrderItems).ToList();
+        //    return Ok(PurchaseOrderValue);
+        //}
+        // PUT: api/ReceiptOrderItems/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutReceiptOrderItem(int id, ReceiptOrderItem receiptOrderItem)
+        {
+            //ReceiptOrderItem model = new ReceiptOrderItem();
+            var model = db.ReceiptOrderItems.Where(x => x.Id == id).FirstOrDefault();
+            model.Cost01 = receiptOrderItem.Cost01;
+            model.Cost02 = receiptOrderItem.Cost02;
+            model.Cost03 = receiptOrderItem.Cost03;
+            model.Cost04 = receiptOrderItem.Cost04;
+            model.Cost05 = receiptOrderItem.Cost05;
+            model.Cost06 = receiptOrderItem.Cost06;
+            model.Cost07 = receiptOrderItem.Cost07;
+            model.Cost08 = receiptOrderItem.Cost08;
+            model.Cost09 = receiptOrderItem.Cost09;
+            model.Cost10 = receiptOrderItem.Cost10;
+            model.Cost11 = receiptOrderItem.Cost11;
+            model.Cost12 = receiptOrderItem.Cost12;
+            model.Cost13 = receiptOrderItem.Cost13;
+            model.Cost14 = receiptOrderItem.Cost14;
+            model.Cost15 = receiptOrderItem.Cost15;
+            model.Cost16 = receiptOrderItem.Cost16;
+            model.Cost17 = receiptOrderItem.Cost17;
+            model.Cost18 = receiptOrderItem.Cost18;
+            model.Cost19 = receiptOrderItem.Cost19;
+            model.Cost20 = receiptOrderItem.Cost20;
+            model.Cost21 = receiptOrderItem.Cost21;
+            model.Cost22 = receiptOrderItem.Cost22;
+            model.Cost23 = receiptOrderItem.Cost23;
+            model.Cost24 = receiptOrderItem.Cost24;
+            model.Cost25 = receiptOrderItem.Cost25;
+            model.Cost26 = receiptOrderItem.Cost26;
+            model.Cost27 = receiptOrderItem.Cost27;
+            model.Cost28 = receiptOrderItem.Cost28;
+            model.Cost29 = receiptOrderItem.Cost29;
+            model.Cost30 = receiptOrderItem.Cost30;
+            model.Quantity01 = receiptOrderItem.Quantity01;
+            model.Quantity02 = receiptOrderItem.Quantity02;
+            model.Quantity03 = receiptOrderItem.Quantity03;
+            model.Quantity04 = receiptOrderItem.Quantity04;
+            model.Quantity05 = receiptOrderItem.Quantity05;
+            model.Quantity06 = receiptOrderItem.Quantity06;
+            model.Quantity07 = receiptOrderItem.Quantity07;
+            model.Quantity08 = receiptOrderItem.Quantity08;
+            model.Quantity09 = receiptOrderItem.Quantity09;
+            model.Quantity10 = receiptOrderItem.Quantity10;
+            model.Quantity11 = receiptOrderItem.Quantity11;
+            model.Quantity12 = receiptOrderItem.Quantity12;
+            model.Quantity13 = receiptOrderItem.Quantity13;
+            model.Quantity14 = receiptOrderItem.Quantity14;
+            model.Quantity15 = receiptOrderItem.Quantity15;
+            model.Quantity16 = receiptOrderItem.Quantity16;
+            model.Quantity17 = receiptOrderItem.Quantity17;
+            model.Quantity18 = receiptOrderItem.Quantity18;
+            model.Quantity19 = receiptOrderItem.Quantity19;
+            model.Quantity20 = receiptOrderItem.Quantity20;
+            model.Quantity21 = receiptOrderItem.Quantity21;
+            model.Quantity22 = receiptOrderItem.Quantity22;
+            model.Quantity23 = receiptOrderItem.Quantity23;
+            model.Quantity24 = receiptOrderItem.Quantity24;
+            model.Quantity25 = receiptOrderItem.Quantity25;
+            model.Quantity26 = receiptOrderItem.Quantity26;
+            model.Quantity27 = receiptOrderItem.Quantity27;
+            model.Quantity28 = receiptOrderItem.Quantity28;
+            model.Quantity29 = receiptOrderItem.Quantity29;
+            model.Quantity30 = receiptOrderItem.Quantity30;
+            model.IsActive = true;
+            var Total = model.Quantity01 * model.Cost01 + model.Quantity02 * model.Cost02 +
+                model.Quantity03 * model.Cost03 + model.Quantity04 * model.Cost04 +
+                model.Quantity05 * model.Cost05 + model.Quantity06 * model.Cost06 +
+                model.Quantity07 * model.Cost07 + model.Quantity08 * model.Cost08 +
+                model.Quantity09 * model.Cost09 + model.Quantity10 * model.Cost10 +
+                model.Quantity11 * model.Cost11 + model.Quantity12 * model.Cost12 +
+                model.Quantity13 * model.Cost13 + model.Quantity14 * model.Cost14 +
+                model.Quantity15 * model.Cost15 + model.Quantity16 * model.Cost16 +
+                model.Quantity17 * model.Cost17 + model.Quantity18 * model.Cost18 +
+                model.Quantity19 * model.Cost19 + model.Quantity20 * model.Cost20 +
+                model.Quantity21 * model.Cost21 + model.Quantity22 * model.Cost22 +
+                model.Quantity23 * model.Cost23 + model.Quantity24 * model.Cost24 +
+                model.Quantity25 * model.Cost25 + model.Quantity26 * model.Cost26 +
+                model.Quantity27 * model.Cost27 + model.Quantity28 * model.Cost28 +
+                model.Quantity29 * model.Cost29 + model.Quantity30 * model.Cost30;
+            model.ProductId = receiptOrderItem.ProductId;
+            model.ReceiptOrderId = receiptOrderItem.ReceiptOrderId;
+            model.SalesCost = Total;
+            model.ProductStyleId = receiptOrderItem.ProductStyleId;
+            db.SaveChanges();
+            return Ok(true);
+        }
+
+        // POST: api/ReceiptOrderItems
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(ReceiptOrderItem))]
+        public IHttpActionResult PostReceiptOrderItem(ReceiptOrderItem receiptOrderItem)
+        {
+            ReceiptOrderItem model = new ReceiptOrderItem();
+            model.Cost01 = receiptOrderItem.Cost01;
+            model.Cost02 = receiptOrderItem.Cost02;
+            model.Cost03 = receiptOrderItem.Cost03;
+            model.Cost04 = receiptOrderItem.Cost04;
+            model.Cost05 = receiptOrderItem.Cost05;
+            model.Cost06 = receiptOrderItem.Cost06;
+            model.Cost07 = receiptOrderItem.Cost07;
+            model.Cost08 = receiptOrderItem.Cost08;
+            model.Cost09 = receiptOrderItem.Cost09;
+            model.Cost10 = receiptOrderItem.Cost10;
+            model.Cost11 = receiptOrderItem.Cost11;
+            model.Cost12 = receiptOrderItem.Cost12;
+            model.Cost13 = receiptOrderItem.Cost13;
+            model.Cost14 = receiptOrderItem.Cost14;
+            model.Cost15 = receiptOrderItem.Cost15;
+            model.Cost16 = receiptOrderItem.Cost16;
+            model.Cost17 = receiptOrderItem.Cost17;
+            model.Cost18 = receiptOrderItem.Cost18;
+            model.Cost19 = receiptOrderItem.Cost19;
+            model.Cost20 = receiptOrderItem.Cost20;
+            model.Cost21 = receiptOrderItem.Cost21;
+            model.Cost22 = receiptOrderItem.Cost22;
+            model.Cost23 = receiptOrderItem.Cost23;
+            model.Cost24 = receiptOrderItem.Cost24;
+            model.Cost25 = receiptOrderItem.Cost25;
+            model.Cost26 = receiptOrderItem.Cost26;
+            model.Cost27 = receiptOrderItem.Cost27;
+            model.Cost28 = receiptOrderItem.Cost28;
+            model.Cost29 = receiptOrderItem.Cost29;
+            model.Cost30 = receiptOrderItem.Cost30;
+            model.Quantity01 = receiptOrderItem.Quantity01;
+            model.Quantity02 = receiptOrderItem.Quantity02;
+            model.Quantity03 = receiptOrderItem.Quantity03;
+            model.Quantity04 = receiptOrderItem.Quantity04;
+            model.Quantity05 = receiptOrderItem.Quantity05;
+            model.Quantity06 = receiptOrderItem.Quantity06;
+            model.Quantity07 = receiptOrderItem.Quantity07;
+            model.Quantity08 = receiptOrderItem.Quantity08;
+            model.Quantity09 = receiptOrderItem.Quantity09;
+            model.Quantity10 = receiptOrderItem.Quantity10;
+            model.Quantity11 = receiptOrderItem.Quantity11;
+            model.Quantity12 = receiptOrderItem.Quantity12;
+            model.Quantity13 = receiptOrderItem.Quantity13;
+            model.Quantity14 = receiptOrderItem.Quantity14;
+            model.Quantity15 = receiptOrderItem.Quantity15;
+            model.Quantity16 = receiptOrderItem.Quantity16;
+            model.Quantity17 = receiptOrderItem.Quantity17;
+            model.Quantity18 = receiptOrderItem.Quantity18;
+            model.Quantity19 = receiptOrderItem.Quantity19;
+            model.Quantity20 = receiptOrderItem.Quantity20;
+            model.Quantity21 = receiptOrderItem.Quantity21;
+            model.Quantity22 = receiptOrderItem.Quantity22;
+            model.Quantity23 = receiptOrderItem.Quantity23;
+            model.Quantity24 = receiptOrderItem.Quantity24;
+            model.Quantity25 = receiptOrderItem.Quantity25;
+            model.Quantity26 = receiptOrderItem.Quantity26;
+            model.Quantity27 = receiptOrderItem.Quantity27;
+            model.Quantity28 = receiptOrderItem.Quantity28;
+            model.Quantity29 = receiptOrderItem.Quantity29;
+            model.Quantity30 = receiptOrderItem.Quantity30;
+            model.IsActive = true;
+            var Total = model.Quantity01 * model.Cost01 + model.Quantity02 * model.Cost02 +
+                model.Quantity03 * model.Cost03 + model.Quantity04 * model.Cost04 +
+                model.Quantity05 * model.Cost05 + model.Quantity06 * model.Cost06 +
+                model.Quantity07 * model.Cost07 + model.Quantity08 * model.Cost08 +
+                model.Quantity09 * model.Cost09 + model.Quantity10 * model.Cost10 +
+                model.Quantity11 * model.Cost11 + model.Quantity12 * model.Cost12 +
+                model.Quantity13 * model.Cost13 + model.Quantity14 * model.Cost14 +
+                model.Quantity15 * model.Cost15 + model.Quantity16 * model.Cost16 +
+                model.Quantity17 * model.Cost17 + model.Quantity18 * model.Cost18 +
+                model.Quantity19 * model.Cost19 + model.Quantity20 * model.Cost20 +
+                model.Quantity21 * model.Cost21 + model.Quantity22 * model.Cost22 +
+                model.Quantity23 * model.Cost23 + model.Quantity24 * model.Cost24 +
+                model.Quantity25 * model.Cost25 + model.Quantity26 * model.Cost26 +
+                model.Quantity27 * model.Cost27 + model.Quantity28 * model.Cost28 +
+                model.Quantity29 * model.Cost29 + model.Quantity30 * model.Cost30;
+            model.ProductId = receiptOrderItem.ProductId; 
+            model.ReceiptOrderId = receiptOrderItem.ReceiptOrderId;
+            model.ProductStyleId = receiptOrderItem.ProductStyleId;
+            model.SalesCost = Total;
+            db.ReceiptOrderItems.Add(model);
+            db.SaveChanges();
+            return Ok(true);
+        }
+
+        // DELETE: api/ReceiptOrderItems/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("delete")]
+        [ResponseType(typeof(ReceiptOrderItem))]
+        public IHttpActionResult DeleteReceiptOrderItem(int id)
+        {
+            ReceiptOrderItem receiptOrderItem = db.ReceiptOrderItems.Find(id);
+            if (receiptOrderItem == null)
+            {
+                return NotFound();
+            }
+
+            db.ReceiptOrderItems.Remove(receiptOrderItem);
+            db.SaveChanges();
+
+            return Ok(receiptOrderItem);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool ReceiptOrderItemExists(int id)
+        {
+            return db.ReceiptOrderItems.Count(e => e.Id == id) > 0;
+        }
+    }
+}

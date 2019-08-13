@@ -1,0 +1,58 @@
+﻿@model List<Model.SalesOrderItemModel>
+<div class="col-sm-12 col-md-12 col-xs-12">
+    <div class="prtm-full-block">
+        <div class="row marg-btn-20">
+            <div class="prtm-block-content mrgn-b-md">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Product</th>
+                                <th>Description</th>
+                                <th>Cah Sale</th>
+                                <th>LayBuy Sale</th>
+                                <th>Units Sold</th>
+                                <th>Qty Dist.</th>
+                                <th>Stock</th>
+                                <th>GIT</th>
+                                <th>Std. Cost</th>
+                                <th>Curr. Price</th>
+                                <th>MrkDwn</th>
+                                <th>Sales Value</th>
+                                <th>GP%</th>
+                                <th>Sold%</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbodyIndex">
+                           @{ 
+                               int i = 0;
+                           }
+                            @foreach(var item in Model)
+                            {
+                                i++;
+                            <tr>
+                                <td>@i</td>
+                                <td>@Html.DisplayFor(modelItem => item.Product.ProductSKU)@Html.DisplayFor(modelItem => item.Product.StyleSKU)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Product.ShortDescription)</td>
+                                <td>@Html.DisplayFor(modelItem=>item.CashSaleCount)</td>
+                                <td>@Html.DisplayFor(modelItem=>item.LayBuySaleCount)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                                <td>@Html.DisplayFor(modelItem => item.IBTStock)</td>
+                                <td>@Html.DisplayFor(modelItem => item.RemainingQuantity)</td>
+                                <td>@Html.DisplayFor(modelItem=> item.Id)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Product.CostPrice)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Product.ActualSellingPrice)</td>
+                                <td>@Html.DisplayFor(modelItem => item.MarkDownCount)</td>
+                                <td>@Html.DisplayFor(modelItem => item.TotalPriceAll)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Sold)</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

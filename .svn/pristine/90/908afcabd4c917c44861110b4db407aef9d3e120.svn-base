@@ -1,0 +1,70 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Model;
+using Services.IService;
+using DAL;
+using Helper;
+using Newtonsoft.Json;
+
+namespace Services.Service
+{
+    public class UserService : IUserService
+    {
+        public List<UserModel> GetAll()
+
+        {
+            var body = "";
+            List<UserModel> UserModelList = ServerResponse.Invoke<List<UserModel>>("api/user/getDetails", body, "get");
+            return UserModelList;
+        }
+     
+        public UserModel GetById(int? id)
+        {
+            var body = "";
+            UserModel UserModelById = ServerResponse.Invoke<UserModel>("api/user/getDetail?id=" + id, body, "GET");
+            return UserModelById;
+        }
+        
+
+        public UserModel Create(UserModel userModel)
+        {
+            var body = JsonConvert.SerializeObject(userModel);
+            UserModel UserCreate = ServerResponse.Invoke<UserModel>("api/user/create", body, "Post");
+            return UserCreate;
+        }
+        public UserModel Edit(UserModel userModel)
+        {
+            var body = JsonConvert.SerializeObject(userModel);
+            UserModel UserEdit = ServerResponse.Invoke<UserModel>("api/user/edit?id=" + userModel.Id, body, "POST");
+            return UserEdit;
+        }
+        public UserModel Delete(UserModel userModel)
+        {
+            var body = JsonConvert.SerializeObject(userModel);
+            UserModel UserDelete = ServerResponse.Invoke<UserModel>("api/user/Delete?id=" + userModel.Id, body, "POST");
+            return UserDelete;
+        }
+        public bool CheckUserPhone(UserModel userModel)
+        {
+            var body = JsonConvert.SerializeObject(userModel);
+            var CheckUserPhone = ServerResponse.Invoke<bool>("api/user/checkUserPhoneNumber" , body, "POST");
+            return CheckUserPhone;
+        }
+        public bool CheckUserEmail(UserModel userModel)
+        {
+            var body = JsonConvert.SerializeObject(userModel);
+            var CheckUserEmail = ServerResponse.Invoke<bool>("api/user/checkUserEmail", body, "POST");
+            return CheckUserEmail;
+        }
+        public UserResetPassword ResetPassword(UserResetPassword userModel)
+        {
+            var body = JsonConvert.SerializeObject(userModel);
+            UserResetPassword UserResetPassword = ServerResponse.Invoke<UserResetPassword>("api/user/resetPassword?id=" + userModel.Id, body, "Post");
+            return UserResetPassword;
+
+        }
+    }
+}

@@ -1,0 +1,161 @@
+﻿@model List<Model.StaffMemberModel>
+@{
+    ViewBag.Title = "_Index";
+    Layout = null;
+}
+
+<div class="prtm-full-block pos-relative">
+    <div class="prtm-block-title pad-all-md">
+        <div class="pos-relative">
+            <div class="caption">
+                <h3 class="text-capitalize">Staff Member</h3>
+            </div>
+        </div>
+    </div>
+    <div class="prtm-block-content mrgn-b-md">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                       @*<th>Fingure Print</th>*@
+                        <th>User Name</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th> Branch</th>
+                        <th>Joining Date</th>
+                        <th>Profile Image</th>
+                        <th style="min-width:125px;">Action</th>
+                        <th>Fingure Print</th>
+                    </tr>
+                </thead>
+                <tbody class="tbodyIndex">
+                    @if (Model.Count != 0) { 
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                             @*@if (item.IsFingurPrintAccess  == true)
+                             {
+                                <td>
+                                    @Html.CheckBox("IsFingurPrintAccess", true)
+                                </td>
+                             }*@
+                             @*else
+                             {
+                                <td>
+                                    @Html.CheckBox("IsFingurPrintAccess", false)
+                                </td>
+                             }*@
+                            @*<td>
+                                @Html.CheckBoxFor(modelItem => item.IsFingurPrintAccess ,new {id="chechkPrint", @class = "CheckFingure" })
+                            </td>*@
+                         
+                            <td>
+                                @Html.DisplayFor(modelItem => item.User.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StaffRole.RoleName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(ModelItem =>item.StaffStatu.StatusName)
+                            </td>
+                            <th>
+                                @Html.DisplayFor(ModelItem =>item.User.Branch.Name)
+                            </th>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.JoiningDate)
+                            </td>
+                            <td>
+                                @if (item.ProfilePic != null)
+                                {
+                                    <img id="user_img" src="~/Image/StaffMember/@item.ProfilePic" height="50" width="50" />
+
+                                }
+                                else
+                                {
+                                    <img id="user_img" src="/images/no-image.png" height="50" width="50" />
+
+                                }
+                            </td>
+                            <td style="min-width:85px;">
+                                <i class="fa fa-pencil edit-form edit" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="edit(@item.Id)"></i>
+                                &nbsp;
+                                <i class="fa fa-trash delete delete-form" data-toggle="modal" data-target="#myModal" data-backdrop="static" onclick="del(@item.Id)"></i>
+                                &nbsp;
+                                <i class="fa fa-eye view-form details" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="details(@item.Id)"></i>
+                                &nbsp;                 
+                            </td>
+                            <td>
+                                @if (item.IsFingurPrintAccess != true)
+                                {
+                                    <button type="button" class="btn-success" onclick="fingurePrintEnamble(@item.Id)">Enable</button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn-danger" onclick="fingurePrintDisable(@item.Id)">Disable</button>
+                                }
+                            </td>
+                        </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7">
+                                <p>No record found.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@*<div class="col-md-12">
+
+        <div class="pagination">
+            @foreach (var i in ViewBag.result)
+            {
+                var page = i;
+                <li><a href="/Admin/StaffMember/_Index?page=@page">@page</a></li>
+
+            }
+        </div>
+    </div>*@
+<div class="col-md-12">
+    @if (ViewBag.endPage > 1)
+    {
+        <div class="pagination">
+
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li>
+                    <a href="/Admin/StaffMember/_Index1?page=1">First</a>
+                </li>
+                <li>
+                    <a href="/Admin/StaffMember/_Index1?page=@(ViewBag.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @foreach (var i in ViewBag.result)
+            {
+                var page = i;
+
+                <li class="@(page == ViewBag.CurrentPage ? "active" : "")">
+                    <a href="/Admin/StaffMember/_Index1?page=@page">@page</a>
+                </li>
+
+            }
+            @if (ViewBag.CurrentPage < ViewBag.pageCount)
+            {
+                <li>
+                    <a href="/Admin/StaffMember/_Index1?page=@(ViewBag.CurrentPage + 1)">Next</a>
+                </li>
+                <li>
+                    <a href="/Admin/StaffMember/_Index1?page=@(ViewBag.pageCount)">Last</a>
+                </li>
+            }
+
+        </div>
+    }
+</div>

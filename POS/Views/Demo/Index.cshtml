@@ -1,0 +1,168 @@
+﻿@model Model.ProductModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    // var list = ViewBag.Data as IPagedList<Model.AreaModel>;
+}
+<style>
+    .ul.pagination {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.pagination li {
+        display: inline;
+    }
+
+        ul.pagination li a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+            ul.pagination li a.active {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            ul.pagination li a:hover:not(.active) {
+                background-color: #ddd;
+            }
+</style>
+<div class="row">
+    <div class="prtm-page-bar col-md-5 col-lg-3 col-sm-12 col-12" style="background:none;">
+        <ul class="breadcrumb" style="background:none;">
+            <li class="breadcrumb-item text-capitalize">
+                <h3>Area</h3>
+            </li>
+            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        </ul>
+    </div>
+    @*@using (Html.BeginForm("Index", "User") new { @class = "formuser" })*@
+    @*@using (Html.BeginForm("Index", "User", FormMethod.Post, new { @class = "formuser" }))
+        {*@
+    <!--------advanced search-->
+    <div class="col-md-8 col-lg-6 col-sm-8 col-12 search-container">
+        <div class="top-search-navbar-search smallsearch col-md-12 col-lg-12 col-sm-12 col-12">
+            <div class="row">
+
+                <input class="top-search-navbar-input col-md-8 col-lg-10 col-sm-8 col-xs-8 searchiFirstName" type="text" placeholder="Search Area Name" Id="Name" name="iFirstName">
+
+                @*<input type="submit" value="Add" class="btn btn-success popup-savebtn" />*@
+
+                <button class="advance-search col-md-2 col-lg-1 col-sm-2 col-xs-2" type="button"></button>
+
+                <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-xs-2" onclick="searchData()">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+
+    </div>
+    <!------------------>
+    @*}*@
+    <div class="add-btn-div col-md-4 col-lg-3 col-sm-4 col-12 text-right">
+        @*<button type="button" class="btn btn-primary import-btn">Import</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-primary export-btn">Export</button>&nbsp;&nbsp;*@
+
+        <button type="button" class="btn btn-primary import-btn" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="create()">Add</button>
+    </div>
+</div>
+    <div class="dvUserDetails">
+        <div class="row marg-btn-20">
+            <div class="col-sm-12 col-md-12 col-xs-12">
+                @using (Html.BeginForm("Index", "Demo", FormMethod.Post, new { id = "createForm", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="forms">
+                        <div class="col-sm-12">
+                            <div class="row marg-btn-20">
+                                <div class="col-md-2 col-sm-3 col-xs-12"><label>Product/ Style</label></div>
+                                <div class="col-md-2 col-sm-3 col-xs-12">
+                                    @Html.DropDownListFor(m => m.SizeGridID, null, "-SizeGridNo-", htmlAttributes: new { @class = "form-control", onchange = "GetSizeGrid(this)" })
+                                    @Html.ValidationMessageFor(model => model.SizeGridID, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                    <div class="">
+
+                                        @Html.EditorFor(model => model.AvailableSize, new { htmlAttributes = new { @class = "form-control", @id = "AvailableSize", @multiple = "multiple", placeholder = "" } })
+                                        @Html.ValidationMessageFor(model => model.AvailableSize, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        </div>
+                }
+                    </div>
+                    </div>
+            </div>
+                            @section scripts{
+                                <script type="text/javascript">
+                                    function GetSizeGrid(SizeGridID) {
+
+				debugger;
+
+				var selectedText = SizeGridID.options[SizeGridID.selectedIndex].innerHTML;
+				var selectedValue = SizeGridID.value;
+				if (selectedValue == null || selectedValue == "")
+					selectedValue = 0;
+
+				$('#AvailableSize').autocomplete({
+
+					source: function (request, response) {
+						debugger
+						$.ajax({
+							url: '/Admin/Product/getGridSize/' + selectedValue,
+							type: "GET",
+							data: "{ 'prefix': '" + request.term + "'}",
+							dataType: "json",
+
+							success: function (data) {
+								response($.map(data, function (item) {
+									//return item;
+									return {
+										label: item.split('-')[0],
+										val: item.split('-')[1]
+									}
+								}))
+							},
+							error: function (response) {
+								alert(response.responseText);
+							},
+							failure: function (response) {
+								alert(response.responseText);
+							}
+						});
+					},
+					select: function (e, i) {
+						debugger
+						var text = this.value.split(/,\s*/);
+						text.pop();
+						text.push(i.item.value);
+						text.push("");
+						this.value = text.join(", ");
+						var value = $("[id*=SizeGridID]").val().split(/,\s*/);
+						value.pop();
+						value.push(i.item.val);
+						value.push("");
+						$("#[id*=SizeGridID]")[0].value = value.join(", ");
+						return false;
+					},
+					minLength: 1,
+					scroll: true
+				}).focus(function () {
+					$(this).autocomplete("search", "");
+				});
+
+
+			}
+
+                                </script>
+                            }
+

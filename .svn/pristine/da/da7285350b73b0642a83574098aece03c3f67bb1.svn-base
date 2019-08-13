@@ -1,0 +1,54 @@
+﻿
+@model Model.TemplateModel
+@{
+	Layout = null;
+	if (Model.Width == null) { Model.Width = 0; }
+	if (Model.Height == null) { Model.Height = 0; }
+	var lenthId = Model?.LengthId;
+	double width = 0.0;//Model?.Width;
+	double height = 0.0;// Model?.Height;
+	double cm = 38.0;
+	if (Model != null)
+	{
+		if (lenthId == 1)
+		{
+			width = (double)Model?.Width * cm;
+			height = (double)Model?.Height * cm;
+		}
+		else if (lenthId == 2)
+		{
+			width = (double)Model?.Width * cm * 2.54;
+			height = (double)Model?.Height * cm * 2.54;
+		}
+		else if (lenthId == 3)
+		{
+			width = (double)Model?.Width;
+			height = (double)Model?.Height;
+		}
+		if (width > 2480)
+		{
+			width = 2480;
+		}
+		if (height > 3508)
+		{
+			height = 3508;
+		}
+	}
+	else
+	{
+		width = 300;
+		height = 300;
+	}
+
+}
+@*<div style="width:100%">*@
+
+@*<div style="width:100%; min-height: 300px;height:auto;border: 1px solid #808080;display:flex;align-items:center;justify-content:center ">*@
+<div style="width:@(width)px;display:flex;padding:15px;height:@(height)px;border: 2px solid #808080; margin:0 auto;align-items:center;justify-content:center ">
+	<div class="inner-print">
+		@Html.Raw(Model.TemplateHtml)
+	</div>
+</div>
+<div>
+
+</div>

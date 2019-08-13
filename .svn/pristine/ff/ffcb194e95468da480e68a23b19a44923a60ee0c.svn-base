@@ -1,0 +1,159 @@
+﻿using Helper;
+using Model;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace POS.Areas.Admin.Controllers
+{
+    [CustomAuth]
+    public class MarkDownBranchController : BaseController
+    {
+        // GET: Admin/MarkDownBranch
+        public ActionResult Index()
+        {
+            int id = Convert.ToInt32(Request.QueryString["id"]);
+            MarkDownAddModel model = new MarkDownAddModel();
+            var BranchList = Services.BranchService.GetAll();
+            var markDown = Services.MarkDownService.GetAll();
+            if (id!=0)
+            {
+                var data = Services.ProductService.GetAll();
+                var dataById = data.Where(x => x.Id == id).FirstOrDefault();
+                ViewBag.ProductSKU = dataById.ProductSKU;
+                ViewBag.Id = id;
+                ViewBag.StyleSKU = dataById.ProductStyle.StyleSKU;
+                ViewBag.OriginalSellingPrice = dataById.ActualSellingPrice;
+                var productSku = Services.ProductService.GetById(id).ProductSKU;
+                //var markDownPrev = markDown.Where(x => x.ProductSKU == productSku).Count();
+              //  TempData["Number"] = markDownPrev;
+              //  var EffectiveDateLast = markDown.Where(x => x.ProductSKU == productSku).LastOrDefault();
+               // if (EffectiveDateLast == null)
+               // {
+                //    TempData["Date"] = "00/00/0000";
+               // }
+              //  else
+            //    {
+             //       TempData["Date"] = EffectiveDateLast.EffectiveDate;
+              //  }
+            }
+           
+            
+            model.MarkDownList = markDown;
+            model.BranchList1 = BranchList;
+            return View(model);
+        }
+        public ActionResult Create()
+        {
+            int id = Convert.ToInt32(Request.QueryString["id"]);
+            if (id != 0)
+            {
+                var data = Services.ProductService.GetAll();
+                var dataById = data.Where(x => x.Id == id).FirstOrDefault();
+                ViewBag.ProductSKU = dataById.ProductSKU;
+                ViewBag.StyleSKU = dataById.ProductStyle.StyleSKU;
+                ViewBag.OriginalSellingPrice = dataById.ActualSellingPrice;
+            }
+            return View();
+        }
+        [HttpPost]
+        public JsonResult GetProductValues(int? ProductSKU,string StyleSKU)
+
+        {
+            var ProductValues = new ProductModel();
+            ProductValues = Services.ProductService.GetValues(ProductSKU, StyleSKU);
+            var markDown = Services.MarkDownService.GetAll();
+            var markDownPrev = markDown.Where(x => x.ProductSKU == ProductSKU && x.StyleSKU == StyleSKU).Count();
+
+            if (ProductValues != null)
+            {
+                if (markDownPrev != 0)
+                {
+                    ProductValues.CountMarkDown = markDownPrev;
+                    var EffectiveDateLast = markDown.Where(x => x.ProductSKU == ProductSKU).LastOrDefault();
+
+                    ProductValues.PreDate = EffectiveDateLast.EffectiveDate.ToString();
+                    return Json(ProductValues, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var ProductValues1 = new ProductModel();
+                    ProductValues1.PreDate = "None";
+                    ProductValues1.CountMarkDown = 0;
+                    return Json(ProductValues1, JsonRequestBehavior.AllowGet);
+                }
+                
+            }
+            else{
+                var ProductValues1 = new ProductModel();
+                ProductValues1.ActualSellingPrice = 0;
+                
+                return Json(ProductValues1, JsonRequestBehavior.AllowGet);
+            }
+
+            
+        }
+        [HttpPost]
+        public ActionResult Create(MarkDownAddModel model)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (model.FromSKU != null && model.ToSKU != null)
+            {
+                var ProList = Services.ProductService.GetAllProductMarkDown();
+                var ProRangeList = ProList.Where(x => x.ProductSKU >= model.FromSKU && x.ProductSKU <= model.ToSKU).ToList();
+                foreach (var item in ProRangeList)
+                {
+                  model.MarkDown.ProductSKU = item.ProductSKU;
+                    model.MarkDown.OriginalSellingPrice = item.CostPrice;
+                    model.MarkDown.NewSellingPrice = item.RecommendedSellingPrice * (100 - model.MarkDown.PercentageDecrease) / 100;
+                   model.MarkDown.NewCashPrice = item.ActualSellingPrice * (100 - model.MarkDown.PercentageDecrease) / 100;
+                   model.MarkDown.StyleSKU = item.ProductStyle.StyleSKU;
+
+                   bool createMarkDown = Services.MarkDownService.Create(model);
+               }
+            }else
+            {
+                bool createMarkDown = Services.MarkDownService.Create(model);
+            }
+                TempData["Success"] = "Data Saved successfully!";
+
+                // return RedirectToAction("Index", "MarkDownBranch");
+                return View(model);
+           
+        }
+        [HttpGet]
+        public ActionResult Detail(int? id)
+        {
+            // int id = Convert.ToInt32(Request.QueryString["id"]);
+            var markDown = Services.MarkDownService.GetAll();
+            if (id != 0)
+            {
+                var ProductById = Services.ProductService.GetByIdMarkDown(id).ProductSKU;
+                markDown = markDown.Where(x => x.ProductSKU == ProductById).ToList();
+            }
+            TempData["Success"] = "Data Saved successfully!";
+
+            return View(markDown);
+        }
+        public ActionResult History()
+        {
+            var markDown = Services.MarkDownService.GetAll();
+            return View(markDown);
+        }
+        [HttpGet]
+        public JsonResult AutoCompleteProductStyleSKUList(string name)
+        {
+            var StyleSKUList = Services.ProductStyleService.ProductStyleAutocomplete(name);
+            return Json(StyleSKUList, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult AutoCompleteProductSKUList(string name)
+        {
+            var ProductSKUList = Services.ProductService.ProductAutocomplete(name);
+            return Json(ProductSKUList, JsonRequestBehavior.AllowGet);
+        }
+    }
+}

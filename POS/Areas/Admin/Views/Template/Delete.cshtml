@@ -1,0 +1,21 @@
+﻿@model Model.TemplateModel
+@{
+    ViewBag.Title = "Delete";
+    Layout = null;
+}
+
+        @using (Html.BeginForm("Delete", "Template", FormMethod.Post, new { id = "viewForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(x=>x.Id)
+<div class="modal-body">
+	<p>Are you sure you want to delete this Template?</p>
+</div>
+<div class="modal-footer">
+	<button type="button" data-dismiss="modal" data-target="#myModal" class="btn btn-outline-inverse">No</button>
+	<input type="submit" value="Yes" class="btn btn-success" />
+
+</div>
+
+        }

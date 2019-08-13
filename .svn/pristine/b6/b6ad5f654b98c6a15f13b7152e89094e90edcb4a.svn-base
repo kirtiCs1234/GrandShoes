@@ -1,0 +1,277 @@
+﻿@model PagedList.IPagedList<Model.TemplateModel>
+    @using PagedList.Mvc;
+    @using PagedList;
+    @{
+        //double add = 3.0;
+        /**/
+        ViewBag.Title = "Barcode Template";
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+<div class="prtm-full-block pos-relative">
+
+    <div class="prtm-block-title pad-all-md pb-0">
+        <div class="pos-relative">
+            <div class="caption">
+                <h3 class="text-capitalize">Barcode Template</h3>
+
+
+
+            </div>
+
+        </div>
+    </div>
+    <div class="row mrgn-b-md">
+        <div class="col-sm-12 text-right">
+
+
+            @*<button type="button" class="btn btn-primary export-btn" onclick="location.href = '/company/importexport/Export?TableName=Template'">Export</button>&nbsp;&nbsp;*@
+
+            @*<button type="button" class="btn btn-primary export-btn" onclick="Export('Template')">Export</button>&nbsp;&nbsp;*@
+
+
+            <button type="button" class="btn btn-primary add-btn add-form create" onclick="window.location.href='/admin/template/Index'"> Add</button>
+
+        </div>
+    </div>
+    <input type="hidden" name="CompanyId" id="CompanyId" value="@ViewBag.CompanyId" />
+
+    @if (TempData["Success"] != null)
+    {
+        <p class="alert alert-success" id="successMessage" style="width: 300px;height: 25px;color: #fff;text-align: center; padding-bottom: 2em;">
+            @TempData["Success"]
+        </p>
+    }
+    <script>
+    setTimeout(function () {
+        $('#successMessage').fadeOut('slow');
+    }, 5000);
+    </script>
+
+    <div class="prtm-block-content mrgn-b-md prtm-full-block prtm-full-block">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            TemplateName
+                        </th>
+                        <th>
+                            TemplateHtml
+                        </th>
+                        <th style="min-width:125px;">Action</th>
+                    </tr>
+                </thead>
+
+                @if (Model.Count != 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+
+                            </td>
+                            <td>
+                                <div>
+                                    @*@Html.Raw(item.TemplateHtml)*@
+                                    <button type="button" class="btn btn-primary add-btn add-form"
+                                            data-backdrop="static" data-toggle="modal" id="#myModal"
+                                            onclick="viewtemp(@item.Id)" data-target="#myModal">
+                                        View
+                                    </button>
+                                </div>
+                            </td>
+
+
+                            <td style="min-width:85px;">
+                                <a class="fa fa-pencil" href="Index?id=@item.Id"></a>
+                                @*<i class="fa fa-pencil edit-form abc" data-toggle="modal" data-backdrop="static" data-target="#myModal" id="#myModal" data-id="@item.Id"><a href="Company/Template/Index?id=@item.Id"></a></i>*@ &nbsp;
+                                <i class="fa fa-trash xyz1" data-toggle="modal" data-backdrop="static" data-target="#myModal2" id="#myModal2" data-id="@item.Id" onclick="del(@item.Id)"></i> &nbsp;
+                                @*<i class="fa fa-eye xyz2" data-toggle="modal" data-backdrop="static" data-id="@item.Id" id="#myModal" data-target="#myModal"></i>*@
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7">
+                            <p>No Record Found.</p>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+
+    </div>
+    @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
+
+    @Html.PagedListPager(Model, page => Url.Action("list", new { page }))
+    @*<div class="row pagination-row">
+            <div class="col-md-4 col-xs-12">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                of
+                @Model.PageCount (@Model.FirstItemOnPage - @Model.LastItemOnPage of @Model.TotalItemCount Templates)
+
+            </div>
+            <div class="col-md-6 col-xs-12 text-center">
+                @Html.PagedListPager(Model, page => Url.Action("list", new { page }))
+            </div>
+            <div class="col-md-2 col-xs-12 dropdown-page text-right">
+                <span style="margin-right:20px">Show</span>
+                <div class="select-page-size" style="float:right;">
+                    @Html.DropDownList("Size", null, new { @class = "select-page-size-value" })
+                </div>
+
+            </div>
+        </div>*@
+</div>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">BarcodeTemplate</h4>
+                </div>
+                <div class="row" id="modaldiv1" style="margin:0px;">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" aria-hidden="true" id="btncancel"
+                            class="btn btn-outline-inverse cancel">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-success" onclick="printElem('modaldiv1')">Print</button>
+                    <script>
+                    function printElem(divId) {
+                        debugger;
+                        var content = document.getElementById(divId).innerHTML;
+                        var mywindow = window.open('', 'Print', 'height=600,width=800');
+
+                        mywindow.document.write('<html><head><title>Print</title>');
+                        mywindow.document.write('</head><body >');
+                        mywindow.document.write(content);
+                        mywindow.document.write('</body></html>');
+
+                        mywindow.document.close();
+                        mywindow.focus()
+                        mywindow.print();
+                        mywindow.close();
+                        return true;
+                    }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal2">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Delete Barcode Template</h4>
+                        </div>*@
+                    <div class="row" id="modaldiv2" style="margin:0px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <script src="/Scripts/Barcode/JsBarcode.all.min.js"></script>
+        <script src="/Scripts/Barcode/jquery.printElement.js"></script>
+        <script type="text/javascript">
+
+
+               // function Export(TableName) {
+               //     debugger;
+
+               //     var obj = {};
+
+
+              //      debugger;
+              ///      $.ajax({
+                 //       url: "/company/template/ExportFile?TableName=" + TableName,
+               ///         type: "POST",
+                //        dataType: "json",
+              ///          contentType: "application/json",
+                //        data: JSON.stringify(obj),
+               //         success: function (result) {
+               //             debugger;
+               //             if (result.success) {
+               //                 window.location.href = "/company/template/DownloadExcel?TableName=" + result.name;
+               //             }
+              //          },
+               //         error: function (result) {
+               //             var str = result.responseText;
+               //             debugger;
+               //             alert("Error");
+               //         }
+               //     })
+                //}
+
+
+    var list = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.model))
+        function viewtemp(htmlid) {
+            var str = "";
+            var obj = {};
+            debugger;
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].Id == htmlid) {
+                    str = list[i].TemplateHtml;
+                    obj.TemplateHtml = str;
+                    obj.Width = list[i].Width;
+                    obj.Height = list[i].Height;
+                    obj.LengthId = list[i].LengthId;
+                    obj.IsActive = true;
+                    break;
+                }
+            }
+            $.ajax({
+                type: "POST",
+                dataType: "html",
+                url: '/Admin/Template/ShowTemplate',
+                data: obj,
+                success: function (result) {
+                    debugger;
+                    //$('#barcode-temp').html(result);
+                    $('#modaldiv1').html(result);
+
+                },
+                error: function (xhr, status) {
+                    alert(status);
+                }
+            });
+
+
+        }
+    function print() {
+        debugger;
+        $('#modaldiv1').printElement();
+    }
+    function del(id)
+    {
+                debugger;
+        $.ajax({
+            type: "GET",
+            //dataType: "html",
+            url: '/Admin/Template/Delete?id='+id,
+            //data: obj,
+            success: function (result) {
+                debugger;
+                //$('#barcode-temp').html(result);
+                $('#modaldiv2').html(result);
+
+            },
+            error: function (xhr, status) {
+                alert(status);
+            }
+        });
+    }
+
+        </script>
+

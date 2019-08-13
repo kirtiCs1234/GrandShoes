@@ -1,0 +1,133 @@
+﻿@model Model.PurchaseOrderModel
+<div class="prtm-full-block pos-relative">
+    <div class="prtm-block-title pad-all-md">
+        <div class="pos-relative">
+            <div class="caption">
+                <h3 class="text-capitalize">Purchase Order Report</h3>
+            </div>
+        </div>
+    </div>
+    <div class="prtm-block-content mrgn-b-md">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Order Number </th>
+                        <th>Purchase Status</th>
+                        <th>Client Invoice Number  </th>
+                        <th>Supplier Name</th>
+                        <th>Buyer Name</th>
+                        <th>Order Date</th>
+                        <th>Quantity </th>
+                        <th>Amount</th>
+                        @*<th>Vat Amount</th>*@
+                        @*<th style="min-width:125px;">Action</th>*@
+                    </tr>
+                </thead>
+                <tbody class="tbodyIndex">
+                    @if (Model.AllPurchaseList.Count != 0)
+                    {
+                        foreach (var item in Model.AllPurchaseList)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PurchaseOrderStatu.OrderStatus)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ClientInvoiceNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Supplier.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Buyer.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Amount)
+                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.VatAmount)
+                                    </td>*@
+
+
+                                @*<td style="min-width:85px;">
+
+                                        <i class="fa fa-pencil edit-form edit" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="edit(@item.Id)"></i>
+                                        &nbsp;
+                                        <i class="fa fa-trash delete delete-form" data-toggle="modal" data-target="#myModal" data-backdrop="static" onclick="del(@item.Id)"></i>
+                                        &nbsp;
+                                        <i class="fa fa-eye view-form details" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="details(@item.Id)"></i>
+
+                                    </td>*@
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7">
+                                <p>No results found.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    @if (ViewBag.endPage > 1)
+    {
+        <div class="pagination">
+
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li>
+                    <a href="/Admin/PurchaseOrderReport/_Index1?page=1">First</a>
+                </li>
+                <li>
+                    <a href="/Admin/PurchaseOrderReport/_Index1?page=@(ViewBag.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @foreach (var i in ViewBag.result)
+            {
+
+                var page = i;
+
+                <li class="@(page == ViewBag.CurrentPage ? "active" : "")">
+                    <a href="/Admin/PurchaseOrderReport/_Index1?page=@page">@page</a>
+                </li>
+
+            }
+            @if (ViewBag.CurrentPage < ViewBag.totalPages)
+            {
+                <li>
+                    <a href="/Admin/PurchaseOrderReport/_Index1?page=@(ViewBag.CurrentPage + 1)">Next</a>
+                </li>
+                <li>
+                    <a href="/Admin/PurchaseOrderReport/_Index1?page=@(ViewBag.totalPages)">Last</a>
+                </li>
+            }
+
+        </div>
+    }
+</div>
+
+
+
+@section scripts{
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+}
+
+
+

@@ -1,0 +1,168 @@
+﻿using Helper;
+using Model;
+using Model.Product;
+using Newtonsoft.Json;
+using Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.Service
+{
+    public class ProductService:IProductService
+    {
+        public List<AllProductDetailModel> GetAllProduct()
+
+        {
+            var body = "";
+            List<AllProductDetailModel> AllProductDetailModels = ServerResponse.Invoke<List<AllProductDetailModel>>("api/product/getDetails", body, "get");
+            return AllProductDetailModels;
+        }
+        public List<MarkDownProduct> GetAllProductMarkDown()
+        {
+            return ServerResponse.Invoke<List<MarkDownProduct>>("api/product/getDetails", "", "GET");
+        }
+        public List<ProductModel> GetFreeGift()
+        {
+            var freeGiftList = ServerResponse.Invoke<List<ProductModel>>("api/product/getFreeGift", "", "GET");
+            return freeGiftList;
+        }
+        public List<AllProductDetailModel> GetFreeGiftList()
+        {
+
+            var freeGiftList = ServerResponse.Invoke<List<AllProductDetailModel>>("api/product/getFreeGift", "", "GET");
+            return freeGiftList;
+        }
+        public ProductModel GetValues(int? ProductSKU,string StyleSKU)
+        {
+            var product = ServerResponse.Invoke<ProductModel>("api/product/getProduct?ProductSKU=" + ProductSKU + "&&StyleSKU=" + StyleSKU, "", "Post");
+            return product;
+        }
+        public YearModel GetYearId(string sku)
+        {
+            var getYearId = ServerResponse.Invoke<YearModel>("api/year/getYearId?sku=" + sku, "", "POST");
+            return getYearId;
+        }
+        public List<ProductModel> GetAll()
+
+        {
+            var body = "";
+            List<ProductModel> ProductDetailModels = ServerResponse.Invoke<List<ProductModel>>("api/product/getProductDetails", body, "get");
+            return ProductDetailModels;
+        }
+        
+        public MarkDownProduct GetByIdMarkDown(int? id)
+        {
+            var body = "";
+            MarkDownProduct ProductModelById = ServerResponse.Invoke<MarkDownProduct>("api/product/getDetail?id=" + id, body, "GET");
+            return ProductModelById;
+        }
+        public ProductModel GetById(int? id)
+        {
+            var body = "";
+            ProductModel ProductModelById = ServerResponse.Invoke<ProductModel>("api/product/getDetail?id=" + id, body, "GET");
+            return ProductModelById;
+        }
+        public bool CheckProductSKU(string chk)
+        {
+            var body = JsonConvert.SerializeObject(chk);
+            var CheckBranchCode = ServerResponse.Invoke<bool>("api/product/checkProductSKU?chk=" + chk, body, "POST");
+            return CheckBranchCode;
+        }
+        public bool Create(ProductModel productModel)
+        {
+            var body = JsonConvert.SerializeObject(productModel);
+            bool ProductCreate = ServerResponse.Invoke<bool>("api/product/create", body, "Post");
+            return ProductCreate;
+        }
+        public bool Edit(ProductModel productModel)
+        {
+            var body = JsonConvert.SerializeObject(productModel);
+            bool ProductEdit = ServerResponse.Invoke<bool>("api/product/edit?id=" + productModel.Id, body, "POST");
+            return ProductEdit;
+        }
+       public MarkDownProduct GetProductID(MarkDownAddModel model)
+        {
+            return ServerResponse.Invoke<MarkDownProduct>("api/product/getProductId", JsonConvert.SerializeObject(model), "POST");
+        }
+        public bool EditByMark(MarkDownProduct productModel)
+        {
+            var body = JsonConvert.SerializeObject(productModel);
+            bool ProductEdit = ServerResponse.Invoke<bool>("api/product/editByMark?id=" + productModel.Id, body, "POST");
+            return ProductEdit;
+        }
+        public OffersModel GetPaging(int? page, out int TotalCount)
+
+        {
+            var body = "";
+            // int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            var model1 = new OffersModel();
+            var productList = ServerResponse.Invoke<ServiceResult<List<ProductModel>>>("api/product/getProductPaging?pageNumber=" + page, body, "GET");
+            TotalCount = productList.TotalCount;
+
+            if (productList.data != null)
+            {
+                model1.ProductList = productList.data.ToList();
+                return model1;
+            }
+            else
+            {
+
+            }
+            return model1;
+        }
+
+        public List<ProductModel> GetProduct(ProdSearch prodSearch, int? page, out int TotalCount)
+        {
+            int pageNumber = (page ?? 1);
+            var body = JsonConvert.SerializeObject(prodSearch);
+           // var model1 = new OffersModel();
+            var productList = ServerResponse.Invoke<ServiceResult<List<ProductModel>>>("api/product/getProducts", body, "POST");
+            TotalCount = productList.TotalCount;
+
+            if (productList.data != null)
+            {
+                var model = productList.data.ToList();
+                return model;
+            }
+            else
+            {
+
+            }
+            return productList.data.ToList();
+
+        }
+        public List<ProductModel> ProductAutocomplete(string name)
+        {
+            return ServerResponse.Invoke<List<ProductModel>>("api/Product/ProductsAutocomplete?name=" + name, "", "get");
+        }
+        public List<AllProductDetailModel> SearchProduct(ProdSearch prodSearch)
+        {
+            var body = JsonConvert.SerializeObject(prodSearch);
+            List<AllProductDetailModel> productModelList = ServerResponse.Invoke<List<AllProductDetailModel>>("api/product/ProductSearch", body, "Post");
+            return productModelList;
+        }
+
+        public List<string> GetCode()
+        {
+            var body = "";
+            List<string> ProductCodeList = ServerResponse.Invoke<List<string>>("api/product/getCode", body, "get");
+            return ProductCodeList;
+        }
+        public bool CheckProductSKU(ProductModel model)
+        {
+            var body = JsonConvert.SerializeObject(model);
+            var CheckProductSKU = ServerResponse.Invoke<bool>("api/product/checkProductSKU", body, "POST");
+            return CheckProductSKU;
+        }
+        public ProductModel Delete(ProductModel productModel)
+        {
+            var body = JsonConvert.SerializeObject(productModel);
+            var ProductDelete = ServerResponse.Invoke<ProductModel>("api/product/Delete?id=" + productModel.Id, body, "POST");
+            return ProductDelete;
+        }
+    }
+}

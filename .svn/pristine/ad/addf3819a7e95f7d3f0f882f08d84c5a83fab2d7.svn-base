@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="56dcfec120ec4f68a08e15ac8cc7e2b3" Name="Diagram1">
+        <EntityTypeShape EntityType="GrandShoesModel.ActionLog" Width="1.5" PointX="0.75" PointY="101.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Area" Width="1.5" PointX="12.75" PointY="90.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Branch" Width="1.5" PointX="8.25" PointY="98.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.BranchDiscount" Width="1.5" PointX="10.5" PointY="99" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Buyer" Width="1.5" PointX="5.25" PointY="91.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.CartonManagement" Width="1.5" PointX="15.5" PointY="117.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.CartonManagementDetail" Width="1.5" PointX="22.75" PointY="114.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Cluster" Width="1.5" PointX="11.25" PointY="86" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.ClusterBranch" Width="1.5" PointX="13.5" PointY="98" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Color" Width="1.5" PointX="5.25" PointY="107.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Designation" Width="1.5" PointX="5.25" PointY="94.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Discount" Width="1.5" PointX="8.25" PointY="90.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Log" Width="1.5" PointX="3" PointY="98.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.MarkDown" Width="1.5" PointX="8.25" PointY="94.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.MarkDownBranch" Width="1.5" PointX="10.5" PointY="96" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Page" Width="1.5" PointX="0.75" PointY="98" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Product" Width="1.5" PointX="7.5" PointY="106.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.ProductCategory" Width="1.5" PointX="5.25" PointY="97.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.ProductGroup" Width="1.5" PointX="5.25" PointY="88.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.ProductSize" Width="1.5" PointX="9.75" PointY="113.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.ProductSource" Width="1.5" PointX="5.25" PointY="85.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.ProductStyle" Width="1.5" PointX="5.25" PointY="81.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.PurchaseOrder" Width="1.5" PointX="10.5" PointY="106.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.PurchaseOrderItem" Width="1.5" PointX="17.75" PointY="97.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.PurchaseOrderStatu" Width="1.5" PointX="5.25" PointY="100.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.ReceiptOrderItem" Width="1.5" PointX="15" PointY="101.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.ReceiveOrder" Width="1.5" PointX="12.75" PointY="103.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Role" Width="1.5" PointX="5.25" PointY="103.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Season" Width="1.5" PointX="5.25" PointY="133.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.SizeGrid" Width="1.5" PointX="5.25" PointY="136.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.SMIBranchDefault" Width="1.5" PointX="13.5" PointY="93.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Staff" Width="1.5" PointX="16.5" PointY="93.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.StaffCommition" Width="1.5" PointX="10.5" PointY="102.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.StaffMember" Width="1.5" PointX="22.75" PointY="100" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.StaffRole" Width="1.5" PointX="5.25" PointY="110.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.StaffStatu" Width="1.5" PointX="5.25" PointY="113.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockAudit" Width="1.5" PointX="20.5" PointY="104.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockBranchInventory" Width="1.5" PointX="20.5" PointY="94.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockBranchTransaction" Width="1.5" PointX="20.5" PointY="114.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockDistribution" Width="1.5" PointX="12.5" PointY="118.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockDistributionStatu" Width="1.5" PointX="5.25" PointY="116.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockDistributionSummary" Width="1.5" PointX="5.25" PointY="120" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockInventory" Width="1.5" PointX="12.75" PointY="108.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockSupplierTransaction" Width="1.5" PointX="9.75" PointY="116.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockTape" Width="1.5" PointX="23.5" PointY="104.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.StockTransactionType" Width="1.5" PointX="5.25" PointY="123.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Supplier" Width="1.5" PointX="5.25" PointY="126.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Template" Width="1.5" PointX="5.25" PointY="145" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.User" Width="1.5" PointX="10.5" PointY="89.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GrandShoesModel.Year" Width="1.5" PointX="5.25" PointY="148" IsExpanded="true" />
+        <AssociationConnector Association="GrandShoesModel.FK_Log_ActionLog" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Area_User" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Branch_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Branch_User" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_BranchDiscount_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_CartonManagement_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_ClusterBranch_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_MarkDownBranches_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_SMIBranchDefault_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_SMIBranchDefault_Branch1" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Staff_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockAudit_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockBranchInventory_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockBranchTransaction_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockDistribution_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockTape_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_User_Branch" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_BranchDiscount_Discount" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Buyer_Buyer" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_Buyer" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrder_Buyer" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_CartonManagement_StockDistributionSummary" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_CartonManagementDetails_CartonManagement" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_CartonManagementDetails_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_ClusterBranch_Cluster" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_Color" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItems_Color" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Designation_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Staff_Designation" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Log_Page" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Log_User" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_ProductCategory_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrder_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItem_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderStatus_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_ReceiptOrderItem_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_ReceiveOrder_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Role_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_SMIBranchDefault_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Staff_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StaffCommition_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StaffMember_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StaffRole_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StaffStatus_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockBranchTransaction_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockDistribution_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockDistributionStatus_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockDistributionSummary_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockInventory_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockSupplierTransaction_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockTransactionType_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Supplier_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_MarkDownBranches_MarkDown" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_ProductCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_ProductGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_ProductSource" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_ProductStyle" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_Season" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_SizeGrid" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_Template" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Product_Year" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_ProductSize_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItem_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_ReceiptOrderItem_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockAudit_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockBranchInventory_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockBranchTransaction_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockDistribution_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockInventory_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockSupplierTransaction_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockTape_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItem_ProductStyle" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_ReceiptOrderItem_ProductStyle" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockInventory_ProductStyle" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrder_PurchaseOrderStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrder_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItem_PurchaseOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_ReceiveOrder_PurchaseOrder" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItems_PurchaseOrderItems" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItems_SizeGrid" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_ReceiptOrderItem_ReceiptOrderItem" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_User_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_Staff_User" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StaffCommition_StaffStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StaffMember_StaffRole" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StaffMember_StaffStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StaffMember_User" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockBranchTransaction_StockTransactionType" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockDistribution_StockDistributionStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockDistribution_StockDistributionSummary" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockDistributionStatus_StockDistributionStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockSupplierTransaction_StockSupplierTransaction" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockSupplierTransaction_StockTransactionType" ManuallyRouted="false" />
+        <AssociationConnector Association="GrandShoesModel.FK_StockSupplierTransaction_Supplier" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GrandShoesModel.Image" Width="1.5" PointX="0.75" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

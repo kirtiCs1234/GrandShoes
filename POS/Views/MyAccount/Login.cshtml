@@ -1,0 +1,81 @@
+﻿@model Model.UserLoginModel
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Purple_loginform Website Template | Home :: w3layouts</title>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+
+    <link href="~/Content/jsTree/style.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- -->
+    <script>var __links = document.querySelectorAll('a'); function __linkClick(e) { parent.window.postMessage(this.href, '*'); }; for (var i = 0, l = __links.length; i < l; i++) { if (__links[i].getAttribute('data-t') == '_blank') { __links[i].addEventListener('click', __linkClick, false); } }</script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+   
+</head>
+
+<body class="login-page">
+	<section class="login-block">
+		<div class="container">
+			<div class="row">
+                <div class="col-md-4 login-sec">
+                    <h2 class="text-center">Login Now</h2>
+                    @using (Html.BeginForm("Login", "MyAccount", FormMethod.Post, new { id = "createForm", @class = "login-form", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1" class="text-uppercase">Username</label>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "text" })
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1" class="text-uppercase">Password</label>
+                            @Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "password" })
+                        </div>
+                        if (ViewBag.message != null)
+                        {
+                            <p style="color:red;">@ViewBag.message</p>
+                        }
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input">
+                                <small>Remember Me</small>
+                            </label>
+                            <button type="submit" class="btn btn-login float-right">Submit</button>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <a href="@Url.Action("/ForgetPassword")">Forgot Password?</a>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+				<div class="col-md-8 banner-sec">
+					<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+						
+						<div class="carousel-inner" role="listbox">
+							<div class="carousel-item active">
+								<img class="d-block img-fluid" src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</section>
+}
+
+</body>
+</html>
+@section scripts{
+
+   
+}

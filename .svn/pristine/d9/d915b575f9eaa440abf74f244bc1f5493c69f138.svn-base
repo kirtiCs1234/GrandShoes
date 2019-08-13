@@ -1,0 +1,109 @@
+﻿@model Model.StockTapeModel
+@{
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Import Excel File</h4>
+        </div>
+        @using (Html.BeginForm("ExcelUpload", "StockTape", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction()" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @*@Html.HiddenFor(m => m.Id)*@
+
+            <div class="modal-body">
+
+                <div class="row  mrgn-b-lg">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+
+                        <label>Excel File Upload</label>
+
+                        <input type="file" title="search image" class="" id="file" name="file" />
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6" style="display:block">
+                        
+                        @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                        @Html.HiddenFor(model => model.BranchId, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.BranchId, "", new { @class = "text-danger" })
+
+                   </div>
+                    </div>
+                <input data-val="true"
+                       data-val-number="The field StudentId must be a number."
+                       data-val-required="The StudentId field is required."
+                       id="IsActive"
+                       name="IsActive"
+                       type="hidden"
+                       value="true" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel">Cancel</button>
+                <input type="button" id="btnUpload" value="Add" class="btn btn-success popup-savebtn" />
+            </div>
+
+
+        }
+    </div>
+</div>    
+
+
+<script type="text/javascript">
+        $(document).ready(function(){
+            $('#btnUpload').click(function () {
+                debugger;
+                // Checking whether FormData is available in browser
+                if (window.FormData !== undefined) {
+
+                    var fileUpload = $("#file").get(0);
+                    var files = fileUpload.files;
+
+                    // Create FormData object
+                    var file = new FormData();
+
+                    // Looping over all files and add it to FormData object
+
+                        file.append("file", files[0]);
+
+
+                    // Adding one more key to FormData object
+                   //fileData.append('username', ‘Manas’);
+
+                    $.ajax({
+                        url: '/Admin/StockTape/ExcelUpload',
+                        type: "POST",
+                        contentType: false, // Not to set any content header
+                        processData: false, // Not to process data
+                        data: file,
+                        success: function (result) {
+                            debugger;
+                             alert("File Uploaded Successfully.");
+                            $('#myModal').modal('hide');
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                        }
+                    });
+                } else {
+                    alert("FormData is not supported.");
+                }
+            });
+        });
+        //function checkFile() {
+        //    debugger;
+        //    var fileName = $('#file').val();
+        //    var fi = fileName
+        //    var allowedExtensions = ".xlsx";
+        //    String.prototype.filename = function (extension) {
+        //        var s = this.replace(/\\/fileName, '/');
+        //        s = s.substring(s.lastIndexOf('/') + 1);
+        //        return extension ? s.replace(/[?#].+$/, '') : s.split('.')[0];
+        //    }
+
+        //    console.log($('img').attr('src').filename());
+
+        //}
+
+</script>

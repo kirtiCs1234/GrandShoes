@@ -1,0 +1,700 @@
+﻿@model Model.StockDistributionModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+        <div class="prtm-block-title pad-all-md ">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">Carton Management</h3>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+
+            <div class="row  mrgn-b-lg">
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.DropDownListFor(m => m.StockDistributionSummaryId, null, "--Distribution Summary Id--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.StockDistributionSummaryId, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    @Html.DropDownListFor(m => m.BranchId, null, "--Branch Name--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.BranchId, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <button type="button" class="btn btn-primary export-btn" onclick="searchData()">Search</button>
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <button type="button" disabled class="btn btn-primary export-btn" id="add" onclick="create()">Add</button>
+                    <input type="hidden" value="@ViewBag.Total" id="totalValue"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myCancelModal">
+    <div id="Canceldiv">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Confirm Cancel</h4>
+                </div>
+                <div class="modal-body">
+                    <p>you sure you need to close without save!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" id="cancelyesbtn" class="btn btn-default" data-dismiss="modal">yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row marg-btn-20">
+
+
+    <div class="dvUserDetails">
+
+    </div>
+    <div class="table-style">
+        @if (TempData["Success"] != null)
+        {
+            <p class="alert alert-success" id="successMessage" style="width: 300px;height: 25px;color: #fff;text-align: center; padding-bottom: 2em;">
+                @TempData["Success"]
+            </p>
+        }
+        <script>
+        setTimeout(function () {
+            $('#successMessage').fadeOut('slow');
+        }, 5000);
+        </script>
+        
+    </div>
+    <div class="dvUserDetails1">
+
+    </div>
+
+    <div class="dvCartonDetails">
+
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        function searchData() {
+            debugger;
+            var obj = {};
+
+            obj.StockDistributionSummaryId = $('#StockDistributionSummaryId').val();
+            obj.BranchId = $('#BranchId').val();
+            $.ajax({
+                url: '/Admin/CartonManagement/_Index',
+                type: 'POST',
+                data: obj,
+                success: function (result) {
+                    // alert('ssss');
+                    $('.dvUserDetails').html(result);
+                    $("#add").removeAttr("disabled");
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+            return false;
+
+        }
+        var id1;
+        function create() {
+            Data(0);
+        }
+
+        function edit(edit) {
+            id1 = edit;//$(this).data("id");
+            Data(1);
+        }
+
+
+        function Data(ch) {
+            debugger;
+            var obj = {};
+            obj.DistributionSummaryID = $('#StockDistributionSummaryId').val();
+            obj.StockDistributionSummaryId = $('#StockDistributionSummaryId').val();
+            obj.BranchId = $('#BranchId').val();
+            var crud = "";
+            switch (ch) {
+                case 0:
+                    crud = '/Admin/CartonManagement/Create';
+                    break;
+                case 1:
+                    crud = '/Admin/CartonManagement/Edit/' + id1;
+                    break;
+
+
+
+            }
+            $.ajax({
+
+                url: crud,
+
+                type: 'GET',
+                data: obj,
+                success: function (result) {
+                    // alert('ssss');
+                    $('.dvUserDetails1').html(result);
+                  //loadData();
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+            return false;
+
+        }
+        function del(id) {
+            debugger;
+            var ans = confirm("Are you sure you want to delete this Record?");
+            if (ans) {
+                $.ajax({
+                    url: "/Admin/CartonManagement/Delete/" + id,
+                    type: "POST",
+                    contentType: "application/json;charset=UTF-8",
+                    //   dataType: "json",
+                    success: function (result) {
+                        debugger;
+                        //   window.location.href = window.location.pathname
+                        loadData();
+                        searchData();
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+            return false;
+        }
+
+        function Edit() {
+            debugger;
+            var obj = {};
+            obj.CartonManagementID = $("#CartonManagementID").val(), //Reading text box values using Jquery
+            obj.ProductID = $("#ProductID").val(),
+
+            // obj.ProductIds = obj.ProductID.toString();
+         obj.Id = id1;
+            obj.Total = $("#Total").val(),
+           obj.Z01 = $("#Quantity01").val(),
+            obj.Z02 = $("#Quantity02").val(),
+            obj.Z03 = $("#Quantity03").val(),
+            obj.Z04 = $("#Quantity04").val(),
+            obj.Z05 = $("#Quantity05").val(),
+            obj.Z06 = $("#Quantity06").val(),
+            obj.Z07 = $("#Quantity07").val(),
+            obj.Z08 = $("#Quantity08").val(),
+            obj.Z09 = $("#Quantity09").val(),
+            obj.Z10 = $("#Quantity10").val(),
+            obj.Z11 = $("#Quantity11").val(),
+            obj.Z12 = $("#Quantity12").val(),
+            obj.Z13 = $("#Quantity13").val(),
+            obj.Z14 = $("#Quantity14").val(),
+            obj.Z15 = $("#Quantity15").val(),
+            obj.Z16 = $("#Quantity16").val(),
+            obj.Z17 = $("#Quantity17").val(),
+            obj.Z18 = $("#Quantity18").val(),
+            obj.Z19 = $("#Quantity19").val(),
+            obj.Z20 = $("#Quantity20").val(),
+            obj.Z21 = $("#Quantity21").val(),
+            obj.Z22 = $("#Quantity22").val(),
+            obj.Z23 = $("#Quantity23").val(),
+            obj.Z24 = $("#Quantity24").val(),
+            obj.Z25 = $("#Quantity25").val(),
+           obj.Z26 = $("#Quantity26").val(),
+            obj.Z27 = $("#Quantity27").val(),
+           obj.Z28 = $("#Quantity28").val(),
+            obj.Z29 = $("#Quantity29").val(),
+            obj.Z30 = $("#Quantity30").val(),
+
+            obj.IsActive = true
+            if (obj.Total > 24) {
+                alert("Not Store in Carton.");
+            }
+            else {
+
+
+                $.ajax(
+                {
+                    type: "POST", //HTTP POST Method
+                    url: '/Admin/CartonManagement/Edit/' + id1,
+                    data: obj,
+                    success: function (result) {
+                        loadData();
+                        $("#Quantity01").val('0'),
+
+                        $("#Quantity02").val('0'),
+                        $("#Quantity03").val('0'),
+                        $("#Quantity04").val('0'),
+                        $("#Quantity05").val('0'),
+                        $("#Quantity06").val('0'),
+                        $("#Quantity07").val('0'),
+                        $("#Quantity08").val('0'),
+                        $("#Quantity09").val('0'),
+                        $("#Quantity10").val('0'),
+                        $("#Quantity11").val('0'),
+                        $("#Quantity12").val('0'),
+                        $("#Quantity13").val('0'),
+                        $("#Quantity14").val('0'),
+                        $("#Quantity15").val('0'),
+                        $("#Quantity16").val('0'),
+                        $("#Quantity17").val('0'),
+                        $("#Quantity18").val('0'),
+                        $("#Quantity19").val('0'),
+                        $("#Quantity20").val('0'),
+                        $("#Quantity21").val('0'),
+                        $("#Quantity22").val('0'),
+                        $("#Quantity23").val('0'),
+                        $("#Quantity24").val('0'),
+                        $("#Quantity25").val('0'),
+                        $("#Quantity26").val('0'),
+                        $("#Quantity27").val('0'),
+                        $("#Quantity28").val('0'),
+                        $("#Quantity29").val('0'),
+                        $("#Quantity30").val('0'),
+                        $('#span_Quantity01').text('0'),
+                        $('#span_Quantity02').text('0'),
+                        $('#span_Quantity03').text('0'),
+                        $('#span_Quantity04').text('0'),
+                        $('#span_Quantity05').text('0'),
+                        $('#span_Quantity06').text('0'),
+                        $('#span_Quantity07').text('0'),
+                        $('#span_Quantity08').text('0'),
+                        $('#span_Quantity09').text('0'),
+                        $('#span_Quantity10').text('0'),
+                        $('#span_Quantity11').text('0'),
+                        $('#span_Quantity12').text('0'),
+                        $('#span_Quantity13').text('0'),
+                        $('#span_Quantity14').text('0'),
+                        $('#span_Quantity15').text('0'),
+                        $('#span_Quantity16').text('0'),
+                        $('#span_Quantity17').text('0'),
+                        $('#span_Quantity18').text('0'),
+                        $('#span_Quantity19').text('0'),
+                        $('#span_Quantity20').text('0'),
+                        $('#span_Quantity21').text('0'),
+                        $('#span_Quantity22').text('0'),
+                        $('#span_Quantity23').text('0'),
+                        $('#span_Quantity24').text('0'),
+                        $('#span_Quantity25').text('0'),
+                        $('#span_Quantity26').text('0'),
+                        $('#span_Quantity27').text('0'),
+                        $('#span_Quantity28').text('0'),
+                        $('#span_Quantity29').text('0'),
+                        $('#span_Quantity30').text('0'),
+                        $('#Total').val('0')
+
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+                $.ajax({
+
+                    url: '/Admin/CartonManagement/Create',
+
+                    type: 'GET',
+                    data: obj,
+                    success: function (result) {
+                        // alert('ssss');
+                        $('.dvUserDetails1').html(result);
+                    },
+                    error: function (xhr, status) {
+                        alert(status)
+                    }
+
+                });
+                return false;
+            }
+        }
+        function Submit() {
+            debugger;
+            var obj = {};
+            obj.CartonManagementID = $("#CartonManagementID").val(), //Reading text box values using Jquery
+            obj.ProductID = $("#ProductID").val(),
+
+            // obj.ProductIds = obj.ProductID.toString();
+
+            obj.Total = $("#Total").val(),
+           obj.Z01 = $("#Quantity01").val(),
+            obj.Z02 = $("#Quantity02").val(),
+            obj.Z03 = $("#Quantity03").val(),
+            obj.Z04 = $("#Quantity04").val(),
+            obj.Z05 = $("#Quantity05").val(),
+            obj.Z06 = $("#Quantity06").val(),
+            obj.Z07 = $("#Quantity07").val(),
+            obj.Z08 = $("#Quantity08").val(),
+            obj.Z09 = $("#Quantity09").val(),
+            obj.Z10 = $("#Quantity10").val(),
+            obj.Z11 = $("#Quantity11").val(),
+            obj.Z12 = $("#Quantity12").val(),
+            obj.Z13 = $("#Quantity13").val(),
+            obj.Z14 = $("#Quantity14").val(),
+            obj.Z15 = $("#Quantity15").val(),
+            obj.Z16 = $("#Quantity16").val(),
+            obj.Z17 = $("#Quantity17").val(),
+            obj.Z18 = $("#Quantity18").val(),
+            obj.Z19 = $("#Quantity19").val(),
+            obj.Z20 = $("#Quantity20").val(),
+            obj.Z21 = $("#Quantity21").val(),
+            obj.Z22 = $("#Quantity22").val(),
+            obj.Z23 = $("#Quantity23").val(),
+            obj.Z24 = $("#Quantity24").val(),
+            obj.Z25 = $("#Quantity25").val(),
+           obj.Z26 = $("#Quantity26").val(),
+            obj.Z27 = $("#Quantity27").val(),
+           obj.Z28 = $("#Quantity28").val(),
+            obj.Z29 = $("#Quantity29").val(),
+            obj.Z30 = $("#Quantity30").val(),
+           
+            obj.totalValue=$("#totalValue").val();
+            obj.IsActive = true
+            var count = $('#table').children().length;
+            if ( totalValue> 24) {
+                alert("Not Store in Carton.");
+            }
+            else {
+
+                $.ajax(
+                {
+                    type: "POST", //HTTP POST Method
+                    url: '/Admin/CartonManagement/Create',
+                    data: obj,
+                    success: function (result) {
+                        loadData();
+                        $("#Quantity01").val('0'),
+
+                        $("#Quantity02").val('0'),
+                        $("#Quantity03").val('0'),
+                        $("#Quantity04").val('0'),
+                        $("#Quantity05").val('0'),
+                        $("#Quantity06").val('0'),
+                        $("#Quantity07").val('0'),
+                        $("#Quantity08").val('0'),
+                        $("#Quantity09").val('0'),
+                        $("#Quantity10").val('0'),
+                        $("#Quantity11").val('0'),
+                        $("#Quantity12").val('0'),
+                        $("#Quantity13").val('0'),
+                        $("#Quantity14").val('0'),
+                        $("#Quantity15").val('0'),
+                        $("#Quantity16").val('0'),
+                        $("#Quantity17").val('0'),
+                        $("#Quantity18").val('0'),
+                        $("#Quantity19").val('0'),
+                        $("#Quantity20").val('0'),
+                        $("#Quantity21").val('0'),
+                        $("#Quantity22").val('0'),
+                        $("#Quantity23").val('0'),
+                        $("#Quantity24").val('0'),
+                        $("#Quantity25").val('0'),
+                        $("#Quantity26").val('0'),
+                        $("#Quantity27").val('0'),
+                        $("#Quantity28").val('0'),
+                        $("#Quantity29").val('0'),
+                        $("#Quantity30").val('0'),
+                        $('#span_Quantity01').text('0'),
+                        $('#span_Quantity02').text('0'),
+                        $('#span_Quantity03').text('0'),
+                        $('#span_Quantity04').text('0'),
+                        $('#span_Quantity05').text('0'),
+                        $('#span_Quantity06').text('0'),
+                        $('#span_Quantity07').text('0'),
+                        $('#span_Quantity08').text('0'),
+                        $('#span_Quantity09').text('0'),
+                        $('#span_Quantity10').text('0'),
+                        $('#span_Quantity11').text('0'),
+                        $('#span_Quantity12').text('0'),
+                        $('#span_Quantity13').text('0'),
+                        $('#span_Quantity14').text('0'),
+                        $('#span_Quantity15').text('0'),
+                        $('#span_Quantity16').text('0'),
+                        $('#span_Quantity17').text('0'),
+                        $('#span_Quantity18').text('0'),
+                        $('#span_Quantity19').text('0'),
+                        $('#span_Quantity20').text('0'),
+                        $('#span_Quantity21').text('0'),
+                        $('#span_Quantity22').text('0'),
+                        $('#span_Quantity23').text('0'),
+                        $('#span_Quantity24').text('0'),
+                        $('#span_Quantity25').text('0'),
+                        $('#span_Quantity26').text('0'),
+                        $('#span_Quantity27').text('0'),
+                        $('#span_Quantity28').text('0'),
+                        $('#span_Quantity29').text('0'),
+                        $('#span_Quantity30').text('0'),
+                        $('#Total').val('0')
+
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+
+
+            }
+        }
+        function change(id) {
+            debugger
+            var id1 = id;
+            if (id1 != null) {
+                $("#Quantity01").removeAttr("disabled");
+                $("#Quantity02").removeAttr("disabled");
+                $("#Quantity03").removeAttr("disabled");
+                $("#Quantity04").removeAttr("disabled");
+                $("#Quantity05").removeAttr("disabled");
+                $("#Quantity06").removeAttr("disabled");
+                $("#Quantity07").removeAttr("disabled");
+                $("#Quantity08").removeAttr("disabled");
+                $("#Quantity09").removeAttr("disabled");
+                $("#Quantity10").removeAttr("disabled");
+                $("#Quantity11").removeAttr("disabled");
+                $("#Quantity12").removeAttr("disabled");
+                $("#Quantity13").removeAttr("disabled");
+                $("#Quantity14").removeAttr("disabled");
+                $("#Quantity15").removeAttr("disabled");
+                $("#Quantity16").removeAttr("disabled");
+                $("#Quantity17").removeAttr("disabled");
+                $("#Quantity18").removeAttr("disabled");
+                $("#Quantity19").removeAttr("disabled");
+                $("#Quantity20").removeAttr("disabled");
+                $("#Quantity21").removeAttr("disabled");
+                $("#Quantity22").removeAttr("disabled");
+                $("#Quantity23").removeAttr("disabled");
+                $("#Quantity24").removeAttr("disabled");
+                $("#Quantity25").removeAttr("disabled");
+                $("#Quantity26").removeAttr("disabled");
+                $("#Quantity27").removeAttr("disabled");
+                $("#Quantity28").removeAttr("disabled");
+                $("#Quantity29").removeAttr("disabled");
+                $("#Quantity30").removeAttr("disabled");
+
+                $("#Quantity01").val('0'),
+
+                                   $("#Quantity02").val('0'),
+                                   $("#Quantity03").val('0'),
+                                   $("#Quantity04").val('0'),
+                                   $("#Quantity05").val('0'),
+                                   $("#Quantity06").val('0'),
+                                   $("#Quantity07").val('0'),
+                                   $("#Quantity08").val('0'),
+                                   $("#Quantity09").val('0'),
+                                   $("#Quantity10").val('0'),
+                                   $("#Quantity11").val('0'),
+                                   $("#Quantity12").val('0'),
+                                   $("#Quantity13").val('0'),
+                                   $("#Quantity14").val('0'),
+                                   $("#Quantity15").val('0'),
+                                   $("#Quantity16").val('0'),
+                                   $("#Quantity17").val('0'),
+                                   $("#Quantity18").val('0'),
+                                   $("#Quantity19").val('0'),
+                                   $("#Quantity20").val('0'),
+                                   $("#Quantity21").val('0'),
+                                   $("#Quantity22").val('0'),
+                                   $("#Quantity23").val('0'),
+                                   $("#Quantity24").val('0'),
+                                   $("#Quantity25").val('0'),
+                                   $("#Quantity26").val('0'),
+                                   $("#Quantity27").val('0'),
+                                   $("#Quantity28").val('0'),
+                                   $("#Quantity29").val('0'),
+                                   $("#Quantity30").val('0'),
+                                   $('#span_Quantity01').text('0'),
+                                   $('#span_Quantity02').text('0'),
+                                   $('#span_Quantity03').text('0'),
+                                   $('#span_Quantity04').text('0'),
+                                   $('#span_Quantity05').text('0'),
+                                   $('#span_Quantity06').text('0'),
+                                   $('#span_Quantity07').text('0'),
+                                   $('#span_Quantity08').text('0'),
+                                   $('#span_Quantity09').text('0'),
+                                   $('#span_Quantity10').text('0'),
+                                   $('#span_Quantity11').text('0'),
+                                   $('#span_Quantity12').text('0'),
+                                   $('#span_Quantity13').text('0'),
+                                   $('#span_Quantity14').text('0'),
+                                   $('#span_Quantity15').text('0'),
+                                   $('#span_Quantity16').text('0'),
+                                   $('#span_Quantity17').text('0'),
+                                   $('#span_Quantity18').text('0'),
+                                   $('#span_Quantity19').text('0'),
+                                   $('#span_Quantity20').text('0'),
+                                   $('#span_Quantity21').text('0'),
+                                   $('#span_Quantity22').text('0'),
+                                   $('#span_Quantity23').text('0'),
+                                   $('#span_Quantity24').text('0'),
+                                   $('#span_Quantity25').text('0'),
+                                   $('#span_Quantity26').text('0'),
+                                   $('#span_Quantity27').text('0'),
+                                   $('#span_Quantity28').text('0'),
+                                   $('#span_Quantity29').text('0'),
+                                   $('#span_Quantity30').text('0'),
+                                   $('#Total').val('0')
+            } else {
+
+            }
+
+        }
+        function loadData() {
+            debugger;
+            $.ajax({
+                url: '/Admin/CartonManagement/CartonDetail',
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: 'html',
+                success: function (result) {
+
+                    $('.dvCartonDetails').html(result);
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+        }
+
+        function updateData(id) {
+            debugger;
+            var id1 = id;
+            var Product2IdValue = $('#table1').children().val();
+            var count = $('#table').children().length;
+            i = 0;
+            while (i < count) {
+                var ProductIdValue = $("#item_Id_" + i).val();
+                var Total1 = $("#item_Total_" + i).val();
+                var Quantity01 = $("#item_Quantity01_" + i).val();
+                var Quantity02 = $("#item_Quantity02_" + i).val();
+                var Quantity03 = $("#item_Quantity03_" + i).val();
+                var Quantity04 = $("#item_Quantity04_" + i).val();
+                var Quantity05 = $("#item_Quantity05_" + i).val();
+                var Quantity06 = $("#item_Quantity06_" + i).val();
+                var Quantity07 = $("#item_Quantity07_" + i).val();
+                var Quantity08 = $("#item_Quantity08_" + i).val();
+                var Quantity09 = $("#item_Quantity09_" + i).val();
+                var Quantity10 = $("#item_Quantity10_" + i).val();
+                var Quantity11 = $("#item_Quantity11_" + i).val();
+                var Quantity12 = $("#item_Quantity12_" + i).val();
+                var Quantity13 = $("#item_Quantity13_" + i).val();
+                var Quantity14 = $("#item_Quantity14_" + i).val();
+                var Quantity15 = $("#item_Quantity15_" + i).val();
+                var Quantity16 = $("#item_Quantity16_" + i).val();
+                var Quantity17 = $("#item_Quantity17_" + i).val();
+                var Quantity18 = $("#item_Quantity18_" + i).val();
+                var Quantity19 = $("#item_Quantity19_" + i).val();
+                var Quantity20 = $("#item_Quantity20_" + i).val();
+                var Quantity21 = $("#item_Quantity21_" + i).val();
+                var Quantity22 = $("#item_Quantity22_" + i).val();
+                var Quantity23 = $("#item_Quantity23_" + i).val();
+                var Quantity24 = $("#item_Quantity24_" + i).val();
+                var Quantity25 = $("#item_Quantity25_" + i).val();
+                var Quantity26 = $("#item_Quantity26_" + i).val();
+                var Quantity27 = $("#item_Quantity27_" + i).val();
+                var Quantity28 = $("#item_Quantity28_" + i).val();
+                var Quantity29 = $("#item_Quantity29_" + i).val();
+                var Quantity30 = $("#item_Quantity30_" + i).val();
+            }
+        }
+        function CalculationCheck(ctrl) {
+            debugger;
+            var inputValue = $(ctrl).val();
+            var ctrlId = $(ctrl).attr("id");
+            var c = $(ctrl).closest("td").index();
+            
+            var itemNumber = ctrlId.split("_")[0];
+            var ProductId = $("#ProductID").attr("id");
+            var ProductIdValue = $("#ProductID").val();
+            //  var ProductIdValue = ProductIdValue1;
+            var childId = $("#table").attr("id");
+          
+            var count = $('#table').children().length;
+            var i = 0;
+            while (i < count) {
+                var ProductId2Value = $("#item_Id_" + i).val();
+                if (ProductId2Value == ProductIdValue) {
+                    // var wareHouseCtrl = $("#item_" + itemNumber + "_" + i);
+                    //  var whareHouse = wareHouseCtrl.val();
+                    
+                    var wareHouseCtrl1 = $(".tbodyIndex")[0].children[i].cells[c - 1].getAttribute("id");
+                    var wareHouseCtrl = $("#" + wareHouseCtrl1);
+                    var whareHouse = $(".tbodyIndex")[0].children[i].cells[c - 1].innerText;
+                    // var totalCtrl = $("#Total_" + i);
+                    // var total = totalCtrl.val();
+                    var totalCtrl1 = $(".tbodyIndex")[0].children[i].children[2].getAttribute("id");
+                    var totalCtrl = $("#" + totalCtrl1);
+                    var total = $(".tbodyIndex")[0].children[i].children[2].innerText;
+                    var totalCartonCtrl = $("#Total");
+                    var hiddenCtrl = $("#span_" + itemNumber + "");
+                    var spanV = hiddenCtrl.text();
+                    if (spanV == "") {
+                        spanV = 0;
+                    }
+                    var totalCarton = totalCartonCtrl.val();
+                    if (totalCarton == "") {
+                        totalCarton = 0;
+                    }
+                    if (isNaN(totalCarton)) {
+                        totalCarton = 0;
+                    }
+                    var temp = whareHouse;
+                    if (whareHouse == "")
+                        whareHouse = 0;
+                    if (inputValue == "") {
+                        inputValue = 0;
+                        whareHouse = temp;
+                    }
+                    var value = inputValue - spanV;
+                    var cartonTotal = parseInt(totalCarton) + parseInt(value);
+                    if (cartonTotal > 24) {
+                        alert("please store only 24 items in one carton.");
+                        if (spanV == "") {
+                            $(ctrl).val(0);
+                        }
+                        else {
+                            $(ctrl).val(spanV);
+                        }
+                    }
+
+                    else {
+                        var span = jQuery("#span_" + itemNumber + "").text(inputValue);
+
+                        if (parseInt(whareHouse) >= parseInt(inputValue)) {
+                            whareHouse = parseInt(whareHouse) - parseInt(value);
+                            total = parseInt(total) - parseInt(value);
+                            wareHouseCtrl.text(whareHouse);
+                            totalCtrl.text(total);
+                            totalCartonCtrl.val(cartonTotal);
+
+                        }
+                        else {
+                            alert("please enter Quantity of Stock Distrubution is less than Quantity of Stock Invebtory ");
+                            $(ctrl).val(0);
+                            $("#span_" + itemNumber + "").text(0);
+                        }
+
+                    }
+                    return 0;
+
+                }
+
+                i++;
+
+            }
+        }
+
+
+    </script>
+}
+
+

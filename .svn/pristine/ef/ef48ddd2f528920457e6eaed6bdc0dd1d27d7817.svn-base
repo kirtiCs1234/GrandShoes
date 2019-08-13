@@ -1,0 +1,18 @@
+﻿using Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.IService
+{
+   public interface IRoleService
+    {
+        List<RoleModel> GetAll();
+        RoleModel GetById(int? id);
+        RoleModel Create(RoleModel roleModel);
+        RoleModel Edit(RoleModel roleModel);
+        RoleModel Delete(RoleModel roleModel);
+    }
+}

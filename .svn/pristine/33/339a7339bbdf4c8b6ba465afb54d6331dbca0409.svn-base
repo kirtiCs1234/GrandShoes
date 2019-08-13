@@ -1,0 +1,332 @@
+﻿@model List<Model.SizeGridModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="prtm-page-bar col-md-5 col-lg-3 col-sm-12 col-12" style="background:none;">
+        <ul class="breadcrumb" style="background:none;">
+            <li class="breadcrumb-item text-capitalize">
+                <h3>Size Grid</h3>
+            </li>
+            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        </ul>
+    </div>
+    @*@using (Html.BeginForm("Index", "User") new { @class = "formuser" })*@
+    @*@using (Html.BeginForm("Index", "User", FormMethod.Post, new { @class = "formuser" }))
+        {*@
+    <!--------advanced search-->
+    <div class="col-md-8 col-lg-6 col-sm-8 col-12 search-container">
+        <div class="top-search-navbar-search smallsearch col-md-12 col-lg-12 col-sm-12 col-12">
+            <div class="row">
+
+                <input class="top-search-navbar-input col-md-8 col-lg-10 col-sm-8 col-xs-8 searchiFirstName" type="text" placeholder="Search Accounts" name="iFirstName">
+
+                @*<input type="submit" value="Add" class="btn btn-success popup-savebtn" />*@
+
+                <button class="advance-search col-md-2 col-lg-1 col-sm-2 col-xs-2" type="button">
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </button>
+
+                <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-xs-2" onclick="searchData(true)">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+
+        <div class="advance-search-container col-md-12 col-lg-12 col-sm-12 col-12">
+            <div class="advance-content">
+                <div class="col-md-12 col-lg-12 col-xg-12"><h5 style="margin-bottom:20px;color:#000;font-weight:normal">Advanced Keyword Search</h5></div>
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <label>First Name</label>
+                    <input class="form-control searchFirstName" type="text" placeholder="First Name" name="FirstName" />
+                </div>
+
+                <div class="col-md-12 col-lg-12 col-xg-12">
+                    <button type="button" onclick="searchData(false)" class="btn btn-success advance-search-btn">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!------------------>
+    @*}*@
+    <div class="add-btn-div col-md-4 col-lg-3 col-sm-4 col-12 text-right">
+        <button type="button" class="btn btn-primary import-btn">Import</button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary export-btn">Export</button>&nbsp;&nbsp;
+
+        <button type="button" class="btn btn-primary add-btn add-form create" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="create()">Add</button>
+    </div>
+</div>
+<div class="table-style">
+    @if (TempData["Success"] != null)
+    {
+        <p class="alert alert-success" id="successMessage" style="width: 300px;height: 25px;color: #fff;text-align: center; padding-bottom: 2em;">
+            @TempData["Success"]
+        </p>
+    }
+    <script>
+        setTimeout(function () {
+            $('#successMessage').fadeOut('slow');
+        }, 5000);
+    </script>
+
+    <div class="prtm-full-block pos-relative">
+        <div class="prtm-block-title pad-all-md">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">Size Grid</h3>
+                </div>
+            </div>
+        </div>
+        <div class="prtm-block-content mrgn-b-md">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Grid No</th>
+                            <th>Z01</th>
+                            <th>Z02</th>
+                            <th>Z03</th>
+                            <th>Z04</th>
+                            <th>Z05</th>
+                            <th>Z06</th>
+                            <th>Z07</th>
+                            <th>Z08</th>
+                            <th>Z09</th>
+                            <th>Z10</th>
+                            <th>Z11</th>
+                            <th>Z12</th>
+                            <th>Z13</th>
+                            <th>Z14</th>
+                            <th>Z15</th>
+                            <th>Z16</th>
+                            <th>Z17</th>
+                            <th>Z18</th>
+                            <th>Z19</th>
+                            <th>Z20</th>
+                            <th>Z21</th>
+                            <th>Z22</th>
+                            <th>Z23</th>
+                            <th>Z24</th>
+                            <th>Z25</th>
+                            <th>Z26</th>
+                            <th>Z27</th>
+                            <th>Z28</th>
+                            <th>Z29</th>
+                            <th>Z30</th>
+                            <th style="min-width:125px;">Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="tbodyIndex">
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.GridNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z01)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z02)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z03)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z04)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z05)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z06)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z07)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z08)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z09)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z10)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z11)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z12)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z13)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z14)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z15)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z16)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z17)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z18)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z19)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z20)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z21)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z22)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z23)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z24)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z25)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z26)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z27)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z28)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z29)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Z30)
+                                </td>
+
+                                <td style="min-width:85px;">
+
+                                    <i class="fa fa-pencil edit-form edit" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="edit(@item.Id)"></i>
+                                    &nbsp;
+                                    <i class="fa fa-trash delete delete-form" data-toggle="modal" data-target="#myModal" data-backdrop="static" onclick="del(@item.Id)"></i>
+                                    &nbsp;
+                                    <i class="fa fa-eye view-form details" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="details(@item.Id)"></i>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal">
+    <div id="dvCreatedetails">
+
+
+    </div>
+
+</div>
+<div class="modal fade" id="myCancelModal">
+    <div id="Canceldiv">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Confirm Cancel</h4>
+                </div>
+                <div class="modal-body">
+                    <p>you sure you need to close without save!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" id="cancelyesbtn" class="btn btn-default" data-dismiss="modal">yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $(document).on("click", "#cancelyesbtn", function () {
+            window.location = '/admin/SizeGrid/index';
+        })
+        var id1;
+        function create() {
+            Data(0);
+        }
+
+        function edit(edit) {
+            id1 = edit;//$(this).data("id");
+            Data(1);
+        }
+
+        function details(details) {
+            id1 = details;//$(this).data("id");
+            Data(2);
+        }
+
+        function del(del) {
+            id1 = del;//"";
+            Data(3);
+        }
+
+        //  $(".approve").click(function () {
+        //       id2 = $(this).data("id");
+        //      approved();
+        //  });
+        function Data(ch) {
+            debugger;
+            var crud = "";
+            switch (ch) {
+                case 0:
+                    crud = '/Admin/SizeGrid/Create';
+                    break;
+                case 1:
+                    crud = '/Admin/SizeGrid/Edit/' + id1;
+                    break;
+                case 2:
+                    crud = '/Admin/SizeGrid/Details/' + id1;
+                    break;
+                case 3:
+                    crud = '/Admin/SizeGrid/Delete/' + id1;
+                    break;
+                
+            }
+            $.ajax({
+
+                url: crud,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                // data: {page : page} ,
+                dataType: 'html',
+                success: function (result) {
+
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+
+</script>
+
+    }

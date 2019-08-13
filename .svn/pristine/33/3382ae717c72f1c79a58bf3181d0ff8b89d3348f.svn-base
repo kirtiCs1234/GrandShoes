@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Services.IService;
+using Services.Service;
+
+namespace Services
+{
+    public class UnitOfService : IUnitOfService
+    {
+        public IUserService UserService => new UserService();
+        public ISupplierService SupplierService => new SupplierService();
+        public ISizeGridService SizeGridService => new SizeGridService();
+        public IBranchService BranchService => new BranchService();
+        public IRoleService RoleService => new RoleService();
+        public IAreaService AreaService => new AreaService();
+        public IBuyerService BuyerService => new BuyerService();
+        public IStaffService StaffService => new StaffService();
+        public IDesignationService DesignationService => new DesignationService();
+        public IProductSourceService ProductSourceService => new ProductSourceService();
+        public IProductCategoryService ProductCategoryService => new ProductCategoryService();
+    }
+}

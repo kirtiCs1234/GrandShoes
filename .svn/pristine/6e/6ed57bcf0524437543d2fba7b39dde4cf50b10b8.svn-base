@@ -1,0 +1,165 @@
+﻿using Model;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using PagedList.Mvc;
+using PagedList;
+using System.Web;
+using System.Web.Mvc;
+using Helper;
+
+namespace POS.Areas.Admin.Controllers
+{
+    [CustomAuth]
+    public class ReceiptController : BaseController
+    {
+        // GET: Admin/Receipt
+        
+        public ActionResult Index(int? page)
+        
+        {
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            var PurchaseOrderList = Services.PurchaseOrderService.GetByReceiptOrder();
+
+            return View(PurchaseOrderList.ToPagedList(pageNumber, pageSize));
+        }
+        [HttpPost]
+       public ActionResult _Index1(PurchaseOrderSearch search,int? page)
+        {
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            var PurchaseOrderList = Services.PurchaseOrderService.GetByReceiptOrder();
+            if (search != null)
+            {
+                if (search.IsActive == true)
+                {
+                    if (!String.IsNullOrEmpty(search.OrderNumber) || !String.IsNullOrEmpty(search.SupplierName))
+                    {
+                        PurchaseOrderList = PurchaseOrderList.Where(x => x.OrderNumber==search.OrderNumber || x.SupplierName.Contains(search.SupplierName.ToLower())).ToList();
+
+                    }
+                }
+            }
+            else
+            {
+                PurchaseOrderList = PurchaseOrderList.Where(x => x.OrderNumber.Contains(search.OrderNumber.ToLower()) || x.SupplierName.Contains(search.SupplierName.ToLower())).ToList();
+
+            }
+            return View(PurchaseOrderList.ToPagedList(pageNumber, pageSize));
+        }
+        [HttpGet]
+        public ActionResult GetReceiptById(int? id)
+        {
+            var ReceiptOrderList = Services.ReceiptOrderService.GetAllReceiptOrder(id);
+            var list = ReceiptOrderList.Where(x => x.TotalQuantity != 0 && x.TotalCost != 0).ToList();
+            return View(list);
+        }
+        public ActionResult Create(int? Id)
+        {
+            ReceiptOrderItemModel RO = new ReceiptOrderItemModel();
+            RO.ReceiptNumber = Helper.RandomNumberGenerator.RandomNumberGeneration();
+            Session["ReceiveOrder"] = RO.ReceiptNumber;
+            // ViewBag.ReceiveOrderId = RO.ReceiptNumber;
+            ReceiveOrderModel ROM = new ReceiveOrderModel();
+            ROM.PurchaseOrderId = Id;
+            ROM.ReceiptNumber = RO.ReceiptNumber;
+            var create = Services.ReceiptOrderService.Create(ROM);
+            var ReceiptOrder = Services.ReceiptOrderService.GetAllReceiptOrder(Id);
+            
+            ViewBag.ReceiptOrderId = ReceiptOrder.FirstOrDefault().Id;
+            return View(RO);
+        }
+        public ActionResult Edit(int? Id)
+        {
+            ReceiptOrderItemModel RO = new ReceiptOrderItemModel();
+            var ReceiptOrderById = Services.ReceiptOrderService.GetById(Id);
+
+            RO.ReceiptNumber = ReceiptOrderById.ReceiptNumber;
+            RO.ReceiptOrderId = Id;
+            ViewBag.purchaseId = ReceiptOrderById.PurchaseOrderId;
+            ViewBag.ReceiptOrderId = Id;
+            var receiptOrderItemList = Services.ReceiptOrderService.GetByReceiptOrderId(Id);
+            RO.ReceiptOrderList = receiptOrderItemList;
+            ViewBag.Count = receiptOrderItemList.Count();
+            return View(RO);
+        }
+      
+        public JsonResult GetPurchaseOrderForUpdate(int? Id,int? productId,int? ProductStyleId)
+        {
+            var Product = Services.ReceiptOrderService.GetUpdateValues(Id,productId, ProductStyleId);
+            return Json(Product, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult AutoCompleteProductSKUList(string name)
+        {
+            var ProductLists = Services.PurchaseOrderService.ProductAutocomplete(name);
+            return Json(ProductLists, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult AutoCompleteStyleSKUList(string name)
+        {
+            var StylesLists = Services.PurchaseOrderService.ProductStyleAutocomplete(name);
+            return Json(StylesLists, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult GetPurchaseOrder(PurchaseOrderSearch model)
+
+        {
+            var PurchaseOrderValue = Services.PurchaseOrderItemsService.GetValue(model);
+            return Json(PurchaseOrderValue, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult AddReceiptOrderItem(ReceiptOrderItemModel model)
+        {
+            var productList = Services.ProductService.GetAll();
+            model.ProductId = productList.Where(x => x.ProductSKU == model.autoCompleteProductName).FirstOrDefault().Id;
+            var productStyleList = Services.ProductStyleService.GetAll();
+            model.ProductStyleId = productStyleList.Where(x => x.StyleSKU == model.autoCompleteProductStyleName).FirstOrDefault().Id;
+            var create = Services.ReceiptOrderService.AddReceiptOrderItem(model);
+            
+            return RedirectToAction("Index", "Receipt");
+        }
+        [HttpPost]
+        public ActionResult EditReceiptOrderItem(ReceiptOrderItemModel model)
+
+
+        {
+            var productList = Services.ProductService.GetAll();
+           // model.ProductId = productList.Where(x => x.ProductSKU == model.autoCompleteProductName).FirstOrDefault().Id;
+            var edit = Services.ReceiptOrderService.EditReceiptOrderItem(model);
+            return RedirectToAction("Index", "Receipt");
+        }
+        public ActionResult AddReceiptOrder(int? ReceiptOrderId)
+        {
+            bool AddReceipt = Services.ReceiptOrderService.AddReceiptOrder(ReceiptOrderId);
+            var AddStockInventory = Services.ReceiptOrderService.Create();
+            return RedirectToAction("Index", "Receipt");
+         }
+        public ActionResult EditReceiptOrder(int? Id)
+        {
+            bool AddReceipt = Services.ReceiptOrderService.EditReceiptOrder(Id);
+            return RedirectToAction("Index", "Receipt");
+        }
+        public ActionResult Detail(int? Id)
+        {
+            var receiptOrderItemList = Services.ReceiptOrderService.GetByReceiptOrderId(Id);
+            return View(receiptOrderItemList);
+        }
+        public JsonResult Delete(int? Id)
+        {
+
+            // ReceiveOrderModel getById = Services.ReceiptOrderService.GetById(Id);
+            bool status = Services.ReceiptOrderService.Delete(Id);
+            return Json(status, JsonRequestBehavior.AllowGet);
+
+        }
+        //[HttpPost]
+        //public ActionResult DeleteConfirmed(ReceiveOrderModel model)
+        //{
+        //  bool status = Services.ReceiptOrderService.Delete(model);
+        //    return View();
+        //}
+    }
+}

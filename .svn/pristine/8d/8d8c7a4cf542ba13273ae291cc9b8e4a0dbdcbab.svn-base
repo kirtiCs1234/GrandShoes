@@ -1,0 +1,46 @@
+﻿using DAL;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+
+namespace Helper.Controllers
+{
+    [RoutePrefix("api/staffRole")]
+    public class StaffRoleController : ApiController
+    {
+        
+     
+            private GrandShoesEntities db = new GrandShoesEntities();
+            public StaffRoleController()
+            {
+                db.Configuration.ProxyCreationEnabled = false;
+                db.Configuration.LazyLoadingEnabled = false;
+            }
+            [HttpGet]
+            [AllowAnonymous]
+            [Route("getDetails")]
+            public List<StaffRole> GetStaffRoles()
+            {
+                var staffRoles = db.StaffRoles.Where(x => x.IsActive == true).OrderByDescending(x => x.Id).ToList();
+                return staffRoles;
+            }
+            [HttpGet]
+            [AllowAnonymous]
+            [Route("getDetail")]
+            [ResponseType(typeof(StaffRole))]
+            public IHttpActionResult GetStaffRole(int id)
+            {
+                StaffRole staffRole = db.StaffRoles.Find(id);
+                if (staffRole == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(staffRole);
+            }
+        }  
+}

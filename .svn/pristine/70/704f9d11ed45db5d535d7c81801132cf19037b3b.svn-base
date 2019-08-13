@@ -1,0 +1,148 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+
+namespace POSApi.Controllers.Admin
+{
+    [RoutePrefix("api/productGroup")]
+    public class ProductGroupController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+        public ProductGroupController()
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            db.Configuration.ProxyCreationEnabled = false;
+        }
+        // GET: api/ProductGroup
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<ProductGroup> GetProductGroups()
+        {
+           var list= db.ProductGroups.ToList();
+            return list;
+        }
+
+        // GET: api/ProductGroup/5
+        [ResponseType(typeof(ProductGroup))]
+        public IHttpActionResult GetProductGroup(int id)
+        {
+            ProductGroup productGroup = db.ProductGroups.Find(id);
+            if (productGroup == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(productGroup);
+        }
+
+        // PUT: api/ProductGroup/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutProductGroup(int id, ProductGroup productGroup)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != productGroup.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(productGroup).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductGroupExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/ProductGroup
+        [ResponseType(typeof(ProductGroup))]
+        public IHttpActionResult PostProductGroup(ProductGroup productGroup)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.ProductGroups.Add(productGroup);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = productGroup.Id }, productGroup);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("getProductGroupId")]
+        public ProductGroup GetCode(string sku)
+        {
+            ProductGroup model = new ProductGroup();
+            bool data = db.ProductGroups.Any(x => x.GroupName == sku && x.IsActive == true);
+            if (data == true)
+            {
+                model = db.ProductGroups.Where(x => x.IsActive == true && x.GroupName == sku).FirstOrDefault();
+            }
+            else
+            {
+                model.GroupName = sku;
+                model.IsActive = true;
+                db.ProductGroups.Add(model);
+                db.SaveChanges();
+                var list = db.ProductGroups.Where(x => x.IsActive == true).ToList();
+                model = list.LastOrDefault();
+            }
+            return model;
+        }
+        // DELETE: api/ProductGroup/5
+        [ResponseType(typeof(ProductGroup))]
+        public IHttpActionResult DeleteProductGroup(int id)
+        {
+            ProductGroup productGroup = db.ProductGroups.Find(id);
+            if (productGroup == null)
+            {
+                return NotFound();
+            }
+
+            db.ProductGroups.Remove(productGroup);
+            db.SaveChanges();
+
+            return Ok(productGroup);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool ProductGroupExists(int id)
+        {
+            return db.ProductGroups.Count(e => e.Id == id) > 0;
+        }
+    }
+}

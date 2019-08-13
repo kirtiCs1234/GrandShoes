@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+
+namespace Model.Color
+{
+    public class ColorModel
+    {
+        public int Id { get; set; }
+        [Required (ErrorMessage = "color code is necessary")]
+        [Remote("CheckExistingColor", "Colors", AdditionalFields ="Id", ErrorMessage = "Color code already exists!")]
+        public string Code { get; set; }
+        [Required]
+        public string ColorLong { get; set; }
+        [Required]
+        public string ColorShort { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+
+    }
+
+    [MetadataType(typeof(ColorModel))]
+    public partial class Color
+    {
+    }
+}

@@ -1,0 +1,2813 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GrandShoesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="GrandShoesEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ActionLogs" EntityType="GrandShoesModel.ActionLog" />
+    <EntitySet Name="Areas" EntityType="GrandShoesModel.Area" />
+    <EntitySet Name="Branches" EntityType="GrandShoesModel.Branch" />
+    <EntitySet Name="BranchDiscounts" EntityType="GrandShoesModel.BranchDiscount" />
+    <EntitySet Name="Buyers" EntityType="GrandShoesModel.Buyer" />
+    <EntitySet Name="CartonManagements" EntityType="GrandShoesModel.CartonManagement" />
+    <EntitySet Name="CartonManagementDetails" EntityType="GrandShoesModel.CartonManagementDetail" />
+    <EntitySet Name="Clusters" EntityType="GrandShoesModel.Cluster" />
+    <EntitySet Name="ClusterBranches" EntityType="GrandShoesModel.ClusterBranch" />
+    <EntitySet Name="Colors" EntityType="GrandShoesModel.Color" />
+    <EntitySet Name="Designations" EntityType="GrandShoesModel.Designation" />
+    <EntitySet Name="Discounts" EntityType="GrandShoesModel.Discount" />
+    <EntitySet Name="Images" EntityType="GrandShoesModel.Image" />
+    <EntitySet Name="Logs" EntityType="GrandShoesModel.Log" />
+    <EntitySet Name="MarkDowns" EntityType="GrandShoesModel.MarkDown" />
+    <EntitySet Name="MarkDownBranches" EntityType="GrandShoesModel.MarkDownBranch" />
+    <EntitySet Name="Pages" EntityType="GrandShoesModel.Page" />
+    <EntitySet Name="Products" EntityType="GrandShoesModel.Product" />
+    <EntitySet Name="ProductCategories" EntityType="GrandShoesModel.ProductCategory" />
+    <EntitySet Name="ProductGroups" EntityType="GrandShoesModel.ProductGroup" />
+    <EntitySet Name="ProductSizes" EntityType="GrandShoesModel.ProductSize" />
+    <EntitySet Name="ProductSources" EntityType="GrandShoesModel.ProductSource" />
+    <EntitySet Name="ProductStyles" EntityType="GrandShoesModel.ProductStyle" />
+    <EntitySet Name="PurchaseOrders" EntityType="GrandShoesModel.PurchaseOrder" />
+    <EntitySet Name="PurchaseOrderItems" EntityType="GrandShoesModel.PurchaseOrderItem" />
+    <EntitySet Name="PurchaseOrderStatus" EntityType="GrandShoesModel.PurchaseOrderStatu" />
+    <EntitySet Name="ReceiptOrderItems" EntityType="GrandShoesModel.ReceiptOrderItem" />
+    <EntitySet Name="ReceiveOrders" EntityType="GrandShoesModel.ReceiveOrder" />
+    <EntitySet Name="Roles" EntityType="GrandShoesModel.Role" />
+    <EntitySet Name="Seasons" EntityType="GrandShoesModel.Season" />
+    <EntitySet Name="SizeGrids" EntityType="GrandShoesModel.SizeGrid" />
+    <EntitySet Name="SMIBranchDefaults" EntityType="GrandShoesModel.SMIBranchDefault" />
+    <EntitySet Name="Staffs" EntityType="GrandShoesModel.Staff" />
+    <EntitySet Name="StaffCommitions" EntityType="GrandShoesModel.StaffCommition" />
+    <EntitySet Name="StaffMembers" EntityType="GrandShoesModel.StaffMember" />
+    <EntitySet Name="StaffRoles" EntityType="GrandShoesModel.StaffRole" />
+    <EntitySet Name="StaffStatus" EntityType="GrandShoesModel.StaffStatu" />
+    <EntitySet Name="StockAudits" EntityType="GrandShoesModel.StockAudit" />
+    <EntitySet Name="StockBranchInventories" EntityType="GrandShoesModel.StockBranchInventory" />
+    <EntitySet Name="StockBranchTransactions" EntityType="GrandShoesModel.StockBranchTransaction" />
+    <EntitySet Name="StockDistributions" EntityType="GrandShoesModel.StockDistribution" />
+    <EntitySet Name="StockDistributionStatus" EntityType="GrandShoesModel.StockDistributionStatu" />
+    <EntitySet Name="StockDistributionSummaries" EntityType="GrandShoesModel.StockDistributionSummary" />
+    <EntitySet Name="StockInventories" EntityType="GrandShoesModel.StockInventory" />
+    <EntitySet Name="StockSupplierTransactions" EntityType="GrandShoesModel.StockSupplierTransaction" />
+    <EntitySet Name="StockTapes" EntityType="GrandShoesModel.StockTape" />
+    <EntitySet Name="StockTransactionTypes" EntityType="GrandShoesModel.StockTransactionType" />
+    <EntitySet Name="Suppliers" EntityType="GrandShoesModel.Supplier" />
+    <EntitySet Name="Templates" EntityType="GrandShoesModel.Template" />
+    <EntitySet Name="Users" EntityType="GrandShoesModel.User" />
+    <EntitySet Name="Years" EntityType="GrandShoesModel.Year" />
+    <AssociationSet Name="FK_Log_ActionLog" Association="GrandShoesModel.FK_Log_ActionLog">
+      <End Role="ActionLog" EntitySet="ActionLogs" />
+      <End Role="Log" EntitySet="Logs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Area_User" Association="GrandShoesModel.FK_Area_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Area" EntitySet="Areas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Branch_Log" Association="GrandShoesModel.FK_Branch_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="Branch" EntitySet="Branches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Branch_User" Association="GrandShoesModel.FK_Branch_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Branch" EntitySet="Branches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BranchDiscount_Branch" Association="GrandShoesModel.FK_BranchDiscount_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="BranchDiscount" EntitySet="BranchDiscounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartonManagement_Branch" Association="GrandShoesModel.FK_CartonManagement_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="CartonManagement" EntitySet="CartonManagements" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClusterBranch_Branch" Association="GrandShoesModel.FK_ClusterBranch_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="ClusterBranch" EntitySet="ClusterBranches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MarkDownBranches_Branch" Association="GrandShoesModel.FK_MarkDownBranches_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="MarkDownBranch" EntitySet="MarkDownBranches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SMIBranchDefault_Branch" Association="GrandShoesModel.FK_SMIBranchDefault_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="SMIBranchDefault" EntitySet="SMIBranchDefaults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SMIBranchDefault_Branch1" Association="GrandShoesModel.FK_SMIBranchDefault_Branch1">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="SMIBranchDefault" EntitySet="SMIBranchDefaults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Staff_Branch" Association="GrandShoesModel.FK_Staff_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="Staff" EntitySet="Staffs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockAudit_Branch" Association="GrandShoesModel.FK_StockAudit_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="StockAudit" EntitySet="StockAudits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockBranchInventory_Branch" Association="GrandShoesModel.FK_StockBranchInventory_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="StockBranchInventory" EntitySet="StockBranchInventories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockBranchTransaction_Branch" Association="GrandShoesModel.FK_StockBranchTransaction_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="StockBranchTransaction" EntitySet="StockBranchTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistribution_Branch" Association="GrandShoesModel.FK_StockDistribution_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="StockDistribution" EntitySet="StockDistributions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockTape_Branch" Association="GrandShoesModel.FK_StockTape_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="StockTape" EntitySet="StockTapes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Branch" Association="GrandShoesModel.FK_User_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BranchDiscount_Discount" Association="GrandShoesModel.FK_BranchDiscount_Discount">
+      <End Role="Discount" EntitySet="Discounts" />
+      <End Role="BranchDiscount" EntitySet="BranchDiscounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Buyer_Buyer" Association="GrandShoesModel.FK_Buyer_Buyer">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="Buyer" EntitySet="Buyers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Buyer" Association="GrandShoesModel.FK_Product_Buyer">
+      <End Role="Buyer" EntitySet="Buyers" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrder_Buyer" Association="GrandShoesModel.FK_PurchaseOrder_Buyer">
+      <End Role="Buyer" EntitySet="Buyers" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartonManagement_StockDistributionSummary" Association="GrandShoesModel.FK_CartonManagement_StockDistributionSummary">
+      <End Role="StockDistributionSummary" EntitySet="StockDistributionSummaries" />
+      <End Role="CartonManagement" EntitySet="CartonManagements" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartonManagementDetails_CartonManagement" Association="GrandShoesModel.FK_CartonManagementDetails_CartonManagement">
+      <End Role="CartonManagement" EntitySet="CartonManagements" />
+      <End Role="CartonManagementDetail" EntitySet="CartonManagementDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CartonManagementDetails_Product" Association="GrandShoesModel.FK_CartonManagementDetails_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="CartonManagementDetail" EntitySet="CartonManagementDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClusterBranch_Cluster" Association="GrandShoesModel.FK_ClusterBranch_Cluster">
+      <End Role="Cluster" EntitySet="Clusters" />
+      <End Role="ClusterBranch" EntitySet="ClusterBranches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Color" Association="GrandShoesModel.FK_Product_Color">
+      <End Role="Color" EntitySet="Colors" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderItems_Color" Association="GrandShoesModel.FK_PurchaseOrderItems_Color">
+      <End Role="Color" EntitySet="Colors" />
+      <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Designation_Log" Association="GrandShoesModel.FK_Designation_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="Designation" EntitySet="Designations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Staff_Designation" Association="GrandShoesModel.FK_Staff_Designation">
+      <End Role="Designation" EntitySet="Designations" />
+      <End Role="Staff" EntitySet="Staffs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Log_Page" Association="GrandShoesModel.FK_Log_Page">
+      <End Role="Page" EntitySet="Pages" />
+      <End Role="Log" EntitySet="Logs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Log_User" Association="GrandShoesModel.FK_Log_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Log" EntitySet="Logs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Log" Association="GrandShoesModel.FK_Product_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductCategory_Log" Association="GrandShoesModel.FK_ProductCategory_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="ProductCategory" EntitySet="ProductCategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrder_Log" Association="GrandShoesModel.FK_PurchaseOrder_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderItem_Log" Association="GrandShoesModel.FK_PurchaseOrderItem_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderStatus_Log" Association="GrandShoesModel.FK_PurchaseOrderStatus_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="PurchaseOrderStatu" EntitySet="PurchaseOrderStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiptOrderItem_Log" Association="GrandShoesModel.FK_ReceiptOrderItem_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="ReceiptOrderItem" EntitySet="ReceiptOrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiveOrder_Log" Association="GrandShoesModel.FK_ReceiveOrder_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="ReceiveOrder" EntitySet="ReceiveOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Role_Role" Association="GrandShoesModel.FK_Role_Role">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="Role" EntitySet="Roles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SMIBranchDefault_Log" Association="GrandShoesModel.FK_SMIBranchDefault_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="SMIBranchDefault" EntitySet="SMIBranchDefaults" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Staff_Log" Association="GrandShoesModel.FK_Staff_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="Staff" EntitySet="Staffs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffCommition_Log" Association="GrandShoesModel.FK_StaffCommition_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="StaffCommition" EntitySet="StaffCommitions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffMember_Log" Association="GrandShoesModel.FK_StaffMember_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="StaffMember" EntitySet="StaffMembers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffRole_Log" Association="GrandShoesModel.FK_StaffRole_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="StaffRole" EntitySet="StaffRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffStatus_Log" Association="GrandShoesModel.FK_StaffStatus_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="StaffStatu" EntitySet="StaffStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockBranchTransaction_Log" Association="GrandShoesModel.FK_StockBranchTransaction_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="StockBranchTransaction" EntitySet="StockBranchTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistribution_Log" Association="GrandShoesModel.FK_StockDistribution_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="StockDistribution" EntitySet="StockDistributions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistributionStatus_Log" Association="GrandShoesModel.FK_StockDistributionStatus_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="StockDistributionStatu" EntitySet="StockDistributionStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistributionSummary_Log" Association="GrandShoesModel.FK_StockDistributionSummary_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="StockDistributionSummary" EntitySet="StockDistributionSummaries" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockInventory_Log" Association="GrandShoesModel.FK_StockInventory_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="StockInventory" EntitySet="StockInventories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockSupplierTransaction_Log" Association="GrandShoesModel.FK_StockSupplierTransaction_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="StockSupplierTransaction" EntitySet="StockSupplierTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockTransactionType_Log" Association="GrandShoesModel.FK_StockTransactionType_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="StockTransactionType" EntitySet="StockTransactionTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Supplier_Log" Association="GrandShoesModel.FK_Supplier_Log">
+      <End Role="Log" EntitySet="Logs" />
+      <End Role="Supplier" EntitySet="Suppliers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MarkDownBranches_MarkDown" Association="GrandShoesModel.FK_MarkDownBranches_MarkDown">
+      <End Role="MarkDown" EntitySet="MarkDowns" />
+      <End Role="MarkDownBranch" EntitySet="MarkDownBranches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_ProductCategory" Association="GrandShoesModel.FK_Product_ProductCategory">
+      <End Role="ProductCategory" EntitySet="ProductCategories" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_ProductGroup" Association="GrandShoesModel.FK_Product_ProductGroup">
+      <End Role="ProductGroup" EntitySet="ProductGroups" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_ProductSource" Association="GrandShoesModel.FK_Product_ProductSource">
+      <End Role="ProductSource" EntitySet="ProductSources" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_ProductStyle" Association="GrandShoesModel.FK_Product_ProductStyle">
+      <End Role="ProductStyle" EntitySet="ProductStyles" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Season" Association="GrandShoesModel.FK_Product_Season">
+      <End Role="Season" EntitySet="Seasons" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_SizeGrid" Association="GrandShoesModel.FK_Product_SizeGrid">
+      <End Role="SizeGrid" EntitySet="SizeGrids" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Supplier" Association="GrandShoesModel.FK_Product_Supplier">
+      <End Role="Supplier" EntitySet="Suppliers" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Template" Association="GrandShoesModel.FK_Product_Template">
+      <End Role="Template" EntitySet="Templates" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Year" Association="GrandShoesModel.FK_Product_Year">
+      <End Role="Year" EntitySet="Years" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductSize_Product" Association="GrandShoesModel.FK_ProductSize_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ProductSize" EntitySet="ProductSizes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderItem_Product" Association="GrandShoesModel.FK_PurchaseOrderItem_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiptOrderItem_Product" Association="GrandShoesModel.FK_ReceiptOrderItem_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="ReceiptOrderItem" EntitySet="ReceiptOrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockAudit_Product" Association="GrandShoesModel.FK_StockAudit_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="StockAudit" EntitySet="StockAudits" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockBranchInventory_Product" Association="GrandShoesModel.FK_StockBranchInventory_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="StockBranchInventory" EntitySet="StockBranchInventories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockBranchTransaction_Product" Association="GrandShoesModel.FK_StockBranchTransaction_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="StockBranchTransaction" EntitySet="StockBranchTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistribution_Product" Association="GrandShoesModel.FK_StockDistribution_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="StockDistribution" EntitySet="StockDistributions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockInventory_Product" Association="GrandShoesModel.FK_StockInventory_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="StockInventory" EntitySet="StockInventories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockSupplierTransaction_Product" Association="GrandShoesModel.FK_StockSupplierTransaction_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="StockSupplierTransaction" EntitySet="StockSupplierTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockTape_Product" Association="GrandShoesModel.FK_StockTape_Product">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="StockTape" EntitySet="StockTapes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderItem_ProductStyle" Association="GrandShoesModel.FK_PurchaseOrderItem_ProductStyle">
+      <End Role="ProductStyle" EntitySet="ProductStyles" />
+      <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiptOrderItem_ProductStyle" Association="GrandShoesModel.FK_ReceiptOrderItem_ProductStyle">
+      <End Role="ProductStyle" EntitySet="ProductStyles" />
+      <End Role="ReceiptOrderItem" EntitySet="ReceiptOrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockInventory_ProductStyle" Association="GrandShoesModel.FK_StockInventory_ProductStyle">
+      <End Role="ProductStyle" EntitySet="ProductStyles" />
+      <End Role="StockInventory" EntitySet="StockInventories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrder_PurchaseOrderStatus" Association="GrandShoesModel.FK_PurchaseOrder_PurchaseOrderStatus">
+      <End Role="PurchaseOrderStatu" EntitySet="PurchaseOrderStatus" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrder_Supplier" Association="GrandShoesModel.FK_PurchaseOrder_Supplier">
+      <End Role="Supplier" EntitySet="Suppliers" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderItem_PurchaseOrder" Association="GrandShoesModel.FK_PurchaseOrderItem_PurchaseOrder">
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+      <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiveOrder_PurchaseOrder" Association="GrandShoesModel.FK_ReceiveOrder_PurchaseOrder">
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+      <End Role="ReceiveOrder" EntitySet="ReceiveOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderItems_SizeGrid" Association="GrandShoesModel.FK_PurchaseOrderItems_SizeGrid">
+      <End Role="SizeGrid" EntitySet="SizeGrids" />
+      <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ReceiptOrderItem_ReceiptOrderItem" Association="GrandShoesModel.FK_ReceiptOrderItem_ReceiptOrderItem">
+      <End Role="ReceiveOrder" EntitySet="ReceiveOrders" />
+      <End Role="ReceiptOrderItem" EntitySet="ReceiptOrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="GrandShoesModel.FK_User_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Staff_User" Association="GrandShoesModel.FK_Staff_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Staff" EntitySet="Staffs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffCommition_StaffStatus" Association="GrandShoesModel.FK_StaffCommition_StaffStatus">
+      <End Role="StaffStatu" EntitySet="StaffStatus" />
+      <End Role="StaffCommition" EntitySet="StaffCommitions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffMember_StaffRole" Association="GrandShoesModel.FK_StaffMember_StaffRole">
+      <End Role="StaffRole" EntitySet="StaffRoles" />
+      <End Role="StaffMember" EntitySet="StaffMembers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffMember_StaffStatus" Association="GrandShoesModel.FK_StaffMember_StaffStatus">
+      <End Role="StaffStatu" EntitySet="StaffStatus" />
+      <End Role="StaffMember" EntitySet="StaffMembers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffMember_User" Association="GrandShoesModel.FK_StaffMember_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="StaffMember" EntitySet="StaffMembers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockBranchTransaction_StockTransactionType" Association="GrandShoesModel.FK_StockBranchTransaction_StockTransactionType">
+      <End Role="StockTransactionType" EntitySet="StockTransactionTypes" />
+      <End Role="StockBranchTransaction" EntitySet="StockBranchTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistribution_StockDistributionStatus" Association="GrandShoesModel.FK_StockDistribution_StockDistributionStatus">
+      <End Role="StockDistributionStatu" EntitySet="StockDistributionStatus" />
+      <End Role="StockDistribution" EntitySet="StockDistributions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistribution_StockDistributionSummary" Association="GrandShoesModel.FK_StockDistribution_StockDistributionSummary">
+      <End Role="StockDistributionSummary" EntitySet="StockDistributionSummaries" />
+      <End Role="StockDistribution" EntitySet="StockDistributions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockDistributionStatus_StockDistributionStatus" Association="GrandShoesModel.FK_StockDistributionStatus_StockDistributionStatus">
+      <End Role="StockDistributionStatu" EntitySet="StockDistributionStatus" />
+      <End Role="StockDistributionStatu1" EntitySet="StockDistributionStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockSupplierTransaction_StockSupplierTransaction" Association="GrandShoesModel.FK_StockSupplierTransaction_StockSupplierTransaction">
+      <End Role="StockSupplierTransaction" EntitySet="StockSupplierTransactions" />
+      <End Role="StockSupplierTransaction1" EntitySet="StockSupplierTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockSupplierTransaction_StockTransactionType" Association="GrandShoesModel.FK_StockSupplierTransaction_StockTransactionType">
+      <End Role="StockTransactionType" EntitySet="StockTransactionTypes" />
+      <End Role="StockSupplierTransaction" EntitySet="StockSupplierTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockSupplierTransaction_Supplier" Association="GrandShoesModel.FK_StockSupplierTransaction_Supplier">
+      <End Role="Supplier" EntitySet="Suppliers" />
+      <End Role="StockSupplierTransaction" EntitySet="StockSupplierTransactions" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ActionLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ActionLogType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Logs" Relationship="GrandShoesModel.FK_Log_ActionLog" FromRole="ActionLog" ToRole="Log" />
+  </EntityType>
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ManagerID" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="User" Relationship="GrandShoesModel.FK_Area_User" FromRole="Area" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BranchCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ManagerId" Type="Int32" />
+    <Property Name="DateOpen" Type="DateTime" Precision="3" />
+    <Property Name="DateClosed" Type="DateTime" Precision="3" />
+    <Property Name="AddressLine1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="AddressLine2" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="AddressLine3" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AreaCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsSendStock" Type="Boolean" />
+    <Property Name="IsClosed" Type="Boolean" />
+    <Property Name="IsHeadOffice" Type="Boolean" />
+    <Property Name="StoreSize" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_Branch_Log" FromRole="Branch" ToRole="Log" />
+    <NavigationProperty Name="User" Relationship="GrandShoesModel.FK_Branch_User" FromRole="Branch" ToRole="User" />
+    <NavigationProperty Name="BranchDiscounts" Relationship="GrandShoesModel.FK_BranchDiscount_Branch" FromRole="Branch" ToRole="BranchDiscount" />
+    <NavigationProperty Name="CartonManagements" Relationship="GrandShoesModel.FK_CartonManagement_Branch" FromRole="Branch" ToRole="CartonManagement" />
+    <NavigationProperty Name="ClusterBranches" Relationship="GrandShoesModel.FK_ClusterBranch_Branch" FromRole="Branch" ToRole="ClusterBranch" />
+    <NavigationProperty Name="MarkDownBranches" Relationship="GrandShoesModel.FK_MarkDownBranches_Branch" FromRole="Branch" ToRole="MarkDownBranch" />
+    <NavigationProperty Name="SMIBranchDefaults" Relationship="GrandShoesModel.FK_SMIBranchDefault_Branch" FromRole="Branch" ToRole="SMIBranchDefault" />
+    <NavigationProperty Name="SMIBranchDefaults1" Relationship="GrandShoesModel.FK_SMIBranchDefault_Branch1" FromRole="Branch" ToRole="SMIBranchDefault" />
+    <NavigationProperty Name="Staffs" Relationship="GrandShoesModel.FK_Staff_Branch" FromRole="Branch" ToRole="Staff" />
+    <NavigationProperty Name="StockAudits" Relationship="GrandShoesModel.FK_StockAudit_Branch" FromRole="Branch" ToRole="StockAudit" />
+    <NavigationProperty Name="StockBranchInventories" Relationship="GrandShoesModel.FK_StockBranchInventory_Branch" FromRole="Branch" ToRole="StockBranchInventory" />
+    <NavigationProperty Name="StockBranchTransactions" Relationship="GrandShoesModel.FK_StockBranchTransaction_Branch" FromRole="Branch" ToRole="StockBranchTransaction" />
+    <NavigationProperty Name="StockDistributions" Relationship="GrandShoesModel.FK_StockDistribution_Branch" FromRole="Branch" ToRole="StockDistribution" />
+    <NavigationProperty Name="StockTapes" Relationship="GrandShoesModel.FK_StockTape_Branch" FromRole="Branch" ToRole="StockTape" />
+    <NavigationProperty Name="Users" Relationship="GrandShoesModel.FK_User_Branch" FromRole="Branch" ToRole="User" />
+  </EntityType>
+  <EntityType Name="BranchDiscount">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BranchID" Type="Int32" />
+    <Property Name="DiscountID" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Branch" Relationship="GrandShoesModel.FK_BranchDiscount_Branch" FromRole="BranchDiscount" ToRole="Branch" />
+    <NavigationProperty Name="Discount" Relationship="GrandShoesModel.FK_BranchDiscount_Discount" FromRole="BranchDiscount" ToRole="Discount" />
+  </EntityType>
+  <EntityType Name="Buyer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="BuyLimit" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_Buyer_Buyer" FromRole="Buyer" ToRole="Log" />
+    <NavigationProperty Name="Products" Relationship="GrandShoesModel.FK_Product_Buyer" FromRole="Buyer" ToRole="Product" />
+    <NavigationProperty Name="PurchaseOrders" Relationship="GrandShoesModel.FK_PurchaseOrder_Buyer" FromRole="Buyer" ToRole="PurchaseOrder" />
+  </EntityType>
+  <EntityType Name="CartonManagement">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DistributionSummaryID" Type="Int32" />
+    <Property Name="TotalItems" Type="Int32" />
+    <Property Name="PackDate" Type="DateTime" Precision="0" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="BranchID" Type="Int32" />
+    <Property Name="IBTNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CartonNumber" Type="Int32" />
+    <Property Name="IsDispatched" Type="Boolean" />
+    <NavigationProperty Name="Branch" Relationship="GrandShoesModel.FK_CartonManagement_Branch" FromRole="CartonManagement" ToRole="Branch" />
+    <NavigationProperty Name="StockDistributionSummary" Relationship="GrandShoesModel.FK_CartonManagement_StockDistributionSummary" FromRole="CartonManagement" ToRole="StockDistributionSummary" />
+    <NavigationProperty Name="CartonManagementDetails" Relationship="GrandShoesModel.FK_CartonManagementDetails_CartonManagement" FromRole="CartonManagement" ToRole="CartonManagementDetail" />
+  </EntityType>
+  <EntityType Name="CartonManagementDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CartonManagementID" Type="Int32" />
+    <Property Name="ProductID" Type="Int32" />
+    <Property Name="Z01" Type="Int32" />
+    <Property Name="Z02" Type="Int32" />
+    <Property Name="Z03" Type="Int32" />
+    <Property Name="Z04" Type="Int32" />
+    <Property Name="Z05" Type="Int32" />
+    <Property Name="Z06" Type="Int32" />
+    <Property Name="Z07" Type="Int32" />
+    <Property Name="Z08" Type="Int32" />
+    <Property Name="Z09" Type="Int32" />
+    <Property Name="Z10" Type="Int32" />
+    <Property Name="Z11" Type="Int32" />
+    <Property Name="Z12" Type="Int32" />
+    <Property Name="Z13" Type="Int32" />
+    <Property Name="Z14" Type="Int32" />
+    <Property Name="Z15" Type="Int32" />
+    <Property Name="Z16" Type="Int32" />
+    <Property Name="Z17" Type="Int32" />
+    <Property Name="Z18" Type="Int32" />
+    <Property Name="Z19" Type="Int32" />
+    <Property Name="Z20" Type="Int32" />
+    <Property Name="Z21" Type="Int32" />
+    <Property Name="Z22" Type="Int32" />
+    <Property Name="Z23" Type="Int32" />
+    <Property Name="Z24" Type="Int32" />
+    <Property Name="Z25" Type="Int32" />
+    <Property Name="Z26" Type="Int32" />
+    <Property Name="Z27" Type="Int32" />
+    <Property Name="Z28" Type="Int32" />
+    <Property Name="Z29" Type="Int32" />
+    <Property Name="Z30" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="CartonManagement" Relationship="GrandShoesModel.FK_CartonManagementDetails_CartonManagement" FromRole="CartonManagementDetail" ToRole="CartonManagement" />
+    <NavigationProperty Name="Product" Relationship="GrandShoesModel.FK_CartonManagementDetails_Product" FromRole="CartonManagementDetail" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Cluster">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="ClusterBranches" Relationship="GrandShoesModel.FK_ClusterBranch_Cluster" FromRole="Cluster" ToRole="ClusterBranch" />
+  </EntityType>
+  <EntityType Name="ClusterBranch">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClusterId" Type="Int32" />
+    <Property Name="BranchId" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Branch" Relationship="GrandShoesModel.FK_ClusterBranch_Branch" FromRole="ClusterBranch" ToRole="Branch" />
+    <NavigationProperty Name="Cluster" Relationship="GrandShoesModel.FK_ClusterBranch_Cluster" FromRole="ClusterBranch" ToRole="Cluster" />
+  </EntityType>
+  <EntityType Name="Color">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ColorLong" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ColorShort" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Products" Relationship="GrandShoesModel.FK_Product_Color" FromRole="Color" ToRole="Product" />
+    <NavigationProperty Name="PurchaseOrderItems" Relationship="GrandShoesModel.FK_PurchaseOrderItems_Color" FromRole="Color" ToRole="PurchaseOrderItem" />
+  </EntityType>
+  <EntityType Name="Designation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DesignationName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_Designation_Log" FromRole="Designation" ToRole="Log" />
+    <NavigationProperty Name="Staffs" Relationship="GrandShoesModel.FK_Staff_Designation" FromRole="Designation" ToRole="Staff" />
+  </EntityType>
+  <EntityType Name="Discount">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductSKU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="StyleSKU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsFlatDiscount" Type="Boolean" />
+    <Property Name="IsQuantityDiscount" Type="Boolean" />
+    <Property Name="MinimumQuantity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateFrom" Type="DateTime" Precision="0" />
+    <Property Name="DateTo" Type="DateTime" Precision="0" />
+    <Property Name="PercentDiscount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Text" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="BranchDiscounts" Relationship="GrandShoesModel.FK_BranchDiscount_Discount" FromRole="Discount" ToRole="BranchDiscount" />
+  </EntityType>
+  <EntityType Name="Image">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Int32" />
+    <Property Name="Image1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsPrimary" Type="Boolean" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="ActionLogId" Type="Int32" Nullable="false" />
+    <Property Name="LogDate" Type="DateTime" Precision="0" />
+    <Property Name="Comment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="PageId" Type="Int32" />
+    <NavigationProperty Name="ActionLog" Relationship="GrandShoesModel.FK_Log_ActionLog" FromRole="Log" ToRole="ActionLog" />
+    <NavigationProperty Name="Branches" Relationship="GrandShoesModel.FK_Branch_Log" FromRole="Log" ToRole="Branch" />
+    <NavigationProperty Name="Buyers" Relationship="GrandShoesModel.FK_Buyer_Buyer" FromRole="Log" ToRole="Buyer" />
+    <NavigationProperty Name="Designations" Relationship="GrandShoesModel.FK_Designation_Log" FromRole="Log" ToRole="Designation" />
+    <NavigationProperty Name="Page" Relationship="GrandShoesModel.FK_Log_Page" FromRole="Log" ToRole="Page" />
+    <NavigationProperty Name="User" Relationship="GrandShoesModel.FK_Log_User" FromRole="Log" ToRole="User" />
+    <NavigationProperty Name="Products" Relationship="GrandShoesModel.FK_Product_Log" FromRole="Log" ToRole="Product" />
+    <NavigationProperty Name="ProductCategories" Relationship="GrandShoesModel.FK_ProductCategory_Log" FromRole="Log" ToRole="ProductCategory" />
+    <NavigationProperty Name="PurchaseOrders" Relationship="GrandShoesModel.FK_PurchaseOrder_Log" FromRole="Log" ToRole="PurchaseOrder" />
+    <NavigationProperty Name="PurchaseOrderItems" Relationship="GrandShoesModel.FK_PurchaseOrderItem_Log" FromRole="Log" ToRole="PurchaseOrderItem" />
+    <NavigationProperty Name="PurchaseOrderStatus" Relationship="GrandShoesModel.FK_PurchaseOrderStatus_Log" FromRole="Log" ToRole="PurchaseOrderStatu" />
+    <NavigationProperty Name="ReceiptOrderItems" Relationship="GrandShoesModel.FK_ReceiptOrderItem_Log" FromRole="Log" ToRole="ReceiptOrderItem" />
+    <NavigationProperty Name="ReceiveOrders" Relationship="GrandShoesModel.FK_ReceiveOrder_Log" FromRole="Log" ToRole="ReceiveOrder" />
+    <NavigationProperty Name="Roles" Relationship="GrandShoesModel.FK_Role_Role" FromRole="Log" ToRole="Role" />
+    <NavigationProperty Name="SMIBranchDefaults" Relationship="GrandShoesModel.FK_SMIBranchDefault_Log" FromRole="Log" ToRole="SMIBranchDefault" />
+    <NavigationProperty Name="Staffs" Relationship="GrandShoesModel.FK_Staff_Log" FromRole="Log" ToRole="Staff" />
+    <NavigationProperty Name="StaffCommitions" Relationship="GrandShoesModel.FK_StaffCommition_Log" FromRole="Log" ToRole="StaffCommition" />
+    <NavigationProperty Name="StaffMembers" Relationship="GrandShoesModel.FK_StaffMember_Log" FromRole="Log" ToRole="StaffMember" />
+    <NavigationProperty Name="StaffRoles" Relationship="GrandShoesModel.FK_StaffRole_Log" FromRole="Log" ToRole="StaffRole" />
+    <NavigationProperty Name="StaffStatus" Relationship="GrandShoesModel.FK_StaffStatus_Log" FromRole="Log" ToRole="StaffStatu" />
+    <NavigationProperty Name="StockBranchTransactions" Relationship="GrandShoesModel.FK_StockBranchTransaction_Log" FromRole="Log" ToRole="StockBranchTransaction" />
+    <NavigationProperty Name="StockDistributions" Relationship="GrandShoesModel.FK_StockDistribution_Log" FromRole="Log" ToRole="StockDistribution" />
+    <NavigationProperty Name="StockDistributionStatus" Relationship="GrandShoesModel.FK_StockDistributionStatus_Log" FromRole="Log" ToRole="StockDistributionStatu" />
+    <NavigationProperty Name="StockDistributionSummaries" Relationship="GrandShoesModel.FK_StockDistributionSummary_Log" FromRole="Log" ToRole="StockDistributionSummary" />
+    <NavigationProperty Name="StockInventories" Relationship="GrandShoesModel.FK_StockInventory_Log" FromRole="Log" ToRole="StockInventory" />
+    <NavigationProperty Name="StockSupplierTransactions" Relationship="GrandShoesModel.FK_StockSupplierTransaction_Log" FromRole="Log" ToRole="StockSupplierTransaction" />
+    <NavigationProperty Name="StockTransactionTypes" Relationship="GrandShoesModel.FK_StockTransactionType_Log" FromRole="Log" ToRole="StockTransactionType" />
+    <NavigationProperty Name="Suppliers" Relationship="GrandShoesModel.FK_Supplier_Log" FromRole="Log" ToRole="Supplier" />
+  </EntityType>
+  <EntityType Name="MarkDown">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductSKU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="StyleSKU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="OriginalSellingPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="PercentageDecrease" Type="Int32" />
+    <Property Name="IsPercentageOriginalPrice" Type="Boolean" />
+    <Property Name="NewSellingPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="NewCashPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="EffectiveDate" Type="DateTime" Precision="0" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="MarkDownBranches" Relationship="GrandShoesModel.FK_MarkDownBranches_MarkDown" FromRole="MarkDown" ToRole="MarkDownBranch" />
+  </EntityType>
+  <EntityType Name="MarkDownBranch">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MarkDownID" Type="Int32" />
+    <Property Name="BranchID" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Branch" Relationship="GrandShoesModel.FK_MarkDownBranches_Branch" FromRole="MarkDownBranch" ToRole="Branch" />
+    <NavigationProperty Name="MarkDown" Relationship="GrandShoesModel.FK_MarkDownBranches_MarkDown" FromRole="MarkDownBranch" ToRole="MarkDown" />
+  </EntityType>
+  <EntityType Name="Page">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="page1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="pageUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Logs" Relationship="GrandShoesModel.FK_Log_Page" FromRole="Page" ToRole="Log" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductSKU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ProductStyleId" Type="Int32" />
+    <Property Name="LongDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="ShortDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="SizeGridID" Type="Int32" />
+    <Property Name="RecommendedSellingPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ActualSellingPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="IsVPI" Type="Boolean" />
+    <Property Name="IsMarkDown" Type="Boolean" />
+    <Property Name="SeasonID" Type="Int32" />
+    <Property Name="YearID" Type="Int32" />
+    <Property Name="ProductCategoryID" Type="Int32" />
+    <Property Name="ProductGroupID" Type="Int32" />
+    <Property Name="ProductSourceID" Type="Int32" />
+    <Property Name="SupplierStyle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SupplierID" Type="Int32" />
+    <Property Name="BuyerID" Type="Int32" />
+    <Property Name="CostPriceUSD" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="CostPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="IsAllowZero" Type="Boolean" />
+    <Property Name="DefaultTemplateID" Type="Int32" />
+    <Property Name="MarkDownTemplateID" Type="Int32" />
+    <Property Name="IsFreeGift" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsConsignment" Type="Boolean" />
+    <Property Name="IsDiscontinue" Type="Boolean" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="ColorID" Type="Int32" />
+    <Property Name="PrimaryImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Image1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Image2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Image3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Image4" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="AvailableSize" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+    <Property Name="LogId" Type="Int32" />
+    <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Buyer" Relationship="GrandShoesModel.FK_Product_Buyer" FromRole="Product" ToRole="Buyer" />
+    <NavigationProperty Name="CartonManagementDetails" Relationship="GrandShoesModel.FK_CartonManagementDetails_Product" FromRole="Product" ToRole="CartonManagementDetail" />
+    <NavigationProperty Name="Color" Relationship="GrandShoesModel.FK_Product_Color" FromRole="Product" ToRole="Color" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_Product_Log" FromRole="Product" ToRole="Log" />
+    <NavigationProperty Name="ProductCategory" Relationship="GrandShoesModel.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
+    <NavigationProperty Name="ProductGroup" Relationship="GrandShoesModel.FK_Product_ProductGroup" FromRole="Product" ToRole="ProductGroup" />
+    <NavigationProperty Name="ProductSource" Relationship="GrandShoesModel.FK_Product_ProductSource" FromRole="Product" ToRole="ProductSource" />
+    <NavigationProperty Name="ProductStyle" Relationship="GrandShoesModel.FK_Product_ProductStyle" FromRole="Product" ToRole="ProductStyle" />
+    <NavigationProperty Name="Season" Relationship="GrandShoesModel.FK_Product_Season" FromRole="Product" ToRole="Season" />
+    <NavigationProperty Name="SizeGrid" Relationship="GrandShoesModel.FK_Product_SizeGrid" FromRole="Product" ToRole="SizeGrid" />
+    <NavigationProperty Name="Supplier" Relationship="GrandShoesModel.FK_Product_Supplier" FromRole="Product" ToRole="Supplier" />
+    <NavigationProperty Name="Template" Relationship="GrandShoesModel.FK_Product_Template" FromRole="Product" ToRole="Template" />
+    <NavigationProperty Name="Year" Relationship="GrandShoesModel.FK_Product_Year" FromRole="Product" ToRole="Year" />
+    <NavigationProperty Name="ProductSizes" Relationship="GrandShoesModel.FK_ProductSize_Product" FromRole="Product" ToRole="ProductSize" />
+    <NavigationProperty Name="PurchaseOrderItems" Relationship="GrandShoesModel.FK_PurchaseOrderItem_Product" FromRole="Product" ToRole="PurchaseOrderItem" />
+    <NavigationProperty Name="ReceiptOrderItems" Relationship="GrandShoesModel.FK_ReceiptOrderItem_Product" FromRole="Product" ToRole="ReceiptOrderItem" />
+    <NavigationProperty Name="StockAudits" Relationship="GrandShoesModel.FK_StockAudit_Product" FromRole="Product" ToRole="StockAudit" />
+    <NavigationProperty Name="StockBranchInventories" Relationship="GrandShoesModel.FK_StockBranchInventory_Product" FromRole="Product" ToRole="StockBranchInventory" />
+    <NavigationProperty Name="StockBranchTransactions" Relationship="GrandShoesModel.FK_StockBranchTransaction_Product" FromRole="Product" ToRole="StockBranchTransaction" />
+    <NavigationProperty Name="StockDistributions" Relationship="GrandShoesModel.FK_StockDistribution_Product" FromRole="Product" ToRole="StockDistribution" />
+    <NavigationProperty Name="StockInventories" Relationship="GrandShoesModel.FK_StockInventory_Product" FromRole="Product" ToRole="StockInventory" />
+    <NavigationProperty Name="StockSupplierTransactions" Relationship="GrandShoesModel.FK_StockSupplierTransaction_Product" FromRole="Product" ToRole="StockSupplierTransaction" />
+    <NavigationProperty Name="StockTapes" Relationship="GrandShoesModel.FK_StockTape_Product" FromRole="Product" ToRole="StockTape" />
+  </EntityType>
+  <EntityType Name="ProductCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_ProductCategory_Log" FromRole="ProductCategory" ToRole="Log" />
+    <NavigationProperty Name="Products" Relationship="GrandShoesModel.FK_Product_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="ProductGroup">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Products" Relationship="GrandShoesModel.FK_Product_ProductGroup" FromRole="ProductGroup" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="ProductSize">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductID" Type="Int32" />
+    <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Product" Relationship="GrandShoesModel.FK_ProductSize_Product" FromRole="ProductSize" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="ProductSource">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Source" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Products" Relationship="GrandShoesModel.FK_Product_ProductSource" FromRole="ProductSource" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="ProductStyle">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StyleSKU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Products" Relationship="GrandShoesModel.FK_Product_ProductStyle" FromRole="ProductStyle" ToRole="Product" />
+    <NavigationProperty Name="PurchaseOrderItems" Relationship="GrandShoesModel.FK_PurchaseOrderItem_ProductStyle" FromRole="ProductStyle" ToRole="PurchaseOrderItem" />
+    <NavigationProperty Name="ReceiptOrderItems" Relationship="GrandShoesModel.FK_ReceiptOrderItem_ProductStyle" FromRole="ProductStyle" ToRole="ReceiptOrderItem" />
+    <NavigationProperty Name="StockInventories" Relationship="GrandShoesModel.FK_StockInventory_ProductStyle" FromRole="ProductStyle" ToRole="StockInventory" />
+  </EntityType>
+  <EntityType Name="PurchaseOrder">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ClientInvoiceNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SupplierId" Type="Int32" Nullable="false" />
+    <Property Name="BuyerId" Type="Int32" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ExpectedDeliveryDate" Type="DateTime" Precision="3" />
+    <Property Name="FirstDeliveryDate" Type="DateTime" Precision="3" />
+    <Property Name="OrderCompletionDate" Type="DateTime" Precision="3" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="VatAmount" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="PurchaseOrderStatusId" Type="Int32" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Buyer" Relationship="GrandShoesModel.FK_PurchaseOrder_Buyer" FromRole="PurchaseOrder" ToRole="Buyer" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_PurchaseOrder_Log" FromRole="PurchaseOrder" ToRole="Log" />
+    <NavigationProperty Name="PurchaseOrderStatu" Relationship="GrandShoesModel.FK_PurchaseOrder_PurchaseOrderStatus" FromRole="PurchaseOrder" ToRole="PurchaseOrderStatu" />
+    <NavigationProperty Name="Supplier" Relationship="GrandShoesModel.FK_PurchaseOrder_Supplier" FromRole="PurchaseOrder" ToRole="Supplier" />
+    <NavigationProperty Name="PurchaseOrderItems" Relationship="GrandShoesModel.FK_PurchaseOrderItem_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderItem" />
+    <NavigationProperty Name="ReceiveOrders" Relationship="GrandShoesModel.FK_ReceiveOrder_PurchaseOrder" FromRole="PurchaseOrder" ToRole="ReceiveOrder" />
+  </EntityType>
+  <EntityType Name="PurchaseOrderItem">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PurchaseOrderId" Type="Int32" Nullable="false" />
+    <Property Name="ProductStyleId" Type="Int32" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="SizeGridId" Type="Int32" />
+    <Property Name="ColorId" Type="Int32" />
+    <Property Name="SuplierStyle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="ItemSize1" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize2" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize3" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize4" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize5" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize6" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize7" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize8" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize9" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize10" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize11" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize12" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize13" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize14" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize15" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize16" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize17" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize18" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize19" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize20" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize21" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize22" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize23" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize24" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize25" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize26" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize27" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize28" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize29" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemSize30" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="QuantitySize1" Type="Int32" />
+    <Property Name="QuantitySize2" Type="Int32" />
+    <Property Name="QuantitySize3" Type="Int32" />
+    <Property Name="QuantitySize4" Type="Int32" />
+    <Property Name="QuantitySize5" Type="Int32" />
+    <Property Name="QuantitySize6" Type="Int32" />
+    <Property Name="QuantitySize7" Type="Int32" />
+    <Property Name="QuantitySize8" Type="Int32" />
+    <Property Name="QuantitySize9" Type="Int32" />
+    <Property Name="QuantitySize10" Type="Int32" />
+    <Property Name="QuantitySize11" Type="Int32" />
+    <Property Name="QuantitySize12" Type="Int32" />
+    <Property Name="QuantitySize13" Type="Int32" />
+    <Property Name="QuantitySize14" Type="Int32" />
+    <Property Name="QuantitySize15" Type="Int32" />
+    <Property Name="QuantitySize16" Type="Int32" />
+    <Property Name="QuantitySize17" Type="Int32" />
+    <Property Name="QuantitySize18" Type="Int32" />
+    <Property Name="QuantitySize19" Type="Int32" />
+    <Property Name="QuantitySize20" Type="Int32" />
+    <Property Name="QuantitySize21" Type="Int32" />
+    <Property Name="QuantitySize22" Type="Int32" />
+    <Property Name="QuantitySize23" Type="Int32" />
+    <Property Name="QuantitySize24" Type="Int32" />
+    <Property Name="QuantitySize25" Type="Int32" />
+    <Property Name="QuantitySize26" Type="Int32" />
+    <Property Name="QuantitySize27" Type="Int32" />
+    <Property Name="QuantitySize28" Type="Int32" />
+    <Property Name="QuantitySize29" Type="Int32" />
+    <Property Name="QuantitySize30" Type="Int32" />
+    <Property Name="CostSize1" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize2" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize3" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize4" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize5" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize6" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize7" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize8" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize9" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize10" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize11" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize12" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize13" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize14" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize15" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize16" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize17" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize18" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize19" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize20" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize21" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize22" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize23" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize24" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize25" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize26" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize27" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize28" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize29" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CostSize30" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="LogId" Type="Int32" />
+    <Property Name="OrderItemDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Color" Relationship="GrandShoesModel.FK_PurchaseOrderItems_Color" FromRole="PurchaseOrderItem" ToRole="Color" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_PurchaseOrderItem_Log" FromRole="PurchaseOrderItem" ToRole="Log" />
+    <NavigationProperty Name="Product" Relationship="GrandShoesModel.FK_PurchaseOrderItem_Product" FromRole="PurchaseOrderItem" ToRole="Product" />
+    <NavigationProperty Name="ProductStyle" Relationship="GrandShoesModel.FK_PurchaseOrderItem_ProductStyle" FromRole="PurchaseOrderItem" ToRole="ProductStyle" />
+    <NavigationProperty Name="PurchaseOrder" Relationship="GrandShoesModel.FK_PurchaseOrderItem_PurchaseOrder" FromRole="PurchaseOrderItem" ToRole="PurchaseOrder" />
+    <NavigationProperty Name="SizeGrid" Relationship="GrandShoesModel.FK_PurchaseOrderItems_SizeGrid" FromRole="PurchaseOrderItem" ToRole="SizeGrid" />
+  </EntityType>
+  <EntityType Name="PurchaseOrderStatu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_PurchaseOrderStatus_Log" FromRole="PurchaseOrderStatu" ToRole="Log" />
+    <NavigationProperty Name="PurchaseOrders" Relationship="GrandShoesModel.FK_PurchaseOrder_PurchaseOrderStatus" FromRole="PurchaseOrderStatu" ToRole="PurchaseOrder" />
+  </EntityType>
+  <EntityType Name="ReceiptOrderItem">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReceiptOrderId" Type="Int32" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="ColumnNumber" Type="Int32" />
+    <Property Name="SalesCost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Quantity01" Type="Int32" />
+    <Property Name="Quantity02" Type="Int32" />
+    <Property Name="Quantity03" Type="Int32" />
+    <Property Name="Quantity04" Type="Int32" />
+    <Property Name="Quantity05" Type="Int32" />
+    <Property Name="Quantity06" Type="Int32" />
+    <Property Name="Quantity07" Type="Int32" />
+    <Property Name="Quantity08" Type="Int32" />
+    <Property Name="Quantity09" Type="Int32" />
+    <Property Name="Quantity10" Type="Int32" />
+    <Property Name="Quantity11" Type="Int32" />
+    <Property Name="Quantity12" Type="Int32" />
+    <Property Name="Quantity13" Type="Int32" />
+    <Property Name="Quantity14" Type="Int32" />
+    <Property Name="Quantity15" Type="Int32" />
+    <Property Name="Quantity16" Type="Int32" />
+    <Property Name="Quantity17" Type="Int32" />
+    <Property Name="Quantity18" Type="Int32" />
+    <Property Name="Quantity19" Type="Int32" />
+    <Property Name="Quantity20" Type="Int32" />
+    <Property Name="Quantity21" Type="Int32" />
+    <Property Name="Quantity22" Type="Int32" />
+    <Property Name="Quantity23" Type="Int32" />
+    <Property Name="Quantity24" Type="Int32" />
+    <Property Name="Quantity25" Type="Int32" />
+    <Property Name="Quantity26" Type="Int32" />
+    <Property Name="Quantity27" Type="Int32" />
+    <Property Name="Quantity28" Type="Int32" />
+    <Property Name="Quantity29" Type="Int32" />
+    <Property Name="Quantity30" Type="Int32" />
+    <Property Name="Cost01" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost02" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost03" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost04" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost05" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost06" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost07" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost08" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost09" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost10" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost11" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost12" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost13" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost14" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost15" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost16" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost17" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost18" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost19" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost20" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost21" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost22" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost23" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost24" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost25" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost26" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost27" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost28" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost29" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Cost30" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <Property Name="ProductStyleId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_ReceiptOrderItem_Log" FromRole="ReceiptOrderItem" ToRole="Log" />
+    <NavigationProperty Name="Product" Relationship="GrandShoesModel.FK_ReceiptOrderItem_Product" FromRole="ReceiptOrderItem" ToRole="Product" />
+    <NavigationProperty Name="ProductStyle" Relationship="GrandShoesModel.FK_ReceiptOrderItem_ProductStyle" FromRole="ReceiptOrderItem" ToRole="ProductStyle" />
+    <NavigationProperty Name="ReceiveOrder" Relationship="GrandShoesModel.FK_ReceiptOrderItem_ReceiptOrderItem" FromRole="ReceiptOrderItem" ToRole="ReceiveOrder" />
+  </EntityType>
+  <EntityType Name="ReceiveOrder">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReceiptNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PurchaseOrderId" Type="Int32" />
+    <Property Name="TotalQuantity" Type="Int32" />
+    <Property Name="TotalCost" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="TotalVAT" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="SupplierInvoice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ReceiptDate" Type="DateTime" Precision="3" />
+    <Property Name="ReceiptStatusId" Type="Boolean" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_ReceiveOrder_Log" FromRole="ReceiveOrder" ToRole="Log" />
+    <NavigationProperty Name="PurchaseOrder" Relationship="GrandShoesModel.FK_ReceiveOrder_PurchaseOrder" FromRole="ReceiveOrder" ToRole="PurchaseOrder" />
+    <NavigationProperty Name="ReceiptOrderItems" Relationship="GrandShoesModel.FK_ReceiptOrderItem_ReceiptOrderItem" FromRole="ReceiveOrder" ToRole="ReceiptOrderItem" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_Role_Role" FromRole="Role" ToRole="Log" />
+    <NavigationProperty Name="Users" Relationship="GrandShoesModel.FK_User_Role" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Season">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Products" Relationship="GrandShoesModel.FK_Product_Season" FromRole="Season" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="SizeGrid">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GridNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Z01" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z02" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z03" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z04" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z05" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z06" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z07" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z08" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z09" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z10" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z11" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z12" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z13" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z14" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z15" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z16" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z17" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z18" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z19" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z20" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z21" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z22" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z23" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z24" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z25" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z26" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z27" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z28" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z29" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Z30" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Products" Relationship="GrandShoesModel.FK_Product_SizeGrid" FromRole="SizeGrid" ToRole="Product" />
+    <NavigationProperty Name="PurchaseOrderItems" Relationship="GrandShoesModel.FK_PurchaseOrderItems_SizeGrid" FromRole="SizeGrid" ToRole="PurchaseOrderItem" />
+  </EntityType>
+  <EntityType Name="SMIBranchDefault">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FromBranchId" Type="Int32" />
+    <Property Name="ToBranchId" Type="Int32" />
+    <Property Name="Distance" Type="Decimal" Precision="18" Scale="4" />
+    <Property Name="IsPreferredRoute" Type="Boolean" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Branch" Relationship="GrandShoesModel.FK_SMIBranchDefault_Branch" FromRole="SMIBranchDefault" ToRole="Branch" />
+    <NavigationProperty Name="Branch1" Relationship="GrandShoesModel.FK_SMIBranchDefault_Branch1" FromRole="SMIBranchDefault" ToRole="Branch" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_SMIBranchDefault_Log" FromRole="SMIBranchDefault" ToRole="Log" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="DesignationID" Type="Int32" />
+    <Property Name="BranchID" Type="Int32" />
+    <Property Name="JoiningDate" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <Property Name="FingerPrintAccess" Type="Boolean" />
+    <NavigationProperty Name="Branch" Relationship="GrandShoesModel.FK_Staff_Branch" FromRole="Staff" ToRole="Branch" />
+    <NavigationProperty Name="Designation" Relationship="GrandShoesModel.FK_Staff_Designation" FromRole="Staff" ToRole="Designation" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_Staff_Log" FromRole="Staff" ToRole="Log" />
+    <NavigationProperty Name="User" Relationship="GrandShoesModel.FK_Staff_User" FromRole="Staff" ToRole="User" />
+  </EntityType>
+  <EntityType Name="StaffCommition">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="SaleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TransactionDate" Type="DateTime" Precision="0" />
+    <Property Name="Amount" Type="Decimal" Precision="18" Scale="4" />
+    <Property Name="SaleStatusId" Type="Int32" />
+    <Property Name="IsPaid" Type="Boolean" />
+    <Property Name="PaymentDate" Type="DateTime" Precision="0" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_StaffCommition_Log" FromRole="StaffCommition" ToRole="Log" />
+    <NavigationProperty Name="StaffStatu" Relationship="GrandShoesModel.FK_StaffCommition_StaffStatus" FromRole="StaffCommition" ToRole="StaffStatu" />
+  </EntityType>
+  <EntityType Name="StaffMember">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="StaffRoleId" Type="Int32" />
+    <Property Name="JoiningDate" Type="DateTime" Precision="0" />
+    <Property Name="ProfilePic" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="StaffStatusId" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsFingurPrintAccess" Type="Boolean" Nullable="false" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_StaffMember_Log" FromRole="StaffMember" ToRole="Log" />
+    <NavigationProperty Name="StaffRole" Relationship="GrandShoesModel.FK_StaffMember_StaffRole" FromRole="StaffMember" ToRole="StaffRole" />
+    <NavigationProperty Name="StaffStatu" Relationship="GrandShoesModel.FK_StaffMember_StaffStatus" FromRole="StaffMember" ToRole="StaffStatu" />
+    <NavigationProperty Name="User" Relationship="GrandShoesModel.FK_StaffMember_User" FromRole="StaffMember" ToRole="User" />
+  </EntityType>
+  <EntityType Name="StaffRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_StaffRole_Log" FromRole="StaffRole" ToRole="Log" />
+    <NavigationProperty Name="StaffMembers" Relationship="GrandShoesModel.FK_StaffMember_StaffRole" FromRole="StaffRole" ToRole="StaffMember" />
+  </EntityType>
+  <EntityType Name="StaffStatu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StatusName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_StaffStatus_Log" FromRole="StaffStatu" ToRole="Log" />
+    <NavigationProperty Name="StaffCommitions" Relationship="GrandShoesModel.FK_StaffCommition_StaffStatus" FromRole="StaffStatu" ToRole="StaffCommition" />
+    <NavigationProperty Name="StaffMembers" Relationship="GrandShoesModel.FK_StaffMember_StaffStatus" FromRole="StaffStatu" ToRole="StaffMember" />
+  </EntityType>
+  <EntityType Name="StockAudit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BranchId" Type="Int32" />
+    <Property Name="Quantity01" Type="Int32" />
+    <Property Name="Quantity02" Type="Int32" />
+    <Property Name="Quantity03" Type="Int32" />
+    <Property Name="Quantity04" Type="Int32" />
+    <Property Name="Quantity05" Type="Int32" />
+    <Property Name="Quantity06" Type="Int32" />
+    <Property Name="Quantity07" Type="Int32" />
+    <Property Name="Quantity08" Type="Int32" />
+    <Property Name="Quantity09" Type="Int32" />
+    <Property Name="Quantity10" Type="Int32" />
+    <Property Name="Quantity11" Type="Int32" />
+    <Property Name="Quantity12" Type="Int32" />
+    <Property Name="Quantity13" Type="Int32" />
+    <Property Name="Quantity14" Type="Int32" />
+    <Property Name="Quantity15" Type="Int32" />
+    <Property Name="Quantity16" Type="Int32" />
+    <Property Name="Quantity17" Type="Int32" />
+    <Property Name="Quantity18" Type="Int32" />
+    <Property Name="Quantity19" Type="Int32" />
+    <Property Name="Quantity20" Type="Int32" />
+    <Property Name="Quantity21" Type="Int32" />
+    <Property Name="Quantity22" Type="Int32" />
+    <Property Name="Quantity23" Type="Int32" />
+    <Property Name="Quantity24" Type="Int32" />
+    <Property Name="Quantity25" Type="Int32" />
+    <Property Name="Quantity26" Type="Int32" />
+    <Property Name="Quantity27" Type="Int32" />
+    <Property Name="Quantity28" Type="Int32" />
+    <Property Name="Quantity29" Type="Int32" />
+    <Property Name="Quantity30" Type="Int32" />
+    <Property Name="LogId" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Branch" Relationship="GrandShoesModel.FK_StockAudit_Branch" FromRole="StockAudit" ToRole="Branch" />
+    <NavigationProperty Name="Product" Relationship="GrandShoesModel.FK_StockAudit_Product" FromRole="StockAudit" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="StockBranchInventory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BranchId" Type="Int32" />
+    <Property Name="Quantity01" Type="Int32" />
+    <Property Name="Quantity02" Type="Int32" />
+    <Property Name="Quantity03" Type="Int32" />
+    <Property Name="Quantity04" Type="Int32" />
+    <Property Name="Quantity05" Type="Int32" />
+    <Property Name="Quantity06" Type="Int32" />
+    <Property Name="Quantity07" Type="Int32" />
+    <Property Name="Quantity08" Type="Int32" />
+    <Property Name="Quantity09" Type="Int32" />
+    <Property Name="Quantity10" Type="Int32" />
+    <Property Name="Quantity11" Type="Int32" />
+    <Property Name="Quantity12" Type="Int32" />
+    <Property Name="Quantity13" Type="Int32" />
+    <Property Name="Quantity14" Type="Int32" />
+    <Property Name="Quantity15" Type="Int32" />
+    <Property Name="Quantity16" Type="Int32" />
+    <Property Name="Quantity17" Type="Int32" />
+    <Property Name="Quantity18" Type="Int32" />
+    <Property Name="Quantity19" Type="Int32" />
+    <Property Name="Quantity20" Type="Int32" />
+    <Property Name="Quantity21" Type="Int32" />
+    <Property Name="Quantity22" Type="Int32" />
+    <Property Name="Quantity23" Type="Int32" />
+    <Property Name="Quantity24" Type="Int32" />
+    <Property Name="Quantity25" Type="Int32" />
+    <Property Name="Quantity26" Type="Int32" />
+    <Property Name="Quantity27" Type="Int32" />
+    <Property Name="Quantity28" Type="Int32" />
+    <Property Name="Quantity29" Type="Int32" />
+    <Property Name="Quantity30" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <Property Name="UpdateTime" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Branch" Relationship="GrandShoesModel.FK_StockBranchInventory_Branch" FromRole="StockBranchInventory" ToRole="Branch" />
+    <NavigationProperty Name="Product" Relationship="GrandShoesModel.FK_StockBranchInventory_Product" FromRole="StockBranchInventory" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="StockBranchTransaction">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="StockTransactionTypeId" Type="Int32" />
+    <Property Name="TransactionDate" Type="DateTime" Precision="0" />
+    <Property Name="BranchId" Type="Int32" />
+    <Property Name="Quantity01" Type="Int32" />
+    <Property Name="Quantity02" Type="Int32" />
+    <Property Name="Quantity03" Type="Int32" />
+    <Property Name="Quantity04" Type="Int32" />
+    <Property Name="Quantity05" Type="Int32" />
+    <Property Name="Quantity06" Type="Int32" />
+    <Property Name="Quantity07" Type="Int32" />
+    <Property Name="Quantity08" Type="Int32" />
+    <Property Name="Quantity10" Type="Int32" />
+    <Property Name="Quantity11" Type="Int32" />
+    <Property Name="Quantity12" Type="Int32" />
+    <Property Name="Quantity13" Type="Int32" />
+    <Property Name="Quantity14" Type="Int32" />
+    <Property Name="Quantity15" Type="Int32" />
+    <Property Name="Quantity16" Type="Int32" />
+    <Property Name="Quantity17" Type="Int32" />
+    <Property Name="Quantity18" Type="Int32" />
+    <Property Name="Quantity19" Type="Int32" />
+    <Property Name="Quantity20" Type="Int32" />
+    <Property Name="Quantity21" Type="Int32" />
+    <Property Name="Quantity22" Type="Int32" />
+    <Property Name="Quantity23" Type="Int32" />
+    <Property Name="Quantity24" Type="Int32" />
+    <Property Name="Quantity25" Type="Int32" />
+    <Property Name="Quantity26" Type="Int32" />
+    <Property Name="Quantity27" Type="Int32" />
+    <Property Name="Quantity28" Type="Int32" />
+    <Property Name="Quantity29" Type="Int32" />
+    <Property Name="Quantity30" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Branch" Relationship="GrandShoesModel.FK_StockBranchTransaction_Branch" FromRole="StockBranchTransaction" ToRole="Branch" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_StockBranchTransaction_Log" FromRole="StockBranchTransaction" ToRole="Log" />
+    <NavigationProperty Name="Product" Relationship="GrandShoesModel.FK_StockBranchTransaction_Product" FromRole="StockBranchTransaction" ToRole="Product" />
+    <NavigationProperty Name="StockTransactionType" Relationship="GrandShoesModel.FK_StockBranchTransaction_StockTransactionType" FromRole="StockBranchTransaction" ToRole="StockTransactionType" />
+  </EntityType>
+  <EntityType Name="StockDistribution">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BranchId" Type="Int32" />
+    <Property Name="InvoiceId" Type="Int32" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="DistributionDate" Type="DateTime" Precision="0" />
+    <Property Name="StockDistributionStatusId" Type="Int32" />
+    <Property Name="Quantity01" Type="Int32" />
+    <Property Name="Quantity02" Type="Int32" />
+    <Property Name="Quantity03" Type="Int32" />
+    <Property Name="Quantity04" Type="Int32" />
+    <Property Name="Quantity05" Type="Int32" />
+    <Property Name="Quantity06" Type="Int32" />
+    <Property Name="Quantity07" Type="Int32" />
+    <Property Name="Quantity08" Type="Int32" />
+    <Property Name="Quantity09" Type="Int32" />
+    <Property Name="Quantity10" Type="Int32" />
+    <Property Name="Quantity11" Type="Int32" />
+    <Property Name="Quantity12" Type="Int32" />
+    <Property Name="Quantity13" Type="Int32" />
+    <Property Name="Quantity14" Type="Int32" />
+    <Property Name="Quantity15" Type="Int32" />
+    <Property Name="Quantity16" Type="Int32" />
+    <Property Name="Quantity17" Type="Int32" />
+    <Property Name="Quantity18" Type="Int32" />
+    <Property Name="Quantity19" Type="Int32" />
+    <Property Name="Quantity20" Type="Int32" />
+    <Property Name="Quantity21" Type="Int32" />
+    <Property Name="Quantity22" Type="Int32" />
+    <Property Name="Quantity23" Type="Int32" />
+    <Property Name="Quantity24" Type="Int32" />
+    <Property Name="Quantity25" Type="Int32" />
+    <Property Name="Quantity26" Type="Int32" />
+    <Property Name="Quantity27" Type="Int32" />
+    <Property Name="Quantity28" Type="Int32" />
+    <Property Name="Quantity29" Type="Int32" />
+    <Property Name="Quantity30" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="StockDistributionSummaryId" Type="Int32" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Branch" Relationship="GrandShoesModel.FK_StockDistribution_Branch" FromRole="StockDistribution" ToRole="Branch" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_StockDistribution_Log" FromRole="StockDistribution" ToRole="Log" />
+    <NavigationProperty Name="Product" Relationship="GrandShoesModel.FK_StockDistribution_Product" FromRole="StockDistribution" ToRole="Product" />
+    <NavigationProperty Name="StockDistributionStatu" Relationship="GrandShoesModel.FK_StockDistribution_StockDistributionStatus" FromRole="StockDistribution" ToRole="StockDistributionStatu" />
+    <NavigationProperty Name="StockDistributionSummary" Relationship="GrandShoesModel.FK_StockDistribution_StockDistributionSummary" FromRole="StockDistribution" ToRole="StockDistributionSummary" />
+  </EntityType>
+  <EntityType Name="StockDistributionStatu">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_StockDistributionStatus_Log" FromRole="StockDistributionStatu" ToRole="Log" />
+    <NavigationProperty Name="StockDistributions" Relationship="GrandShoesModel.FK_StockDistribution_StockDistributionStatus" FromRole="StockDistributionStatu" ToRole="StockDistribution" />
+    <NavigationProperty Name="StockDistributionStatus1" Relationship="GrandShoesModel.FK_StockDistributionStatus_StockDistributionStatus" FromRole="StockDistributionStatu" ToRole="StockDistributionStatu1" />
+    <NavigationProperty Name="StockDistributionStatu1" Relationship="GrandShoesModel.FK_StockDistributionStatus_StockDistributionStatus" FromRole="StockDistributionStatu1" ToRole="StockDistributionStatu" />
+  </EntityType>
+  <EntityType Name="StockDistributionSummary">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DistributionNumber" Type="Int32" />
+    <Property Name="DateOpen" Type="DateTime" Precision="3" />
+    <Property Name="DateClose" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="InvoiceId" Type="Int32" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="CartonManagements" Relationship="GrandShoesModel.FK_CartonManagement_StockDistributionSummary" FromRole="StockDistributionSummary" ToRole="CartonManagement" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_StockDistributionSummary_Log" FromRole="StockDistributionSummary" ToRole="Log" />
+    <NavigationProperty Name="StockDistributions" Relationship="GrandShoesModel.FK_StockDistribution_StockDistributionSummary" FromRole="StockDistributionSummary" ToRole="StockDistribution" />
+  </EntityType>
+  <EntityType Name="StockInventory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="ProductStyleId" Type="Int32" />
+    <Property Name="BracketNumber" Type="Int32" />
+    <Property Name="ColumnNumber" Type="Int32" />
+    <Property Name="Quantity01" Type="Int32" />
+    <Property Name="Quantity02" Type="Int32" />
+    <Property Name="Quantity03" Type="Int32" />
+    <Property Name="Quantity04" Type="Int32" />
+    <Property Name="Quantity05" Type="Int32" />
+    <Property Name="Quantity06" Type="Int32" />
+    <Property Name="Quantity07" Type="Int32" />
+    <Property Name="Quantity08" Type="Int32" />
+    <Property Name="Quantity09" Type="Int32" />
+    <Property Name="Quantity10" Type="Int32" />
+    <Property Name="Quantity11" Type="Int32" />
+    <Property Name="Quantity12" Type="Int32" />
+    <Property Name="Quantity13" Type="Int32" />
+    <Property Name="Quantity14" Type="Int32" />
+    <Property Name="Quantity15" Type="Int32" />
+    <Property Name="Quantity16" Type="Int32" />
+    <Property Name="Quantity17" Type="Int32" />
+    <Property Name="Quantity18" Type="Int32" />
+    <Property Name="Quantity19" Type="Int32" />
+    <Property Name="Quantity20" Type="Int32" />
+    <Property Name="Quantity21" Type="Int32" />
+    <Property Name="Quantity22" Type="Int32" />
+    <Property Name="Quantity23" Type="Int32" />
+    <Property Name="Quantity24" Type="Int32" />
+    <Property Name="Quantity25" Type="Int32" />
+    <Property Name="Quantity26" Type="Int32" />
+    <Property Name="Quantity27" Type="Int32" />
+    <Property Name="Quantity28" Type="Int32" />
+    <Property Name="Quantity29" Type="Int32" />
+    <Property Name="Quantity30" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_StockInventory_Log" FromRole="StockInventory" ToRole="Log" />
+    <NavigationProperty Name="Product" Relationship="GrandShoesModel.FK_StockInventory_Product" FromRole="StockInventory" ToRole="Product" />
+    <NavigationProperty Name="ProductStyle" Relationship="GrandShoesModel.FK_StockInventory_ProductStyle" FromRole="StockInventory" ToRole="ProductStyle" />
+  </EntityType>
+  <EntityType Name="StockSupplierTransaction">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="StockTransactionTypeId" Type="Int32" />
+    <Property Name="TransactionDate" Type="DateTime" Precision="0" />
+    <Property Name="SupplierId" Type="Int32" />
+    <Property Name="InvoiceId" Type="Int32" />
+    <Property Name="Quantity01" Type="Int32" />
+    <Property Name="Quantity02" Type="Int32" />
+    <Property Name="Quantity03" Type="Int32" />
+    <Property Name="Quantity04" Type="Int32" />
+    <Property Name="Quantity05" Type="Int32" />
+    <Property Name="Quantity06" Type="Int32" />
+    <Property Name="Quantity07" Type="Int32" />
+    <Property Name="Quantity08" Type="Int32" />
+    <Property Name="Quantity09" Type="Int32" />
+    <Property Name="Quantity10" Type="Int32" />
+    <Property Name="Quantity11" Type="Int32" />
+    <Property Name="Quantity12" Type="Int32" />
+    <Property Name="Quantity13" Type="Int32" />
+    <Property Name="Quantity14" Type="Int32" />
+    <Property Name="Quantity15" Type="Int32" />
+    <Property Name="Quantity16" Type="Int32" />
+    <Property Name="Quantity17" Type="Int32" />
+    <Property Name="Quantity18" Type="Int32" />
+    <Property Name="Quantity19" Type="Int32" />
+    <Property Name="Quantity20" Type="Int32" />
+    <Property Name="Quantity21" Type="Int32" />
+    <Property Name="Quantity22" Type="Int32" />
+    <Property Name="Quantity23" Type="Int32" />
+    <Property Name="Quantity24" Type="Int32" />
+    <Property Name="Quantity25" Type="Int32" />
+    <Property Name="Quantity26" Type="Int32" />
+    <Property Name="Quantity27" Type="Int32" />
+    <Property Name="Quantity28" Type="Int32" />
+    <Property Name="Quantity29" Type="Int32" />
+    <Property Name="Quantity30" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_StockSupplierTransaction_Log" FromRole="StockSupplierTransaction" ToRole="Log" />
+    <NavigationProperty Name="Product" Relationship="GrandShoesModel.FK_StockSupplierTransaction_Product" FromRole="StockSupplierTransaction" ToRole="Product" />
+    <NavigationProperty Name="StockSupplierTransaction1" Relationship="GrandShoesModel.FK_StockSupplierTransaction_StockSupplierTransaction" FromRole="StockSupplierTransaction" ToRole="StockSupplierTransaction1" />
+    <NavigationProperty Name="StockSupplierTransaction2" Relationship="GrandShoesModel.FK_StockSupplierTransaction_StockSupplierTransaction" FromRole="StockSupplierTransaction1" ToRole="StockSupplierTransaction" />
+    <NavigationProperty Name="StockTransactionType" Relationship="GrandShoesModel.FK_StockSupplierTransaction_StockTransactionType" FromRole="StockSupplierTransaction" ToRole="StockTransactionType" />
+    <NavigationProperty Name="Supplier" Relationship="GrandShoesModel.FK_StockSupplierTransaction_Supplier" FromRole="StockSupplierTransaction" ToRole="Supplier" />
+  </EntityType>
+  <EntityType Name="StockTape">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="BranchId" Type="Int32" />
+    <Property Name="Barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Quantity01" Type="Int32" />
+    <Property Name="Quantity02" Type="Int32" />
+    <Property Name="Quantity03" Type="Int32" />
+    <Property Name="Quantity04" Type="Int32" />
+    <Property Name="Quantity05" Type="Int32" />
+    <Property Name="Quantity06" Type="Int32" />
+    <Property Name="Quantity07" Type="Int32" />
+    <Property Name="Quantity08" Type="Int32" />
+    <Property Name="Quantity09" Type="Int32" />
+    <Property Name="Quantity10" Type="Int32" />
+    <Property Name="Quantity11" Type="Int32" />
+    <Property Name="Quantity12" Type="Int32" />
+    <Property Name="Quantity13" Type="Int32" />
+    <Property Name="Quantity14" Type="Int32" />
+    <Property Name="Quantity15" Type="Int32" />
+    <Property Name="Quantity16" Type="Int32" />
+    <Property Name="Quantity17" Type="Int32" />
+    <Property Name="Quantity18" Type="Int32" />
+    <Property Name="Quantity19" Type="Int32" />
+    <Property Name="Quantity20" Type="Int32" />
+    <Property Name="Quantity21" Type="Int32" />
+    <Property Name="Quantity22" Type="Int32" />
+    <Property Name="Quantity23" Type="Int32" />
+    <Property Name="Quantity24" Type="Int32" />
+    <Property Name="Quantity25" Type="Int32" />
+    <Property Name="Quantity26" Type="Int32" />
+    <Property Name="Quantity27" Type="Int32" />
+    <Property Name="Quantity28" Type="Int32" />
+    <Property Name="Quantity29" Type="Int32" />
+    <Property Name="Quantity30" Type="Int32" />
+    <Property Name="LogId" Type="Int32" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Branch" Relationship="GrandShoesModel.FK_StockTape_Branch" FromRole="StockTape" ToRole="Branch" />
+    <NavigationProperty Name="Product" Relationship="GrandShoesModel.FK_StockTape_Product" FromRole="StockTape" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="StockTransactionType">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_StockTransactionType_Log" FromRole="StockTransactionType" ToRole="Log" />
+    <NavigationProperty Name="StockBranchTransactions" Relationship="GrandShoesModel.FK_StockBranchTransaction_StockTransactionType" FromRole="StockTransactionType" ToRole="StockBranchTransaction" />
+    <NavigationProperty Name="StockSupplierTransactions" Relationship="GrandShoesModel.FK_StockSupplierTransaction_StockTransactionType" FromRole="StockTransactionType" ToRole="StockSupplierTransaction" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PermanentAddress1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PermanentAddress2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PermanentAddress3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PermanentCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PermanentCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PermanentPostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CorrespondanceAddress1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CorrespondanceAddress2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CorrespondanceAddress3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CorrespondanceCity" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CorrespondanceCountry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CorrespondancePostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Limit" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="ContactNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FaxNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="LogId" Type="Int32" />
+    <NavigationProperty Name="Log" Relationship="GrandShoesModel.FK_Supplier_Log" FromRole="Supplier" ToRole="Log" />
+    <NavigationProperty Name="Products" Relationship="GrandShoesModel.FK_Product_Supplier" FromRole="Supplier" ToRole="Product" />
+    <NavigationProperty Name="PurchaseOrders" Relationship="GrandShoesModel.FK_PurchaseOrder_Supplier" FromRole="Supplier" ToRole="PurchaseOrder" />
+    <NavigationProperty Name="StockSupplierTransactions" Relationship="GrandShoesModel.FK_StockSupplierTransaction_Supplier" FromRole="Supplier" ToRole="StockSupplierTransaction" />
+  </EntityType>
+  <EntityType Name="Template">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Format" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Products" Relationship="GrandShoesModel.FK_Product_Template" FromRole="Template" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RoleID" Type="Int32" />
+    <Property Name="BranchID" Type="Int32" />
+    <Property Name="IsVerified" Type="Boolean" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="PasswordHash" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="PasswordSalt" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="UserGuid" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsPrimaryAccountHolder" Type="Boolean" />
+    <NavigationProperty Name="Areas" Relationship="GrandShoesModel.FK_Area_User" FromRole="User" ToRole="Area" />
+    <NavigationProperty Name="Branches" Relationship="GrandShoesModel.FK_Branch_User" FromRole="User" ToRole="Branch" />
+    <NavigationProperty Name="Branch" Relationship="GrandShoesModel.FK_User_Branch" FromRole="User" ToRole="Branch" />
+    <NavigationProperty Name="Logs" Relationship="GrandShoesModel.FK_Log_User" FromRole="User" ToRole="Log" />
+    <NavigationProperty Name="Role" Relationship="GrandShoesModel.FK_User_Role" FromRole="User" ToRole="Role" />
+    <NavigationProperty Name="Staffs" Relationship="GrandShoesModel.FK_Staff_User" FromRole="User" ToRole="Staff" />
+    <NavigationProperty Name="StaffMembers" Relationship="GrandShoesModel.FK_StaffMember_User" FromRole="User" ToRole="StaffMember" />
+  </EntityType>
+  <EntityType Name="Year">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Year1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="Products" Relationship="GrandShoesModel.FK_Product_Year" FromRole="Year" ToRole="Product" />
+  </EntityType>
+  <Association Name="FK_Log_ActionLog">
+    <End Type="GrandShoesModel.ActionLog" Role="ActionLog" Multiplicity="1" />
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActionLog">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Log">
+        <PropertyRef Name="ActionLogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Area_User">
+    <End Type="GrandShoesModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Area" Role="Area" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Area">
+        <PropertyRef Name="ManagerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Branch_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Branch">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Branch_User">
+    <End Type="GrandShoesModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Branch">
+        <PropertyRef Name="ManagerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BranchDiscount_Branch">
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.BranchDiscount" Role="BranchDiscount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BranchDiscount">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartonManagement_Branch">
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.CartonManagement" Role="CartonManagement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartonManagement">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClusterBranch_Branch">
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.ClusterBranch" Role="ClusterBranch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClusterBranch">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MarkDownBranches_Branch">
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.MarkDownBranch" Role="MarkDownBranch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MarkDownBranch">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SMIBranchDefault_Branch">
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.SMIBranchDefault" Role="SMIBranchDefault" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SMIBranchDefault">
+        <PropertyRef Name="FromBranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SMIBranchDefault_Branch1">
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.SMIBranchDefault" Role="SMIBranchDefault" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SMIBranchDefault">
+        <PropertyRef Name="ToBranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Staff_Branch">
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Staff" Role="Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Staff">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockAudit_Branch">
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockAudit" Role="StockAudit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockAudit">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockBranchInventory_Branch">
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockBranchInventory" Role="StockBranchInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockBranchInventory">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockBranchTransaction_Branch">
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockBranchTransaction" Role="StockBranchTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockBranchTransaction">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistribution_Branch">
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockDistribution" Role="StockDistribution" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistribution">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockTape_Branch">
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockTape" Role="StockTape" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockTape">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Branch">
+    <End Type="GrandShoesModel.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BranchDiscount_Discount">
+    <End Type="GrandShoesModel.Discount" Role="Discount" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.BranchDiscount" Role="BranchDiscount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Discount">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BranchDiscount">
+        <PropertyRef Name="DiscountID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Buyer_Buyer">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Buyer" Role="Buyer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Buyer">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Buyer">
+    <End Type="GrandShoesModel.Buyer" Role="Buyer" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Buyer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="BuyerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrder_Buyer">
+    <End Type="GrandShoesModel.Buyer" Role="Buyer" Multiplicity="1" />
+    <End Type="GrandShoesModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Buyer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="BuyerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartonManagement_StockDistributionSummary">
+    <End Type="GrandShoesModel.StockDistributionSummary" Role="StockDistributionSummary" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.CartonManagement" Role="CartonManagement" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StockDistributionSummary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartonManagement">
+        <PropertyRef Name="DistributionSummaryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartonManagementDetails_CartonManagement">
+    <End Type="GrandShoesModel.CartonManagement" Role="CartonManagement" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.CartonManagementDetail" Role="CartonManagementDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CartonManagement">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartonManagementDetail">
+        <PropertyRef Name="CartonManagementID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CartonManagementDetails_Product">
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.CartonManagementDetail" Role="CartonManagementDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CartonManagementDetail">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClusterBranch_Cluster">
+    <End Type="GrandShoesModel.Cluster" Role="Cluster" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.ClusterBranch" Role="ClusterBranch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cluster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClusterBranch">
+        <PropertyRef Name="ClusterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Color">
+    <End Type="GrandShoesModel.Color" Role="Color" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Color">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="ColorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderItems_Color">
+    <End Type="GrandShoesModel.Color" Role="Color" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.PurchaseOrderItem" Role="PurchaseOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Color">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItem">
+        <PropertyRef Name="ColorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Designation_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Designation" Role="Designation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Designation">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Staff_Designation">
+    <End Type="GrandShoesModel.Designation" Role="Designation" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Staff" Role="Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Designation">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Staff">
+        <PropertyRef Name="DesignationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Log_Page">
+    <End Type="GrandShoesModel.Page" Role="Page" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Page">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Log">
+        <PropertyRef Name="PageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Log_User">
+    <End Type="GrandShoesModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Log">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductCategory_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.ProductCategory" Role="ProductCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductCategory">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrder_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderItem_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.PurchaseOrderItem" Role="PurchaseOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItem">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderStatus_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.PurchaseOrderStatu" Role="PurchaseOrderStatu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrderStatu">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiptOrderItem_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.ReceiptOrderItem" Role="ReceiptOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReceiptOrderItem">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiveOrder_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.ReceiveOrder" Role="ReceiveOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReceiveOrder">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Role_Role">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Role" Role="Role" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Role">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SMIBranchDefault_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.SMIBranchDefault" Role="SMIBranchDefault" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SMIBranchDefault">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Staff_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Staff" Role="Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Staff">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffCommition_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StaffCommition" Role="StaffCommition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffCommition">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffMember_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StaffMember" Role="StaffMember" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffMember">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffRole_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StaffRole" Role="StaffRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffRole">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffStatus_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StaffStatu" Role="StaffStatu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffStatu">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockBranchTransaction_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockBranchTransaction" Role="StockBranchTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockBranchTransaction">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistribution_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockDistribution" Role="StockDistribution" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistribution">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistributionStatus_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockDistributionStatu" Role="StockDistributionStatu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistributionStatu">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistributionSummary_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockDistributionSummary" Role="StockDistributionSummary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistributionSummary">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockInventory_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockInventory" Role="StockInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockInventory">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockSupplierTransaction_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockSupplierTransaction" Role="StockSupplierTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockSupplierTransaction">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockTransactionType_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockTransactionType" Role="StockTransactionType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockTransactionType">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Supplier_Log">
+    <End Type="GrandShoesModel.Log" Role="Log" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Supplier" Role="Supplier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Log">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Supplier">
+        <PropertyRef Name="LogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MarkDownBranches_MarkDown">
+    <End Type="GrandShoesModel.MarkDown" Role="MarkDown" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.MarkDownBranch" Role="MarkDownBranch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MarkDown">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MarkDownBranch">
+        <PropertyRef Name="MarkDownID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_ProductCategory">
+    <End Type="GrandShoesModel.ProductCategory" Role="ProductCategory" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="ProductCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_ProductGroup">
+    <End Type="GrandShoesModel.ProductGroup" Role="ProductGroup" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="ProductGroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_ProductSource">
+    <End Type="GrandShoesModel.ProductSource" Role="ProductSource" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductSource">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="ProductSourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_ProductStyle">
+    <End Type="GrandShoesModel.ProductStyle" Role="ProductStyle" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductStyle">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="ProductStyleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Season">
+    <End Type="GrandShoesModel.Season" Role="Season" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Season">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="SeasonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_SizeGrid">
+    <End Type="GrandShoesModel.SizeGrid" Role="SizeGrid" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SizeGrid">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="SizeGridID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Supplier">
+    <End Type="GrandShoesModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="SupplierID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Template">
+    <End Type="GrandShoesModel.Template" Role="Template" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="DefaultTemplateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Year">
+    <End Type="GrandShoesModel.Year" Role="Year" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Year">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="YearID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductSize_Product">
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.ProductSize" Role="ProductSize" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductSize">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderItem_Product">
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="GrandShoesModel.PurchaseOrderItem" Role="PurchaseOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItem">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiptOrderItem_Product">
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.ReceiptOrderItem" Role="ReceiptOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReceiptOrderItem">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockAudit_Product">
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="GrandShoesModel.StockAudit" Role="StockAudit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockAudit">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockBranchInventory_Product">
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="GrandShoesModel.StockBranchInventory" Role="StockBranchInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockBranchInventory">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockBranchTransaction_Product">
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockBranchTransaction" Role="StockBranchTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockBranchTransaction">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistribution_Product">
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockDistribution" Role="StockDistribution" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistribution">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockInventory_Product">
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockInventory" Role="StockInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockInventory">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockSupplierTransaction_Product">
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockSupplierTransaction" Role="StockSupplierTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockSupplierTransaction">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockTape_Product">
+    <End Type="GrandShoesModel.Product" Role="Product" Multiplicity="1" />
+    <End Type="GrandShoesModel.StockTape" Role="StockTape" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockTape">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderItem_ProductStyle">
+    <End Type="GrandShoesModel.ProductStyle" Role="ProductStyle" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.PurchaseOrderItem" Role="PurchaseOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductStyle">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItem">
+        <PropertyRef Name="ProductStyleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiptOrderItem_ProductStyle">
+    <End Type="GrandShoesModel.ProductStyle" Role="ProductStyle" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.ReceiptOrderItem" Role="ReceiptOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductStyle">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReceiptOrderItem">
+        <PropertyRef Name="ProductStyleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockInventory_ProductStyle">
+    <End Type="GrandShoesModel.ProductStyle" Role="ProductStyle" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockInventory" Role="StockInventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductStyle">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockInventory">
+        <PropertyRef Name="ProductStyleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrder_PurchaseOrderStatus">
+    <End Type="GrandShoesModel.PurchaseOrderStatu" Role="PurchaseOrderStatu" Multiplicity="1" />
+    <End Type="GrandShoesModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrderStatu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="PurchaseOrderStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrder_Supplier">
+    <End Type="GrandShoesModel.Supplier" Role="Supplier" Multiplicity="1" />
+    <End Type="GrandShoesModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderItem_PurchaseOrder">
+    <End Type="GrandShoesModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="1" />
+    <End Type="GrandShoesModel.PurchaseOrderItem" Role="PurchaseOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrder">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItem">
+        <PropertyRef Name="PurchaseOrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiveOrder_PurchaseOrder">
+    <End Type="GrandShoesModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.ReceiveOrder" Role="ReceiveOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrder">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ReceiveOrder">
+        <PropertyRef Name="PurchaseOrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderItems_SizeGrid">
+    <End Type="GrandShoesModel.SizeGrid" Role="SizeGrid" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.PurchaseOrderItem" Role="PurchaseOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SizeGrid">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItem">
+        <PropertyRef Name="SizeGridId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ReceiptOrderItem_ReceiptOrderItem">
+    <End Type="GrandShoesModel.ReceiveOrder" Role="ReceiveOrder" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.ReceiptOrderItem" Role="ReceiptOrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ReceiveOrder">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ReceiptOrderItem">
+        <PropertyRef Name="ReceiptOrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Type="GrandShoesModel.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Staff_User">
+    <End Type="GrandShoesModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.Staff" Role="Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Staff">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffCommition_StaffStatus">
+    <End Type="GrandShoesModel.StaffStatu" Role="StaffStatu" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StaffCommition" Role="StaffCommition" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffStatu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffCommition">
+        <PropertyRef Name="SaleStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffMember_StaffRole">
+    <End Type="GrandShoesModel.StaffRole" Role="StaffRole" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StaffMember" Role="StaffMember" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffRole">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffMember">
+        <PropertyRef Name="StaffRoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffMember_StaffStatus">
+    <End Type="GrandShoesModel.StaffStatu" Role="StaffStatu" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StaffMember" Role="StaffMember" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffStatu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffMember">
+        <PropertyRef Name="StaffStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffMember_User">
+    <End Type="GrandShoesModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StaffMember" Role="StaffMember" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffMember">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockBranchTransaction_StockTransactionType">
+    <End Type="GrandShoesModel.StockTransactionType" Role="StockTransactionType" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockBranchTransaction" Role="StockBranchTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StockTransactionType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockBranchTransaction">
+        <PropertyRef Name="StockTransactionTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistribution_StockDistributionStatus">
+    <End Type="GrandShoesModel.StockDistributionStatu" Role="StockDistributionStatu" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockDistribution" Role="StockDistribution" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StockDistributionStatu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistribution">
+        <PropertyRef Name="StockDistributionStatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistribution_StockDistributionSummary">
+    <End Type="GrandShoesModel.StockDistributionSummary" Role="StockDistributionSummary" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockDistribution" Role="StockDistribution" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StockDistributionSummary">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistribution">
+        <PropertyRef Name="StockDistributionSummaryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockDistributionStatus_StockDistributionStatus">
+    <End Type="GrandShoesModel.StockDistributionStatu" Role="StockDistributionStatu" Multiplicity="1" />
+    <End Type="GrandShoesModel.StockDistributionStatu" Role="StockDistributionStatu1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="StockDistributionStatu">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockDistributionStatu1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockSupplierTransaction_StockSupplierTransaction">
+    <End Type="GrandShoesModel.StockSupplierTransaction" Role="StockSupplierTransaction" Multiplicity="1" />
+    <End Type="GrandShoesModel.StockSupplierTransaction" Role="StockSupplierTransaction1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="StockSupplierTransaction">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockSupplierTransaction1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockSupplierTransaction_StockTransactionType">
+    <End Type="GrandShoesModel.StockTransactionType" Role="StockTransactionType" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockSupplierTransaction" Role="StockSupplierTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StockTransactionType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockSupplierTransaction">
+        <PropertyRef Name="StockTransactionTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockSupplierTransaction_Supplier">
+    <End Type="GrandShoesModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+    <End Type="GrandShoesModel.StockSupplierTransaction" Role="StockSupplierTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Supplier">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StockSupplierTransaction">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,110 @@
+﻿@model List<Model.StaffMemberModel>
+@{
+    ViewBag.Title = "_Index";
+    Layout = null;
+}
+
+<div class="prtm-full-block pos-relative">
+    <div class="prtm-block-title pad-all-md">
+        <div class="pos-relative">
+            <div class="caption">
+                <h3 class="text-capitalize">Staff Member</h3>
+            </div>
+        </div>
+    </div>
+    <div class="prtm-block-content mrgn-b-md">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Joining Date</th>
+                        <th>Profile Pic</th>
+                        @*<th>Active</th>*@
+
+                        <th style="min-width:125px;">Action</th>
+
+                    </tr>
+                </thead>
+                <tbody class="tbodyIndex">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.JoiningDate)
+                            </td>
+                            <td>
+                                @if (item.ProfilePic != null)
+                                {
+                                    <img id="user_img" src="~/Image/StaffMember/@item.ProfilePic" height="50" width="50" />
+
+                                }
+                                else
+                                {
+                                    <img id="user_img" src="/images/product/no-image.png" height="50" width="50" />
+
+                                }
+                            </td>
+                            <td style="min-width:85px;">
+                                <i class="fa fa-pencil edit-form edit" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="edit(@item.Id)"></i>
+                                &nbsp;
+                                <i class="fa fa-trash delete delete-form" data-toggle="modal" data-target="#myModal" data-backdrop="static" onclick="del(@item.Id)"></i>
+                                &nbsp;
+                                <i class="fa fa-eye view-form details" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="details(@item.Id)"></i>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@*<div class="col-md-12">
+
+    <div class="pagination">
+        @foreach (var i in ViewBag.result)
+        {
+            var page = i;
+            <li><a href="/Admin/StaffMember/_Index?page=@page">@page</a></li>
+
+        }
+    </div>
+</div>*@
+<div class="col-md-12">
+    @if (ViewBag.endPage > 1)
+    {
+        <div class="pagination">
+
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li>
+                    <a href="/Admin/StaffMember/_Index1?page=1">First</a>
+                </li>
+                <li>
+                    <a href="/Admin/StaffMember/_Index1?page=@(ViewBag.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @foreach (var i in ViewBag.result)
+            {
+
+                var page = i;
+
+                <li class="@(page == ViewBag.CurrentPage ? "active" : "")">
+                    <a href="/Admin/StaffMember/_Index1?page=@page">@page</a>
+                </li>
+
+            }
+            @if (ViewBag.CurrentPage < ViewBag.pageCount)
+            {
+                <li>
+                    <a href="/Admin/StaffMember/_Index1?page=@(ViewBag.CurrentPage + 1)">Next</a>
+                </li>
+                <li>
+                    <a href="/Admin/StaffMember/_Index1?page=@(ViewBag.pageCount)">Last</a>
+                </li>
+            }
+
+        </div>
+    }
+</div>

@@ -1,0 +1,61 @@
+﻿@model List<Model.PromotionalDiscountModel>
+<div class="row marg-btn-20">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+        <div class="prtm-full-block">
+            <div class="row marg-btn-20">
+                <div class="prtm-block-content mrgn-b-md">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Cost Price</th>
+                                    <th>Actual Selling Price</th>
+                                    <th>Discount Price</th>
+                                    <th>After Discount Price</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyIndex">
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Product.ProductSKU)
+                                        @Html.DisplayFor(modelItem => item.Product.StyleSKU)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Product.CostPrice)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Product.ActualSellingPrice)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DiscountSummary.DiscountValue)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DiscountedPrice)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DiscountSummary.FromDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DiscountSummary.ToDate)
+                                    </td>
+                                    <td>Active</td>
+                                    <td>
+                                        <button type="button" class="btn btn-success btn-primary export-btn" onclick="searchData()">Allow</button>
+                                    </td>
+                                </tr>
+                                }
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

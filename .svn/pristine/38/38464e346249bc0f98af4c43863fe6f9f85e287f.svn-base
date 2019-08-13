@@ -1,0 +1,17 @@
+﻿using Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.IService
+{
+   public interface IStockAuditService
+    {
+        List<StockAuditModel> GetByBranchId(int? BranchId);
+        StockAuditModel Create(StockAuditModel audit);
+        List<StockVarianceModel> ShowVariance(int? BranchId);
+        StockAuditModel DeleteRecord(StockAuditModel stockAudit);
+    }
+}

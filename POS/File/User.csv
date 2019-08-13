@@ -1,0 +1,4 @@
+Name,Email,Phone,Password,RoleName,BranchName,IsVerified
+Ravi Kumar Sharma,ravi@gmail.com,7845784578,Ravi@1234,Manager,CITY BRANCH,FALSE
+Isshu Shukla,Isshu@gmail.com,7845124578,Isshu@1234,Casheir,CITY BRANCH,FALSE
+Anushka,anushka@gmail.com,1245784512,Anushka@1234,Cashier,D.S.O. POLOKWANE,FALSE

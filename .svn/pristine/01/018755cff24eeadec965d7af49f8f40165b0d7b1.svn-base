@@ -1,0 +1,48 @@
+﻿using Helper;
+using Model;
+using Newtonsoft.Json;
+using Services.IService;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.Service
+{
+    public class BranchService:IBranchService
+    {
+        public List<BranchModel> GetAll()
+
+        {
+            var body = "";
+            List<BranchModel> BranchModelList = ServerResponse.Invoke<List<BranchModel>>("api/branch/getDetails", body, "get");
+            return BranchModelList;
+        }
+        public BranchModel GetById(int? id)
+        {
+            var body = "";
+            BranchModel BranchById = ServerResponse.Invoke<BranchModel>("api/branch/getDetail?id=" + id, body, "get");
+            return BranchById;
+        }
+        public BranchModel Create(BranchModel branchModel)
+        {
+            var body = JsonConvert.SerializeObject(branchModel);
+            BranchModel BranchCreate = ServerResponse.Invoke<BranchModel>("api/branch/create", body, "Post");
+            return BranchCreate;
+        }
+        public BranchModel Edit(BranchModel branchModel)
+        {
+            var body = JsonConvert.SerializeObject(branchModel);
+            BranchModel BranchEdit = ServerResponse.Invoke<BranchModel>("api/branch/edit?id=" + branchModel.Id, body, "POST");
+            return BranchEdit;
+        }
+        public BranchModel Delete(BranchModel branchModel)
+        {
+            var body = JsonConvert.SerializeObject(branchModel);
+            BranchModel BranchDelete = ServerResponse.Invoke<BranchModel>("api/branch/Delete?id=" + branchModel.Id, body, "POST");
+            return BranchDelete;
+        }
+
+    }
+}

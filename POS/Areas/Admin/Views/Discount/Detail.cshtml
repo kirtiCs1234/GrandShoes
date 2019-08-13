@@ -1,0 +1,74 @@
+﻿@model List<Model.PromotionalDiscountModel>
+<div class="row marg-btn-20">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+        <div class="prtm-full-block">
+            <div class="row marg-btn-20">
+                <div class="prtm-block-content mrgn-b-md">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Product</th>
+                                    <th>Cost Price</th>
+                                    <th>Actual Selling Price</th>
+                                    <th>Discount Type</th>
+                                    <th>Discount Price</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyIndex">
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" value="@item.Id" class="products" name="selectedProduct"/>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Product.ProductSKU)
+                                            @Html.DisplayFor(modelItem => item.Product.StyleSKU)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Product.CostPrice)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Product.ActualSellingPrice)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DiscountSummary.DiscountType)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DiscountSummary.DiscountValue)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DiscountSummary.FromDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DiscountSummary.ToDate)
+                                        </td>
+                                        <td id="tdApproveUser" data-id="@item.Id" class="account-table-btns approved">
+                                            @if (item.IsActive == true)
+                                            {
+                                                <Span>Approved </Span>
+                                            }
+                                            else
+                                            {
+                                                <button class="btn btn-success approve-btn approve" type="button" value="Approve" onclick="ApproveUser(this)" data-id="@item.Id">Approve</button>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <button class="btn btn-success approve-btn approve " type="button" value="Approve" onclick="Allow()">Allow</button>
+                        <button type="button" class="btn btn-outline-inverse cancel" onclick="selectAll()">All</button>
+                        <button type="button" class="btn btn-outline-inverse cancel" onclick="NoneSelect()">None</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

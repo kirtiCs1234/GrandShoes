@@ -1,0 +1,352 @@
+﻿using DAL;
+using Helper;
+using Model;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using static Helper.CommonFunction;
+
+namespace POSApi.Controllers
+{
+    [RoutePrefix("api/user")]
+    public class UsersController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+        public UsersController()
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            db.Configuration.LazyLoadingEnabled = false;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<User> GetUsers()
+        {
+            var users = db.Users.Where(x=>x.IsActive==true).OrderByDescending(x => x.Id).ToList();
+            return users;
+        }
+        [Route("userByEmail")]
+        public IHttpActionResult GetByEmail(string email)
+        {
+            var result = db.Users.Where(x => x.IsActive == true && x.Email == email).FirstOrDefault();
+            return Ok(result);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("getUserId")]
+        public User GetUserCode(string sku)
+        {
+            User model = new User();
+            bool data = db.Users.Any(x => x.FirstName == sku && x.IsActive == true);
+            if (data == true)
+            {
+                model = db.Users.Where(x => x.IsActive == true && x.FirstName == sku).FirstOrDefault();
+            }
+            else
+            {
+                string[] sizes = sku.Split(' ');
+                int c = sizes.Count();
+                if (c == 3)
+                {
+                    model.FirstName = sizes[0];
+                    model.MiddleName = sizes[1];
+                    model.LastName = sizes[2];
+                }
+               else if (c == 2)
+                {
+                    model.FirstName = sizes[0];
+                    
+                    model.LastName = sizes[1];
+                }
+                model.IsActive = true;
+                db.Users.Add(model);
+                db.SaveChanges();
+                var list = db.Users.Where(x => x.IsActive == true).ToList();
+                model = list.LastOrDefault();
+            }
+            return model;
+        }
+        [HttpPost]
+        [Route("login")]
+        public IHttpActionResult LoginUser(User model)
+        {
+            var user = db.Users.Where( x=>x.Email.Equals(model.Email) && x.Password.Equals(model.Password)).FirstOrDefault();
+
+            return Ok(user);
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getUserPaging")]
+        public ServiceResult<List<User>> GetUserPaging([FromUri]Paging paging)
+
+        {
+            ServiceResult<List<User>> model = new ServiceResult<List<User>>();
+            var source = db.Users.Where(x => x.IsActive == true).OrderByDescending(x => x.Id).ToList();
+            int count = source.Count();
+
+            // Parameter is passed from Query string if it is null then it default Value will be pageNumber:1  
+            int CurrentPage = paging.pageNumber;
+
+            // Parameter is passed from Query string if it is null then it default Value will be pageSize:20  
+            int PageSize = paging.pageSize;
+
+            // Display TotalCount to Records to User  
+            int TotalCount = count;
+
+            // Calculating Totalpage by Dividing (No of Records / Pagesize)  
+            int TotalPages = (int)Math.Ceiling(count / (double)PageSize);
+
+            // Returns List of Customer after applying Paging   
+            var items = source.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+
+            // if CurrentPage is greater than 1 means it has previousPage  
+            var previousPage = CurrentPage > 1 ? "Yes" : "No";
+
+            // if TotalPages is greater than CurrentPage means it has nextPage  
+            var nextPage = CurrentPage < TotalPages ? "Yes" : "No";
+
+            model.TotalCount = count;
+            model.data = items;
+
+            return model;
+
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("getSearchData")]
+        public ServiceResult<List<User>> GetSearchData(UserSearch userSearch)
+
+        {
+            ServiceResult<List<User>> model = new ServiceResult<List<User>>();
+            var source = db.Users.Where(x => x.IsActive == true);
+            var pageSize = 10;
+            if (userSearch != null)
+            {
+                if (userSearch.IsActive == false)
+                {
+                    source = db.Users.Where(x => x.IsActive == true);
+                }
+
+                    if (!string.IsNullOrEmpty(userSearch.FirstName) || !string.IsNullOrEmpty(userSearch.LastName) || !string.IsNullOrEmpty(userSearch.Email) || !string.IsNullOrEmpty(userSearch.Phone) || !string.IsNullOrEmpty(userSearch.iFirstName))
+
+                    { source = source.Where(m => m.FirstName == userSearch.FirstName || m.LastName == userSearch.LastName || m.Phone == userSearch.Phone || m.Email == userSearch.Email || m.FirstName == userSearch.iFirstName);
+                    }
+                if (userSearch.FirstName != null)
+                {
+                    source = db.Users.Where(x => x.IsActive == true && x.FirstName.Contains(userSearch.FirstName.ToLower()));
+                }
+                if(userSearch.LastName!=null)
+                {
+                    source = source.Where(x => x.LastName.Contains(userSearch.LastName.ToLower()));
+                }
+                if (userSearch.Email != null)
+                {
+                    source = source.Where(x => x.Email.Contains(userSearch.Email.ToLower()));
+                }
+                if (userSearch.Phone != null)
+                {
+                    source = source.Where(x => x.Phone.Contains(userSearch.Phone.ToLower()));
+                }
+            }
+
+            int count =source.Count();
+            var items = source.OrderBy(m => m.Id).Skip(((userSearch.Page ?? 1) - 1) * pageSize).Take(pageSize).ToList();
+            model.data = items.Select(x => new DAL.User
+            {
+                Id=x.Id,
+                FirstName=x.FirstName,
+                MiddleName=x.MiddleName,
+                LastName=x.LastName,
+                Phone=x.Phone,
+                Email=x.Email,
+                BranchID=x.BranchID,
+                IsVerified=x.IsVerified,
+                RoleID=x.RoleID,
+                Password=x.Password
+               
+            }).ToList();
+            model.TotalCount = count;
+           
+            return model; ;
+        }
+
+        // GET: api/Users/5
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetail")]
+        [ResponseType(typeof(User))]
+        public IHttpActionResult GetUser(int id)
+        {
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
+        // PUT: api/Users/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(User))]
+        public IHttpActionResult PutUser(int id, User user)
+        {
+            var model = db.Users.Find(id);
+            model.FirstName = user.FirstName;
+            model.MiddleName = user.MiddleName;
+            model.LastName = user.LastName;
+            model.Email = user.Email;
+            model.Phone = user.Phone;
+            model.RoleID = user.RoleID;
+            model.IsActive = user.IsActive;
+            model.IsVerified = user.IsVerified;
+            if (user.Password != null)
+            {
+                var salt = CommonFunction.CreateSalt(64);      //Generate a cryptographic random number.  
+                var hashAlgorithm = new SHA512HashAlgorithm();
+                user.PasswordHash = hashAlgorithm.GenerateSaltedHash(CommonFunction.GetBytes(user.Password), salt);
+                user.PasswordSalt = salt;
+               // db.Entry(user).State = EntityState.Modified;
+            }
+
+            db.SaveChanges();
+            return Ok(true);
+          
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("resetPassword")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutUserPass(int id,User user)
+        {
+            var users = db.Users.Find(id);
+            var salt = CommonFunction.CreateSalt(64);      //Generate a cryptographic random number.  
+            var hashAlgorithm = new SHA512HashAlgorithm();
+            users.PasswordHash = hashAlgorithm.GenerateSaltedHash(CommonFunction.GetBytes(user.Password), salt);
+            users.PasswordSalt = salt;
+            
+            users.Password = user.Password;
+            db.SaveChanges();
+            return Ok(true);
+
+        }
+       
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(User))]
+        public IHttpActionResult PostUser(User user)
+        {
+            User model = new DAL.User();
+            var salt = CommonFunction.CreateSalt(64);      //Generate a cryptographic random number.  
+            var hashAlgorithm = new SHA512HashAlgorithm();
+            model.PasswordSalt = salt;
+            model.PasswordHash= hashAlgorithm.GenerateSaltedHash(CommonFunction.GetBytes(user.Password), salt);
+            model.FirstName = user.FirstName;
+            model.MiddleName = user.MiddleName;
+            model.LastName = user.LastName;
+            model.IsVerified = user.IsVerified;
+            model.Password = user.Password;
+            model.Phone = user.Phone;
+            model.RoleID = user.RoleID;
+            model.BranchID = user.BranchID;
+            model.Email = user.Email;
+            model.IsActive = true;
+            db.Users.Add(model);
+            db.SaveChanges();
+            return Ok(true);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("checkUserPhoneNumber")]
+        public bool GetPhoneNumber(User user)
+        {
+            if (user.Id > 0)
+            {
+                var phoneNumber = db.Users.Where(x => x.Id == user.Id && x.IsActive == true).FirstOrDefault();
+                if (phoneNumber.Phone.Equals(user.Phone))
+                {
+                    return false;
+                }
+
+            }
+            var data = db.Users.Any(x => x.Phone == user.Phone && x.IsActive == true);
+            return data;
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("checkUserEmail")]
+        public bool GetEmail(User user)
+        {
+            if (user.Id > 0)
+            {
+                var email = db.Users.Where(x => x.Id == user.Id && x.IsActive == true).FirstOrDefault();
+                if (email.Email.Equals(user.Email))
+                {
+                    return false;
+                }
+
+            }
+            var data = db.Users.Any(x => x.Email == user.Email && x.IsActive == true);
+            return data;
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("checkUserEmail1")]
+        public bool GetEmail1(User user)
+        {
+            if (user.Id > 0)
+            {
+                var email = db.Users.Where(x => x.Id == user.Id && x.IsActive == true).FirstOrDefault();
+                if (email.Email.Equals(user.Email))
+                {
+                    return false;
+                }
+
+            }
+            var data = db.Users.Any(x => x.Email != user.Email && x.IsActive == true);
+            return data;
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("Delete")]
+        [ResponseType(typeof(User))]
+        public IHttpActionResult DeleteUser(int id)
+        {
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.IsActive = false;
+            //db.Units.Remove(unit);
+            db.SaveChanges();
+
+            return Ok(user);
+        }
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool UserExists(int id)
+        {
+            throw new NotImplementedException();
+        }
+     
+    }
+}

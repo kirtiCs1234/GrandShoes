@@ -1,0 +1,113 @@
+﻿using Model;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Mvc;
+
+namespace POS.Areas.Admin.Controllers
+{
+    public class AreaController : BaseController
+    {
+        // GET: Admin/Area
+       
+        public ActionResult Index(int? page)
+
+        {
+            var pageNumber = page ?? 1;
+            AreaPaginationModel AreaModelList = Services.AreaService.GetAll(page);
+            //  var pageSize = AreaModelList.Pager1.PageSize;
+            // return View(AreaModelList.ToPagedList();
+            //  coursesViewList.ToPagedList(pageNumber, PageSize);
+
+            return View(AreaModelList);
+        }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<UserModel> UserModelList = Services.UserService.GetAll();
+            ViewBag.ManagerID = new SelectList(UserModelList, "Id","FullName");
+
+            AreaModel AreaModelById = Services.AreaService.GetById(id);
+            return View(AreaModelById);
+        }
+        public ActionResult Create()
+        {
+            List<UserModel> UserModelList = Services.UserService.GetAll();
+            ViewBag.ManagerID = new SelectList(UserModelList, "Id", "FullName");
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Create(AreaModel area)
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+                List<UserModel> UserModelList = Services.UserService.GetAll();
+                ViewBag.ManagerID = new SelectList(UserModelList, "Id", "FullName");
+                // user.IsActive = true;
+                AreaModel AreaCreate = Services.AreaService.Create(area);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Area");
+            }
+            return View(area);
+
+        }
+        public ActionResult Edit(int? id)
+
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            List<UserModel> UserModelList = Services.UserService.GetAll();
+            ViewBag.ManagerID = new SelectList(UserModelList, "Id", "FullName");
+            AreaModel AreaModelById = Services.AreaService.GetById(id);
+            return View(AreaModelById);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(AreaModel area)
+        {
+            if (ModelState.IsValid)
+            {
+                List<UserModel> UserModelList = Services.UserService.GetAll();
+                ViewBag.ManagerID = new SelectList(UserModelList, "Id", "FullName");
+                AreaModel AreaEdit = Services.AreaService.Edit(area);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Area");
+            }
+            return View(area);
+        }
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            AreaModel AreaModelById = Services.AreaService.GetById(id);
+
+            if (AreaModelById == null)
+            {
+                return HttpNotFound();
+            }
+            return View(AreaModelById);
+        }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(AreaModel area)
+        {
+            if (area.Id > 0)
+            {
+                AreaModel AreaDelete = Services.AreaService.Delete(area);
+                TempData["Success"] = "Data saved successfully!";
+                return RedirectToAction("Index", "Area");
+            }
+            return View(area);
+        }
+    }
+}

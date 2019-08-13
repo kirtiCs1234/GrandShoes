@@ -1,0 +1,98 @@
+﻿@model List<Model.RoleModel>
+@using Model
+@{
+    //Layout = null;
+    var list = ViewBag.PageName;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int BranchId = ViewBag.BranchId;
+}
+@*<link href="/Scripts/assets/ScrollTabla.css" rel="stylesheet" media="screen" />*@
+@*<link href="css/ScrollTabla.css" rel="stylesheet" media="screen" />*@
+
+
+<div class="ContenedorTabla">
+    <h2 class="text-center contenedor-heading">PermissionGranted</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tabs">
+                <div class="tab-button-outer">
+                    <ul id="tab-button">
+                        <li><a href="#" onclick="requestPermissionPage(1)">Tab 1</a></li>
+                        <li><a href="#" onclick="requestPermissionPage(2)">Tab 2</a></li>
+                    </ul>
+                </div>
+                <div class="tab-select-outer">
+                    <select id="tab-select">
+                        <option value="#tab01">Tab 1</option>
+                        <option value="#tab02">Tab 2</option>
+                    </select>
+                </div>
+
+                <div id="tab01" class="tab-contents first-page">
+
+                </div>
+
+                <div id="tab02" class="tab-contents second-page">
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+    @*<div class="modal fade" id="myCancelModal">
+            <div id="Canceldiv">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">ConfirmCancel</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>CloseWithoutSave</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">No</button>
+                            <button type="button" id="cancelyesbtn" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    @section scripts{
+        <script type="text/javascript">
+    var pageNum = 1;
+    debugger;
+    requestPermissionPage(1);
+    function requestPermissionPage(id)
+    {
+        pageNum = id;
+        $.ajax({
+                url: '/Admin/Role/_GrantPermission?RolePage='+id,
+              //  contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                // data: {page : page} ,
+              //  dataType: 'html',
+                success: function (result) {
+                    debugger;
+                    //if(pageNum == 1)
+                    //{
+                        $('.first-page').html(result);
+                    //}
+                    //else if(pageNum == 2)
+                   // {
+                   //     $('.second-page').html(result);
+                   // }
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+        })
+    }
+
+        </script>
+    }

@@ -1,0 +1,115 @@
+﻿@using System.Web.UI.WebControls
+@using Model
+@using POS.Areas.Admin.Controllers
+@model IEnumerable<TreeViewModel>
+    @{ 
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+<h2>TreeView</h2>
+<link href="~/Content/jsTree/themes/default/style.min.css" rel="stylesheet" />
+<div class="form-body">
+    <div id="jstree">
+        @(Html.TreeView(Model)
+                          .EmptyContent("Distributes")
+                          .Children(m => m.Childs)
+                          .HtmlAttributes(new { id = "tree" })
+                          .ChildrenHtmlAttributes(new { @class = "subItem" })
+                          .ItemText(m => m.ProductName)
+                          .ItemTemplate(
+                @<text>         
+                    <div class="add-btn-div col-md-4 col-lg-3 col-sm-4 col-12 text-right">
+                        <button type="button" class="btn btn-primary add-btn add-form create" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" onclick="productName(@item.Id)">@item.ProductName</button>
+                    </div>                     
+
+                </text>
+            )
+        )
+    </div>
+</div>
+<div class="modal fade" id="myModal">
+    <div id="dvCreatedetails">
+
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/jsTree3/jstree.min.js"></script>
+    <script>
+
+        $(function () {
+            var selectedData;
+            $('#jstree').jstree({
+                "core": {
+                    "multiple": true,
+                    "check_callback": false,
+                    'themes': {
+                        "responsive": true,
+                        'variant': 'larg',
+                        'stripes': false,
+                        'dots': false
+                    }
+                },
+                "types": {
+                    "default": {
+                        "icon": "fa fa-folder icon-state-warning icon-lg"
+                    },
+                    "file": {
+                        "icon": "fa fa-file icon-state-warning icon-lg"
+                    }
+                },
+                "plugins": ["dnd", "state", "types", "sort", "OnSelectedNodeChanged"]
+            });
+        });
+    </script>
+
+
+   <script type="text/javascript">
+        $(document).on("click", "#cancelyesbtn", function () {
+            window.location = '/admin/Branch/index';
+        });
+        var id1;
+        function productName(product) {
+            id1 = product;
+            Data(0);
+            debugger;
+        }
+
+      
+
+        function Data(ch) {
+            debugger;
+            var crud = "";
+            switch (ch) {
+                case 0:
+                    crud = '/Admin/StockInventory/StockInventoryForProduct';
+                    break;
+                case 1:
+                    crud = '/Admin/StockInventory/Edit/' + id1;
+                    break;
+                case 2:
+                    crud = '/Admin/StockInventory/Details/' + id1;
+                    break;
+                case 3:
+                    crud = '/Admin/StockInventory/Delete/' + id1;
+                    break;
+
+            }
+            $.ajax({
+                
+                url: crud,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                data: { ProductId : id1 , DisributionSummaryId:1} ,
+                success: function (result) {
+                    debugger;
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+       
+      </script>
+}   

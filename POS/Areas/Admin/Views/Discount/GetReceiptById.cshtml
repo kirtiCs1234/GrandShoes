@@ -1,0 +1,25 @@
+﻿@model List<Model.PromotionalDiscountModel>
+@{
+
+    Layout = null;
+}
+
+@foreach (var item in Model)
+{
+
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.Product.ProductSKU)</td>
+        <td>@Html.DisplayFor(modelItem => item.Product.StyleSKU)</td>
+        <td>@Html.DisplayFor(modelItem => item.Product.ActualSellingPrice)</td>
+        <td>@Html.DisplayFor(modelItem => item.MarkDownPrice)</td>
+        <td><a href="">@Html.DisplayFor(modelItem => item.Branches)</a></td>
+        <td style="min-width:85px;">
+            <i class="fa fa-pencil edit-form edit" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="edit(@item.Id)"></i>
+            &nbsp;
+            <i class="fa fa-trash delete delete-form" data-toggle="modal" data-target="#myModal" data-backdrop="static" onclick="delet(@item.Id)"></i>
+            &nbsp;
+            <i class="fa fa-eye view-form details" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="details(@item.Id)"></i>
+        </td>
+    </tr>
+}
+

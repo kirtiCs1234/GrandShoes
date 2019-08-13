@@ -1,0 +1,207 @@
+﻿@model List<Model.StockDistributionModel>
+<div class="table-style">
+    <div class="row  mrgn-b-lg">
+        <div class="col-sm-12 col-md-12 col-xs-12">
+            <div class="forms">
+                <div class="table-responsive" style="height:183px;border: 1px solid #eeeeee">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                
+                                <th>Branch Name</th>
+                                
+                                <th>Product SKU</th>
+                                <th>Barcode</th>
+                
+                                <th>Total</th>
+                                <th>01</th>
+                                <th>02</th>
+                                <th>03</th>
+                                <th>04</th>
+                                <th>05</th>
+                                <th>06</th>
+                                <th>07</th>
+                                <th>08</th>
+                                <th>09</th>
+                                <th>10</th>
+                                <th>11</th>
+                                <th>12</th>
+                                <th>13</th>
+                                <th>14</th>
+                                <th>15</th>
+                                <th>16</th>
+                                <th>17</th>
+                                <th>18</th>
+                                <th>19</th>
+                                <th>20</th>
+                                <th>21</th>
+                                <th>22</th>
+                                <th>23</th>
+                                <th>24</th>
+                                <th>25</th>
+                                <th>26</th>
+                                <th>27</th>
+                                <th>28</th>
+                                <th>29</th>
+                                <th>30</th>
+                            </tr>
+
+                        </thead>
+                        <tbody class="tbodyIndex" id="table1">
+                       @for (var i = 0; i < Model.Count; i++)
+                       {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem=>Model[i].Branch.Name)
+                                </td>
+                               
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Product.ProductSKU)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Product.Barcode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem=> Model[i].Total)
+                                    
+                                </td>
+                                <td id="Quantity01_@i">
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity01)
+                                    <span style="display:none" id="span_Quantity01_@i"></span>
+                                </td>
+                                
+                                <td id="Quantity02_@i">
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity02)
+                                    <span style="display:none" id="span_Quantity02_@i"></span>
+                                </td>
+                                
+                                <td id="Quantity03_@i">
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity03)
+                                    <span style="display:none" id="span_Quantity03_@i"></span>
+                                </td>
+                                
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity04)
+                                    <span style="display:none" id="span_Quantity04_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity05)
+                                    <span style="display:none" id="span_Quantity05_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity06)
+                                    <span style="display:none" id="span_Quantity06_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity07)
+                                    <span style="display:none" id="span_Quantity07_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity08)
+                                    <span style="display:none" id="span_Quantity08_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity09)
+                                    <span style="display:none" id="span_Quantity09_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity10)
+                                    <span style="display:none" id="span_Quantity10_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity11)
+                                    <span style="display:none" id="span_Quantity11_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity12)
+                                    <span style="display:none" id="span_Quantity12_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity13)
+                                    <span style="display:none" id="span_Quantity13_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity14)
+                                    <span style="display:none" id="span_Quantity14_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity15)
+                                    <span style="display:none" id="span_Quantity15_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity16)
+                                    <span style="display:none" id="span_Quantity16_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity17)
+                                    <span style="display:none" id="span_Quantity17_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity18)
+                                    <span style="display:none" id="span_Quantity18_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity19)
+                                    <span style="display:none" id="span_Quantity19_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity20)
+                                    <span style="display:none" id="span_Quantity20_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity21)
+                                    <span style="display:none" id="span_Quantity21_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity22)
+                                    <span style="display:none" id="span_Quantity22_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity23)
+                                    <span style="display:none" id="span_Quantity23_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity24)
+                                    <span style="display:none" id="span_Quantity24_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity25)
+                                    <span style="display:none" id="span_Quantity25_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity26)
+                                    <span style="display:none" id="span_Quantity26_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity27)
+                                    <span style="display:none" id="span_Quantity27_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity28)
+                                    <span style="display:none" id="span_Quantity28_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity29)
+                                    <span style="display:none" id="span_Quantity29_@i"></span>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => Model[i].Quantity30)
+                                    <span style="display:none" id="span_Quantity30_@i"></span>
+                                </td>
+                               <td style="display:none">
+                                   @Html.DisplayFor(modelItem=> Model[i].Id)
+                               </td>
+                                <td style="display:none">
+                                    @Html.DisplayFor(modelItem => Model[i].Product.Barcode)
+                                </td>
+                            </tr>
+                        }
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

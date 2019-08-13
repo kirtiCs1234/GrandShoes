@@ -1,0 +1,181 @@
+﻿@model Model.DiscountAddModel
+@{
+    Layout = null;
+}
+<div class="table-style">
+    <div class="prtm-full-block pos-relative col-md-10">
+
+        @using (Html.BeginForm("Create", "Discount", FormMethod.Post, new { id = "createForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+           
+
+            <div class="prtm-block-content mrgn-b-md col-md-12 padding-section">
+                <div class="">
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+
+                            
+                        </div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+                            <label>From</label>
+                        </div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+                            <label>To</label>
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+                            <label>Product SKU</label>
+                        </div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+
+                            @Html.EditorFor(model => model.FromProductSKU, new { htmlAttributes = new { @class = "form-control",placeholder = "Product SKU"} })
+                            @Html.ValidationMessageFor(model => model.AutocompleteProductSKU, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+
+                            @Html.EditorFor(model => model.ToProductSKU, new { htmlAttributes = new { @class = "form-control", placeholder = "Product SKU" } })
+                            @Html.ValidationMessageFor(model => model.AutocompleteProductSKU, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+                            <label>Style SKU</label>
+                        </div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+
+                            @Html.EditorFor(model => model.FromStyleSKU, new { htmlAttributes = new { @class = "form-control",placeholder = "Style SKU" } })
+                            @Html.ValidationMessageFor(model => model.AutocompleteProductStyleSKU, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+
+                            @Html.EditorFor(model => model.ToStyleSKU, new { htmlAttributes = new { @class = "form-control", placeholder = "Style SKU" } })
+                            @Html.ValidationMessageFor(model => model.AutocompleteProductStyleSKU, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+                            <label><input type="checkbox" class="check" id="flate" />Flat Discount</label>
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            <label><input type="checkbox" class="check" id="quantity"/>Quantity Discount</label>
+                        </div>
+                    </div>
+                   
+                    @*<div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+                            <label>Minimum Quantity</label>
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+
+                            @Html.EditorFor(model => model.Discounts.MinimumQuantity, new { htmlAttributes = new { @class = "form-control", @id = "MinimumQuantity", placeholder = "Minimum Quantity",@readonly="readonly" } })
+                            @Html.ValidationMessageFor(model => model.Discounts.MinimumQuantity, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>*@
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+
+                            <label>Start Date</label>
+                        </div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+
+                            @Html.EditorFor(model => model.Discounts.DateFrom, new { htmlAttributes = new { @class = "form-control", @id = "DateFrom", placeholder = "Date From" } })
+                            @Html.ValidationMessageFor(model => model.Discounts.DateFrom, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+
+                            @Html.EditorFor(model => model.Discounts.DateFrom, new { htmlAttributes = new { @class = "form-control", @id = "DateFrom", placeholder = "Date From" } })
+                            @Html.ValidationMessageFor(model => model.Discounts.DateFrom, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+
+                            <label>Price </label>
+                        </div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+
+                            @Html.EditorFor(model => model.Discounts.DateTo, new { htmlAttributes = new { @class = "form-control", @id = "DateTo", placeholder = "Date To" } })
+                            @Html.ValidationMessageFor(model => model.Discounts.DateTo, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="col-md-2 col-sm-3 col-xs-12">
+
+                            @Html.EditorFor(model => model.Discounts.DateTo, new { htmlAttributes = new { @class = "form-control", @id = "DateTo", placeholder = "Date To" } })
+                            @Html.ValidationMessageFor(model => model.Discounts.DateTo, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+                            <label>Sales Per Discount</label>
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+
+                            @Html.EditorFor(model => model.Discounts.MinimumQuantity, new { htmlAttributes = new { @class = "form-control", @id = "MinimumQuantity", placeholder = "Minimum Quantity" } })
+                            @Html.ValidationMessageFor(model => model.Discounts.MinimumQuantity, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+                            <label><input type="checkbox" class="check" id="flate" />Only MarkDown Items</label>
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            <label><input type="checkbox" class="check" id="quantity" />Create Single File All Store</label>
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+                            <label><input type="checkbox" class="check" id="flate"  />Excl MarkDowns</label>
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+                            <label><input type="checkbox" class="check" id="quantity" />Dont include zero Qty</label>
+                        </div>
+                    </div>
+                  
+                 
+                   
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+
+                            <label><input type="checkbox" />Exclude Area man MarkDown</label>
+                        </div>
+
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-8 col-xs-12 col-sm-6">
+
+                            <label>Label Template File</label>
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-6">
+
+                            @Html.EditorFor(model => model.Discounts.Text, new { htmlAttributes = new { @class = "form-control"} })
+                            @Html.ValidationMessageFor(model => model.Discounts.Text, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-2 padding-section">
+        <input type="button" value="Accept" id="SubmitButton" class="btn btn-success popup-savebtn form-control branch-btn-input" onclick="Submit()" />
+        <button type="button" class="btn btn-outline-inverse cancel form-control mrgn-b-md branch-btn" onclick="History()">History</button>
+        <button type="button" class="btn btn-outline-inverse cancel form-control" onclick="Clear()">Clear</button>
+    </div>
+</div>
+
+<script>
+    window.onload = function () {
+        $.validator.unobtrusive.parse($("#createForm"))
+    }   
+</script>

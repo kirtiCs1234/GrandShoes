@@ -1,0 +1,1635 @@
+﻿@model Model.CartonManagementModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<div class="table-style">
+    <div class="prtm-block-title pad-all-md ">
+        <div class="pos-relative">
+            <div class="caption">
+                <h3 class="text-capitalize">IBT Carton</h3>
+            </div>
+
+        </div>
+
+    </div>
+    @using (Html.BeginForm("Create", "IBTCarton", FormMethod.Post, new { id = "createForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col-md-4 col-xs-12">
+
+
+
+            <div class="prtm-block-content mrgn-b-md ">
+
+                <div class="row mrgn-b-xs">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>IBT Number</label>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+
+                        @Html.EditorFor(model => model.IBTNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "IBT Number" } })
+                        @Html.ValidationMessageFor(model => model.IBTNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mrgn-b-xs">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>Carton Number</label>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+
+                        @Html.EditorFor(model => model.CartonNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "Carton Number" } })
+                        @Html.ValidationMessageFor(model => model.CartonNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mrgn-b-xs">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>Packing Slip Number</label>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+
+                        @Html.EditorFor(model => model.DistributionSummaryID, new { htmlAttributes = new { @class = "form-control", placeholder = "Packing Slip Number" } })
+                        @Html.ValidationMessageFor(model => model.DistributionSummaryID, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="row mrgn-b-xs">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>IBT Total Stock</label>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+
+                        @Html.EditorFor(model => model.IBTTotalStock, new { htmlAttributes = new { @class = "form-control", placeholder = "IBT Total Stock" } })
+                        @Html.ValidationMessageFor(model => model.IBTTotalStock, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="row mrgn-b-xs">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>Total Packed</label>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+
+                        @Html.EditorFor(model => model.TotalItems, new { htmlAttributes = new { @class = "form-control", placeholder = "Total Packed" } })
+                        @Html.HiddenFor(model => model.PackDate, new { htmlAttributes = new { } })
+                        @Html.HiddenFor(model => model.Id, new { htmlAttributes = new { } })
+                        @Html.ValidationMessageFor(model => model.TotalItems, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="row mrgn-b-xs">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>Barcode</label>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+
+                        @Html.EditorFor(model => model.Barcode, new { htmlAttributes = new { @class = "form-control", placeholder = "Barcode" } })
+                        @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger" })
+                        <span id="mas"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xs-12">
+            <span id="mas1"></span>
+            <div class="pack-center">
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-sm-12 mrgn-b-xs">
+
+                        <label>From:</label>
+
+                        @Html.EditorFor(model => model.From, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-md-12 col-xs-12 col-sm-12 mrgn-b-xs">
+
+                        <label>To:</label>
+                        @Html.EditorFor(model => model.BranchName, new { htmlAttributes = new { @class = "form-control", onchange = "getBranchAddress();" } })
+                        @Html.Hidden("BranchID", new { id = "BranchID" })
+                        @Html.ValidationMessageFor(model => model.BranchName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12 mrgn-b-sm">
+
+                        <label>Address:</label>
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.Address1, new { htmlAttributes = new { @class = "form-control", style = "margin-top:15px;" } })
+                        @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger" })
+                        @*<input type="text" class="form-control" style="margin-top:15px;" />*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="col-md-2 col-xs-12">
+        <input type="button" value="Start Packing" id="SubmitButton" class="btn btn-success popup-savebtn form-control branch-btn-input" onclick="startPacking()" />
+
+        <button type="button" class="btn btn-outline-inverse cancel form-control mrgn-b-md branch-btn" id="reStart" onclick="Restart()">Restart</button>
+        <input type="button" value="Next Carton" id="SubmitButton" class="btn btn-success popup-savebtn form-control branch-btn-input" onclick="NextCarton()" />
+        <button type="button" class="btn btn-outline-inverse cancel form-control mrgn-b-md branch-btn" onclick="Complete()">Complete</button>
+        <button type="button" class="btn btn-outline-inverse cancel form-control" onclick="Clear()">Print</button>
+    </div>
+</div>
+<div style="width:100%;float:left;">
+    <input type="button" class="btn btn-success popup-savebtn toggle-btn" id="stock" data-toggle="collapse" value="View Stock Distribution" />
+    <span id="massage"></span>
+    <div id="demo" class="collapse">
+        @Html.Action("ViewDistribution")
+    </div>
+</div>
+
+
+
+<div class="dvCartonDetails" style="width:100%;float:left;">
+
+    @Html.Action("CartonDetail")
+
+</div>
+<div class="dvCartonDetails1" style="width:100%;float:left;">
+
+    @Html.Action("ProductDetail")
+</div>
+<style>
+    .ui-widget-content.ui-autocomplete {
+        z-index: 9999 !important;
+    }
+</style>
+@section scripts{
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script type="text/x-handlebars-template" id="tableTemplate">
+    </script>
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script type="text/javascript">
+        setTimeout(function () {
+            $('#mas1').fadeOut('slow');
+            $('#mas').fadeOut('slow');
+
+        }, 5000);
+        $(document).ready(function () {
+            debugger
+            $(".toggle-btn").click(function () {
+                $("#demo").collapse('toggle');
+            });
+        });
+        $(document).ready(function () {
+            debugger
+            var BranchList = {};
+            //var ProductStyleList = [];
+            $("#BranchName").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/IBTCarton/AutoCompleteBranch",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+
+                            BranchList = $.map(result, function (value, key) { return { value: value.ID, label: value.Name }; });
+                            response(BranchList);
+                            // getBranchAddress();
+                            // alert(result.BranchCode);
+                            //$('#Address').val('(' + result.BranchCode + ') ' + result.AddressLine1 + ' ' + result.AddressLine2 + ' ' + result.AddressLine3);
+                            //$('#Address1').val(result.AreaCode + ', PIN' + result.PostalCode + ' (' + result.Telephone + ')');
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#BranchName").val(ui.item.label);
+                    $("#BranchID").val(ui.item.value);
+
+                    //  GetProductStyle(productName);
+                    //  ProductStyleList = ui.item.ProductStyleSKU;
+                },
+                minLength: 1
+            });
+        });
+        function getBranchAddress() {
+            debugger;
+            var obj = {};
+            obj.BranchName = $('#BranchName').val();
+            $.ajax({
+                url: '/Admin/IBTCarton/GetBranchAddress',
+                type: 'POST',
+                data: obj,
+                success: function (result) {
+                    debugger;
+                    $('#Address').val('(' + result.BranchCode + '),  ' + result.AddressLine1 + '  , ' + result.AddressLine2 + '  , ' + result.AddressLine3);
+                    $('#Address1').val(result.AreaCode + ', PIN - ' + result.PostalCode + ', (' + result.Telephone + ')');
+                },
+
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+            return false;
+        }
+        function startPacking() {
+            debugger;
+            var obj = {};
+            obj.BranchName = $('#BranchName').val();
+            if (obj.BranchName == '' || obj.BranchName == null) {
+                // $("#mas1").text("Please Enter Branch Name and Address.");
+                //  $("#mas1").css("color", "red");
+                alert("Please Enter Branch Name and Address.")
+            }
+            else {
+                $.ajax({
+                    url: '/Admin/IBTCarton/StartPacking',
+                    type: 'GET',
+                    data: obj,
+                    success: function (result) {
+                        debugger;
+                        //  alert(result);
+                        $("#IBTNumber").val(result.IBTNumber);
+                        $("#PackDate").val(result.PackDate);
+                        $("#IBTTotalStock").val("24");
+                        $("#TotalItems").val("0");
+                        //var to = parseInt($("#CartonNumber").val());
+                        //if (isNaN(to)) to = 0;
+                        //to = to + 1;
+                        $("#CartonNumber").val(result.CartonNumber);
+                        $("#DistributionSummaryID").val(result.DistributionSummaryID);
+                        // cartonDetail();
+                        document.getElementById("SubmitButton").disabled = true;
+                        ViewDistribution();
+                    }
+
+                })
+            }
+
+        }
+        function ViewDistribution() {
+            debugger;
+            var obj = {};
+            obj.DistributionSummaryID = $("#DistributionSummaryID").val();
+            obj.BranchName = $("#BranchName").val();
+            $.ajax({
+                url: '/Admin/IBTCarton/ViewDistribution',
+                type: "GET",
+                data: obj,
+                success: function (result) {
+                    debugger;
+                    $('#demo').html(result);
+                    var l = $("#table1 tr").length;
+                    if (l == 0) {
+                        $("#massage").text("Stock Distribution data not found this branch.");
+                        $("#massage").css("color", "red");
+                        document.getElementById("stock").disabled = true;
+                    }
+                }
+            })
+        }
+        function cartonDetail() {
+            debugger;
+            $.ajax({
+                url: '/Admin/IBTCarton/CartonDetail',
+                type: 'GET',
+                success: function (result) {
+                    debugger;
+
+                    $('.dvCartonDetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            })
+        }
+
+        $("#Barcode").focusout(function () {
+            debugger;
+            var barcode = $('#Barcode').val();
+            var length = barcode.length;
+            //var status= checkBarcode(barcode);
+            // if (status == false) {
+            //    alert("Barcode is not found.")
+            // }
+            if (length != 12) {
+                $("#mas").text("Please Enter 12 digits of Barcode.");
+                $("#mas").css("color", "red");
+                // alert("Please Enter 12 digits of Barcode.")
+                $('#Barcode').val('');
+            } else {
+                var DistributionSummaryID = $('#DistributionSummaryID').val();
+                var CartonNumber = $('#CartonNumber').val();
+                if (CartonNumber == '' && DistributionSummaryID == '') {
+                    alert("Please Enter Carton No and Packing No.")
+                } else {
+                    var ColNo = 0;
+                    var status;
+                    var total = 0;
+                    //  var totalPacked = 0;
+                    var obj = {};
+
+                    var styleSKU = barcode.substring(0, 4);
+                    obj.StyleSKU = styleSKU;
+                    var productSku = barcode.substring(4, 7);
+                    obj.ProductSKU = productSku;
+                    var size = barcode.substring(10, 12);
+                    var branchName = $('#BranchName').val();
+                    obj.BranchName = branchName;
+                    // var date = document.getElementById("PackDate").value;
+                    //document.getElementById("demo").innerHTML = date;
+
+                    //date = parseDate("dd/mm/yy", $('#PackDate').val());
+                    //var currentDate = new Date("dd/mm/yyyy");
+                    // obj.PackDate=date;
+                    ibt = $('#IBTNumber').val();
+                    obj.IBTNumber = ibt;
+                    //total=parseInt(z01)+parseInt(z02)+parseInt(z03)+parseInt(z04)+parseInt(z05)+parseInt(z06)+parseInt(z07)+parseInt(z08)+parseInt(z09)+parseInt(z10)+parseInt(z11)+parseInt(z12)+parseInt(z13)+parseInt(z14)+parseInt(z15)+parseInt(z16)+parseInt(z17)+parseInt(z18)+parseInt(z19)+parseInt(z20)+parseInt(z21)+parseInt(z22)+parseInt(z23)+parseInt(z24)+parseInt(z25)+parseInt(z26)+parseInt(z27)+parseInt(z28)+parseInt(z29)+parseInt(z30);
+                    var z01 = 0; var z02 = 0; var z03 = 0; var z04 = 0; var z05 = 0; var z06 = 0; var z07 = 0; var z08 = 0; var z09 = 0; var z10 = 0; var z11 = 0; var z12 = 0; var z13 = 0; var z14 = 0; var z15 = 0; var z16 = 0; var z17 = 0; var z18 = 0; var z19 = 0; var z20 = 0; var z21 = 0; var z22 = 0; var z23 = 0; var z24 = 0; var z25 = 0; var z26 = 0; var z27 = 0; var z28 = 0; var z29 = 0; var z30 = 0;
+                    var i = 1;
+                    var l = $('#table1 tr').length;
+                    var t = 0;
+                    var status1 = true;
+                    for (t = 0; t < l; t++) {
+                        var pku = $('#table1 tr')[t].cells[1].innerHTML.trim();
+                        var sku = $('#table1 tr')[t].cells[2].innerHTML.trim();
+
+
+                        if (pku == productSku && sku == styleSKU) {
+                            //        return true;
+                            //    }
+                            //}
+                            status1 = false;
+                            if (size == '01') {
+
+                                // var vl = $('#table1 tr')[t].cells[4].innerHTML;
+                                var v = parseInt($('#table1 tr')[t].cells[4].innerHTML);
+
+                                debugger
+
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    //var item = $('#table1 tr')[t].cells[4].id;
+                                    //var span = $('#span_' + item);
+                                    //span.text(v);
+                                    v = parseInt($('#table1 tr')[t].cells[4].innerHTML) - 1;
+                                    //$('#span_Quantity01_'+t).text(v);
+                                    $('#table1 tr')[t].cells[4].innerHTML = v;
+
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z01 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+
+                            }
+                            if (size == '02') {
+                                debugger
+                                // var vl = $('#table1 tr')[t].cells[5].innerHTML;
+                                var v = parseInt($('#table1 tr')[t].cells[5].innerHTML);
+                                var item = $('#table1 tr')[t].cells[5].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[5].innerHTML) - 1;
+
+                                    $('#table1 tr')[t].cells[5].innerHTML = v;
+
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z02 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '03') {
+
+                                var v = parseInt($('#table1 tr')[t].cells[6].innerHTML);
+                                var item = $('#table1 tr')[t].cells[6].id;
+                                var span = $('#span_' + item);
+                                debugger
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[6].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[6].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z03 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '04') {
+
+                                var v = parseInt($('#table1 tr')[t].cells[7].innerHTML);
+                                var item = $('#table1 tr')[t].cells[7].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[7].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[7].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z04 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '05') {
+
+                                var v = parseInt($('#table1 tr')[t].cells[8].innerHTML);
+                                var item = $('#table1 tr')[t].cells[8].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[8].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[8].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z05 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '06') {
+
+                                var v = parseInt($('#table1 tr')[t].cells[9].innerHTML);
+                                var item = $('#table1 tr')[t].cells[9].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[9].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[9].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z06 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '07') {
+                                var v = parseInt($('#table1 tr')[t].cells[10].innerHTML);
+                                var item = $('#table1 tr')[t].cells[10].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[10].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[10].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z07 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '08') {
+                                var v = parseInt($('#table1 tr')[t].cells[11].innerHTML);
+                                var item = $('#table1 tr')[t].cells[11].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[11].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[11].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z08 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '09') {
+                                var v = parseInt($('#table1 tr')[t].cells[12].innerHTML);
+                                var item = $('#table1 tr')[t].cells[12].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[12].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[12].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z09 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '10') {
+                                var v = parseInt($('#table1 tr')[t].cells[13].innerHTML);
+                                var item = $('#table1 tr')[t].cells[13].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[13].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[13].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z10 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '11') {
+                                var v = parseInt($('#table1 tr')[t].cells[14].innerHTML);
+                                var item = $('#table1 tr')[t].cells[14].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[14].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[14].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z11 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '12') {
+                                var v = parseInt($('#table1 tr')[t].cells[15].innerHTML);
+                                var item = $('#table1 tr')[t].cells[15].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[15].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[15].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z12 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '13') {
+                                var v = parseInt($('#table1 tr')[t].cells[16].innerHTML);
+                                var item = $('#table1 tr')[t].cells[16].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[16].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[16].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z13 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '14') {
+                                var v = parseInt($('#table1 tr')[t].cells[17].innerHTML);
+                                var item = $('#table1 tr')[t].cells[17].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[17].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[17].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z14 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '15') {
+                                var v = parseInt($('#table1 tr')[t].cells[18].innerHTML);
+                                var item = $('#table1 tr')[t].cells[18].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[18].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[18].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z15 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '16') {
+                                var v = parseInt($('#table1 tr')[t].cells[19].innerHTML);
+                                var item = $('#table1 tr')[t].cells[19].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[19].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[19].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z16 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '17') {
+                                var v = parseInt($('#table1 tr')[t].cells[20].innerHTML);
+                                var item = $('#table1 tr')[t].cells[20].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[20].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[20].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z17 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '18') {
+                                var v = parseInt($('#table1 tr')[t].cells[21].innerHTML);
+                                var item = $('#table1 tr')[t].cells[21].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[21].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[21].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z18 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '19') {
+                                var v = parseInt($('#table1 tr')[t].cells[22].innerHTML);
+                                var item = $('#table1 tr')[t].cells[22].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[22].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[22].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z19 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '20') {
+                                var v = parseInt($('#table1 tr')[t].cells[23].innerHTML);
+                                var item = $('#table1 tr')[t].cells[23].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[23].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[23].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z20 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '21') {
+                                var v = parseInt($('#table1 tr')[t].cells[24].innerHTML);
+                                var item = $('#table1 tr')[t].cells[24].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[24].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[24].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z21 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '22') {
+                                var v = parseInt($('#table1 tr')[t].cells[25].innerHTML);
+                                var item = $('#table1 tr')[t].cells[25].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[25].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[25].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z22 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '23') {
+                                var v = parseInt($('#table1 tr')[t].cells[26].innerHTML);
+                                var item = $('#table1 tr')[t].cells[26].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[26].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[26].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z23 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '24') {
+                                var v = parseInt($('#table1 tr')[t].cells[27].innerHTML);
+                                var item = $('#table1 tr')[t].cells[27].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[27].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[27].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z24 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '25') {
+                                var v = parseInt($('#table1 tr')[t].cells[28].innerHTML);
+                                var item = $('#table1 tr')[t].cells[28].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[28].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[28].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z25 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '26') {
+                                var v = parseInt($('#table1 tr')[t].cells[29].innerHTML);
+                                var item = $('#table1 tr')[t].cells[29].id;
+                                var span = $('#span_' + item);
+                                span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[29].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[29].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z26 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '27') {
+                                var v = parseInt($('#table1 tr')[t].cells[30].innerHTML);
+                                //var item = $('#table1 tr')[t].cells[30].id;
+                                //var span = $('#span_' + item);
+                                //span.text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[30].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[30].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z27 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '28') {
+                                var v = parseInt($('#table1 tr')[t].cells[31].innerHTML);
+
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[31].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[31].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z28 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '29') {
+                                var v = parseInt($('#table1 tr')[t].cells[32].innerHTML);
+                                $('#span_Quantity29_' + t).text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[32].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[32].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z29 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            if (size == '30') {
+                                var v = parseInt($('#table1 tr')[t].cells[33].innerHTML);
+                                $('#span_Quantity30_' + t).text(v);
+                                if (v == 0) {
+                                    alert("Product is not available.")
+                                    return 0;
+                                } else {
+                                    v = parseInt($('#table1 tr')[t].cells[33].innerHTML) - 1;
+                                    l = v + 1;
+                                    $('#span_Quantity30_' + t).text(l);
+                                    $('#table1 tr')[t].cells[33].innerHTML = v;
+                                    var tv = parseInt($('#table1 tr')[t].cells[3].innerHTML) - 1;
+                                    $('#table1 tr')[t].cells[3].innerHTML = tv;
+                                    z30 += 1;
+                                    total += 1;
+                                    var tot = parseInt($('#TotalItems').val());
+                                    if (isNaN(tot)) tot = 0;
+                                    tot = tot + total;
+                                    $('#TotalItems').val(tot);
+                                }
+                            }
+                            //var templateText = $("#tableTemplate").html();
+                            //var tableTemplate = Handlebars.compile(templateText);
+                            //$("#ProductData").html(tableTemplate({ array: product }));
+
+                            var product = [
+                                {
+                                    i, branchName, productSku, styleSKU, ColNo, ibt, status, total, z01, z02, z03, z04, z05, z06, z07, z08, z09, z10, z11, z12, z13, z14, z15, z16, z17, z18, z19, z20, z21, z22, z23, z24, z25, z26, z27, z28, z29, z30
+                                }
+                            ]
+
+                            var markup = "<tr><td>" + i + "</td><td>" + branchName + "</td><td>" + productSku + "</td><td>" + styleSKU + "</td><td>" + ColNo + "</td><td>" + ibt + "</td><td>" + status + "</td><td>" + total + "</td><td>" + z01 + "</td><td>" + z02 + "</td><td>" + z03 + "</td><td>" + z04 + "</td><td>" + z05 + "</td><td>" + z06 + "</td><td>" + z07 + "</td><td>" + z08 + "</td><td>" + z09 + "</td><td>" + z10 + "</td><td>" + z11 + "</td><td>" + z12 + "</td><td>" + z13 + "</td><td>" + z14 + "</td><td>" + z15 + "</td><td>" + z16 + "</td><td>" + z17 + "</td><td>" + z18 + "</td><td>" + z19 + "</td><td>" + z20 + "</td><td>" + z21 + "</td><td>" + z22 + "</td><td>" + z23 + "</td><td>" + z24 + "</td><td>" + z25 + "</td><td>" + z26 + "</td><td>" + z27 + "</td><td>" + z28 + "</td><td>" + z29 + "</td><td>" + z30 + "</td></tr>";
+                            var rowCount = $('#tablea1').find('tr').length;
+                            if (rowCount == 0) {
+                                $("#tablea1").append(markup);
+
+                            } else {
+                                var status = true;
+                                var k = 0;
+                                for (k = 0; k < rowCount; k++) {
+                                    var proSKU = $('#tablea1 tr')[k].cells[2].innerHTML;
+                                    var styleSKU1 = $('#tablea1 tr')[k].cells[3].innerHTML;
+                                    if (proSKU != productSku && styleSKU1 != styleSKU) {
+                                        // $("#table1").append(markup);
+                                        status == true;
+                                    }
+                                        //else if (proSKU == "" && styleSKU == "") {
+                                        //    $("#table1").append(markup)
+                                        //}
+                                    else if (proSKU == productSku && styleSKU1 == styleSKU) {
+                                        status = false;
+                                        if (size == '01') {
+                                            //z01 += 1;
+                                            var v = parseInt($('#table1 tr')[t].cells[4].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z01 = parseInt($('#tablea1 tr')[k].cells[8].innerHTML) + 1;
+                                                $('#tablea1 tr')[k].cells[8].innerHTML = z01;
+                                            }
+
+                                        }
+                                        if (size == '02') {
+                                            var v = parseInt($('#table1 tr')[t].cells[5].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z02 = parseInt($('#tablea1 tr')[k].cells[9].innerHTML) + 1;
+                                                $('#tablea1 tr')[k].cells[9].innerHTML = z02;
+                                            }
+
+
+                                        }
+                                        if (size == '03') {
+                                            var v = parseInt($('#table1 tr')[t].cells[6].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z03 = parseInt($('#tablea1 tr')[k].cells[10].innerHTML) + 1;
+                                                $('#tablea1 tr')[k].cells[10].innerHTML = z03;
+                                            }
+
+                                        }
+                                        if (size == '04') {
+                                            var v = parseInt($('#table1 tr')[t].cells[7].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z04 = parseInt($('#tablea1 tr')[k].cells[11].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[11].innerHTML = z04;
+                                        }
+                                        if (size == '05') {
+                                            var v = parseInt($('#table1 tr')[t].cells[8].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z02 = parseInt($('#tablea1 tr')[k].cells[12].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[12].innerHTML = a05;
+                                        }
+                                        if (size == '06') {
+                                            var v = parseInt($('#table1 tr')[t].cells[9].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z06 = parseInt($('#tablea1 tr')[k].cells[13].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[13].innerHTML = z06;
+                                        }
+                                        if (size == '07') {
+                                            var v = parseInt($('#table1 tr')[t].cells[10].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z07 = parseInt($('#tablea1 tr')[k].cells[14].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[14].innerHTML = z07;
+                                        }
+                                        if (size == '08') {
+                                            var v = parseInt($('#table1 tr')[t].cells[11].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z08 = parseInt($('#tablea1 tr')[k].cells[15].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[15].innerHTML = z08;
+                                        }
+                                        if (size == '09') {
+                                            var v = parseInt($('#table1 tr')[t].cells[12].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z09 = parseInt($('#tablea1 tr')[k].cells[16].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[16].innerHTML = z09;
+                                        }
+                                        if (size == '10') {
+                                            var v = parseInt($('#table1 tr')[t].cells[13].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z10 = parseInt($('#tablea1 tr')[k].cells[17].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[17].innerHTML = z10;
+                                        }
+                                        if (size == '11') {
+                                            var v = parseInt($('#table1 tr')[t].cells[14].innerHTML);
+                                            if ($('#span_Quantity11_' + t).text() != 0) {
+                                                z11 = parseInt($('#tablea1 tr')[k].cells[18].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[18].innerHTML = z11;
+                                        }
+                                        if (size == '12') {
+                                            var v = parseInt($('#table1 tr')[t].cells[15].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z12 = parseInt($('#tablea1 tr')[k].cells[19].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[19].innerHTML = z12;
+                                        }
+                                        if (size == '13') {
+                                            var v = parseInt($('#table1 tr')[t].cells[16].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z13 = parseInt($('#tablea1 tr')[k].cells[20].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[20].innerHTML = z13;
+                                        }
+                                        if (size == '14') {
+                                            var v = parseInt($('#table1 tr')[t].cells[17].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z14 = parseInt($('#tablea1 tr')[k].cells[21].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[21].innerHTML = z14;
+                                        }
+                                        if (size == '15') {
+                                            var v = parseInt($('#table1 tr')[t].cells[18].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z15 = parseInt($('#tablea1 tr')[k].cells[22].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[22].innerHTML = z15;
+                                        }
+                                        if (size == '16') {
+                                            var v = parseInt($('#table1 tr')[t].cells[19].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z16 = parseInt($('#tablea1 tr')[k].cells[23].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[23].innerHTML = z16;
+                                        }
+                                        if (size == '17') {
+                                            var v = parseInt($('#table1 tr')[t].cells[20].innerHTML);
+                                            if ($('#span_Quantity17_' + t).text() != 0) {
+                                                z17 = parseInt($('#tablea1 tr')[k].cells[24].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[24].innerHTML = z17;
+                                        }
+                                        if (size == '18') {
+                                            var v = parseInt($('#table1 tr')[t].cells[21].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z18 = parseInt($('#tablea1 tr')[k].cells[25].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[25].innerHTML = z18;
+                                        }
+                                        if (size == '19') {
+                                            var v = parseInt($('#table1 tr')[t].cells[22].innerHTML);
+                                            if ($('#span_Quantity19_' + t).text() != 0) {
+                                                z19 = parseInt($('#tablea1 tr')[k].cells[26].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[26].innerHTML = z19;
+                                        }
+                                        if (size == '20') {
+                                            var v = parseInt($('#table1 tr')[t].cells[23].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z20 = parseInt($('#tablea1 tr')[k].cells[27].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[27].innerHTML = z20;
+                                        }
+                                        if (size == '21') {
+                                            var v = parseInt($('#table1 tr')[t].cells[24].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z21 = parseInt($('#tablea1 tr')[k].cells[28].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[28].innerHTML = z21;
+                                        }
+                                        if (size == '22') {
+                                            var v = parseInt($('#table1 tr')[t].cells[25].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z22 = parseInt($('#tablea1 tr')[k].cells[29].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[29].innerHTML = z22;
+                                        }
+                                        if (size == '23') {
+                                            var v = parseInt($('#table1 tr')[t].cells[26].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z02 = parseInt($('#tablea1 tr')[k].cells[30].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[30].innerHTML = z23;
+                                        }
+                                        if (size == '24') {
+                                            var v = parseInt($('#table1 tr')[t].cells[27].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z24 = parseInt($('#tablea1 tr')[k].cells[31].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[31].innerHTML = z24;
+                                        }
+                                        if (size == '25') {
+                                            var v = parseInt($('#table1 tr')[t].cells[28].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z25 = parseInt($('#tablea1 tr')[k].cells[32].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[32].innerHTML = z25;
+                                        }
+                                        if (size == '26') {
+                                            var v = parseInt($('#table1 tr')[t].cells[29].innerHTML);
+                                            if ($('#span_Quantity26_' + t).text() != 0) {
+                                                z26 = parseInt($('#tablea1 tr')[k].cells[33].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[33].innerHTML = z26;
+                                        }
+                                        if (size == '27') {
+                                            var v = parseInt($('#table1 tr')[t].cells[30].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z27 = parseInt($('#tablea1 tr')[k].cells[34].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[34].innerHTML = z27;
+                                        }
+                                        if (size == '28') {
+                                            var v = parseInt($('#table1 tr')[t].cells[31].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z28 = parseInt($('#tablea1 tr')[k].cells[35].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[35].innerHTML = z28;
+                                        }
+                                        if (size == '29') {
+                                            var v = parseInt($('#table1 tr')[t].cells[32].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z29 = parseInt($('#tablea1 tr')[k].cells[36].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[36].innerHTML = z29;
+                                        }
+                                        if (size == '30') {
+                                            var v = parseInt($('#table1 tr')[t].cells[33].innerHTML);
+                                            var s = v + 1;
+                                            if (s != 0) {
+                                                z30 = parseInt($('#tablea1 tr')[k].cells[37].innerHTML) + 1;
+                                            }
+                                            $('#tablea1 tr')[k].cells[37].innerHTML = z30;
+                                        }
+                                        //total = z01 + z02 + z03 + z04 + z05 + z06 + z07 + z08 + z09 + z10 + z11 + z12 + z13 + z14 + z15 + z16 + z17 + z18 + z19 + z20 + z21 + z22 + z23 + z24 + z25 + z26 + z27 + z28 + z29 + z30;
+                                        total = parseInt($('#tablea1 tr')[k].cells[8].innerHTML) + parseInt($('#tablea1 tr')[k].cells[9].innerHTML) + parseInt($('#tablea1 tr')[k].cells[10].innerHTML) + parseInt($('#tablea1 tr')[k].cells[11].innerHTML) + parseInt($('#tablea1 tr')[k].cells[12].innerHTML) + parseInt($('#tablea1 tr')[k].cells[13].innerHTML) + parseInt($('#tablea1 tr')[k].cells[14].innerHTML) + parseInt($('#tablea1 tr')[k].cells[15].innerHTML) + parseInt($('#tablea1 tr')[k].cells[16].innerHTML) + parseInt($('#tablea1 tr')[k].cells[17].innerHTML) + parseInt($('#tablea1 tr')[k].cells[18].innerHTML) + parseInt($('#tablea1 tr')[k].cells[19].innerHTML) + parseInt($('#tablea1 tr')[k].cells[20].innerHTML) + parseInt($('#tablea1 tr')[k].cells[21].innerHTML) + parseInt($('#tablea1 tr')[k].cells[22].innerHTML) + parseInt($('#tablea1 tr')[k].cells[23].innerHTML) + parseInt($('#tablea1 tr')[k].cells[24].innerHTML) + parseInt($('#tablea1 tr')[k].cells[25].innerHTML) + parseInt($('#tablea1 tr')[k].cells[26].innerHTML) + parseInt($('#tablea1 tr')[k].cells[27].innerHTML) + parseInt($('#tablea1 tr')[k].cells[28].innerHTML) + parseInt($('#tablea1 tr')[k].cells[29].innerHTML) + parseInt($('#tablea1 tr')[k].cells[30].innerHTML) + parseInt($('#tablea1 tr')[k].cells[31].innerHTML) + parseInt($('#tablea1 tr')[k].cells[32].innerHTML) + parseInt($('#tablea1 tr')[k].cells[33].innerHTML) + parseInt($('#tablea1 tr')[k].cells[34].innerHTML) + parseInt($('#tablea1 tr')[k].cells[35].innerHTML) + parseInt($('#tablea1 tr')[k].cells[36].innerHTML) + parseInt($('#tablea1 tr')[k].cells[37].innerHTML);
+                                        $('#tablea1 tr')[k].cells[7].innerHTML = total;
+                                        var v = parseInt($('#table1 tr')[t].cells[4].innerHTML);
+                                        // v = parseInt($('#table1 tr')[t].cells[5].innerHTML);
+                                        if (v != 0) {
+                                            $('#TotalItems').val(tot);
+                                        }
+                                        // var totalPacked = parseInt($('#tablea1 tr')[k].cells[8].innerHTML)+1;
+
+                                    }
+                                    // return 0;
+                                }
+                                debugger
+                                if (status == true) {
+                                    $("#tablea1").append(markup);
+                                }
+                                //$('#table1 tr')[k].cells[8].innerHTML= total;
+                                //  k++;
+                            }
+
+                            //for (var j = 0; j < product.length ; j++) {
+                            //    var arr = product[j];
+                            //    var table = document.getElementById("table1");
+                            //    var tr = table.getElementsByTagName("tr");
+                            //    var td = document.createElement('td');          // TABLE DEFINITION.
+                            //    td = tr.arr(j);
+
+
+                            //   $('#a_' + j).append(td);
+                            //}
+
+                            //$('#ProductSKU').text(productSku);
+                            //$('#StyleSKU').text(styleSKU);
+                            //$('#BranchCode').text(branchName);
+
+                            //$('#date').text(currentDate);
+                            //$('#IBTNo').text(ibt);
+                            return 0;
+                        }
+                        //else {
+                        //    $("#mas").text("Product is not found in stock distribution.");
+                        //    $("#mas").css("color", "red");
+                        //}
+
+                    }
+                    if (pku != productSku && sku != styleSKU) {
+                        status1 = true;
+                        $("#mas").text("Product is not found in stock distribution.");
+                        $("#mas").css("color", "red");
+                        $('#Barcode').val('');
+                    } else if (pku != productSku && sku == styleSKU) {
+                        status1 = true;
+                        $("#mas").text("Product is not found in stock distribution.");
+                        $("#mas").css("color", "red");
+                        $('#Barcode').val('');
+                    } else if (pku == productSku && sku != styleSKU) {
+                        status1 = true;
+                        $("#mas").text("Product is not found in stock distribution.");
+                        $("#mas").css("color", "red");
+                        $('#Barcode').val('');
+                    }
+                    //t++;
+                }
+            }
+        });
+        function validate() {
+            var isValid = true;
+            if ($('#Barcode').val().trim() == "" && $('#Barcode').val().length != 12) {
+                $('#Barcode').css('border-color', 'Red');
+                isValid = false;
+            }
+            else {
+                $('#Barcode').css('border-color', 'lightgrey');
+            }
+
+        }
+        function NextCarton() {
+            debugger;
+            var obj = {};
+            obj.BranchName = $('#BranchName').val();
+            var barcode = $('#Barcode').val();
+            if (obj.BranchName == '' || obj.BranchName == null) {
+                $("#mas1").text("Please Enter Branch Name and Address.");
+                $("#mas1").css("color", "red");
+                //alert("Please Enter Branch Name and Address.")
+            }
+            else if (barcode == '') {
+                $("#mas").text("Please scan product.");
+                $("#mas").css("color", "red");
+            } else {
+
+                obj.DistributionSummaryID = $('#DistributionSummaryID').val();
+
+                obj.CartonNumber = $('#CartonNumber').val();
+
+                obj.TotalItems = $('#TotalItems').val();
+                // obj.TotalItems=;
+                obj.IsActive = true;
+                var table = document.getElementById("tablea1");
+                var table1 = document.getElementById("table1");
+                var stockDistribution = [];
+
+                obj.StockDistributionList = stockDistribution;
+                for (var j = 0; j < table1.rows.length; j++) {
+                    stockDistribution.push({
+                        BranchName: table1.rows[j].cells[0].innerHTML.trim(),
+                        ProductSKU: table1.rows[j].cells[1].innerHTML.trim(),
+                        StyleSKU: table1.rows[j].cells[2].innerHTML.trim(),
+                        Total: table1.rows[j].cells[3].innerHTML,
+                        Quantity01: table1.rows[j].cells[4].innerHTML,
+                        Quantity02: table1.rows[j].cells[5].innerHTML,
+                        Quantity03: table1.rows[j].cells[6].innerHTML,
+                        Quantity04: table1.rows[j].cells[7].innerHTML,
+                        Quantity05: table1.rows[j].cells[8].innerHTML,
+                        Quantity06: table1.rows[j].cells[9].innerHTML,
+                        Quantity07: table1.rows[j].cells[10].innerHTML,
+                        Quantity08: table1.rows[j].cells[11].innerHTML,
+                        Quantity09: table1.rows[j].cells[12].innerHTML,
+                        Quantity10: table1.rows[j].cells[13].innerHTML,
+                        Quantity11: table1.rows[j].cells[14].innerHTML,
+                        Quantity12: table1.rows[j].cells[15].innerHTML,
+                        Quantity13: table1.rows[j].cells[16].innerHTML,
+                        Quantity14: table1.rows[j].cells[17].innerHTML,
+                        Quantity15: table1.rows[j].cells[18].innerHTML,
+                        Quantity16: table1.rows[j].cells[19].innerHTML,
+                        Quantity17: table1.rows[j].cells[20].innerHTML,
+                        Quantity18: table1.rows[j].cells[21].innerHTML,
+                        Quantity19: table1.rows[j].cells[22].innerHTML,
+                        Quantity20: table1.rows[j].cells[23].innerHTML,
+                        Quantity21: table1.rows[j].cells[24].innerHTML,
+                        Quantity22: table1.rows[j].cells[25].innerHTML,
+                        Quantity23: table1.rows[j].cells[26].innerHTML,
+                        Quantity24: table1.rows[j].cells[27].innerHTML,
+                        Quantity25: table1.rows[j].cells[28].innerHTML,
+                        Quantity26: table1.rows[j].cells[29].innerHTML,
+                        Quantity27: table1.rows[j].cells[30].innerHTML,
+                        Quantity28: table1.rows[j].cells[31].innerHTML,
+                        Quantity29: table1.rows[j].cells[32].innerHTML,
+                        Quantity30: table1.rows[j].cells[33].innerHTML,
+                        Id: table1.rows[j].cells[34].innerHTML,
+                    })
+                }
+                var cartonDetail = [];
+
+                obj.CartonManagementDetails = cartonDetail;
+                for (var i = 0; i < table.rows.length; i++) {
+                    debugger
+                    cartonDetail.push({
+                        CartonManagementID: $('#Id').val(),
+                        ProductSKU: table.rows[i].cells[2].innerHTML,
+                        StyleSKU: table.rows[i].cells[3].innerHTML,
+                        Z01: table.rows[i].cells[8].innerHTML,
+                        Z02: table.rows[i].cells[9].innerHTML,
+                        Z03: table.rows[i].cells[10].innerHTML,
+                        Z04: table.rows[i].cells[11].innerHTML,
+                        Z05: table.rows[i].cells[12].innerHTML,
+                        Z06: table.rows[i].cells[13].innerHTML,
+                        Z07: table.rows[i].cells[14].innerHTML,
+                        Z08: table.rows[i].cells[15].innerHTML,
+                        Z09: table.rows[i].cells[16].innerHTML,
+                        Z10: table.rows[i].cells[17].innerHTML,
+                        Z11: table.rows[i].cells[18].innerHTML,
+                        Z12: table.rows[i].cells[19].innerHTML,
+                        Z13: table.rows[i].cells[20].innerHTML,
+                        Z14: table.rows[i].cells[21].innerHTML,
+                        Z15: table.rows[i].cells[22].innerHTML,
+                        Z16: table.rows[i].cells[23].innerHTML,
+                        Z17: table.rows[i].cells[24].innerHTML,
+                        Z18: table.rows[i].cells[25].innerHTML,
+                        Z19: table.rows[i].cells[26].innerHTML,
+                        Z20: table.rows[i].cells[27].innerHTML,
+                        Z21: table.rows[i].cells[28].innerHTML,
+                        Z22: table.rows[i].cells[29].innerHTML,
+                        Z23: table.rows[i].cells[30].innerHTML,
+                        Z24: table.rows[i].cells[31].innerHTML,
+                        Z25: table.rows[i].cells[32].innerHTML,
+                        Z26: table.rows[i].cells[33].innerHTML,
+                        Z27: table.rows[i].cells[34].innerHTML,
+                        Z28: table.rows[i].cells[35].innerHTML,
+                        Z29: table.rows[i].cells[36].innerHTML,
+                        Z30: table.rows[i].cells[37].innerHTML,
+                        Total: table.rows[i].cells[8].innerHTML,
+                        IsActive: true,
+                    });
+                }
+                var jsonstring = JSON.stringify(obj);
+                $.ajax(
+                   {
+                       url: '/Admin/IBTCarton/CreateA',
+                       type: "POST", //HTTP POST Method
+                       contentType: "application/json; charset=utf-8",
+                      // dataType: "json",
+                       data: jsonstring,
+                       success: function (result) {
+                           debugger;
+                           //event.preventDefault();
+                           alert("data save successfully......");
+                           Complete1();
+                           var ct = parseInt($('#CartonNumber').val());
+                           $('#CartonNumber').val(ct);
+                           $('TotalItems').val("0");
+                           $('#Barcode').val('');
+                           startPacking();
+                           $("#tablea1 tr").remove();
+                           ViewDistribution();
+                       },
+                       error: function (errormessage, err) {
+                           debugger
+                           alert(errormessage.responseText);
+                       }
+                   });
+
+            }
+        }
+        function Complete1() {
+            debugger;
+            var obj1 = {};
+            obj1.DistributionSummaryID = $('#DistributionSummaryID').val();
+
+            obj1.CartonNumber = $('#CartonNumber').val();
+
+            obj1.TotalItems = $('#TotalItems').val();
+            obj1.TotalItems = 24;
+            obj1.IsActive = true;
+            var table = document.getElementById("tablea1");
+            var cartonDetail = [];
+            obj1.CartonManagementDetails = cartonDetail;
+            for (var i = 0; i < table.rows.length; i++) {
+
+                cartonDetail.push({
+                    CartonManagementID: $('#Id').val(),
+                    ProductSKU: table.rows[i].cells[2].innerHTML.trim(),
+                    StyleSKU: table.rows[i].cells[3].innerHTML.trim(),
+                    Z01: table.rows[i].cells[8].innerHTML,
+                    Z02: table.rows[i].cells[9].innerHTML,
+                    Z03: table.rows[i].cells[10].innerHTML,
+                    Z04: table.rows[i].cells[11].innerHTML,
+                    Z05: table.rows[i].cells[12].innerHTML,
+                    Z06: table.rows[i].cells[13].innerHTML,
+                    Z07: table.rows[i].cells[14].innerHTML,
+                    Z08: table.rows[i].cells[15].innerHTML,
+                    Z09: table.rows[i].cells[16].innerHTML,
+                    Z10: table.rows[i].cells[17].innerHTML,
+                    Z11: table.rows[i].cells[18].innerHTML,
+                    Z12: table.rows[i].cells[19].innerHTML,
+                    Z13: table.rows[i].cells[20].innerHTML,
+                    Z14: table.rows[i].cells[21].innerHTML,
+                    Z15: table.rows[i].cells[22].innerHTML,
+                    Z16: table.rows[i].cells[23].innerHTML,
+                    Z17: table.rows[i].cells[24].innerHTML,
+                    Z18: table.rows[i].cells[25].innerHTML,
+                    Z19: table.rows[i].cells[26].innerHTML,
+                    Z20: table.rows[i].cells[27].innerHTML,
+                    Z21: table.rows[i].cells[28].innerHTML,
+                    Z22: table.rows[i].cells[29].innerHTML,
+                    Z23: table.rows[i].cells[30].innerHTML,
+                    Z24: table.rows[i].cells[31].innerHTML,
+                    Z25: table.rows[i].cells[32].innerHTML,
+                    Z26: table.rows[i].cells[33].innerHTML,
+                    Z27: table.rows[i].cells[34].innerHTML,
+                    Z28: table.rows[i].cells[35].innerHTML,
+                    Z29: table.rows[i].cells[36].innerHTML,
+                    Z30: table.rows[i].cells[37].innerHTML,
+                    Total: table.rows[i].cells[8].innerHTML,
+                    IsActive: true,
+                    CartonNo: $('#CartonNumber').val(),
+                    StockDistributionId: $('#DistributionSummaryID').val(),
+                });
+            }
+            $.ajax(
+              {
+                  type: "POST", //HTTP POST Method
+                  url: '/Admin/IBTCarton/ProductDetail1',
+                  data: obj1,
+                  success: function (result) {
+                      debugger;
+                      event.preventDefault();
+                      var html = '';
+                      $.each(result, function (key, item) {
+                          html += '<tr>';
+                          html += '<td>' + item.ProductSKU + '</td>';
+                          html += '<td>' + item.StyleSKU + '</td>';
+                          html += '<td>' + item.Total + '</td>';
+                          html += '<td>' + + '</td>';
+                          html += '<td>' + + '</td>';
+                          html += '<td>' + item.CartonNo + '</td>';
+                          html += '<td>' + item.Country + '</td>';
+                          '</tr>';
+                      });
+                      $('#table2').append(html);
+                      //$('.dvCartonDetails1').html(result);
+                      // Complete1();
+                  },
+                  error: function (errormessage) {
+                      alert(errormessage.responseText);
+                  }
+              });
+            return false;
+        }
+        function Restart() {
+            debugger;
+            window.location.reload();
+            document.getElementById("SubmitButton").disabled = false;
+            $.ajax({
+                url: '/Admin/IBTCarton/DeleteCartonWaste',
+                type: "GET",
+            })
+        }
+        function Complete() {
+            debugger;
+            var obj = {};
+            obj.BranchName = $('#BranchName').val();
+            if (obj.BranchName == '' || obj.BranchName == null) {
+                $("#mas1").text("Please Enter Branch Name and Address.");
+                $("#mas1").css("color", "red");
+                //alert("Please Enter Branch Name and Address.")
+            } else {
+                $.ajax({
+                    url: '/Admin/IBTCarton/ProductDetail',
+                    type: 'GET',
+                    data: obj,
+                    success: function (result) {
+                        debugger;
+                        $('.dvCartonDetails1').html(result);
+                    },
+                    error: function (xhr, status) {
+                        alert(status)
+                    }
+                });
+                return false;
+            }
+        }
+        function checkBarcode(barcode) {
+            debugger;
+            var obj = {};
+            obj.barcode = barcode;
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/IBTCarton/CheckBarcode',
+
+                data: obj,
+                success: function (result) {
+                    debugger;
+                    // alert(result);
+                    return result;
+                    // $('.dvCartonDetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            })
+        }
+    </script>
+}

@@ -1,0 +1,49 @@
+﻿
+@model Model.RoleModel
+@{
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Edit Role</h4>
+        </div>
+        @using (Html.BeginForm("Edit", "Role", FormMethod.Post, new { id = "createForm" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="modal-body">
+                <div class="row  mrgn-b-lg">
+                    <div class="col-md-6 col-xs-12 col-sm-6">
+                        <label>Role Name</label>
+                        @*<input class="form-control" type="text" placeholder="First Name" name="FirstName" />*@
+                        @Html.EditorFor(model => model.RoleName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
+
+                    </div>
+                    
+                </div>
+                <input data-val="true"
+                       data-val-number="The field StudentId must be a number."
+                       data-val-required="The StudentId field is required."
+                       id="IsActive"
+                       name="IsActive"
+                       type="hidden"
+                       value="true" />
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel">Cancel</button>
+                <input type="submit" value="Update" class="btn btn-success popup-savebtn" />
+            </div>
+        }
+
+    </div>
+</div>
+<script>
+    $.validator.unobtrusive.parse($("#createForm"))
+</script>
+

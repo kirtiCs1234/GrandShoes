@@ -1,0 +1,252 @@
+﻿
+@model PagedList.IPagedList<Model.PurchaseOrderModel>
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+                ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div class="row">
+    <div class="prtm-page-bar col-md-5 col-lg-3 col-sm-12 col-12" style="background:none;">
+        <ul class="breadcrumb" style="background:none;">
+            <li class="breadcrumb-item text-capitalize">
+                <h3>Receipt</h3>
+            </li>
+            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        </ul>
+    </div>
+   
+    <div class="col-md-8 col-lg-6 col-sm-8 col-12 search-container">
+        <div class="top-search-navbar-search smallsearch col-md-12 col-lg-12 col-sm-12 col-12">
+            <div class="row">
+
+                <input class="top-search-navbar-input col-md-8 col-lg-10 col-sm-8 col-xs-8 searchiFirstName" type="text" placeholder="Search Receipts" Id="Name" name="iFirstName">
+                <button class="advance-search col-md-2 col-lg-1 col-sm-2 col-xs-2" type="button">
+                   
+                </button>
+
+                <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-xs-2" onclick="searchData()">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    @*<div class="add-btn-div col-md-4 col-lg-3 col-sm-4 col-12 text-right">
+        <button type="button" class="btn btn-primary import-btn">Import</button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-primary export-btn">Export</button>&nbsp;&nbsp;
+    </div>*@
+</div>
+<div class="dvUserDetails">
+    @{
+
+        Html.RenderPartial("_Index1", Model);
+    }
+
+</div>
+
+<div class="modal fade" id="myCancelModal">
+    <div id="Canceldiv">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Confirm Cancel</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you need to close without save!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" id="cancelyesbtn" class="btn btn-success popup-savebtn" data-dismiss="modal">yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal">
+    <div id="dvCreatedetails">
+
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+@section scripts{
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(document).on("click", "#cancelyesbtn", function () {
+            window.location = '/Admin/Receipt/index';
+        });
+        function searchData() {
+            debugger;
+            var obj = {};
+
+            obj.OrderNumber = $('#Name').val();
+            obj.SupplierName = $('#Name').val();
+            obj.IsActive = true;
+            $.ajax({
+                url: '/Admin/Receipt/_Index1',
+                type: 'POST',
+                data: obj,
+                success: function (result) {
+                    $('.dvUserDetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+            return false;
+        }
+
+        $(document).on("click", "a[href^='/Admin/Receipt/_Index1?page']", function () {
+            debugger
+            var obj = {};
+
+            obj.OrderNumber = $('#Name').val();
+            obj.SupplierName = $('#Name').val();
+            obj.IsActive = true;
+            $.ajax({
+                type: "POST",
+                url: $(this).attr("href"),
+                // data: JSON.stringify(obj),
+                data: obj,
+                success: function (result) {
+                    $('.dvUserDetails').html(result);
+                    //  alert('hdfjdhfj');
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+            return false;
+        });
+        function showReceipt(id) {
+            debugger
+            //  alert(id);
+            $("#ReceiptDetail-" + id).html('<tr><td colspan = "5" style="background-color:white;"><img src="/Image/bars.gif" style="width:55px; height:47px;margin-left:40%; z-index:200" /></td></tr>');
+
+            $.ajax(
+                {
+                    url: '/Admin/Receipt/GetReceiptById/' + id,
+                    type: "GET",
+                    success: function (result) {
+                        debugger
+                        $("#ReceiptDetail-" + id).html(result);
+                        // alert("dgfhdf");
+                    },
+                    error: function (xhr, status) {
+                        alert(status)
+                    }
+                });
+        }
+        $(document).on('click', ".accordian-btn", function () {
+            $(this).toggleClass("accordian-reverse");
+            $(this).parent().parent().next().find(".accordian-bundling").toggle(500);
+        });
+        var id1;
+        function create(create) {
+            id1 = create;
+
+            Data(0);
+        }
+        function details(details) {
+            id1 = details;
+            Data(1);
+        }
+        function edit(edit) {
+            id1 = edit;
+            Data(2);
+        }
+        function delet(delet) {
+        	id1 = delet;
+        	Data(3);
+        }
+        function Data(ch) {
+            debugger;
+            var crud = "";
+            switch (ch) {
+                case 0:
+                    crud = '/Admin/Receipt/Create/' + id1;
+                    break;
+                case 1:
+                    crud = '/Admin/Receipt/Detail/' + id1;
+                    break;
+                case 2:
+                    crud = '/Admin/Receipt/Edit/' + id1;
+                    break;
+            	case 3:
+            		crud = '/Admin/Receipt/Delete/' + id1;
+            		break;
+            }
+
+            $.ajax({
+
+                url: crud,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                // data: {page : page} ,
+                dataType: 'html',
+                success: function (result) {
+		              debugger
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+       
+
+
+        //function searchData() {
+        //    debugger;
+        //    var obj = {};
+        //    obj.OrderNumber = $('#OrderNumber').val();
+        //    obj.SupplierName = $('#OrderNumber').val();
+        //    obj.IsActive = true;
+        //    $.ajax({
+        //        url: "/Admin/Receipt/Index",
+        //        type:'POST',
+        //        data: obj,
+        //        success: function (result) {
+        //           $('#details').html(result);
+        //        },
+        //        error: function (xhr, status) {
+        //            alert(status)
+        //        }
+
+        //    })
+        //    return false;
+        //}
+        //$(document).on("click", "a[href^='/Admin/Receipt/_Index?page']", function () {
+
+        //    debugger
+        //    var obj = {};
+        //    obj.OrderNumber = $('#OrderNumber').val();
+        //    obj.SupplierName = $('#OrderNumber').val();
+          
+        //    obj.IsActive = true;
+
+        //    $.ajax({
+        //        type: "POST",
+        //        url: $(this).attr("href"),
+
+        //        data: obj,
+        //        success: function (result) {
+        //            $('#details').html(result);
+        //            //  alert('hdfjdhfj');
+        //        },
+        //        error: function (xhr, status) {
+        //            alert(status)
+        //        }
+
+        //    });
+        //    return false;
+        //});
+    </script>
+}

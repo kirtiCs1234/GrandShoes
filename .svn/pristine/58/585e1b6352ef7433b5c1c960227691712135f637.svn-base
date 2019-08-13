@@ -1,0 +1,148 @@
+﻿using DAL;
+//using POSApi.ExtensionMethods;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+
+namespace POSApi.Controllers
+{
+    [RoutePrefix("api/user")]
+    public class UsersController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+        public UsersController()
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            db.Configuration.LazyLoadingEnabled = false;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<User> GetUsers()
+        {
+            var users = db.Users.Where(x=>x.IsActive==true).ToList();
+
+
+
+            return users;
+        }
+        // GET: api/Users/5
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetail")]
+        [ResponseType(typeof(User))]
+        public IHttpActionResult GetUser(int id)
+        {
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
+        // PUT: api/Users/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(User))]
+        public IHttpActionResult PutUser(int id, User user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != user.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(user).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+
+            //return StatusCode(HttpStatusCode.NoContent);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(User))]
+        public IHttpActionResult PostUser(User user)
+        {
+            //var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+           // var pi = new User();
+            db.Users.Add(user);
+           
+                db.SaveChanges();
+            
+            //var user1 = new Model.UserModel();
+            //user1.Id = user.Id;
+            //user1.FirstName = user.FirstName;
+            //user1.LastName = user.LastName;
+            //user1.Phone = user.Phone;
+            //user1.Email = user.Email;
+            return Ok(user);
+        }
+
+        
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("Delete")]
+        [ResponseType(typeof(User))]
+        public IHttpActionResult DeleteUser(int id)
+        {
+            User user = db.Users.Find(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.IsActive = false;
+            //db.Units.Remove(unit);
+            db.SaveChanges();
+
+            return Ok(user);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool UserExists(int id)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

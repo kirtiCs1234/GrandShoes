@@ -1,0 +1,303 @@
+﻿@model Model.OffersModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div class="row">
+
+    <div class="prtm-page-bar col-md-12 col-lg-12 col-sm-12 col-12" style="background:none;">
+        <ul class="breadcrumb" style="background:none;">
+            <li class="breadcrumb-item text-capitalize">
+                <h3>Product Search</h3>
+            </li>
+            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-3">
+        <div class="filter-content">
+
+            <div class="filters-filt">
+                <div class="box-style-filt">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        <i class="icon_set_1_icon-65"></i> Product Search
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 col-xg-12 mrgn-b-sm">
+                                        <div class="filter_type">
+                                            <h6>Price</h6>
+                                            <input type="text" id="costPrice" name="range" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-12 col-lg-12 col-xg-12 mrgn-b-sm">
+                                        <label class="" for="CountryId">Style Code</label>
+                                        @Html.TextBoxFor(model => model.AutocompleteProductSKU, new { @class = "form-control" })
+                                        <input id="autoCompleteProductStyleId" name="autoCompleteProductStyleId" type="hidden" />
+                                        @Html.ValidationMessageFor(Model => Model.AutocompleteProductSKU)
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-xg-12 mrgn-b-sm">
+                                        <label class="" for="CountryId">Season</label>
+                                        @Html.TextBoxFor(model => model.AutocompleteSeason, new { @class = "form-control" })
+                                        <input id="autoCompleteSeasonId" name="autoCompleteSeasonId" type="hidden" />
+                                        @Html.ValidationMessageFor(Model => Model.AutocompleteSeason)
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-xg-12">
+                                        <label for="line-wrap-example">Color</label>
+                                        <div class="form-group multi-select-full">
+                                            @*<select id="dates-field2" class="multiselect-ui form-control chzn-select" multiple="multiple">
+                                                <option value="cheese">Cheese</option>
+                                                <option value="tomatoes">Tomatoes</option>
+                                                <option value="mozarella">Mozzarella</option>
+                                                <option value="mushrooms">Mushrooms</option>
+                                                <option value="pepperoni">Pepperoni</option>
+                                                <option value="onions">Onions</option>
+                                            </select>*@
+                                            @Html.DropDownListFor(model => model.Colors, (MultiSelectList)ViewBag.ColorId, new { @id = "dates-field2",@class = "multiselect-ui form-control chzn-select", multiple = "multiple" })
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-xg-12">
+                                <button type="submit" onclick="searchData()" class="btn btn-success advance-serach-btn">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tbb-content col-md-9">
+    </div>
+    <div class="dvUserDetails">
+        @{
+
+            Html.RenderPartial("_Index", Model);
+        }
+
+    </div>
+</div>
+<style>
+    .ui-widget-content.ui-autocomplete {
+        z-index: 9999 !important;
+    }
+</style>
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('.multiselect-ui').multiselect({
+                includeSelectAllOption: true
+            });
+        });
+      
+        $(document).ready(function () {
+            debugger
+            var SizeList = {};
+            $("#AutocompleteSize").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/Offers/AutoCompleteSizeList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            SizeList = $.map(result, function (value, key) {
+                                return {
+                                    value: value.Id, label: value.Z01,
+
+                                };
+
+                            });
+                            response(SizeList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    event.preventDefault();
+                    debugger
+                    var value = $("[id*=AutocompleteSize]").val().split(/,\s*/);
+                    value.pop();
+                    if (value == ui.item.label) {
+                        ui.item.disabled = true;
+
+                    }
+
+                    var text = this.value.split(/,\s*/);
+                    text.pop();
+                    text.push(ui.item.label);
+                    text.push("");
+                    this.value = text.join(", ");
+
+                    var value = $("[id*=AutocompleteSize]").val().split(/,\s*/);
+                    value.pop();
+
+                    value.push(ui.item.label);
+                    value.push("");
+
+                    $("#[id*=AutocompleteSize]")[0].value = value.join(", ");
+
+                    return false;
+                },
+                minLength: 1
+            });
+        })
+        $(document).ready(function () {
+            debugger
+            var SeasonList = {};
+            $("#AutocompleteSeason").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/Offers/AutoCompleteSeasonList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            SeasonList = $.map(result, function (value, key) { return { value: value.Id, label: value.Code }; });
+                            response(SeasonList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#AutocompleteSeason").val(ui.item.label);
+                    $("#autoCompleteSeasonId").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
+        $(document).ready(function () {
+            var StyleSKUList = {};
+            $("#AutocompleteProductSKU").autocomplete({
+                source: function (request, response) {
+
+                    $.ajax({
+                        url: "/Admin/Offers/AutoCompleteStyleSKUList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+
+                            StyleSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value.StyleSKU }; });
+                            response(StyleSKUList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+
+                    event.preventDefault();
+                    $("#AutocompleteProductSKU").val(ui.item.label);
+                    $("#autoCompleteProductStyleId").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
+        $(function () {
+            debugger
+            $("#costPrice").ionRangeSlider({
+                hide_min_max: true,
+                keyboard: true,
+                min: 30,
+                max: 999,
+                from: 30,
+                to: 999,
+                type: 'double',
+                step: 1,
+                prefix: "",
+                grid: true
+            });
+        });
+        function searchData() {
+            debugger
+            var obj = {};
+            var array = $('#dates-field2').val();
+            if (array == null) {
+                alert("please select color.")
+            } else {
+                obj.AutocompleteSeason = $('#AutocompleteSeason').val();
+                obj.AutocompleteProductSKU = $('#AutocompleteProductSKU').val();
+
+                obj.AutocompleteSize = $('#AutocompleteSize').val();
+                var array = $('#dates-field2').val();
+
+                obj.Colors = array + [];
+                obj.MinPrice = parseFloat($(".irs-from").text());
+                obj.MaxPrice = parseFloat($(".irs-to").text());
+                obj.IsActive = true;
+                $.ajax({
+                    url: '/Admin/Offers/_Index',
+                    type: 'POST',
+                    data: obj,
+                    success: function (result) {
+                        $('.dvUserDetails').html(result);
+                    },
+                    error: function (xhr, status) {
+                        alert(status)
+                    }
+
+                });
+                return false;
+            }
+        }
+
+
+        $(document).on("click", "a[href^='/Admin/Offers/_Index?page']", function () {
+            debugger
+            var obj = {};
+            obj.AutocompleteSeason = $('#AutocompleteSeason').val();
+            obj.AutocompleteProductSKU = $('#AutocompleteProductSKU').val();
+            obj.AutocompleteColorCode = $('#AutocompleteColorCode').val();
+            obj.AutocompleteSize = $('#AutocompleteSize').val();
+            var array = $('#dates-field2').val();
+
+            obj.Colors = array + [];
+            obj.MinPrice = parseFloat($(".irs-from").text());
+            obj.MaxPrice = parseFloat($(".irs-to").text());
+            obj.IsActive = true;
+            $.ajax({
+                type: "POST",
+                url: $(this).attr("href"),
+
+                data: obj,
+                success: function (result) {
+                    //  alert("sgdhs")
+                    $('.dvUserDetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+
+            });
+            return false;
+        });
+
+
+    </script>
+    <script src="~/Scripts/vendor/range/ion.rangeSlider.min.js"></script>
+}

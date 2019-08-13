@@ -1,0 +1,126 @@
+﻿@model Model.PurchaseOrderModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+
+<div class="table-style">
+    <div class="prtm-full-block pos-relative">
+        <div class="prtm-block-title pad-all-md">
+            <div class="pos-relative">
+                <div class="caption">
+                    <h3 class="text-capitalize">Purchase Orders Report</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-xs-12">
+                <div class="purchase-div" style="padding: 0 15px;">
+                    <div class="add-btn-div col-md-12 col-lg-12 col-sm-12 col-12 text-right">
+                        <button type="button" class="btn btn-primary import-btn">Import</button>&nbsp;&nbsp;
+                        <button type="button" class="btn btn-primary export-btn">Export</button>&nbsp;&nbsp;
+                        @*<button type="button" class="btn btn-primary " data-target="#myModal" onclick="print()">Print </button>*@<br /><br />
+                    </div>
+                    
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-4 col-xs-12 col-sm-4">
+                            <label>Purchase Order Status</label>
+                            @Html.DropDownListFor(m => m.PurchaseOrderStatusId, ViewBag.OrderStatusList as SelectList, new { @class = "form-control" })
+                        </div>
+
+                        <div class="col-md-4 col-xs-12 col-sm-4">
+                            <label>From Date </label>
+                            @Html.TextBoxFor(model => model.FromDate, " ", new { id = "fromDate", @class = "form-control date-picker" })
+                            @Html.ValidationMessageFor(Model => Model.FromDate)
+
+                        </div>
+                        <div class="col-md-4 col-xs-12 col-sm-4">
+                            <label>To Date</label>
+                            @Html.TextBoxFor(model => model.ToDate, " ", new { id = "toDate", @class = "form-control date-picker" })
+                            @Html.ValidationMessageFor(Model => Model.ToDate)
+                        </div>
+                    </div>
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-12 col-xs-12 col-sm-12 text-right">
+                            <button type="submit" class="btn btn-success exception-btn" onclick="PurchaseOrderReportSearch()">Search</button>
+                        </div>
+                    </div>
+
+
+                    <div class="dvPurchaseOrderReport">
+                        @{
+                            Html.RenderPartial("_index1");
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+@*}*@
+
+    @*<div>
+        <div class="dvPurchaseOrderReport">
+            {
+                Html.RenderPartial("_index1");
+            }
+        </div>
+    </div>*@
+@section scripts{
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.date-picker').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+        })
+
+        $("#purchaseorderForm").submit(function (e) {
+            return false;
+        });
+    </script>
+
+    <script type="text/javascript">
+        function PurchaseOrderReportSearch() {
+            debugger;      
+            var purchareOrder = {};
+            purchareOrder.FromDate = $('#fromDate').val();
+            purchareOrder.ToDate = $('#toDate').val();
+            purchareOrder.PurchaseOrderStatusId = $('#PurchaseOrderStatusId').val();     
+            $.ajax({
+                url: "/admin/PurchaseOrderReport/_Index1",
+                type: 'POST',
+                data: { purchaseOrder: purchareOrder },
+                success: function (result) {
+                    debugger;
+                  
+                    $('.dvPurchaseOrderReport').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+            return false;
+        }
+        $(document).on("click", "a[href^='/Admin/PurchaseOrderReport/_Index1?page']", function () {
+            $.ajax({
+                type: "POST",
+                url: $(this).attr("href"),
+                // data: JSON.stringify(obj),
+               
+                success: function (result) {
+                    $('.dvPurchaseOrderReport').html(result);                  
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+            return false;
+        });
+    </script>
+
+}

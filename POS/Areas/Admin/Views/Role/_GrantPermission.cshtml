@@ -1,0 +1,167 @@
+﻿@model List<Model.RoleModel>
+@using Model
+@{
+    //Layout = null;
+    var list = ViewBag.PageName;
+    Layout = null;// "~/Views/Shared/_LayoutCompany.cshtml";
+    int BranchId = ViewBag.BranchId;
+    var IsAdminPage = ViewBag.IsAdminPage.ToString();
+}
+<link href="/Scripts/assets/ScrollTabla.css" rel="stylesheet" media="screen" />
+@*<link href="css/ScrollTabla.css" rel="stylesheet" media="screen" />*@
+@using (Html.BeginForm("GrantPermission", "Role", FormMethod.Post, new { id = "createForm" }))
+{
+    <input type="hidden" name="IsAdminPage" value="@IsAdminPage" />
+    @*@Html.Hidden("IsAdminPage",IsAdminPage)*@
+
+        <table id="pruebatabla4" class="fht-table">
+            <thead>
+                <tr>
+                    <th class="excel_cell _cell_header role-bg"><div>Role</div></th>
+                    @if (Model.Count != 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <th class="excel_cell _cell_header">
+                                @*<a href="/Company/Role/GrantAction?RoleId=@item.Id&CompanyId=@CompanyId" style="color:white">*@
+                                    @item.RoleName
+                                @*</a>*@
+                            </th>
+                        }
+                    }
+                    @*<th class="excel_cell _cell_header"><div>Role Name 1</div></th>*@
+
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    //var count = ViewBag.PageName.Count();
+                    //for (var i = 1; i < count; i++)
+                    var permission = ViewBag.getGrantPermission;
+                    var bigstr = "O";
+                    foreach (var item in permission)
+                    {
+                        bigstr += item.PageAction + "O";
+                    }
+                    var i = 0;
+                    var j = 0;
+                    foreach (var page in ViewBag.PageName)
+                    {
+
+                        <tr>
+                            @*<th>@Enum.GetName(typeof(Pages), i)</th>*@
+                            @if (page.Page != null && page.Page.ToLower().Equals("bill"))
+                            {
+                                <td class="excel_cell _cell_header"><div>Purchase Bill</div></td>
+                            }
+                            else
+                            {
+                                <td class="excel_cell _cell_header"><div>@page.Page</div></td>
+                            }
+
+                            @if (Model.Count != 0)
+                            {
+                                j = 0;
+                                foreach (var item in Model)
+                                {
+
+                                    var str = page.Id.ToString() + "x" + item.Id.ToString();
+                                    var rts = item.Id.ToString() + "x" + page.Id.ToString();
+
+                                    if (bigstr.Contains("O" + rts + "O"))
+                                    {
+                                        <td class="excel_cell _cell_Default"><div><input type="checkbox" name="@(list[i].Page)[@j]" id="@str" value="@str" checked /></div></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="excel_cell _cell_Default"><div><input type="checkbox" name="@(list[i].Page)[@j]" id="@str" value="@str" /></div></td>
+                                    }
+
+                                    j++;
+                                }
+                            }
+                        </tr>
+                        i++;
+                    }
+                }
+
+            </tbody>
+        </table>
+        <div class="col-sm-12 col-xs-12 text-center">
+            <input type="submit" class="btn btn-success" value="Submit" />
+            @*<button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel">Cancel</button>*@
+            <button type="button" id="btncancel" onclick="window.location.href='/admin/role/index'" class="btn btn-outline-inverse cancel">Cancel</button>
+            @*<button type="button" class="btn btn-warning">Cancel</button>*@
+        </div>
+    @*</div>*@
+    <div class="modal fade" id="myCancelModal">
+        <div id="Canceldiv">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">ConfirmCancel</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>CloseWithoutSave</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">No</button>
+                        <button type="button" id="cancelyesbtn" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script src="/Scripts/assets/jquery.CongelarFilaColumna.js"></script>
+<script type="text/javascript">
+    $(document).on('click','#cancelyesbtn',function(){
+        debugger;
+        window.location.href="/company/role/index";
+    })
+    var role = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model))
+    var page = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.PageName))
+    //$(document).ready(function(){
+        $("#pruebatabla4").CongelarFilaColumna({Columnas:1});
+    //});
+    var li = 0;
+    for(var k=0;k<page.length;k++)
+    {
+        li = 0;
+        for(var i=0;i<role.length;i++)
+        {
+            if ($('#'+page[k].Id+'x'+role[i].Id).is(':checked'))
+            {
+                var title = $('#'+page[k].Id+'x'+role[i].Id).attr("name");
+                var len = title.length-3;
+                var str = title.substr(0,len);
+                var strng = str+"["+li+"]";
+                $('#'+page[k].Id+'x'+role[i].Id).attr("name",strng);
+                li++;
+                debugger;
+            }
+        }
+    }
+
+
+    $('input[type=checkbox]').change(function () {
+        var j = 0;
+        var s = $(this).val();
+        var id = s.split('x');
+        debugger;
+        for(var i=0;i<role.length;i++)
+        {
+            if ($('#'+id[0]+'x'+role[i].Id).is(':checked'))
+            {
+                var title = $('#'+id[0]+'x'+role[i].Id).attr("name");
+                var len = title.length-3;
+                var str = title.substr(0,len);
+                var strng = str+"["+j+"]";
+                $('#'+id[0]+'x'+role[i].Id).attr("name",strng);
+                j++;
+                debugger;
+            }
+        }
+    });
+</script>

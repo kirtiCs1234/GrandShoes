@@ -1,0 +1,487 @@
+﻿@model List<Model.AllProductDetailModel>
+@{
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
+<div class="row">
+    <div class="col-sm-12 col-xs-12 top-menu-bg">
+        <ul class="top-menu">
+            <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><br />View Orders</a></li>
+            <li><a href="/Admin/Receipt/Index"><i class="fa fa-building" aria-hidden="true"></i><br />View Receipts</a></li>
+            <li><a href="#" onclick="MyFunction();"><i class="fa fa-building" aria-hidden="true"></i><br />View Distribution</a></li>
+            <li><a href="#"><i class="fa fa-bars" aria-hidden="true"></i><br />View All Sales</a></li>
+            <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><br />View Weekely Sales</a></li>
+            <li><a href="#"><i class="fa fa-building" aria-hidden="true"></i><br />View Branch Sales</a></li>
+            <li><a href="#"><i class="fa fa-building" aria-hidden="true"></i><br />View Stock</a></li>
+            <li><a href="#"><i class="fa fa-bars" aria-hidden="true"></i><br />View Invoices</a></li>
+            <li><a href="#" onclick="MyFunctionMarkDown();"><i class="fa fa-user" aria-hidden="true"></i><br />Mark Down</a></li>
+            <li><a href="#" onclick="MyFunctionDiscount();"><i class="fa fa-building" aria-hidden="true"></i><br />Discount</a></li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-9 col-lg-9 col-sm-12 col-xs-12">
+
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <div class="top-search-navbar-search smallsearch">
+                    <input class="top-search-navbar-input col-md-8 col-lg-10 col-sm-8 col-xs-8 searchiFirstName" type="text" placeholder="Search Product SKU" name="Code" id="ProductSKU">
+
+                    @*<input type="submit" value="Add" class="btn btn-success popup-savebtn" />*@
+
+                    <button class="advance-search col-md-2 col-lg-1 col-sm-2 col-xs-2" type="button"></button>
+
+                    <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-xs-2" onclick="searchData()">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xs-12">
+            <div class="row">
+                <div class="top-search-navbar-search smallsearch">
+                    <input class="top-search-navbar-input col-md-8 col-lg-10 col-sm-8 col-xs-8 searchiFirstName" type="text" placeholder="Search Product Style SKU" name="Code" id="StyleSKU">
+
+                    <button class="advance-search col-md-2 col-lg-1 col-sm-2 col-xs-2" type="button"></button>
+
+                    <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-xs-2" onclick="searchData()">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top:5px;">
+
+    <div class="dvUserDetails">
+        @{
+
+            Html.RenderPartial("_Index", Model);
+        }
+
+    </div>
+</div>
+<div class="table-style">
+    @if (TempData["Success"] != null)
+    {
+        <p class="alert alert-success" id="successMessage" style="width: 300px;height: 25px;color: #fff;text-align: center; padding-bottom: 2em;">
+            @TempData["Success"]
+        </p>
+    }
+    <script>
+        setTimeout(function () {
+            $('#successMessage').fadeOut('slow');
+        }, 5000);
+    </script>
+   
+</div>
+<div class="row marg-btn-20">
+    <div class="partial-render">
+        @Html.Action("Create")
+    </div>
+
+    <div id="dvCreatedetails">
+
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+@section scripts{
+
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.0/barcodes/JsBarcode.codabar.min.js"></script>
+    <script type="text/javascript">
+
+
+        function searchData() {
+            debugger
+            var obj = {};
+            obj.ProductSKU = $("#ProductSKU").val();
+            obj.StyleSKU = $("#StyleSKU").val();
+            obj.IsActive = true;
+            $.ajax({
+                url: '/Admin/Product/_Index',
+                type: 'POST',
+                data: obj,
+                success: function (result) {
+                    debugger;
+                    $('.dvUserDetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+            return false;
+        }
+        var id1;
+        function create() {
+            Data(0);
+        }
+
+        function edit(edit) {
+            id1 = edit;
+            Data(1);
+        }
+
+        function details(details) {
+            id1 = details;
+            Data(2);
+        }
+
+        function TreeView(ctrl) {
+            var product = $(ctrl).val();
+            id1 = product;
+            Data(4);
+        }
+        function getId(data) {
+            debugger;
+
+            var id2 = data;
+            id1 = id2.children[0].children[0].value;
+            var img = data.children[3];
+            var src1 = img.children[0].attributes.src.value;
+
+            document.getElementById("show").src = src1;
+        }
+        function Data(ch) {
+            debugger;
+            $(".partial-render").remove();
+            var crud = "";
+            switch (ch) {
+                case 0:
+                    crud = '/Admin/Product/Create';
+                    break;
+                case 1:
+                    crud = '/Admin/Product/Edit/' + id1;
+                    break;
+                case 2:
+                    crud = '/Admin/Product/Details/' + id1;
+                    break;
+
+                case 4:
+                    crud = '/Admin/TreeView/Index/' + id1;
+                    break;
+
+            }
+            $.ajax({
+                url: crud,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                data: {
+                    ProductId: id1
+                },
+                dataType: 'html',
+                success: function (result) {
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+          function del(id) {
+            debugger;
+            var id2 = $('#')
+            var ans = confirm("Are you sure you want to delete this Record?");
+            if (ans) {
+                $.ajax({
+                    url: "/Admin/Product/Delete/" + id,
+                    type: "POST",
+                    contentType: "application/json;charset=UTF-8",
+                    //   dataType: "json",
+                    success: function (result) {
+                        debugger;
+                        window.location.href = '/admin/Product/Index';                     
+                    },
+                    error: function (errormessage) {
+                        alert(errormessage.responseText);
+                    }
+                });
+            }
+            return false;
+        }
+
+        function MyFunction() {
+            debugger;
+            if (id1 != null) {
+                window.location.href = "/Admin/TreeView/Index/" + id1;
+            }
+            else {
+                alert("Please select any one row.");
+            }
+        }
+        function MyFunctionMarkDown() {
+            debugger;
+            if (id1 != null) {
+                window.location.href = "/Admin/MarkDownBranch/Index/?id=" + id1;
+
+            }
+            else {
+                alert("Please select any one row.");
+            }
+        }
+        function MyFunctionDiscount() {
+            debugger;
+            if (id1 != null) {
+                window.location.href = "/Admin/Discount/Index/?id=" + id1;
+
+            }
+            else {
+                alert("Please select any one row.");
+            }
+        }
+        function RefreshField() {
+            debugger;
+            $("#SKU").val('');
+            $("#AutocompleteProductStyleSKU").val('');
+            $("#date").val('');
+            $("#date1").val('');
+            $("#SeasonData").val('');
+            $("#BuyerData").val('');
+            $("#AutocompleteSupplierCode").val('');
+            $("#Long").val('');
+            $("#Short").val('');
+            $("#SizeGridData").val('');
+            $("#AvailableSizes").val('');
+            $("#ProductCategoryData").val('');
+            $("#ProductGroupData").val('');
+            $("#ProductSourceData").val('');
+            $("#RecommendedSellingPrices").val('');
+            $("#CostPrices").val('');
+            $("#ActualSellingPrices").val('');
+            $("#OriginalPrice").val('');
+            $("#InternationalCost").val('');
+            $("#ColorData").val('');
+            $("#SupplierCode").val('');
+            $("#SupplierName").val('');
+            $("#IsConsignment").val('');
+            $("#IsAllowZero").val('');
+            $("#IsFreeGift").val('');
+            $("#MarkDownData").val('');
+            $("#Template").val('');
+            $("#Primary").val('');
+            $("#file").val('');
+            $("#file1").val('');
+            $("#file2").val('');
+            $("#file3").val('');
+            $("#file4").val('');
+        }
+        $(document).ready(function () {
+            debugger
+            var StyleLists = {};
+            $("#AutocompleteProductStyleSKU").autocomplete({
+
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/admin/Product/AutoCompleteStyleSKUList",
+                        type: 'GET',
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            StyleLists = $.map(result, function (value, key) { return { value: value.Id, label: value.StyleSKU }; });
+                            response(StyleLists);
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#AutocompleteProductStyleSKU").val(ui.item.label);
+                    $("#autoCompleteProductStyleId").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
+
+        function GetSizeGrid(SizeGridID) {
+
+            debugger;
+
+            var selectedText = SizeGridID.options[SizeGridID.selectedIndex].innerHTML;
+            var selectedValue = SizeGridID.value;
+            if (selectedValue == null || selectedValue == "")
+                selectedValue = 0;
+
+            $('#AvailableSize').autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: '/Admin/Product/getGridSize/' + selectedValue,
+                        type: "GET",
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                //return item;
+                                return {
+                                    label: item.split('-')[0],
+                                    val: item.split('-')[1]
+                                }
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    debugger
+                    var text = this.value.split(/,\s*/);
+                    text.pop();
+                    text.push(i.item.value);
+                    text.push("");
+                    this.value = text.join(", ");
+                    var value = $("[id*=SizeGridID]").val().split(/,\s*/);
+                    value.pop();
+                    value.push(i.item.val);
+                    value.push("");
+                    $("#[id*=SizeGridID]")[0].value = value.join(", ");
+                    return false;
+                },
+                minLength: 1,
+                scroll: true
+            }).focus(function () {
+                $(this).autocomplete("search", "");
+            });
+
+
+        }
+
+
+
+
+
+        function show(input) {
+            debugger;
+            if (input.files && input.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    debugger;
+                    $('.create-user-image').attr('src', e.target.result);
+
+                }
+                filerdr.readAsDataURL(input.files[0]);
+            }
+        }
+        function show1(input1) {
+            debugger;
+            if (input1.files && input1.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    debugger;
+                    $('.create-user-image1').attr('src', e.target.result);
+
+                }
+                filerdr.readAsDataURL(input1.files[0]);
+            }
+        }
+        function show2(input2) {
+            debugger;
+            if (input2.files && input2.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    debugger;
+                    $('.create-user-image2').attr('src', e.target.result);
+
+                }
+                filerdr.readAsDataURL(input2.files[0]);
+            }
+        }
+        function show3(input3) {
+            debugger;
+            if (input3.files && input3.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    debugger;
+                    $('.create-user-image3').attr('src', e.target.result);
+
+                }
+                filerdr.readAsDataURL(input3.files[0]);
+            }
+        }
+        function show4(input4) {
+            debugger;
+            if (input4.files && input4.files[0]) {
+                var filerdr = new FileReader();
+                filerdr.onload = function (e) {
+                    debugger;
+                    $('.create-user-image4').attr('src', e.target.result);
+
+                }
+                filerdr.readAsDataURL(input4.files[0]);
+            }
+        }
+
+        function GetSupplier(SupplierID) {
+            debugger;
+            var selectedText = SupplierID.options[SupplierID.selectedIndex].innerHTML;
+            var selectedValue = SupplierID.value;
+            if (selectedValue == null || selectedValue == "")
+                selectedValue = 0;
+            $.ajax({
+
+                url: '/Admin/Product/getSupplierName/' + selectedValue,
+                contentType: 'application/html; charse=utf-8',
+                type: 'GET',
+                // data: {page : page} ,
+                dataType: 'html',
+                success: function (result) {
+
+                    $('.createName').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+
+        $('tr').click(function () {
+            debugger;
+            $('tr').css('background', '');
+
+            if (this.style.background == "" || this.style.background == "white") {
+
+                $(this).css('background', '#F5E1B6');
+
+            }
+            else {
+                $(this).css('background', 'white');
+                clicked = true;
+            }
+
+        });
+
+        $(function () {
+            $("#date").datepicker();
+
+        });
+        $(function () {
+            $("#date1").datepicker();
+
+        });
+    </script>
+
+}
+

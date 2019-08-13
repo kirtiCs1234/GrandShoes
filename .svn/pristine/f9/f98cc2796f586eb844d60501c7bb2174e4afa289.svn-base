@@ -1,0 +1,143 @@
+﻿using Helper;
+using Model;
+using POS.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace POS.Areas.Admin.Controllers
+{
+    [CustomAuth]
+    public class IBTCartonController : BaseController
+    {
+        // GET: Admin/IBTCarton
+        public ActionResult Index()
+        {
+            return View();
+        }
+        
+        public JsonResult AutoCompleteBranch(string name)
+        {
+            var BranchLists = Services.IBTService.BranchAutocomplete(name);
+            return Json(BranchLists, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult CartonDetail()
+        {
+            //var list = Services.IBTService.GetCartonDetail().LastOrDefault();
+           return View();
+        }
+        [HttpPost]
+        public JsonResult ProductDetail1(CartonManagementModel carton)
+        {
+            List<CartonManagementDetailModel> model = new List<CartonManagementDetailModel>();
+            model = carton.CartonManagementDetails;
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ProductDetail(string BranchName)
+
+        {
+            
+            List<CartonManagementDetailModel> list = new List<CartonManagementDetailModel>();
+            if (BranchName != null)
+            {
+                var carton = Services.IBTService.GetCartonByBranch(BranchName);
+                if (carton != null)
+                {
+                    ViewBag.DistributionSummaryID = carton.DistributionSummaryID;
+                }
+
+
+                var cartonList = Services.IBTService.GetProductByBranch(BranchName);
+                foreach (var a in cartonList)
+                {
+                    CartonManagementDetailModel model = new CartonManagementDetailModel();
+                    
+                        var ProductModel = Services.ProductService.GetById(a.ProductID);
+                    model.ProductSKU = ProductModel.ProductSKU;
+                    model.StyleSKU = ProductModel.ProductStyle.StyleSKU;
+                    model.Z01 = a.Z01; model.Z02 = a.Z02; model.Z03 = a.Z03; model.Z04 = a.Z04; model.Z05 = a.Z05; model.Z06 = a.Z06; model.Z07 = a.Z07;
+                    model.Z08 = a.Z08; model.Z09 = a.Z09; model.Z10 = a.Z10; model.Z11 = a.Z11; model.Z12 = a.Z12; model.Z13 = a.Z13; model.Z14 = a.Z14;
+                    model.Z15 = a.Z15; model.Z16 = a.Z16; model.Z17 = a.Z17; model.Z18 = a.Z18; model.Z19 = a.Z19; model.Z20 = a.Z20; model.Z21 = a.Z21;
+                    model.Z22 = a.Z22; model.Z23 = a.Z23; model.Z24 = a.Z24; model.Z25 = a.Z25; model.Z26 = a.Z26; model.Z27 = a.Z27; model.Z28 = a.Z28;
+                    model.Z29 = a.Z29; model.Z30 = a.Z30;
+                    list.Add(model);
+                }
+            }
+            return View(list);
+        }
+        public ActionResult ViewDistribution(int? DistributionSummaryID,string BranchName)
+        {
+            var StockData = Services.StockDistributionService.GetStockData(DistributionSummaryID, BranchName);
+            
+            return View(StockData);
+        }
+        [HttpPost]
+        public JsonResult GetBranchAddress(string BranchName)
+        {
+            var BranchAddress = Services.IBTService.GetBranchAddress(BranchName);
+            return Json(BranchAddress, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult StartPacking(string BranchName)
+        {
+
+            CartonManagementModel CM = new CartonManagementModel();
+            CM.BranchName = BranchName;
+            CM.IBTNumber= Helper.RandomNumberGenerator.RandomNumberGeneration();
+            var Summary = Services.IBTService.GetLast();
+            var SummaryId = Summary.StockDistributionSummaryId;
+            //ViewBag.SummaryId = SummaryId;
+            CM.DistributionSummaryID = SummaryId;
+            //Session["ReceiveOrder"] = RO.ReceiptNumber;
+            var createCartonManagement = Services.IBTService.CreateCartonManagement(CM);
+            var IBT = Services.IBTService.GetIBTNumber().LastOrDefault();
+            var c = Services.CartonManagementService.GetAllDetail(SummaryId);
+            if (c.Count!= 0)
+            {
+                var cd1 = c.Where(x => x.DistributionSummaryID == SummaryId && x.TotalItems != null);
+                var cd = cd1.LastOrDefault().CartonNumber;
+                IBT.CartonNumber = cd + 1;
+            }
+            else
+            {
+                IBT.CartonNumber = 1;
+            }
+            //bool createCartonDetail = Services.IBTService.CreateCartonDetail1(IBT);
+            return Json(IBT, JsonRequestBehavior.AllowGet);
+           // return RedirectToAction("Index", "IBTCarton");
+        }
+        [HttpPost]
+        public ActionResult Create(CartonManagementModel model)
+        {
+            
+            foreach(var a in model.CartonManagementDetails)
+            {
+                var Product = Services.ProductService.GetAll();
+                var ProductList = Product.Where(x=>x.ProductSKU==a.ProductSKU && x.ProductStyle.StyleSKU==a.StyleSKU).ToList();
+                if (ProductList.Count != 0)
+                {
+                    var ProductId = ProductList.FirstOrDefault().Id;
+                    a.ProductID = ProductId;
+                    var create = Services.IBTService.CompleteCreate(model);
+                }
+            }
+           //foreach(var b in model.StockDistributionList)
+           // {
+           //     var edit = Services.IBTService.EditStockDistribution(b);
+           // }
+            return RedirectToAction("Index", "IBTCarton");
+        }
+        public JsonResult CheckBarcode(string Barcode)
+        {
+            var iExist = Services.IBTService.CheckBarcode(Barcode);
+            return Json(!iExist, JsonRequestBehavior.AllowGet);
+        }
+        public bool DeleteCartonWaste()
+        {
+            bool status = Services.IBTService.DeleteWaste();
+            return status;
+        }
+    }
+}

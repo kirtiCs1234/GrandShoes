@@ -1,0 +1,334 @@
+﻿@model Model.StockDistributionViewModel
+
+   <div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Warehouse</th>
+                <th>01</th>
+                <th>02</th>
+                <th>03</th>
+                <th>04</th>
+                <th>05</th>
+                <th>06</th>
+                <th>07</th>
+                <th>08</th>
+                <th>09</th>
+                <th>10</th>
+                <th>11</th>
+                <th>12</th>
+                <th>13</th>
+                <th>14</th>
+                <th>15</th>
+                <th>16</th>
+                <th>17</th>
+                <th>18</th>
+                <th>19</th>
+                <th>20</th>
+                <th>21</th>
+                <th>22</th>
+                <th>23</th>
+                <th>24</th>
+                <th>25</th>
+                <th>26</th>
+                <th>27</th>
+                <th>28</th>
+                <th>29</th>
+                <th>30</th>
+            </tr>
+        </thead>
+
+        <tbody class="tbodyIndex">
+            <tr>
+                <td>
+                    @Html.HiddenFor(modelItem => Model.ProductInventory.Id)
+                    @Html.HiddenFor(modelItem => Model.ProductInventory.ProductId)
+                    @Html.HiddenFor(modelItem => Model.StockDistributionSummaryModel.Id, new { Value = ViewBag.StockDistributionSummaryId })
+                    Warehouse
+                </td>
+                <td>
+					
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity01, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity02, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity03, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity04, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity05, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity06, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity07, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity08, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity09, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity10, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity11, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity12, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity13, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity14, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity15, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity16, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity17, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity18, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity19, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity20, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity21, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity22, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity23, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity24, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity25, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity26, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity27, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity28, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity29, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => Model.ProductInventory.Quantity30, new { @class = "CheckCalculation1", @readonly = "readonly" })
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+    <div class="prtm-block-content mrgn-b-md">
+        <div class="table-responsive">
+            <div class="table-responsive" style="height:400px;">
+                <table class="table table-hover">
+                    <tbody>
+                        @for (int i = 0; i < Model.BranchDistribution.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Model.BranchDistribution[i].Name
+
+                                    @Html.HiddenFor(modelItem => Model.BranchDistribution[i].Id)
+                                    @Html.HiddenFor(modelItem => Model.BranchDistribution[i].ProductId)
+                                    @Html.HiddenFor(modelItem => Model.BranchDistribution[i].BranchId)
+                                    @Html.HiddenFor(modelItem => Model.BranchDistribution[i].StockDistributionSummaryId, new { Value = ViewBag.StockDistributionSummaryId })
+                                    @Html.HiddenFor(modelItem => Model.BranchDistribution[i].IsActive, new { Value = true })
+                                    @Html.HiddenFor(modelItem => Model.BranchDistribution[i].Name)
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity01</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity01, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+                                    @Html.ValidationMessageFor(modelItem => Model.BranchDistribution[i].Quantity01, "", new { @class = "text-danger" })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity02</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity02, new { @class =" CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity03</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity03, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity04</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity04, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" id="spanval">@Model.BranchDistribution[i].Quantity05</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity05, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity06</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity06, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity07</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity07, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity08</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity08, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity09</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity09, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity10</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity10, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity11</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity11, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity12</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity12, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity13</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity13, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity14</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity14, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity15</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity15, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity16</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity16, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity17</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity17, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity18</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity18, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity19</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity19, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity20</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity20, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity21</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity21, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity22</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity22, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity23</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity23, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity24</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity24, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity25</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity25, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity26</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity26, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity27</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity27, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity28</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity28, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity29</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity29, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+                                </td>
+                                <td>
+                                    <span style="visibility:hidden" class="spanval">@Model.BranchDistribution[i].Quantity30</span>
+                                    @Html.TextBoxFor(modelItem => Model.BranchDistribution[i].Quantity30, new { @class = "CheckCalculation2", @onchange = "CalculationCheck(this)", type = "number", min = 0 })
+									@Html.HiddenFor(modelItem=>Model.BranchDistribution[i].ProductId,new { @Value = @Model.BranchDistribution[i].ProductId })
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>
+
+
+
+    <div class="modal-footer">
+        <input type="submit" value="Save" class="btn btn-success popup-savebtn" />
+    </div>
+
+    <script type="text/javascript">
+        $.validator.unobtrusive.parse($("#StockForm"));
+    </script>

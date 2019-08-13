@@ -1,0 +1,22 @@
+﻿using Model;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.IService
+{
+   public interface IPurchaseOrderItemsService
+    {
+        List<PurchaseOrderItemModel> GetAllPurchaseOrderItems();
+        int AddPurchaseOrderItems(PurchaseOrderItemModel orderItems);
+        bool DeletePurchaseOrderItems(int id);
+        int UpdatePurchaseOrderItems(PurchaseOrderItemModel orderItems);
+        PurchaseOrderItemModel GetPurchaseOrderItemsById(int id);
+        List<PurchaseOrderItemModel> GetItemsByPurchaseOrderId(int PurchaseOrderId);
+        PurchaseOrderItemModel GetValue(PurchaseOrderSearch model);
+        List<PurchaseOrderItemModel> GetItemByOrderId(int id);
+    }
+}

@@ -1,0 +1,135 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+
+namespace POSApi.Controllers
+{
+    [RoutePrefix("api/sizeGrid")]
+    public class SizeGridsController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+
+        // GET: api/SizeGrids
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<SizeGrid> GetSizeGrids()
+        {
+            var list= db.SizeGrids.Where(x=>x.IsActive==true).ToList();
+            return list;
+        }
+
+        // GET: api/SizeGrids/5
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetail")]
+        [ResponseType(typeof(SizeGrid))]
+        public IHttpActionResult GetSizeGrid(int id)
+        {
+            SizeGrid sizeGrid = db.SizeGrids.Find(id);
+            if (sizeGrid == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(sizeGrid);
+        }
+
+        // PUT: api/SizeGrids/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutSizeGrid(int id, SizeGrid sizeGrid)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != sizeGrid.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(sizeGrid).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SizeGridExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/SizeGrids
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(SizeGrid))]
+        public IHttpActionResult PostSizeGrid(SizeGrid sizeGrid)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.SizeGrids.Add(sizeGrid);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = sizeGrid.Id }, sizeGrid);
+        }
+
+        // DELETE: api/SizeGrids/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("Delete")]
+        [ResponseType(typeof(SizeGrid))]
+        public IHttpActionResult DeleteSizeGrid(int id)
+        {
+            SizeGrid sizeGrid = db.SizeGrids.Find(id);
+            if (sizeGrid == null)
+            {
+                return NotFound();
+            }
+            sizeGrid.IsActive =false;
+            //db.SizeGrids.Remove(sizeGrid);
+            db.SaveChanges();
+
+            return Ok(sizeGrid);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool SizeGridExists(int id)
+        {
+            return db.SizeGrids.Count(e => e.Id == id) > 0;
+        }
+    }
+}

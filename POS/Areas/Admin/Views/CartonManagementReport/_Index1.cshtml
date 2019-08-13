@@ -1,0 +1,206 @@
+﻿@model Model.CartonManagementReportModel
+
+@{
+    ViewBag.Title = "_Index1";
+    Layout = null;
+}
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+        <div class="forms">
+            <div class="row">
+                <div class="prtm-block-content mrgn-b-md">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Total Item</th>
+                                    <th>Carton Number</th>
+                                    <th>Branch Name</th>
+
+                                    <th>Quantity01</th>
+                                    <th>Quantity02</th>
+                                    <th>Quantity03</th>
+                                    <th>Quantity04</th>
+                                    <th>Quantity05</th>
+                                    <th>Quantity06</th>
+                                    <th>Quantity07</th>
+                                    <th>Quantity08</th>
+                                    <th>Quantity09</th>
+                                    <th>Quantity10</th>
+                                    <th>Quantity11</th>
+                                    <th>Quantity12</th>
+                                    <th>Quantity13</th>
+                                    <th>Quantity14</th>
+                                    <th>Quantity15</th>
+                                    <th>Quantity16</th>
+                                    <th>Quantity17</th>
+                                    <th>Quantity18</th>
+                                    <th>Quantity19</th>
+                                    <th>Quantity20</th>
+                                    <th>Quantity21</th>
+                                    <th>Quantity22</th>
+                                    <th>Quantity23</th>
+                                    <th>Quantity24</th>
+                                    <th>Quantity25</th>
+                                    <th>Quantity26</th>
+                                    <th>Quantity27</th>
+                                    <th>Quantity28</th>
+                                    <th>Quantity29</th>
+                                    <th>Quantity30</th>
+                                    <th>Packing Date</th>
+                                    @*<th>Stock Distribution Summary Number </th>*@
+                                </tr>
+                            </thead>
+                            <tbody class="tbodyIndex" id="table">
+                                @foreach (var item in Model.CartonManagementDetails)
+                                {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CartonManagement.TotalItems)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CartonManagement.Branch.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z01)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z02)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z03)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z04)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z05)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z06)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z07)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z08)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z09)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z10)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z11)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z12)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z13)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z14)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z15)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z16)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z17)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z08)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z19)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z20)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z21)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z22)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z23)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z24)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z25)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z26)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z27)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z28)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z29)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Z30)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CartonManagement.PackDate)
+                                    </td>
+                                    @*<td>
+                                        @Html.DisplayFor(modelItem => item.CartonManagement.StockDistributionSummary.DistributionNumber)
+                                    </td>*@
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="col-md-12">
+    @if (ViewBag.endPage > 1)
+    {
+        <div class="pagination">
+
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li>
+                    <a href="/Admin/CartonManagementReport/_Index1?page=1">First</a>
+                </li>
+                <li>
+                    <a href="/Admin/CartonManagementReport/_Index1?page=@(ViewBag.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @foreach (var i in ViewBag.result)
+            {
+                var page = i;
+                <li class="@(page == ViewBag.CurrentPage ? "active" : "")">
+                    <a href="/Admin/CartonManagementReport/_Index1?page=@page">@page</a>
+                </li>
+            }
+            @if (ViewBag.CurrentPage < ViewBag.pageCount)
+            {
+                <li>
+                    <a href="/Admin/CartonManagementReport/_Index1?page=@(ViewBag.CurrentPage + 1)">Next</a>
+                </li>
+                <li>
+                    <a href="/Admin/CartonManagementReport/_Index1?page=@(ViewBag.pageCount)">Last</a>
+                </li>
+            }
+        </div>
+    }
+</div>

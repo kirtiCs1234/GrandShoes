@@ -1,0 +1,18 @@
+﻿using Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Services.IService
+{
+   public interface IBranchService
+    {
+        List<BranchModel> GetAll();
+        BranchModel GetById(int? id);
+        BranchModel Create(BranchModel branchModel);
+        BranchModel Edit(BranchModel branchModel);
+        BranchModel Delete(BranchModel branchModel);
+    }
+}

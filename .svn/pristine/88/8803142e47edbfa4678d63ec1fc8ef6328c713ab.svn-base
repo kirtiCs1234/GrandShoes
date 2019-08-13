@@ -1,0 +1,267 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+using Model;
+
+namespace POSApi.Controllers.Admin
+{
+    [RoutePrefix("api/season")]
+    public class SeasonsController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+        public SeasonsController()
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            db.Configuration.ProxyCreationEnabled = false;
+        }
+        // GET: api/Seasons
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<Season> GetSeasons()
+        {
+            var list= db.Seasons.Where(x=>x.IsActive==true).OrderByDescending(x => x.Id).ToList();
+            return list;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getSeasonPaging")]
+        public ServiceResult<List<Season>> GetArea([FromUri]Paging paging)
+
+        {
+            ServiceResult<List<Season>> model = new ServiceResult<List<Season>>();
+            var source = db.Seasons.Where(x => x.IsActive == true).OrderByDescending(x => x.Id).ToList();
+            int count = source.Count();
+
+            // Parameter is passed from Query string if it is null then it default Value will be pageNumber:1  
+            int CurrentPage = paging.pageNumber;
+
+            // Parameter is passed from Query string if it is null then it default Value will be pageSize:20  
+            int PageSize = paging.pageSize;
+
+            // Display TotalCount to Records to User  
+            int TotalCount = count;
+
+            // Calculating Totalpage by Dividing (No of Records / Pagesize)  
+            int TotalPages = (int)Math.Ceiling(count / (double)PageSize);
+
+            // Returns List of Customer after applying Paging   
+            var items = source.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+            model.TotalCount = count;
+            model.data = items;
+
+            return model;
+
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("getSearchData")]
+        public ServiceResult<List<Season>> GetSearchData(SeasonSearch seasonSearch)
+
+        {
+            ServiceResult<List<Season>> model = new ServiceResult<List<Season>>();
+            var source = db.Seasons.Where(x => x.IsActive == true);
+            var pageSize = 10;
+            if (seasonSearch != null)
+            {
+
+                if (!string.IsNullOrEmpty(seasonSearch.Code))
+
+                    source = source.Where(m => m.Code == seasonSearch.Code);
+            }
+
+            int count = source.Count();
+            var items = source.OrderByDescending(x => x.Id).Skip(((seasonSearch.Page ?? 1) - 1) * pageSize).Take(pageSize).ToList();
+            model.data = items.Select(x => new Season
+            {
+                Id=x.Id,
+                Code=x.Code,
+                Description=x.Description,
+                IsActive=x.IsActive
+            }).ToList();
+            model.TotalCount = count;
+           
+            return model; ;
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetail")]
+        // GET: api/Seasons/5
+        [ResponseType(typeof(Season))]
+        public IHttpActionResult GetSeason(int id)
+        {
+            Season season = db.Seasons.Find(id);
+            if (season == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(season);
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getSeasonDescription")]
+        [ResponseType(typeof(Season))]
+        public IHttpActionResult GetSeasonDescription(int id)
+        {
+            var season = db.Seasons.Where(x=>x.IsActive==true && x.Id==id).ToList();
+            if (season == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(season);
+        }
+
+        // PUT: api/Seasons/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutSeason(int id, Season season)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != season.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(season).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SeasonExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("checkSeasonCode")]
+        public bool GetPhoneNumber(Season season)
+        {
+            if (season.Id > 0)
+            {
+                var code = db.Seasons.Where(x => x.Id == season.Id && x.IsActive == true).FirstOrDefault();
+                if (code.Code.Equals(season.Code))
+                {
+                    return false;
+                }
+
+            }
+            var data = db.Seasons.Any(x => x.Code == season.Code && x.IsActive == true);
+            return data;
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("checkSeasonCode1")]
+        public bool GetCode(string chk)
+        {
+
+            var data = db.Seasons.Any(x => x.Code == chk && x.IsActive == true);
+            return data;
+        }
+        // POST: api/Seasons
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(Season))]
+        public IHttpActionResult PostSeason(Season season)
+        {
+            Season model = new Season();
+            model.Code = season.Code;
+            model.Description = season.Description;
+            model.IsActive = true;
+            db.Seasons.Add(model);
+            return Ok(true);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("getSeasonId")]
+        public Season GetSeasonCode(string sku)
+        {
+            Season model = new Season();
+            bool data = db.Seasons.Any(x => x.Code == sku && x.IsActive == true);
+            if (data == true)
+            {
+                model = db.Seasons.Where(x => x.IsActive == true && x.Code== sku).FirstOrDefault();
+            }
+            else
+            {
+                model.Code = sku;
+                model.IsActive = true;
+                db.Seasons.Add(model);
+                db.SaveChanges();
+                var list = db.Seasons.Where(x => x.IsActive == true).ToList();
+                model = list.LastOrDefault();
+            }
+            return model;
+        }
+        [HttpGet]
+        [Route("SeasonAutocomplete")]
+        public IHttpActionResult ColorsAutocomplete(string name)
+        {
+            var data = db.Seasons.Where(x => x.IsActive == true && x.Code.Contains(name)).ToList().Select(m => new Model.SeasonModel
+            {
+                Code = m.Code,
+                Id = m.Id,
+            }).ToList();
+            return Ok(data);
+        }
+        // DELETE: api/Seasons/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("delete")]
+        [ResponseType(typeof(Season))]
+        public IHttpActionResult DeleteSeason(int id)
+        {
+            Season season = db.Seasons.Find(id);
+            if (season == null)
+            {
+                return NotFound();
+            }
+
+            season.IsActive = false;
+            db.SaveChanges();
+
+            return Ok(season);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool SeasonExists(int id)
+        {
+            return db.Seasons.Count(e => e.Id == id) > 0;
+        }
+    }
+}

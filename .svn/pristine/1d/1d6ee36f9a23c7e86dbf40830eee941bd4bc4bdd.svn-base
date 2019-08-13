@@ -1,0 +1,102 @@
+﻿@model Model.StockDistributionModel
+@{
+
+    Layout = null;
+}
+<div class="row marg-btn-20">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+        @using (Html.BeginForm("GetDetail", "TreeView", FormMethod.Post, new { id = "viewForm", enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.BranchId)
+
+            <div class="forms">
+                <div class="row marg-btn-20">
+                    <div class="prtm-block-content mrgn-b-md">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+
+                                <thead>
+                                    <tr>
+                                        <th>Branch Id</th>
+                                        <th>Branch Name</th>
+                                        <th>Distribution Date</th>
+                                        <th>Quantity01</th>
+                                        <th>Quantity02</th>
+                                        <th>Quantity03</th>
+                                        <th>Quantity04</th>
+                                        <th>Quantity05</th>
+                                        <th>Quantity06</th>
+                                        <th>Quantity07</th>
+                                        <th>Quantity08</th>
+                                        <th>Quantity09</th>
+                                        <th>Quantity10</th>
+                                        <th>Quantity11</th>
+                                        <th>Quantity12</th>
+                                        <th>Quantity13</th>
+                                        <th>Quantity14</th>
+                                        <th>Quantity15</th>
+                                        <th>Quantity16</th>
+                                        <th>Quantity17</th>
+                                        <th>Quantity18</th>
+                                        <th>Quantity19</th>
+                                        <th>Quantity20</th>
+                                        <th>Quantity21</th>
+                                        <th>Quantity22</th>
+                                        <th>Quantity23</th>
+                                        <th>Quantity24</th>
+                                        <th>Quantity25</th>
+                                        <th>Quantity26</th>
+                                        <th>Quantity27</th>
+                                        <th>Quantity28</th>
+                                        <th>Quantity29</th>
+
+                                        <th>Quantity30</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="tbodyIndex">
+                                <td>@Html.DisplayFor(model => model.BranchId)</td>
+                                <td>@Html.DisplayFor(model=>model.Branch.Name)</td>
+                                <td>@Html.DisplayFor(model => model.DistributionDate)</td>
+                                <td>@Html.DisplayFor(model => model.Quantity01)</td>
+                                <td>@Html.DisplayFor(model => model.Quantity02)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity03)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity04)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity05)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity06)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity07)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity08)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity09)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity10)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity11)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity12)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity13)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity14)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity15)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity16)</td>
+
+                                <td> @Html.DisplayFor(model => model.Quantity17)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity18)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity19)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity20)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity21)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity22)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity23)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity24)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity25)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity26)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity27)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity28)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity29)</td>
+                                <td> @Html.DisplayFor(model => model.Quantity30)</td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                    }
+                </div>
+        </div>

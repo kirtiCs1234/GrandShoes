@@ -1,0 +1,135 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.Description;
+using DAL;
+
+namespace POSApi.Controllers.Admin
+{
+    [RoutePrefix("api/staff")]
+    public class StaffsController : ApiController
+    {
+        private GrandShoesEntities db = new GrandShoesEntities();
+
+        // GET: api/Staffs
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetails")]
+        public List<Staff> GetStaffs()
+        {
+            var list= db.Staffs.Where(x=>x.IsActive==true).ToList();
+            return list;
+        }
+
+        // GET: api/Staffs/5
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("getDetail")]
+        [ResponseType(typeof(Staff))]
+        public IHttpActionResult GetStaff(int id)
+        {
+            Staff staff = db.Staffs.Find(id);
+            if (staff == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(staff);
+        }
+
+        // PUT: api/Staffs/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("edit")]
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutStaff(int id, Staff staff)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != staff.Id)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(staff).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!StaffExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/Staffs
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("create")]
+        [ResponseType(typeof(Staff))]
+        public IHttpActionResult PostStaff(Staff staff)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.Staffs.Add(staff);
+            db.SaveChanges();
+
+            return CreatedAtRoute("DefaultApi", new { id = staff.Id }, staff);
+        }
+
+        // DELETE: api/Staffs/5
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("delete")]
+        [ResponseType(typeof(Staff))]
+        public IHttpActionResult DeleteStaff(int id)
+        {
+            Staff staff = db.Staffs.Find(id);
+            if (staff == null)
+            {
+                return NotFound();
+            }
+            staff.IsActive = false;
+            //db.Staffs.Remove(staff);
+            db.SaveChanges();
+
+            return Ok(staff);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool StaffExists(int id)
+        {
+            return db.Staffs.Count(e => e.Id == id) > 0;
+        }
+    }
+}
