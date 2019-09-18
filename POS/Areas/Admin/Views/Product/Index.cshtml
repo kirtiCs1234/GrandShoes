@@ -1,6 +1,5 @@
 ﻿@model List<Model.AllProductDetailModel>
 @{
-
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     var data = ViewBag.processData as Dictionary<string, string>;
@@ -11,16 +10,16 @@
 <div class="row">
     <div class="col-sm-12 col-xs-12 top-menu-bg">
         <ul class="top-menu">
-            <li><a><i onclick="MyFunctionMarkDown('1');" class="fa fa-user" aria-hidden="true"></i><br />View Orders</a></li>
-            <li><a onclick="MyFunctionMarkDown('2');"><i class="fa fa-building" aria-hidden="true" data-toggle="modal" data-backdrop="static" data-target="#myModal"></i><br />View Receipts</a></li>
-            <li><a onclick="MyFunctionMarkDown('3');"><i class="fa fa-building" aria-hidden="true" data-toggle="modal" data-backdrop="static" data-target="#myModal"></i><br />View Distribution</a></li>
-            <li><a href="#"><i class="fa fa-bars" aria-hidden="true"></i><br />View All Sales</a></li>
-            <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i><br />View Weekely Sales</a></li>
-            <li><a href="#"><i class="fa fa-building" aria-hidden="true"></i><br />View Branch Sales</a></li>
-            <li><a onclick="MyFunctionMarkDown('4');"><i class="fa fa-building" aria-hidden="true"></i><br />View Stock</a></li>
-            <li><a href="#"><i class="fa fa-bars" aria-hidden="true"></i><br />View Invoices</a></li>
-            <li><a onclick="MyFunctionMarkDown('5');"><i class="fa fa-user" aria-hidden="true"></i><br />Mark Down</a></li>
-            <li><a onclick="MyFunctionDiscount();"><i class="fa fa-building" aria-hidden="true"></i><br />Discount</a></li>
+            <li><a onclick="Order();" data-toggle="modal" data-backdrop="static" data-target="#myModal"><i class="fa fa-user" aria-hidden="true"></i><br />View Orders</a></li>
+            <li><a onclick="Receipt();" data-toggle="modal" data-backdrop="static" data-target="#myModal"><i class="fa fa-building" aria-hidden="true"></i><br />View Receipts</a></li>
+            <li><a onclick="Distribution();" data-toggle="modal" data-backdrop="static" data-target="#myModal"><i class="fa fa-building" aria-hidden="true"></i><br />View Distribution</a></li>
+            <li><a onclick="ViewAllSales()" data-toggle="modal" data-backdrop="static" data-target="#myModal"><i class="fa fa-bars" aria-hidden="true"></i><br />View All Sales</a></li>
+            <li><a onclick="ViewWeeklySales()" data-toggle="modal" data-backdrop="static" data-target="#myModal"><i class="fa fa-user" aria-hidden="true"></i><br />View Weekely Sales</a></li>
+            <li><a onclick="ViewBranchSales()" data-toggle="modal" data-backdrop="static" data-target="#myModal"><i class="fa fa-building" aria-hidden="true"></i><br />View Branch Sales</a></li>
+            <li><a onclick="Stock()" data-toggle="modal" data-backdrop="static" data-target="#myModal"><i class="fa fa-building" aria-hidden="true"></i><br />View Stock</a></li>
+            <li><a onclick="SupplierInvoice()" data-toggle="modal" data-backdrop="static" data-target="#myModal"><i class="fa fa-bars" aria-hidden="true"></i><br />View Invoices</a></li>
+            <li><a onclick="MarkDown();" data-toggle="modal" data-backdrop="static" data-target="#myModal"><i class="fa fa-user" aria-hidden="true"></i><br />Mark Down</a></li>
+            @*<li><a><i class="fa fa-building" aria-hidden="true"></i><br />Discount</a></li>*@
         </ul>
     </div>
 </div>
@@ -230,16 +229,16 @@
         function Cancel() {
             window.location = '/Admin/Product/Index';
         }
-        
-        
-        
         function barcode() {
             JsBarcode("#barcode", "hyy", {
                 width: 2,
                 height: 30,
                 length: 100
             });
-
+        }
+        function closeWindow() {
+            window.open('', '_parent', '');
+            window.close();
         }
         function ShowBarcode(templateId, productId) {
             debugger
@@ -292,8 +291,12 @@
             var isAllow = $("#IsAllowZero").val();
             if (isAllow == "false") {
                 $("#IsFreeGift").removeAttr("disabled");
+                $("#SizeGridID").removeAttr("disabled");
+                $("#AvailableSize").removeAttr("disabled");
             } else if (isAllow == "true") {
                 $("#IsFreeGift").prop("disabled", true);
+                $("#SizeGridID").prop("disabled", true);
+                $("#AvailableSize").prop("disabled", true);
             }
         }
         function ProductValidation() {
@@ -311,16 +314,12 @@
                         // $("#Style").val("");
                         GenerateStyleSKU();
                     }
-
                 },
                 error: function (xhr, status) {
                     alert(status)
                 }
             });
-
         }
-
-
         function searchData() {
             debugger
             var obj = {};
@@ -330,7 +329,6 @@
             $.ajax({
                 type: 'POST',
                 url: '/Admin/Product/_Index',
-
                 contentType: "application/json; charset=utf-8",
                 // dataType: "json",
                 data: JSON.stringify(obj),
@@ -341,30 +339,25 @@
                     alert(status)
                 }
             });
-
         }
         var id1;
         function create() {
 
             Data(0);
         }
-
         function edit(edit) {
             id1 = edit;
             Data(1);
         }
-
         function details(details) {
             id1 = details;
             Data(2);
         }
-
         function TreeView(ctrl) {
             var product = $(ctrl).val();
             id1 = product;
             Data(4);
         }
-
         function Export() {
             Data(6);
         }
@@ -423,7 +416,6 @@
                     break;
             }
             $.ajax({
-
                 url: crud,
                 contentType: 'application/html; charse=utf-8',
                 type: 'GET',
@@ -444,7 +436,6 @@
             var str = $(location).attr("href");
             var n = str.indexOf("Index") + 6;
             if (n > str.length) {
-
             }
             else {
                 var itemId = str.substring(n, str.length);
@@ -471,10 +462,127 @@
                 }
             })
         }
+       
         function Import() {
+            Data1(0);
+        }
+        function MarkDown() {
+            if (id1 > 0) {
+                Data1(1);
+            } else {
+                alert("Please Select Product.")
+                window.location.reload();
+            }
+          
+        }
+        function Order() {
+            if (id1 > 0) {
+                Data1(2);
+            } else {
+                alert("Please Select Product.")
+                window.location.reload();
+            }
+
+        }
+        function ViewBranchSales() {
+            if (id1 > 0) {
+                Data1(3);
+            } else {
+                alert("Please Select Product.")
+                window.location.reload();
+            }
+
+        }
+        function ViewWeeklySales() {
+            if (id1 > 0) {
+                Data1(4);
+            } else {
+                alert("Please Select Product.")
+                window.location.reload();
+            }
+
+        }
+        function ViewAllSales() {
+            if (id1 > 0) {
+                Data1(5);
+            } else {
+                alert("Please Select Product.")
+                window.location.reload();
+            }
+
+        }
+        function SupplierInvoice() {
+            if (id1 > 0) {
+                Data1(6);
+            } else {
+                alert("Please Select Product.")
+                window.location.reload();
+            }
+
+        }
+        function Receipt() {
+            if (id1 > 0) {
+                Data1(7);
+            } else {
+                alert("Please Select Product.")
+                window.location.reload();
+            }
+
+        }
+        function Distribution() {
+            if (id1 > 0) {
+                Data1(8);
+            } else {
+                alert("Please Select Product.")
+                window.location.reload();
+            }
+        }
+        function Stock() {
+            if (id1 > 0) {
+                Data1(9);
+            } else {
+                alert("Please Select Product.")
+                window.location.reload();
+            }
+
+        }
+        function Data1(ch) {
             debugger;
+            var crud = "";
+            switch (ch) {
+                case 0:
+                    crud = '/Admin/Product/ExcelUpload';
+                    break;
+                case 1:
+                    crud = '/Admin/Product/MarkDown/' + id1;
+                    break;
+                case 2:
+                    crud = '/Admin/Product/ViewPurchaseOrder/' + id1;
+                    break;
+                case 3:
+                    crud = '/Admin/Product/ViewBranchSales/' + id1;
+                    break;
+                case 4:
+                    crud = '/Admin/Product/ViewWeeklySales/' + id1;
+                    break;
+                case 5:
+                    crud = '/Admin/Product/ViewAllSales/' + id1;
+                    break;
+                case 6:
+                    crud = '/Admin/Product/SupplierInvoice/' + id1;
+                    break;
+                case 7:
+                    crud = '/Admin/Product/ViewReceiptOrder/' + id1;
+                    break;
+                case 8:
+                    crud = '/Admin/Product/ViewDistribution/' + id1;
+                    break;
+                case 9:
+                    crud = '/Admin/Product/ViewStock/' + id1;
+                    break;
+            }
             $.ajax({
-                url: '/Admin/Product/ExcelUpload',
+                url: crud,
                 type: 'GET',
                 dataType: 'html',
                 success: function (result) {
@@ -545,6 +653,11 @@
             }
             return false;
         }
+        function Reload() {
+            debugger
+            $('#dvCreatedetails1').empty();
+            //window.location.reload();
+        }
         function MyFunction() {
             debugger;
             if (id1 != null) {
@@ -565,39 +678,7 @@
             }
         }
 
-        function MyFunctionMarkDown(value) {
-            debugger;
-
-            if (id1 != null) {
-                var crud = "";
-                if (value == '1') {
-                    // alert("jghg");
-                    crud = "/Admin/Product/ViewPurchaseOrder/" + id1;
-                }
-                if (value == '2') {
-                    // alert("jghg");
-                    crud = "/Admin/Product/ViewReceiptOrder/" + id1;
-                }
-                if (value == '3') {
-                    // alert("jghg");
-                    crud = "/Admin/Product/ViewDistribution/" + id1;
-                }
-                if (value == '4') {
-                    // alert("jghg");
-                    crud = "/Admin/Product/ViewStock/" + id1;
-                }
-                if (value == '5') {
-                    // alert("jghg");
-                    crud = "/Admin/MarkDownBranch/Index?id=" + id1;;
-                }
-                window.location.href = crud;
-
-            }
-            else {
-                alert("Please select any one row.");
-            }
-        }
-
+       
         function ViewReceipt() {
             debugger;
             if (id1 != null) {
@@ -784,7 +865,10 @@
                 }
             });
         }
-
+        $(document).on('click', ".accordian-btn", function () {
+            $(this).toggleClass("accordian-reverse");
+            $(this).parent().parent().next().find(".accordian-bundling").toggle(500);
+        });
         $('.product-index').click(function () {
             debugger;
             $('.product-index').css('background', '');
@@ -808,7 +892,7 @@
 
             $('#date').datepicker({
                 minDate: new Date(currentYear, currentMonth, currentDate),
-                dateFormat: 'yy/mm/dd'
+                dateFormat: 'yy-M-dd'
             });
         });
         $(document).ready(function () {
@@ -819,7 +903,7 @@
 
             $('#date1').datepicker({
                 minDate: new Date(currentYear, currentMonth, currentDate),
-                dateFormat: 'yy/mm/dd'
+                dateFormat: 'yy-M-dd'
             });
         });
         function showReceipt(id) {
@@ -830,6 +914,44 @@
             $.ajax(
                 {
                     url: '/Admin/Product/GetReceiptById/' + id,
+                    type: "GET",
+                    success: function (result) {
+                        debugger
+                        $("#ReceiptDetail-" + id).html(result);
+                        // alert("dgfhdf");
+                    },
+                    error: function (xhr, status) {
+                        alert(status)
+                    }
+                });
+        }
+        function showOrder(id) {
+            debugger
+            //  alert(id);
+            $("#ReceiptDetail-" + id).html('<tr><td colspan = "5" style="background-color:white;"><img src="/Image/bars.gif" style="width:55px; height:47px;margin-left:40%; z-index:200" /></td></tr>');
+
+            $.ajax(
+                {
+                    url: '/Admin/Product/GetOrderById/' + id,
+                    type: "GET",
+                    success: function (result) {
+                        debugger
+                        $("#ReceiptDetail-" + id).html(result);
+                        // alert("dgfhdf");
+                    },
+                    error: function (xhr, status) {
+                        alert(status)
+                    }
+                });
+        }
+        function showDistribution(id) {
+            debugger
+            //  alert(id);
+            $("#ReceiptDetail-" + id).html('<tr><td colspan = "5" style="background-color:white;"><img src="/Image/bars.gif" style="width:55px; height:47px;margin-left:40%; z-index:200" /></td></tr>');
+
+            $.ajax(
+                {
+                    url: '/Admin/Product/GetDistributionById/' + id,
                     type: "GET",
                     success: function (result) {
                         debugger
@@ -888,6 +1010,64 @@
 
                 });
             }
+        }
+        function detail(event) {
+            debugger
+            if (event.target.innerText == "read more") {
+                $(event.target.previousElementSibling).show()
+                event.target.innerText = "read less";
+            } else {
+                $(event.target.previousElementSibling).hide()
+                event.target.innerText = "read more";
+            }
+        }
+        function Print() {
+            debugger
+            $.ajax({
+                type: "GET",
+                url: '/Admin/Product/ViewPrintMarkDown/' + id1,
+                success: function (result) {
+                    debugger;
+                    $("#content").css("display", "block")
+                    $(".main-loading").removeClass("displayNone")
+                    var data = $("#content").html(result);
+                    var contents = data.html();
+                    var frame1 = $('<iframe />');
+                    frame1[0].name = "frame1";
+                    // frame1.css({ "position": "relative", "top": "-1000000px" });
+                    //$("#content .iframecontainer").html(frame1);
+                    $("body").append(frame1);
+                    var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+                    frameDoc.document.open();
+                    //Create a new HTML document.
+                    frameDoc.document.write('<html><head><title>DIV Contents</title>');
+                    frameDoc.document.write('</head><body>');
+                    //Append the external CSS file.
+                    frameDoc.document.write('<link href="/Content/StyleForPDF.css" rel="stylesheet"  type="text/css" />');
+                    //Append the DIV contents.
+                    frameDoc.document.write(contents);
+                    frameDoc.document.write('</body></html>');
+                    frameDoc.document.close();
+                    var interval = setInterval(function () {
+                        debugger;
+                        clearInterval(interval);
+                        window.frames["frame1"].focus();
+                        window.frames["frame1"].print();
+                        $(".main-loading").addClass("displayNone");
+                        frame1.remove();
+                    }, 1000);
+                    $("#content").css("display", "none")
+                    //doc.fromHTML($('#content').html(), 15, 15, {
+                    //    'width': 400,'height':400,
+                    //    'elementHandlers': specialElementHandlers
+
+                    //});
+                    //doc.save('sample-file.pdf');
+                },
+                error: function (xhr, status) {
+                    alert(status);
+                }
+            });
         }
     </script>
 

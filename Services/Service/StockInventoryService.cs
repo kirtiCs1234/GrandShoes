@@ -54,6 +54,6 @@ namespace Services.Service
         {
             return ServerResponse.Invoke<StockInventoryModel>("api/stockInventory/getByProduct?ProductId=" +id, "", "Get");
         }
-
+     
     }
 }

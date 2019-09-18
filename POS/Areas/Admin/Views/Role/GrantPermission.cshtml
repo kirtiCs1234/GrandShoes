@@ -1,18 +1,18 @@
-﻿@model List<Model.RoleModel>
-@using Model
+﻿@*@model List<Model.RoleModel>
+@using Model*@
 @{
     //Layout = null;
-    var list = ViewBag.PageName;
+   // var list = ViewBag.PageName;
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-    int BranchId = ViewBag.BranchId;
+   // int BranchId = ViewBag.BranchId;
 }
 @*<link href="/Scripts/assets/ScrollTabla.css" rel="stylesheet" media="screen" />*@
 @*<link href="css/ScrollTabla.css" rel="stylesheet" media="screen" />*@
 
 
-<div class="ContenedorTabla">
-    <h2 class="text-center contenedor-heading">PermissionGranted</h2>
-    <div class="row">
+@*<div class="ContenedorTabla">*@
+   @* <h2 class="text-center contenedor-heading">PermissionGranted</h2>*@
+    @*<div class="row">
         <div class="col-md-12">
             <div class="tabs">
                 <div class="tab-button-outer">
@@ -40,59 +40,176 @@
             </div>
         </div>
     </div>
-    </div>
+</div>*@
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="tabs">
+            <div class="tab-button-outer">
+                <ul id="tab-button">
+                    <li><a href="#">Tab 1</a></li>
+                    <li><a href="#">Tab 2</a></li>
+                </ul>
+            </div>
+            <div class="tab-select-outer">
+                <select id="tab-select">
+                    <option value="#tab01">Tab 1</option>
+                    <option value="#tab02">Tab 2</option>
+                </select>
+            </div>
 
-
-    @*<div class="modal fade" id="myCancelModal">
-            <div id="Canceldiv">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">ConfirmCancel</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>CloseWithoutSave</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-warning" data-dismiss="modal">No</button>
-                            <button type="button" id="cancelyesbtn" class="btn btn-danger" data-dismiss="modal">Yes</button>
-                        </div>
+            <div id="tab01" class="tab-contents">
+                <div class="table-responsive">
+                    <div class="unseen">
+                        <table class="table table-hover table-bordered table-striped">
+                            <thead>
+                                <tr class="bg-primary">
+                                    <th>Code</th>
+                                    <th>Company</th>
+                                    <th class="numeric">Price</th>
+                                    <th class="numeric">Change</th>
+                                    <th class="numeric">Change %</th>
+                                    <th class="numeric">Open</th>
+                                    <th class="numeric">High</th>
+                                    <th class="numeric">Low</th>
+                                    <th class="numeric">Volume</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>AAC</td>
+                                    <td>AUSTRALIAN AGRICULTURAL COMPANY LIMITED.</td>
+                                    <td class="numeric">$1.38</td>
+                                    <td class="numeric">-0.01</td>
+                                    <td class="numeric">-0.36%</td>
+                                    <td class="numeric">$1.39</td>
+                                    <td class="numeric">$1.39</td>
+                                    <td class="numeric">$1.38</td>
+                                    <td class="numeric">9,395</td>
+                                </tr>
+                                <tr>
+                                    <td>AAD</td>
+                                    <td>ARDENT LEISURE GROUP</td>
+                                    <td class="numeric">$1.15</td>
+                                    <td class="numeric"> +0.02</td>
+                                    <td class="numeric">1.32%</td>
+                                    <td class="numeric">$1.14</td>
+                                    <td class="numeric">$1.15</td>
+                                    <td class="numeric">$1.13</td>
+                                    <td class="numeric">56,431</td>
+                                </tr>
+                                <tr>
+                                    <td>AAX</td>
+                                    <td>AUSENCO LIMITED</td>
+                                    <td class="numeric">$4.00</td>
+                                    <td class="numeric">-0.04</td>
+                                    <td class="numeric">-0.99%</td>
+                                    <td class="numeric">$4.01</td>
+                                    <td class="numeric">$4.05</td>
+                                    <td class="numeric">$4.00</td>
+                                    <td class="numeric">90,641</td>
+                                </tr>
+                                <tr>
+                                    <td>ABC</td>
+                                    <td>ADELAIDE BRIGHTON LIMITED</td>
+                                    <td class="numeric">$3.00</td>
+                                    <td class="numeric"> +0.06</td>
+                                    <td class="numeric">2.04%</td>
+                                    <td class="numeric">$2.98</td>
+                                    <td class="numeric">$3.00</td>
+                                    <td class="numeric">$2.96</td>
+                                    <td class="numeric">862,518</td>
+                                </tr>
+                                <tr>
+                                    <td>ABP</td>
+                                    <td>ABACUS PROPERTY GROUP</td>
+                                    <td class="numeric">$1.91</td>
+                                    <td class="numeric">0.00</td>
+                                    <td class="numeric">0.00%</td>
+                                    <td class="numeric">$1.92</td>
+                                    <td class="numeric">$1.93</td>
+                                    <td class="numeric">$1.90</td>
+                                    <td class="numeric">595,701</td>
+                                </tr>
+                                <tr>
+                                    <td>ABY</td>
+                                    <td>ADITYA BIRLA MINERALS LIMITED</td>
+                                    <td class="numeric">$0.77</td>
+                                    <td class="numeric"> +0.02</td>
+                                    <td class="numeric">2.00%</td>
+                                    <td class="numeric">$0.76</td>
+                                    <td class="numeric">$0.77</td>
+                                    <td class="numeric">$0.76</td>
+                                    <td class="numeric">54,567</td>
+                                </tr>
+                                <tr>
+                                    <td>ACR</td>
+                                    <td>ACRUX LIMITED</td>
+                                    <td class="numeric">$3.71</td>
+                                    <td class="numeric"> +0.01</td>
+                                    <td class="numeric">0.14%</td>
+                                    <td class="numeric">$3.70</td>
+                                    <td class="numeric">$3.72</td>
+                                    <td class="numeric">$3.68</td>
+                                    <td class="numeric">191,373</td>
+                                </tr>
+                                <tr>
+                                    <td>ADU</td>
+                                    <td>ADAMUS RESOURCES LIMITED</td>
+                                    <td class="numeric">$0.72</td>
+                                    <td class="numeric">0.00</td>
+                                    <td class="numeric">0.00%</td>
+                                    <td class="numeric">$0.73</td>
+                                    <td class="numeric">$0.74</td>
+                                    <td class="numeric">$0.72</td>
+                                    <td class="numeric">8,602,291</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </div>*@
-    @section scripts{
-        <script type="text/javascript">
-    var pageNum = 1;
-    debugger;
-    requestPermissionPage(1);
-    function requestPermissionPage(id)
-    {
-        pageNum = id;
-        $.ajax({
-                url: '/Admin/Role/_GrantPermission?RolePage='+id,
-              //  contentType: 'application/html; charse=utf-8',
+
+            @*<div id="tab02" class="tab-contents>
+                sdfasd
+            </div>*@
+
+
+        </div>
+    </div>
+</div>
+
+ 
+
+@section scripts{
+    <script type="text/javascript">
+        var pageNum = 1;
+        debugger;
+        requestPermissionPage(1);
+        function requestPermissionPage(id) {
+            pageNum = id;
+            $.ajax({
+                url: '/Admin/Role/_GrantPermission?RolePage=' + id,
+                //  contentType: 'application/html; charse=utf-8',
                 type: 'GET',
                 // data: {page : page} ,
-              //  dataType: 'html',
+                //  dataType: 'html',
                 success: function (result) {
                     debugger;
                     //if(pageNum == 1)
                     //{
-                        $('.first-page').html(result);
+                    $('.first-page').html(result);
                     //}
                     //else if(pageNum == 2)
-                   // {
-                   //     $('.second-page').html(result);
-                   // }
+                    // {
+                    //     $('.second-page').html(result);
+                    // }
                 },
                 error: function (xhr, status) {
                     alert(status)
                 }
-        })
-    }
+            })
+        }
 
-        </script>
-    }
+    </script>
+}

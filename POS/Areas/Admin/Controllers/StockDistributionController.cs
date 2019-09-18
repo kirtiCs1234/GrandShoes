@@ -23,19 +23,20 @@ namespace POS.Areas.Admin.Controllers
         //    return View(StockInventoryModelList);
         //}
         public ActionResult Index()
-
         {
             StockDistributionViewModel model = new StockDistributionViewModel();
             StockDistributionSummaryModel model1 = new StockDistributionSummaryModel();
             var StockList = Services.StockDistributionSummaryService.GetAll().Where(x=>x.IsActive==true).ToList();
             //    model.Id = StockList.OrderBy(x=>x.Id).LastOrDefault().Id;
+            var allSummary = Services.StockDistributionSummaryService.GetAllSummary();
             if (StockList.Count != 0)
             {
                 model1.Id = StockList.LastOrDefault().Id;
                ViewBag.Id = model1.Id;
             }
             List<StockInventoryModel> ProductModelList = Services.StockInventoryService.GetProduct();
-           // List<AllProductDetailModel> ProductModelList = Services.ProductService.GetAllProduct();
+            // List<AllProductDetailModel> ProductModelList = Services.ProductService.GetAllProduct();
+            ViewBag.SymmaryID = new SelectList(allSummary, "Id", "Id");
             ViewBag.ProductId = new SelectList(ProductModelList, "ProductId", "ProductSKU");
             return View();
         }
@@ -87,23 +88,24 @@ namespace POS.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult SaveData(StockDistributionViewModel model)
         {
-           
             StockDistributionSummaryModel SummaryId = new StockDistributionSummaryModel();
             var StockList = Services.StockDistributionSummaryService.GetAll();
             SummaryId.Id = StockList.OrderBy(x => x.Id).LastOrDefault().Id;
             ViewBag.StockDistributionSummaryId = SummaryId.Id;
             bool Model = Services.StockInventoryService.SaveStock(model);
-
-            //   return RedirectToAction("StockInventoryForProduct","StockInventory", new { DisributionSummaryId = 1, model.ProductInventory.ProductId });
-            // return View(Model);
             TempData["Success"] = "Data saved successfully!";
             return RedirectToAction("Index", "StockDistribution");
         }
-
         public ActionResult CheckQuantity(StockDistributionModel Quantity01)
         { 
             var IsExists = Services.StockInventoryService.CheckQuantity(Quantity01);
             return Json(!IsExists, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ViewPDF(int id)
+        {
+            var data = Services.StockDistributionService.GetBySummaryId(id);
+
+            return View(data);
         }
     }
 }

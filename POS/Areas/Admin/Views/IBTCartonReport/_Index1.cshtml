@@ -1,4 +1,5 @@
-﻿@model List<Model.CartonManagementModel>
+﻿
+@model List<Model.CartonManagementModel>
 <div class="table-style">
     <div class="prtm-full-block pos-relative">
         <div class="prtm-block-title pad-all-md">
@@ -17,7 +18,6 @@
                             <th>IBT Number</th>
                             <th>Branch Name</th>
                             <th>Carton Number</th>
-
                             <th>Total Items</th>
                             <th>Pack Date</th>
                             <th>Pack Slip</th>
@@ -25,7 +25,6 @@
                             <th>Add</th>
                         </tr>
                     </thead>
-
                     <tbody class="tbodyIndex">
                         @if (Model.Count != 0)
                         {
@@ -68,38 +67,7 @@
                                                 <table class="table table-hover bundle-ppoup-table">
                                                     <thead>
                                                         <tr>
-                                                            @*<th>Product SKU</th>
-                                                            <th>Style SKU</th>
-                                                            <th>Z01 </th>
-                                                            <th>Z02</th>
-                                                            <th>Z03</th>
-                                                            <th>Z04</th>
-                                                            <th>Z05</th>
-                                                            <th>Z06</th>
-                                                            <th>Z07</th>
-                                                            <th>Z08</th>
-                                                            <th>Z09</th>
-                                                            <th>Z10</th>
-                                                            <th>Z11</th>
-                                                            <th>Z12</th>
-                                                            <th>Z13</th>
-                                                            <th>Z14</th>
-                                                            <th>Z15</th>
-                                                            <th>Z16</th>
-                                                            <th>Z17</th>
-                                                            <th>Z18</th>
-                                                            <th>Z19</th>
-                                                            <th>Z20</th>
-                                                            <th>Z21</th>
-                                                            <th>Z22</th>
-                                                            <th>Z23</th>
-                                                            <th>Z24</th>
-                                                            <th>Z25</th>
-                                                            <th>Z26</th>
-                                                            <th>Z27</th>
-                                                            <th>Z28</th>
-                                                            <th>Z29</th>
-                                                            <th>Z30</th>*@
+                                                            
                                                         </tr>
                                                     </thead>
                                                     <tbody id="ReceiptDetail-@item.Id"></tbody>
@@ -118,7 +86,6 @@
                             </tr>
                         }
                     </tbody>
-
                 </table>
             </div>
         </div>

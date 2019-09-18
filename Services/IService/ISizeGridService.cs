@@ -24,5 +24,6 @@ namespace Services.IService
         SizeGridModel GetSizeGridId(string sku);
         Dictionary<string, string> CreateList(Dictionary<int, SizeGridModel> list);
         Dictionary<string, string> UpdateList(Dictionary<int, SizeGridModel> list);
+        Dictionary<int, bool> CheckGridNumber(Dictionary<int, string> list);
     }
 }

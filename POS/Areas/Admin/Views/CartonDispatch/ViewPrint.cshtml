@@ -1,0 +1,73 @@
+﻿
+@model Model.CartonManagementModel
+@{
+    Layout = null;
+    var list = ViewData["list"] as List<Model.DictIBTModel>;
+}
+<div style="width:100%;background:#fff;float:left;">
+    <div id="project">
+        <div><span>Destination</span>@Model.Branch.Name</div>
+        <div><span>Packing Slip No</span>@Model.DistributionSummaryID</div>
+        <div><span>Carton No</span>@Model.CartonNumber</div>
+        <div><span>Packing Date</span>@Model.PackDate</div>
+        <div><span>IBT Number</span>@Model.IBTNumber</div>
+        @*<div><span>Packed By</span></div>*@
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Style SKU</th>
+                <th>Product SKU</th>
+                <th>Color</th>
+                <th>Size</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                decimal sum = 0;
+            }
+            @foreach (var item in list)
+            {
+                var QuantitySize = item.QuantitySize.Where(x => x.Value != "0").ToList();
+                if (QuantitySize != null)
+                {
+                    foreach (var itemk in QuantitySize)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.StyleSKU)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.ProductSKU)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Color.ColorShort)
+                            </td>
+                            <td>
+                                @{
+                                    var a = itemk.Key;
+                                    if (Convert.ToInt16(a) < 10) { a = "0" + a; }
+
+                                }
+                                @a
+                            </td>
+                            <td>
+                                @{
+                                    var value = Convert.ToInt64(itemk.Value);
+                                    sum += value;
+                                }@value
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+            <tr>
+                <td colspan="4" class="total text-right">TOTAL</td>
+                <td colspan="1" class="total">@sum</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+<div class="pageFooter"></div>

@@ -270,6 +270,28 @@ namespace POSApi.Controllers
             return Ok(true);
         }
         [HttpPost]
+        [Route("checkCode")]
+        public IHttpActionResult CheckCode(Dictionary<int, string> list)
+        {
+            var obj = new Dictionary<int, bool>();
+            if (list != null && list.Count > 0)
+            {
+                var supplierList = db.Suppliers.Where(x => x.IsActive == true);
+                var code = list.Select(x => x.Value).Distinct().ToList();
+                if (code != null && code.Count > 0)
+                {
+                    supplierList = supplierList.Where(x => code.Contains(x.Code));
+                }
+                var Color = supplierList.ToList();
+                foreach (var item in list)
+                {
+                    var result = Color.Any(x => x.Code == item.Value);
+                    obj.Add(item.Key, result);
+                }
+            }
+            return Ok(obj);
+        }
+        [HttpPost]
         [AllowAnonymous]
         [Route("checkSupplierCode")]
         public bool GetCodeId(string chk)

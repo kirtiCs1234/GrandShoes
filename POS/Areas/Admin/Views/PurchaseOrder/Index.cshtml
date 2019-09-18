@@ -21,15 +21,10 @@
     <div class="col-md-8 col-lg-6 col-sm-8 col-12 search-container">
         <div class="top-search-navbar-search smallsearch col-md-12 col-lg-12 col-sm-12 col-12">
             <div class="row">
-
                 <input class="top-search-navbar-input col-md-8 col-lg-10 col-sm-8 col-xs-8 searchiFirstName" type="text" placeholder="Search Order No" Id="OrderNumber" name="iFirstName">
-
-                @*<input type="submit" value="Add" class="btn btn-success popup-savebtn" />*@
-
                 <button class="advance-search col-md-2 col-lg-1 col-sm-2 col-xs-2" type="button">
                     <i class="fa fa-angle-down" aria-hidden="true"></i>
                 </button>
-
                 <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-xs-2" onclick="searchData()">
                     <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
@@ -40,7 +35,7 @@
                 <div class="col-md-12 col-lg-12 col-xg-12"><h5 style="margin-bottom:20px;color:#000;font-weight:normal">Advanced Keyword Search</h5></div>
                 <div class="col-md-12 col-lg-12 col-xg-12">
                     <label>Order Number</label>
-                    <input class="form-control searchCode" type="text" placeholder="Order Number" name="OrderNumber" id="OrderNumber" />
+                    <input class="form-control searchCode" type="text" placeholder="Order Number" name="OrderNumber" id="OrderNumber1" />
                 </div>
                 <div class="col-md-12 col-lg-12 col-xg-12">
                     <label>Supplier Name</label>
@@ -52,9 +47,8 @@
                 </div>
                 <div class="col-md-12 col-lg-12 col-xg-12">
                     <label>Order Date</label>
-                    <input class="form-control searchPostalCode" type="date" placeholder="Order Date" name="Order Date" id="OrderDate" />
+                    <input class="form-control searchPostalCode" type="text" placeholder="Order Date" name="Order Date" id="OrderDate" />
                 </div>
-
                 <div class="col-md-12 col-lg-12 col-xg-12">
                     <label>Status</label>
                     <select class="selectize-single-select searchIsActive" name="IsActive" id="IsActive">
@@ -62,14 +56,11 @@
                         <option value="false">Inactive</option>
                     </select>
                 </div>
-
                 <div class="col-md-12 col-lg-12 col-xg-12">
                     <button type="button" onclick="searchData(true)" class="btn btn-success advance-search-btn">Search</button>
                 </div>
             </div>
         </div>
-    
-
     </div>
     <!------------------>
     @*}*@
@@ -91,30 +82,28 @@
     </script>
     <div class="dvUserDetails">
         @{
-
             Html.RenderPartial("_Index", Model);
         }
-
     </div>
-
 </div>
-
+<div class="modal fade" id="myModal">
+    <div id="dvCreatedetails">
+    </div>
+</div>
 @section scripts{
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-
-
     <script type="text/javascript">
         function searchData() {
             debugger;
+           // alert($('#OrderNumber1').val())
             var obj = {};
-
             obj.OrderNumber = $('#OrderNumber').val();
+            obj.OrderNumber1 = $('#OrderNumber1').val();
             obj.SupplierName = $('#SupplierName').val();
             obj.BuyerName = $('#BuyerName').val();
             obj.OrderDate = $('#OrderDate').val();
             obj.IsActive = true;
-
             $.ajax({
                 url: '/Admin/PurchaseOrder/_Index',
                 type: 'POST',
@@ -125,25 +114,21 @@
                 error: function (xhr, status) {
                     alert(status)
                 }
-
             });
             return false;
         }
-
  $(document).on("click", "a[href^='/Admin/PurchaseOrder/_Index?page']", function () {
-
             debugger
             var obj = {};
-            obj.OrderNumber= $('#OrderNumber').val();
+     obj.OrderNumber1 = $('#OrderNumber1').val();
+     obj.OrderNumber = $('#OrderNumber').val();
             obj.SupplierName = $('#SupplierName').val();
             obj.BuyerName = $('#BuyerName').val();
             obj.OrderDate = $('#OrderDate').val();
             obj.IsActive = true;
-
             $.ajax({
                 type: "POST",
                 url: $(this).attr("href"),
-
                 data: obj,
                 success: function (result) {
                     $('.dvUserDetails').html(result);
@@ -152,10 +137,50 @@
                 error: function (xhr, status) {
                     alert(status)
                 }
-
             });
             return false;
  });
-        
+        $('#OrderDate').datepicker({
+            dateFormat: 'yy-mm-dd'
+        });
+        function Comment(data) {
+            var id = data;
+            $.ajax({
+                type:"POST",
+                url: '/Admin/PurchaseOrder/getComment/' + id,
+                success: function (result) {
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            })
+        }
+        function CancelOrder(event) {
+            debugger
+            var id = event.target.parentElement.parentElement.children[0].innerText;
+//alert(id);
+            var status = event.target.parentElement.parentElement.children[11].innerText;
+            if (status ==="Complete" || status==="Pending") {
+                $.ajax({
+                    type:"GET",
+                    url: '/admin/purchaseorder/cancelled/' + id,
+                    success: function (result) {
+                        debugger
+                        if (result.PurchaseOrderStatusId == 4) {
+                            alert("your order is cancelled.");
+                            
+                        }
+                        
+                        window.location.reload();
+                    }
+                })
+            } else if (status === "Cancelled") {
+                alert("Your Order is already cancelled.")
+            }
+            else if (status ==="Placed") {
+                alert("Your order is placed, you can not cancel order.")
+            }
+        }
     </script>
 }

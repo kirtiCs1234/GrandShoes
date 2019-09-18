@@ -309,5 +309,6 @@ namespace Services.Service
             var data= ServerResponse.Invoke<DropDownProductListModel>("api/product/getDropDownList", "", "GET");
             return data;
         }
+       
     }
 }

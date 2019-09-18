@@ -22,7 +22,6 @@ namespace Model
         public string ProductCat3 { get; set; }
         public string ProductCat4 { get; set; }
         public string Color { get; set; }
-
         public int? SizeGridId { get; set; }
         public int? SeasonId { get; set; }
         public int? YearId { get; set; }

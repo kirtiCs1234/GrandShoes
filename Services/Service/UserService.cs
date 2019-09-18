@@ -158,7 +158,17 @@ namespace Services.Service
             var body = JsonConvert.SerializeObject(userModel);
             bool UserResetPassword = ServerResponse.Invoke<bool>("api/user/resetPassword?id=" + userModel.Id, body, "Post");
             return UserResetPassword;
-
+        }
+        
+        public Dictionary<int, bool> CheckEmailDict(Dictionary<int, string> list)
+        {
+            return ServerResponse.Invoke<Dictionary<int, bool>>("api/user/checkUser", JsonConvert.SerializeObject(list), "Post");
+        }
+        public Dictionary<int, Tuple<string, string, string, string>> UserImportFilter(Dictionary<int, Tuple<string,string, string, string>> list)
+        {
+            var body = JsonConvert.SerializeObject(list);
+            var obj = ServerResponse.Invoke<Dictionary<int, Tuple<string, string, string, string>>>("api/product/getUserImportFilter", body, "POST");
+            return obj;
         }
     }
 }

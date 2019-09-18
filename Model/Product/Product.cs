@@ -19,7 +19,6 @@ namespace Model
         public string StyleSKU { get; set; }
         public string LongDescription { get; set; }
         public string ShortDescription { get; set; }
-        [Required(ErrorMessage ="Please Enter Size Grid No.")]
         public int? SizeGridID { get; set; }
         public string RecommendedSellingPrice { get; set; }
         [Required(ErrorMessage ="Please Enter Actual Selling Price.")]
@@ -62,6 +61,7 @@ namespace Model
         public string UpdatedOn { get; set; }
         [Required(ErrorMessage = "Please Enter Color")]
         public int? ColorID { get; set; }
+        [Required(ErrorMessage ="Please Select Image.")]
         public string PrimaryImage { get; set; }
         public string Image1 { get; set; }
         public string Image2 { get; set; }
@@ -71,7 +71,6 @@ namespace Model
         public int? End { get; set; }
         public string AutocompleteSupplierCode { get; set; }
         public string AutocompleteProductSKU { get; set; }
-        [Required(ErrorMessage ="Please Enter Available Sizes.")]
         public string AvailableSize { get; set; }
         public IEnumerable<SizeGridModel> Sizes { get; set; }
         public string[] SelectedSizes { get; set; }

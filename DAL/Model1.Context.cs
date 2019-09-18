@@ -12,11 +12,13 @@ namespace DAL
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class GrandShoesEntities : DbContext
     {
         public GrandShoesEntities()
-            : base("name=GrandShoesEntities")
+            : base("GrandShoesEntities")
         {
         }
     
@@ -35,6 +37,8 @@ namespace DAL
         public virtual DbSet<Buyer> Buyers { get; set; }
         public virtual DbSet<CartonManagement> CartonManagements { get; set; }
         public virtual DbSet<CartonManagementDetail> CartonManagementDetails { get; set; }
+        public virtual DbSet<CartonMgmtDetailsStockTransfer> CartonMgmtDetailsStockTransfers { get; set; }
+        public virtual DbSet<CartonMgmtStockTransfer> CartonMgmtStockTransfers { get; set; }
         public virtual DbSet<Cluster> Clusters { get; set; }
         public virtual DbSet<ClusterBranch> ClusterBranches { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
@@ -48,6 +52,7 @@ namespace DAL
         public virtual DbSet<IBTDetail> IBTDetails { get; set; }
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<LayBaySale> LayBaySales { get; set; }
+        public virtual DbSet<LaybyeSale> LaybyeSales { get; set; }
         public virtual DbSet<LengthMeasure> LengthMeasures { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<MarkDown> MarkDowns { get; set; }
@@ -84,8 +89,10 @@ namespace DAL
         public virtual DbSet<SizeGrid> SizeGrids { get; set; }
         public virtual DbSet<SizeParameter> SizeParameters { get; set; }
         public virtual DbSet<SMIBranchDefault> SMIBranchDefaults { get; set; }
+        public virtual DbSet<Staff> Staffs { get; set; }
         public virtual DbSet<StaffCommition> StaffCommitions { get; set; }
         public virtual DbSet<StaffMember> StaffMembers { get; set; }
+        public virtual DbSet<StaffRole> StaffRoles { get; set; }
         public virtual DbSet<StaffStatu> StaffStatus { get; set; }
         public virtual DbSet<StockAudit> StockAudits { get; set; }
         public virtual DbSet<StockBranchInventory> StockBranchInventories { get; set; }
@@ -97,17 +104,34 @@ namespace DAL
         public virtual DbSet<StockSupplierTransaction> StockSupplierTransactions { get; set; }
         public virtual DbSet<StockTape> StockTapes { get; set; }
         public virtual DbSet<StockTransactionType> StockTransactionTypes { get; set; }
+        public virtual DbSet<StockTransferDetail> StockTransferDetails { get; set; }
+        public virtual DbSet<StockWarehouseTransaction> StockWarehouseTransactions { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Synchronise> Synchronises { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Template> Templates { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<TrasactionReference> TrasactionReferences { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Year> Years { get; set; }
         public virtual DbSet<t1> t1 { get; set; }
         public virtual DbSet<table1> table1 { get; set; }
-        public virtual DbSet<CartonMgmtDetailsStockTransfer> CartonMgmtDetailsStockTransfers { get; set; }
-        public virtual DbSet<CartonMgmtStockTransfer> CartonMgmtStockTransfers { get; set; }
-        public virtual DbSet<StockTransferDetail> StockTransferDetails { get; set; }
+        public virtual DbSet<View_RemainingStockByBranchByProduct> View_RemainingStockByBranchByProduct { get; set; }
+    
+        public virtual ObjectResult<SPGet_Data_For_Suggestions_Result> SPGet_Data_For_Suggestions(Nullable<System.DateTime> dateFrom, Nullable<System.DateTime> dateTO, Nullable<int> productId)
+        {
+            var dateFromParameter = dateFrom.HasValue ?
+                new ObjectParameter("dateFrom", dateFrom) :
+                new ObjectParameter("dateFrom", typeof(System.DateTime));
+    
+            var dateTOParameter = dateTO.HasValue ?
+                new ObjectParameter("dateTO", dateTO) :
+                new ObjectParameter("dateTO", typeof(System.DateTime));
+    
+            var productIdParameter = productId.HasValue ?
+                new ObjectParameter("productId", productId) :
+                new ObjectParameter("productId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGet_Data_For_Suggestions_Result>("SPGet_Data_For_Suggestions", dateFromParameter, dateTOParameter, productIdParameter);
+        }
     }
 }

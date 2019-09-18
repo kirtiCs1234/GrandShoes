@@ -66,10 +66,6 @@ namespace POSApi.Controllers
         [ResponseType(typeof(SMIBranchDefault))]
         public IHttpActionResult SMIBranchDefault(SMIBranchDefaultModel model)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
             foreach (var item in model.BranchDestination)
             {
                 var SMIBranch = new SMIBranchDefault();
@@ -79,18 +75,14 @@ namespace POSApi.Controllers
                 SMIBranch.Distance = Convert.ToDecimal(item.Distance);
                 SMIBranch.IsPreferredRoute = true;
                 SMIBranch.IsActive = true;
-
-               // SMIBranch.LogId = CommonFunction.LogMethods("DSdf", "1", 1);
                 if (item.Id == 0)
                 {
                     if (item.Distance != null)
                     {
-                        //model.LogId = CommonFunction.LogMethods("DSdf", 1, 1);
                         db.SMIBranchDefaults.Add(SMIBranch);
                         db.SaveChanges();
                     }
                 }
-
                 if (item.Id != 0)
                 {
                     db.Entry(SMIBranch).State = EntityState.Modified;
@@ -98,8 +90,6 @@ namespace POSApi.Controllers
                 }
             }
             return Ok(model);
-            //return StatusCode(HttpStatusCode.NoContent);
         }
-       
     }
 }

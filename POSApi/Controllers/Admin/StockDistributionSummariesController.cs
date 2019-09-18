@@ -28,7 +28,7 @@ namespace POSApi.Controllers.Admin
         [Route("getDetails")]
         public List<StockDistributionSummary> GetStockDistributionSummaries()
         {
-            var list = db.StockDistributionSummaries.Where(x=>x.IsActive==true);
+            var list = db.StockDistributionSummaries.Where(x=>x.IsActive==false);
             return list.ToList();
         }
         [HttpGet]

@@ -211,6 +211,7 @@
     <Compile Include="Report\TransactionEnquiry.cs" />
     <Compile Include="Role\Role.cs" />
     <Compile Include="SalesOrderItem\SalesOrderItemModel.cs" />
+    <Compile Include="SalesOrderItem\SalesWeeklyData.cs" />
     <Compile Include="SalesOrder\SalesOrderModel.cs" />
     <Compile Include="SalesTransaction\SalesTransactionModel.cs" />
     <Compile Include="Season\SeasonModel.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="Staff\StaffSerach.cs" />
     <Compile Include="StockAudit\StockAudit.cs" />
     <Compile Include="StockBranchInventory\StockBranchInventory.cs" />
+    <Compile Include="StockBranchTransaction\StockBranchTransactionModel.cs" />
     <Compile Include="StockDistributionConfirmData\StockDistributionConfirmData.cs" />
     <Compile Include="StockDistributionStatus\StockDistributionStatusModel.cs" />
     <Compile Include="StockDistributionSummary\StockDistributionSummary.cs" />
@@ -242,7 +244,9 @@
     <Compile Include="StockInventory\StockInventory.cs" />
     <Compile Include="StockTape\FormDataModel.cs" />
     <Compile Include="StockTape\StockTape.cs" />
+    <Compile Include="StockTransactionTypeModel\StockTransactionTypeModel.cs" />
     <Compile Include="StockVariance\StockVariance.cs" />
+    <Compile Include="StockWarehouseTransaction\StockWarehouseTransactionModel.cs" />
     <Compile Include="StoreDeliveryReport\StoreDeliveryReport.cs" />
     <Compile Include="Supplier\Supplier.cs" />
     <Compile Include="Supplier\SupplierExcelData.cs" />
@@ -251,6 +255,7 @@
     <Compile Include="Template\BarcodeDesignModel.cs" />
     <Compile Include="Template\ManageTemplate.cs" />
     <Compile Include="Template\TemplateModel.cs" />
+    <Compile Include="TransactionReference\TrasactionReferenceModel.cs" />
     <Compile Include="Transaction\TransactionModel.cs" />
     <Compile Include="UserSearch\UserSearch.cs" />
     <Compile Include="User\User.cs" />

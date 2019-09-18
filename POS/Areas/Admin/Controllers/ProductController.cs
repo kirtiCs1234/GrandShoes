@@ -23,7 +23,8 @@ namespace POS.Areas.Admin.Controllers
         // GET: Admin/Product
         ServiceClass sc = new ServiceClass();
 		public ActionResult Index()
-		{
+
+        {
             var pData = TempData["ProcessData"];
             if(pData != null)
             {
@@ -54,7 +55,17 @@ namespace POS.Areas.Admin.Controllers
 			var ReceiptItem = Services.ReceiptOrderService.GetReceiptItemById(id);
 			return View(ReceiptItem);
 		}
-		public ActionResult TreeView(int id)
+        public ActionResult GetOrderById(int id)
+        {
+            var ReceiptItem = Services.PurchaseOrderItemsService.GetById(id);
+            return View(ReceiptItem);
+        }
+        public ActionResult GetDistributionById(int? id)
+        {
+            var data = Services.StockDistributionService.GetById(id);
+            return View(data);
+        }
+        public ActionResult TreeView(int id)
 		{
 			List<ViewDistribution> data = new List<ViewDistribution>();
 			// var StockSummary = Services.StockDistributionService.GetByProductId(id);
@@ -140,14 +151,14 @@ namespace POS.Areas.Admin.Controllers
 			var markDown = Services.MarkDownService.GetAll();
 			var markDownPrev = markDown.Where(x => x.ProductSKU == productSku && x.StyleSKU == ProductModelById.StyleSKU).Count();
 			TempData["Number"] = markDownPrev;
-			var EffectiveDateLast = markDown.Where(x => x.ProductSKU.ToString() == productSku).LastOrDefault();
+			var EffectiveDateLast = markDown.Where(x => x.ProductSKU.ToString() == productSku).FirstOrDefault();
 			if (EffectiveDateLast == null)
 			{
 				TempData["Date"] = "";
 			}
 			else
 			{
-				TempData["Date"] = EffectiveDateLast.EffectiveDate;
+				TempData["Date"] = EffectiveDateLast.EffectiveDate.Substring(0,10);
 			}
 			if (ProductModelById.CreatedOn != null)
 			{
@@ -212,6 +223,7 @@ namespace POS.Areas.Admin.Controllers
 		{
             Dictionary<string, SelectList> seList = new Dictionary<string, SelectList>();
 			ProductModel productModel = new ProductModel();
+            productModel.CreatedOn = DateTime.UtcNow.ToShortDateString();
             DropDownProductListModel model = Services.ProductService.GetDropDownProductList();
              var ProdCat1ID = new SelectList(model.Cat1List, "Id", "CateName");
             var ProdCat2ID = new SelectList(model.Cat2List, "Id", "CateName");
@@ -416,8 +428,8 @@ namespace POS.Areas.Admin.Controllers
                                 ProductImport pi = new ProductImport();
                                 var model = new ProductModel();
                                 var rowsplit = row.Split(',');
-                                model.ProductSKU = rowsplit[0];
-                                model.StyleSKU = rowsplit[1];
+                                model.ProductSKU = rowsplit[0].ToString();
+                                model.StyleSKU = rowsplit[1].ToString();
                                 if (model.StyleSKU.Length < 4)
                                 {
                                     var s = model.StyleSKU.Length;
@@ -427,61 +439,61 @@ namespace POS.Areas.Admin.Controllers
                                         s++;
                                     }
                                 }
-                                process.Add(i + "#" + rowsplit[0] + "#" + model.StyleSKU, "");
-                                model.LongDescription = rowsplit[2];
-                                model.ShortDescription = rowsplit[3];
-                                var SizeGridNo = rowsplit[4];
-                                pi.SizeGridNo = rowsplit[4];
-                                model.RecommendedSellingPrice = rowsplit[5];
-                                model.ActualSellingPrice = rowsplit[6];
+                                process.Add(i + "#" + rowsplit[0].ToString() + "#" + model.StyleSKU, "");
+                                model.LongDescription = rowsplit[2].ToString();
+                                model.ShortDescription = rowsplit[3].ToString();
+                                var SizeGridNo = rowsplit[4].ToString();
+                                pi.SizeGridNo = rowsplit[4].ToString();
+                                model.RecommendedSellingPrice = rowsplit[5].ToString();
+                                model.ActualSellingPrice = rowsplit[6].ToString();
                                 model.IsVPI = rowsplit[7].Equals("1") ? true : false;
                                 model.IsMarkDown = rowsplit[8].Equals("1") ? true : false;
-                                var SeasonCode = rowsplit[9];
-                                pi.Season = rowsplit[9];
+                                var SeasonCode = rowsplit[9].ToString();
+                                pi.Season = rowsplit[9].ToString();
                                 // model.SeasonID = Services.SeasonService.GetSeasonId(SeasonCode)?.Id;
-                                var year = rowsplit[10];
-                                pi.Year = rowsplit[10];
+                                var year = rowsplit[10].ToString();
+                                pi.Year = rowsplit[10].ToString();
                                 //  model.YearID = Services.ProductService.GetYearId(year)?.Id;
-                                var productSource = rowsplit[11];
-                                pi.ProductSource = rowsplit[11];
+                                var productSource = rowsplit[11].ToString();
+                                pi.ProductSource = rowsplit[11].ToString();
                                 //model.ProductSourceID = Services.ProductSourceService.GetProductSourceId(productSource)?.Id;
 
-                                model.SupplierStyle = rowsplit[12];
-                                var supplier = rowsplit[13];
-                                pi.Supplier = rowsplit[13];
+                                model.SupplierStyle = rowsplit[12].ToString();
+                                var supplier = rowsplit[13].ToString();
+                                pi.Supplier = rowsplit[13].ToString();
                                 //model.SupplierID = Services.SupplierService.GetSupplierId(supplier)?.Id;
 
-                                var buyer = rowsplit[14];
-                                pi.Buyer = rowsplit[14];
+                                var buyer = rowsplit[14].ToString();
+                                pi.Buyer = rowsplit[14].ToString();
                                 //    model.BuyerID = Services.BuyerService.GetBuyerId(buyer)?.Id;
 
-                                model.CostPriceUSD = rowsplit[15];
-                                model.CostPrice = rowsplit[16];
+                                model.CostPriceUSD = rowsplit[15].ToString();
+                                model.CostPrice = rowsplit[16].ToString();
                                 model.IsAllowZero = rowsplit[17].Equals("1") ? true : false;
-                                var template = rowsplit[18];
-                                pi.DefaultTemplate = rowsplit[18];
+                                var template = rowsplit[18].ToString();
+                                pi.DefaultTemplate = rowsplit[18].ToString();
                                 //   model.DefaultTemplateID = Services.TemplateService.GetTemplateId(template)?.Id;
 
-                                var markdown = rowsplit[19];
-                                pi.MarkdownTemplate = rowsplit[19];
+                                var markdown = rowsplit[19].ToString();
+                                pi.MarkdownTemplate = rowsplit[19].ToString();
                                 //   model.MarkDownTemplateID = Services.TemplateService.GetTemplateId(markdown)?.Id;
 
-                                model.IsFreeGift = rowsplit[20];
+                                model.IsFreeGift = rowsplit[20].ToString();
                                 model.IsConsignment = rowsplit[21].Equals("1") ? true : false;
                                 model.IsDiscontinue = rowsplit[22].Equals("1") ? true : false;
-                                model.CreatedOn = rowsplit[23];
-                                model.UpdatedOn = rowsplit[24];
-                                var prodCat1 = rowsplit[25];
-                                pi.ProductCat1 = rowsplit[25];
+                                model.CreatedOn = rowsplit[23].ToString();
+                                model.UpdatedOn = rowsplit[24].ToString();
+                                var prodCat1 = rowsplit[25].ToString();
+                                pi.ProductCat1 = rowsplit[25].ToString();
                                 //  model.ProdCat1ID = Services.ProductCategoryService.GetIdCat1(prodCat1)?.Id;
-                                var prodCat2 = rowsplit[26];
-                                pi.ProductCat2 = rowsplit[26];
+                                var prodCat2 = rowsplit[26].ToString();
+                                pi.ProductCat2 = rowsplit[26].ToString();
                                 // model.ProdCat2ID = Services.ProductCategoryService.GetIdCat2(prodCat2)?.Id;
-                                var prodCat3 = rowsplit[27];
-                                pi.ProductCat3 = rowsplit[27];
+                                var prodCat3 = rowsplit[27].ToString();
+                                pi.ProductCat3 = rowsplit[27].ToString();
                                 //   model.ProdCat3ID = Services.ProductCategoryService.GetIdCat3(prodCat3)?.Id;
-                                var prodCat4 = rowsplit[28];
-                                pi.ProductCat4 = rowsplit[28];
+                                var prodCat4 = rowsplit[28].ToString();
+                                pi.ProductCat4 = rowsplit[28].ToString();
                                 //   model.ProdCat4ID = Services.ProductCategoryService.GetIdCat4(prodCat4)?.Id;
                                 var count = rowsplit.Length;
                                 for (int j = 29; j < count - 1; j++)
@@ -494,18 +506,11 @@ namespace POS.Areas.Admin.Controllers
                                 ////model.AvailableSize = model.AvailableSize.Remove('"',null);
                                 var color = rowsplit[count - 1];
                                 pi.Color = rowsplit[count - 1];
-                                //  model.ColorID = Services.ColorService.GetColorId(color)?.Id;
-                                //var body = Newtonsoft.Json.JsonConvert.SerializeObject(pi)
-                               
-                                //ServerResponse.Invoke<int>("api/product/getProductImportFilter",body,"POST");
-
                                 model.Barcode = model.StyleSKU + model.ProductSKU + color;
                                 model.Barcode = model.Barcode.Replace("\r", "");
                                 model.IsActive = true;
-                                string chk1 = rowsplit[0];
-
+                                string chk1 = rowsplit[0].ToString();
                                 string chk2 = model.StyleSKU;
-
                                 if (model.ProductSKU.Length == 3 && model.StyleSKU.Length == 4)
                                 {
                                     tempProducts.Add(i, model);
@@ -514,7 +519,7 @@ namespace POS.Areas.Admin.Controllers
                                 }
                                 else
                                 {
-                                    process[i + "#" + rowsplit[0] + "#" + model.StyleSKU] = "Check the ProductSKU Length";
+                                    process[i + "#" + rowsplit[0].ToString() + "#" + model.StyleSKU] = "Check the ProductSKU Length";
                                 }
                             }
                         }
@@ -533,7 +538,6 @@ namespace POS.Areas.Admin.Controllers
                 }
 
                 var check = Services.ProductService.ProductCheckFilter(SKU);//ServerResponse.Invoke<Dictionary<int, bool>>("api/product/getProductCheckFilter", body2, "POST");
-
                 if (tempProducts != null && tempProducts.Count > 0)
                 {
                     foreach (var item in tempProducts)
@@ -710,14 +714,14 @@ namespace POS.Areas.Admin.Controllers
 			var markDown = Services.MarkDownService.GetAll();
 			var markDownPrev = markDown.Where(x => x.ProductSKU == productSku && x.StyleSKU == ProductModelById.StyleSKU).Count();
 			TempData["Number"] = markDownPrev;
-			var EffectiveDateLast = markDown.Where(x => x.ProductSKU.ToString() == productSku).LastOrDefault();
+			var EffectiveDateLast = markDown.Where(x => x.ProductSKU.ToString() == productSku).FirstOrDefault();
 			if (EffectiveDateLast == null)
 			{
 				TempData["Date"] = "";
 			}
 			else
 			{
-				TempData["Date"] = EffectiveDateLast.EffectiveDate;
+				TempData["Date"] = EffectiveDateLast.EffectiveDate.Substring(0,10);
 			}
 			ViewBag.PrimaryImage = ProductModelById.PrimaryImage;
 			ProductModelById.CreatedOn = ProductModelById.CreatedOn?.ToString();
@@ -1308,22 +1312,23 @@ namespace POS.Areas.Admin.Controllers
                 }
             }
             var avalableSize = data.AvailableSize;
+            if (avalableSize != null) { 
             string[] strArray = avalableSize.Split(',');
-            foreach(var item in strArray)
-            {
-                var DictValue = result.Where(x => x.Value.Equals(item)).FirstOrDefault();
-                if (DictValue.Value != null)
+                foreach (var item in strArray)
                 {
-                    if (Convert.ToInt16(DictValue.Key) < 10)
+                    var DictValue = result.Where(x => x.Value.Equals(item)).FirstOrDefault();
+                    if (DictValue.Value != null)
                     {
-                        gridSizes.Add("0" + DictValue.Key, DictValue.Value);
-                    }
-                    else
-                    {
-                        gridSizes.Add(DictValue.Key, DictValue.Value);
+                        if (Convert.ToInt16(DictValue.Key) < 10)
+                        {
+                            gridSizes.Add("0" + DictValue.Key, DictValue.Value);
+                        }
+                        else
+                        {
+                            gridSizes.Add(DictValue.Key, DictValue.Value);
+                        }
                     }
                 }
-                
             }
             ViewBag.CreateSize = new SelectList(gridSizes, "Key", "Value");
             //var model = db.Result<TemplateModel>("api/template/getOne?id=" + TemplateId, "", "GET");
@@ -1394,6 +1399,10 @@ namespace POS.Areas.Admin.Controllers
         public ActionResult ViewPurchaseOrder(int? id)
         {
             var list = Services.PurchaseOrderItemsService.GetByProductId(id);
+            foreach(var item in list)
+            {
+                item.PurchaseOrder.OrderDate = item.PurchaseOrder.OrderDate.Substring(0, 10);
+            }
             return View(list);
         }
         public ActionResult ViewReceiptOrder(int? id)
@@ -1417,6 +1426,103 @@ namespace POS.Areas.Admin.Controllers
         {
             bool status = Services.ProductService.Check(model);
             return Json(status,JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult MarkDown(int? id)
+        {
+            var BranchList = Services.BranchService.GetAll();
+            ViewBag.BranchId = new SelectList(BranchList, "Id", "BranchCode");
+            var data = Services.StockBranchInventoryService.GetByProduct(id);
+            var markDown = Services.MarkDownService.GetAll();
+            if (data.Count() > 0)
+            {
+                var markDownPrev = markDown.Where(x => x.ProductSKU == data.FirstOrDefault().Product.ProductSKU && x.StyleSKU == data.FirstOrDefault().Product.StyleSKU).Count();
+                TempData["Number"] = markDownPrev;
+
+
+                var EffectiveDateLast = markDown.Where(x => x.ProductSKU.ToString() == data.FirstOrDefault().Product.ProductSKU).FirstOrDefault();
+                if (EffectiveDateLast == null)
+                {
+                    TempData["Date"] = "";
+                }
+                else
+                {
+                    TempData["Date"] = EffectiveDateLast.EffectiveDate.Substring(0, 10);
+                }
+            }
+            return View(data);
+        }
+        public ActionResult ViewPrintMarkDown(int? id)
+        {
+            var BranchList = Services.BranchService.GetAll();
+            ViewBag.BranchId = new SelectList(BranchList, "Id", "BranchCode");
+            var data = Services.StockBranchInventoryService.GetByProduct(id);
+            var markDown = Services.MarkDownService.GetAll();
+            if (data.Count() > 0)
+            {
+                var markDownPrev = markDown.Where(x => x.ProductSKU == data.FirstOrDefault().Product.ProductSKU && x.StyleSKU == data.FirstOrDefault().Product.StyleSKU).Count();
+                TempData["Number"] = markDownPrev;
+
+
+                var EffectiveDateLast = markDown.Where(x => x.ProductSKU.ToString() == data.FirstOrDefault().Product.ProductSKU).FirstOrDefault();
+                if (EffectiveDateLast == null)
+                {
+                    TempData["Date"] = "";
+                }
+                else
+                {
+                    TempData["Date"] = EffectiveDateLast.EffectiveDate.Substring(0, 10);
+                }
+            }
+            return View(data);
+        }
+        public ActionResult ViewBranchSales(int? id)
+        {
+            var stockBranch = Services.StockBranchInventoryService.GetByProduct(id);
+            var salesOrderItem = Services.SalesOrderItemService.GetByProduct(id);
+            foreach (var item in stockBranch)
+            {
+                int? Quantity = 0;
+                var data1 = salesOrderItem.Where(x => x.SalesOrder.BranchId == item.BranchId).ToList();
+                foreach(var data in data1)
+                {
+                    Quantity += data.Quantity;
+                    
+                }
+                item.Quantity = Quantity;
+                item.LastSale = data1.FirstOrDefault().SalesOrder.TransactionDate.ToString().Substring(0,10);
+                item.UpdateTime = item.UpdateTime.ToString().Replace("T00:00:00", "");
+            }
+            return View(stockBranch);
+        }
+        public ActionResult ViewWeeklySales(int? id)
+        {
+            var salesOrderItem = Services.SalesOrderItemService.GetWeeklySales(id);
+            return View(salesOrderItem);
+        }
+        public ActionResult ViewAllSales(int? id)
+        {
+            var stockBranch = Services.StockBranchInventoryService.GetByProduct(id);
+            var salesOrderItem = Services.SalesOrderItemService.GetByProduct(id);
+            foreach (var item in stockBranch)
+            {
+                int? Quantity = 0;
+                var data1 = salesOrderItem.Where(x => x.SalesOrder.BranchId == item.BranchId).ToList();
+                foreach (var data in data1)
+                {
+                    Quantity += data.Quantity;
+
+                }
+                item.Quantity = Quantity;
+                item.LastSale = data1.FirstOrDefault().SalesOrder.TransactionDate.ToString().Substring(0, 10);
+                item.UpdateTime = item.UpdateTime.ToString().Replace("T00:00:00", "");
+            }
+            ViewBag.WeeklyData =Services.SalesOrderItemService.GetWeeklySales(id);
+            return View(stockBranch);
+        }
+        public ActionResult SupplierInvoice(int? id)
+        {
+            var supplierInvoice = Services.ReceiptOrderService.GetReceiptByProduct(id);
+            return View(supplierInvoice);
         }
     }
 }

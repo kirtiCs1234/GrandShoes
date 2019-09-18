@@ -18,8 +18,8 @@ namespace DAL
         public StockDistributionSummary()
         {
             this.CartonManagements = new HashSet<CartonManagement>();
-            this.StockDistributions = new HashSet<StockDistribution>();
             this.CartonMgmtStockTransfers = new HashSet<CartonMgmtStockTransfer>();
+            this.StockDistributions = new HashSet<StockDistribution>();
         }
     
         public int Id { get; set; }
@@ -35,8 +35,8 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartonManagement> CartonManagements { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StockDistribution> StockDistributions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartonMgmtStockTransfer> CartonMgmtStockTransfers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockDistribution> StockDistributions { get; set; }
     }
 }

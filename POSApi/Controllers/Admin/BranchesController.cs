@@ -142,7 +142,6 @@ namespace POSApi.Controllers
                     }
                 }
             }
-
             return Ok(result);
         }
 
@@ -218,7 +217,7 @@ namespace POSApi.Controllers
         public IHttpActionResult BranchAutocomplete(string name)
         {
            // var list = db.StockDistributions.Where(x => x.IsActive == true).ToList();
-            var data = db.Branches.Where(x => x.Name.StartsWith(name)).ToList().Select(m => new BranchModel
+            var data = db.Branches.Where(x => x.Name.StartsWith(name) && x.IsActive==true).ToList().Select(m => new BranchModel
             {
                 Id = m.Id,
                 Name=m.Name
@@ -394,7 +393,28 @@ namespace POSApi.Controllers
 			return Ok(true);
            
         }
-
+        [HttpPost]
+        [Route("checkBranch")]
+        public IHttpActionResult CheckBranch(Dictionary<int, string> list)
+        {
+            var obj = new Dictionary<int, bool>();
+            if (list != null && list.Count > 0)
+            {
+                var branchList = db.Branches.Where(x => x.IsActive == true);
+                var code = list.Select(x => x.Value).Distinct().ToList();
+                if (code != null && code.Count > 0)
+                {
+                    branchList = branchList.Where(x => code.Contains(x.BranchCode));
+                }
+                var Branch = branchList.ToList();
+                foreach (var item in list)
+                {
+                    var result = Branch.Any(x => x.BranchCode == item.Value);
+                    obj.Add(item.Key, result);
+                }
+            }
+            return Ok(obj);
+        }
         // DELETE: api/Branches/5
         [HttpPost]
         [AllowAnonymous]

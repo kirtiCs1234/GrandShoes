@@ -129,11 +129,11 @@ namespace POS.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult ExcelUpload(SizeGridModel sizeGrid, HttpPostedFileBase ExcelFile)
         {
+            Dictionary<int,string> GridNumber = new Dictionary<int, string>();
             Dictionary<string, string> process = new Dictionary<string, string>();
             Dictionary<int, SizeGridModel> sizeGrids = new Dictionary<int, SizeGridModel>();
+            Dictionary<int, SizeGridModel> TempsizeGrids = new Dictionary<int, SizeGridModel>();
             Dictionary<int, SizeGridModel> updatesizeGrids = new Dictionary<int, SizeGridModel>();
-
-            //List<SizeGridModel> sizeGrids = new List<SizeGridModel>();
 			string filePath = string.Empty;
 			if (ExcelFile != null)
 			{
@@ -156,70 +156,87 @@ namespace POS.Areas.Admin.Controllers
 						{
                             i++;
 							var model = new SizeGridModel();
-							model.GridNumber = row.Split(',')[0];
-							model.Z01 = Convert.ToInt32(row.Split(',')[1]);
-							model.Z02 = Convert.ToInt32(row.Split(',')[2]);
-							model.Z03 = Convert.ToInt32(row.Split(',')[3]);
-							model.Z04 = Convert.ToInt32(row.Split(',')[4]);
-							model.Z05 = Convert.ToInt32(row.Split(',')[5]);
-							model.Z06 = Convert.ToInt32(row.Split(',')[6]);
-							model.Z07 = Convert.ToInt32(row.Split(',')[7]);
-							model.Z08 = Convert.ToInt32(row.Split(',')[8]);
-							model.Z09 = Convert.ToInt32(row.Split(',')[9]);
-							model.Z10 = Convert.ToInt32(row.Split(',')[10]);
-							model.Z11 = Convert.ToInt32(row.Split(',')[11]);
-							model.Z12 = Convert.ToInt32(row.Split(',')[12]);
-							model.Z13 = Convert.ToInt32(row.Split(',')[13]);
-							model.Z14 = Convert.ToInt32(row.Split(',')[14]);
-							model.Z15 = Convert.ToInt32(row.Split(',')[15]);
-							model.Z16 = Convert.ToInt32(row.Split(',')[16]);
-							model.Z17 = Convert.ToInt32(row.Split(',')[17]);
-							model.Z18 = Convert.ToInt32(row.Split(',')[18]);
-							model.Z19 = Convert.ToInt32(row.Split(',')[19]);
-							model.Z20 = Convert.ToInt32(row.Split(',')[20]);
-							model.Z21 = Convert.ToInt32(row.Split(',')[21]);
-							model.Z22 = Convert.ToInt32(row.Split(',')[22]);
-							model.Z23 = Convert.ToInt32(row.Split(',')[23]);
-							model.Z24 = Convert.ToInt32(row.Split(',')[24]);
-							model.Z25 = Convert.ToInt32(row.Split(',')[25]);
-							model.Z26 = Convert.ToInt32(row.Split(',')[26]);
-							model.Z27 = Convert.ToInt32(row.Split(',')[27]);
-							model.Z28 = Convert.ToInt32(row.Split(',')[28]);
-							model.Z29 = Convert.ToInt32(row.Split(',')[29]);
-							model.Z30 = Convert.ToInt32(row.Split(',')[30]);
+                            var rowSplit = row.Split(',');
+							model.GridNumber = rowSplit[0].ToString();
+                            if (model.GridNumber.Length < 2)
+                            {
+                                var s = model.GridNumber.Length;
+                                while (s < 2)
+                                {
+                                    model.GridNumber = "0" + model.GridNumber;
+                                    s++;
+                                }
+                            }
+                            model.Z01 = Convert.ToInt32(rowSplit[1].ToString());
+							model.Z02 = Convert.ToInt32(rowSplit[2].ToString());
+							model.Z03 = Convert.ToInt32(rowSplit[3].ToString());
+							model.Z04 = Convert.ToInt32(rowSplit[4].ToString());
+							model.Z05 = Convert.ToInt32(rowSplit[5].ToString());
+							model.Z06 = Convert.ToInt32(rowSplit[6].ToString());
+							model.Z07 = Convert.ToInt32(rowSplit[7].ToString());
+							model.Z08 = Convert.ToInt32(rowSplit[8].ToString());
+							model.Z09 = Convert.ToInt32(rowSplit[9].ToString());
+							model.Z10 = Convert.ToInt32(rowSplit[10].ToString());
+							model.Z11 = Convert.ToInt32(rowSplit[11].ToString());
+							model.Z12 = Convert.ToInt32(rowSplit[12].ToString());
+							model.Z13 = Convert.ToInt32(rowSplit[13].ToString());
+							model.Z14 = Convert.ToInt32(rowSplit[14].ToString());
+							model.Z15 = Convert.ToInt32(rowSplit[15].ToString());
+							model.Z16 = Convert.ToInt32(rowSplit[16].ToString());
+							model.Z17 = Convert.ToInt32(rowSplit[17].ToString());
+							model.Z18 = Convert.ToInt32(rowSplit[18].ToString());
+							model.Z19 = Convert.ToInt32(rowSplit[19].ToString());
+							model.Z20 = Convert.ToInt32(rowSplit[20].ToString());
+							model.Z21 = Convert.ToInt32(rowSplit[21].ToString());
+							model.Z22 = Convert.ToInt32(rowSplit[22].ToString());
+							model.Z23 = Convert.ToInt32(rowSplit[23].ToString());
+							model.Z24 = Convert.ToInt32(rowSplit[24].ToString());
+							model.Z25 = Convert.ToInt32(rowSplit[25].ToString());
+							model.Z26 = Convert.ToInt32(rowSplit[26].ToString());
+							model.Z27 = Convert.ToInt32(rowSplit[27].ToString());
+							model.Z28 = Convert.ToInt32(rowSplit[28].ToString());
+							model.Z29 = Convert.ToInt32(rowSplit[29].ToString());
+							model.Z30 = Convert.ToInt32(rowSplit[30].ToString());
 							model.IsActive = true;
-							string chk = row.Split(',')[0];
-							bool isexists = Services.SizeGridService.CheckGridNo1(chk);
-							if (!isexists)
-							{
-								sizeGrids.Add(i,model);
-                                process[i + "#" + row.Split(',')[0]] = "Add";
-                            }
-							else
-							{
-                                updatesizeGrids.Add(i, model);
-                                process[i + "#" + row.Split(',')[0]] = "Update";
-                            }
-
-						}
+                            TempsizeGrids.Add(i, model);
+                            GridNumber.Add(i, model.GridNumber);
+                        }
 					}
-					catch (Exception ex)
-					{
-                        //error loging stuff
+                    catch (Exception ex)
+                    {
                         if (ex.Message != null)
                         {
                             process[i + "#" + row.Split(',')[0]] = ex.Message;
                         }
+                        else
+                        {
+                            process[i + "#" + row.Split(',')[0]] = "Error Adding the row";
+                        }
                     }
-				}
+                }
 			}
-			var addList = Services.SizeGridService.CreateList(sizeGrids);
+            var isexists = Services.SizeGridService.CheckGridNumber(GridNumber);
+            if (TempsizeGrids != null && TempsizeGrids.Count > 0)
+            {
+                foreach (var item in TempsizeGrids)
+                {
+                    if (isexists[item.Key] == false)
+                    {
+                        sizeGrids.Add(item.Key, item.Value);
+                        process[item.Key + "#" + item.Value.GridNumber] = "Add";
+                    }
+                    else
+                    {
+                        updatesizeGrids.Add(item.Key, item.Value);
+                        process[item.Key + "#" + item.Value.GridNumber] = "Update";
+                    }
+                }
+            }
+            var addList = Services.SizeGridService.CreateList(sizeGrids);
 			var updateList = Services.SizeGridService.UpdateList(updatesizeGrids);
             var dictionaryFrom = new Dictionary<string, string>();
-
             dictionaryFrom = sc.getFilterData(addList, updateList, process);
             TempData["ProcessData"] = dictionaryFrom;
-
             TempData["Success"] = "Data Uploaded Successfully!";
 			return RedirectToAction("Index", "SizeGrid");
 		}

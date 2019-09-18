@@ -12,45 +12,45 @@ namespace Model
     {
         public int ID { get; set; }
         public int PurchaseOrderId { get; set; }
-        
+        [Remote("CheckProduct", "PurchaseOrder", "Admin", ErrorMessage = "This product is already uses", AdditionalFields = "autoCompleteProductName")]
         public int? ProductId { get; set; }
+        public int? autoCompleteProductId { get; set; }
         public string ProductSKU { get; set; }
-		[Remote("CheckProduct", "PurchaseOrder", "Admin", ErrorMessage = "This product is already uses.", AdditionalFields = "ID")]
 		public string StyleSKU { get; set; }
         public Nullable<int> SizeGridId { get; set; }
         public Nullable<int> ColorId { get; set; }
         public string SuplierStyle { get; set; }
         public decimal? Amount { get; set; }
-        public Nullable<decimal> ItemSize1 { get; set; }
-        public Nullable<decimal> ItemSize2 { get; set; }
-        public Nullable<decimal> ItemSize3 { get; set; }
-        public Nullable<decimal> ItemSize4 { get; set; }
-        public Nullable<decimal> ItemSize5 { get; set; }
-        public Nullable<decimal> ItemSize6 { get; set; }
-        public Nullable<decimal> ItemSize7 { get; set; }
-        public Nullable<decimal> ItemSize8 { get; set; }
-        public Nullable<decimal> ItemSize9 { get; set; }
-        public Nullable<decimal> ItemSize10 { get; set; }
-        public Nullable<decimal> ItemSize11 { get; set; }
-        public Nullable<decimal> ItemSize12 { get; set; }
-        public Nullable<decimal> ItemSize13 { get; set; }
-        public Nullable<decimal> ItemSize14 { get; set; }
-        public Nullable<decimal> ItemSize15 { get; set; }
-        public Nullable<decimal> ItemSize16 { get; set; }
-        public Nullable<decimal> ItemSize17 { get; set; }
-        public Nullable<decimal> ItemSize18 { get; set; }
-        public Nullable<decimal> ItemSize19 { get; set; }
-        public Nullable<decimal> ItemSize20 { get; set; }
-        public Nullable<decimal> ItemSize21 { get; set; }
-        public Nullable<decimal> ItemSize22 { get; set; }
-        public Nullable<decimal> ItemSize23 { get; set; }
-        public Nullable<decimal> ItemSize24 { get; set; }
-        public Nullable<decimal> ItemSize25 { get; set; }
-        public Nullable<decimal> ItemSize26 { get; set; }
-        public Nullable<decimal> ItemSize27 { get; set; }
-        public Nullable<decimal> ItemSize28 { get; set; }
-        public Nullable<decimal> ItemSize29 { get; set; }
-        public Nullable<decimal> ItemSize30 { get; set; }
+        public string ItemSize1 { get; set; }
+        public string ItemSize2 { get; set; }
+        public string ItemSize3 { get; set; }
+        public string ItemSize4 { get; set; }
+        public string ItemSize5 { get; set; }
+        public string ItemSize6 { get; set; }
+        public string ItemSize7 { get; set; }
+        public string ItemSize8 { get; set; }
+        public string ItemSize9 { get; set; }
+        public string ItemSize10 { get; set; }
+        public string ItemSize11 { get; set; }
+        public string ItemSize12 { get; set; }
+        public string ItemSize13 { get; set; }
+        public string ItemSize14 { get; set; }
+        public string ItemSize15 { get; set; }
+        public string ItemSize16 { get; set; }
+        public string ItemSize17 { get; set; }
+        public string ItemSize18 { get; set; }
+        public string ItemSize19 { get; set; }
+        public string ItemSize20 { get; set; }
+        public string ItemSize21 { get; set; }
+        public string ItemSize22 { get; set; }
+        public string ItemSize23 { get; set; }
+        public string ItemSize24 { get; set; }
+        public string ItemSize25 { get; set; }
+        public string ItemSize26 { get; set; }
+        public string ItemSize27 { get; set; }
+        public string ItemSize28 { get; set; }
+        public string ItemSize29 { get; set; }
+        public string ItemSize30 { get; set; }
         public Nullable<int> QuantitySize1 { get; set; }
         public Nullable<int> QuantitySize2 { get; set; }
         public Nullable<int> QuantitySize3 { get; set; }
@@ -116,8 +116,10 @@ namespace Model
 		public bool IsActive { get; set; }
         public string OrderItemDate{ get; set; }
         [Required(ErrorMessage ="Enter Product style")]
+        [Remote("CheckProduct", "PurchaseOrder", "Admin", ErrorMessage = "This product is already uses.", AdditionalFields = "autoCompleteProductName")]
         public string autoCompleteProductStyleName { get; set; }
         [Required(ErrorMessage = "Enter Product name")]
+        [Remote("CheckProduct", "PurchaseOrder", "Admin", ErrorMessage = "This product is already uses.", AdditionalFields = "autoCompleteProductName")]
         public string autoCompleteProductName { get; set; }
         [Required(ErrorMessage = "Enter Grid size")]
         public string autoCompleteGridName { get; set; }

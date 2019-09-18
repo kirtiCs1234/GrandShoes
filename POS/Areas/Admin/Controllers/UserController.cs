@@ -132,104 +132,107 @@ namespace POS.Areas.Admin.Controllers
 			return View();
 		}
 		[HttpPost]
-		public ActionResult ExcelUpload(SupplierModel supplier, HttpPostedFileBase ExcelFile)
+		public ActionResult ExcelUpload(UserModel user, HttpPostedFileBase ExcelFile)
 		{
+             var Email = new Dictionary<int, string>();
             Dictionary<string, string> process = new Dictionary<string, string>();
-
             Dictionary<int, UserModel> users = new Dictionary<int, UserModel>();
+            Dictionary<int, UserModel> TempUsers = new Dictionary<int, UserModel>();
             Dictionary<int, UserModel> updateusers = new Dictionary<int, UserModel>();
-
-            //List<UserModel> users = new List<UserModel>();
-			string filePath = string.Empty;
-			if (ExcelFile != null)
-			{
-				string path = Server.MapPath("~/File/");
-				if (!Directory.Exists(path))
-				{
-					Directory.CreateDirectory(path);
-				}
-				filePath = path + Path.GetFileName(ExcelFile.FileName);
-				string extension = Path.GetExtension(ExcelFile.FileName);
-				ExcelFile.SaveAs(filePath);
-				string csvData = System.IO.File.ReadAllText(filePath);
-				var csv = csvData.Split('\n').Length;
-				var row = csvData.Split('\n');
-				int i = 0;
+            string filePath = string.Empty;
+            if (ExcelFile != null)
+            {
+                string path = Server.MapPath("~/File/");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                filePath = path + Path.GetFileName(ExcelFile.FileName);
+                string extension = Path.GetExtension(ExcelFile.FileName);
+                ExcelFile.SaveAs(filePath);
+                string csvData = System.IO.File.ReadAllText(filePath);
+                var csv = csvData.Split('\n').Length;
+                var row = csvData.Split('\n');
+                int i = 0;
                 int j = 0;
-				for(i= 1;i<csv;i++)
-				{
-					try
-					{
-						if (!string.IsNullOrEmpty(row[i]) && !row[i].StartsWith(",,,,,"))
-						{
+                for (i = 1; i < csv; i++)
+                {
+                    try
+                    {
+                        if (!string.IsNullOrEmpty(row[i]) && !row[i].StartsWith(",,,,,"))
+                        {
                             j++;
-							var model = new UserModel();
-                            process.Add(j + "#" + row[i].Split(',')[1], "");
-                            var name = row[i].Split(',')[0];
-							string[] sizes = name.Split(' ');
-							int c = sizes.Count();
-							if (c == 3)
-							{
-								model.FirstName = sizes[0];
-								model.MiddleName = sizes[1];
-								model.LastName = sizes[2];
-							}
-							else if (c == 2)
-							{
-								model.FirstName = sizes[0];
-
-								model.LastName = sizes[1];
-							}
-							else if (c == 1)
-							{
-								model.FirstName = sizes[0];
-							}
-							model.Email = row[i].Split(',')[1];
-							model.Phone = row[i].Split(',')[2];
-							model.Password = row[i].Split(',')[3];
-							var roleName = row[i].Split(',')[4];
-							model.RoleID = Services.RoleService.GetByRoleName(roleName).Id;
-							var branchName = row[i].Split(',')[5];
-							model.BranchID = Services.BranchService.GetByName(branchName).Id;
-							model.IsVerified = row[i].Split(',')[6].Equals("1") ? true : false;
-							model.IsActive = true;
-							string chk = row[i].Split(',')[1];
-							bool isexists = Services.UserService.CheckEmail(chk);
-							if (!isexists)
-							{
-								users.Add(j,model);
-                                process[j + "#" + row[i].Split(',')[1]] = "Add";
-
+                            var rowSplit = row[i].Split(',');
+                            var model = new UserModel();
+                            process.Add(j + "#" + rowSplit[1], "");
+                            var name = rowSplit[0];
+                            string[] sizes = name.Split(' ');
+                            int c = sizes.Count();
+                            if (c == 3)
+                            {
+                                model.FirstName = sizes[0];
+                                model.MiddleName = sizes[1];
+                                model.LastName = sizes[2];
                             }
-							else
-							{
-                                updateusers.Add(j, model);
-                                process[j + "#" + row[i].Split(',')[1]] = "Update";
-                            }
+                            else if (c == 2)
+                            {
+                                model.FirstName = sizes[0];
 
-						}
-					}
-					catch (Exception ex)
-					{
+                                model.LastName = sizes[1];
+                            }
+                            else if (c == 1)
+                            {
+                                model.FirstName = sizes[0];
+                            }
+                            model.Email = rowSplit[1];
+                            model.Phone = rowSplit[2];
+                            model.Password = rowSplit[3];
+                            var roleName = rowSplit[4];
+                            model.RoleID = Services.RoleService.GetByRoleName(roleName).Id;
+                            var branchName = rowSplit[5];
+                            model.BranchID = Services.BranchService.GetByName(branchName).Id;
+                            model.IsVerified = rowSplit[6].Equals("1") ? true : false;
+                            model.IsActive = true;
+                            string chk = rowSplit[1];
+                            TempUsers.Add(i, model);
+                            Email.Add(i, model.Email);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
                         //error loging stuff
                         if (ex.Message != null)
                         {
                             process[j + "#" + row[i].Split(',')[1]] = ex.Message;
                         }
                     }
-				}
-			}
-			var addList = Services.UserService.CreateList(users);
+                }
+
+                var check = Services.UserService.CheckEmailDict(Email);
+                if (TempUsers != null && TempUsers.Count > 0)
+                {
+                    foreach (var item in TempUsers)
+                    {
+                        if (check[item.Key] == false)
+                        {
+                            users.Add(item.Key, item.Value);
+                            process[item.Key + "#" + item.Value.Email] = "Add";
+                        }
+                        else
+                        {
+                            updateusers.Add(item.Key, item.Value);
+                            process[item.Key + "#" + item.Value.Email] = "Update";
+                        }
+                    }
+                }
+            }
+            var addList = Services.UserService.CreateList(users);
             var updateList = Services.UserService.UpdateList(updateusers);
-
             var dictionaryFrom = new Dictionary<string, string>();
-
             dictionaryFrom = sc.getFilterData(addList, updateList, process);
             TempData["ProcessData"] = dictionaryFrom;
-
             TempData["Success"] = "Data Uploaded Successfully!";
 			return RedirectToAction("Index", "User");
-
 		}
 		public ActionResult ExportList()
 		{

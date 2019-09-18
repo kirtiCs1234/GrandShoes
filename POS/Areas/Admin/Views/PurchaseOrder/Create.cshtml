@@ -16,7 +16,7 @@
             </div>
             <div class="row" style="margin:0px;">
 
-                <div class="">
+                <div class="modal-body">
                     @if (@ViewBag.IsFinalize == true)
                     {
                         <p>Sorry this order is Finalized so new item can not be Add.</p>
@@ -48,17 +48,14 @@
                                                         <label>Style SKU</label>
                                                     </div>
                                                     <div class="col-md12 col-xs-12 col-sm-12">
-                                                        @Html.TextBoxFor(model => model.autoCompleteProductStyleName, new { @class = "form-control" })
+                                                        @Html.TextBoxFor(model => model.autoCompleteProductStyleName, new { @class = "form-control"})
                                                         <input id="autoCompleteProductStyleId" name="autoCompleteProductStyleId" type="hidden" />
                                                         @Html.ValidationMessageFor(Model => Model.autoCompleteProductStyleName, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
-
-
                                         </div>
                                     </div>
-
                                     <div class="col-md-6 col-xs-12 col-sm-12">
                                         <label>Grid No.</label>
                                         <div class="inverse-select  text-left">
@@ -136,8 +133,6 @@
         </div>
     </div>
 }
-
-
 <style>
     .ui-widget-content.ui-autocomplete {
         z-index: 9999 !important;
@@ -150,30 +145,6 @@
 		debugger
 		window.open('@Url.Content("~/Admin/Product/Index")');
 	}
-
-	var status = null;
-	 function checkProduct(productId) {
-	 	debugger
-		var obj = {};
-		obj.PurchaseOrderId = $("#PurchareOrderId").val();
-		//alert(productId);
-		obj.ProductId = productId;
-		var jsonstring = JSON.stringify(obj);
-		$.ajax({
-			url: '/Admin/PurchaseOrder/CheckProductByOrderId',
-			type: "POST",
-			contentType: "application/json; charset=utf-8",
-			// dataType: "json",
-			data: jsonstring,
-			success:function (result) {
-				debugger
-				status = result;
-				return result;
-			}
-		})
-
-	 }
-
     $("#purchaseorderItemForm").submit(function (e) {
         return false;
     });
@@ -197,13 +168,11 @@
             });
         },
         select: function (event, ui) {
-   debugger
+         debugger
             event.preventDefault();
             $("#autoCompleteProductName").val(ui.item.label);
             $("#autoCompleteProductId").val(ui.item.value);
-
         },
-
         minLength: 1
     });
     var StyleList = {};
@@ -213,7 +182,7 @@
     var autoCompleteGridId = 0;
     var CostPrice = 0;
     var Id = 0;
-    $("#autoCompleteProductStyleName").autocomplete({
+     $("#autoCompleteProductStyleName").autocomplete({
         source: function (request, response) {
             var id = $('#autoCompleteProductName').val();
             debugger
@@ -224,85 +193,108 @@
 
                 success: function (result) {
                     debugger
-    if(result.length==1 && request.term==result[0].StyleSKU){
-    debugger
-    FillData(result[0]);
-    }
-                    StyleList = $.map(result, function (value, key) {
-                    	return {
-                            value: value.Id,
-                            label: value.StyleSKU,
-                            label1: value.SupplierStyle,
-                            autoCompleteColorName:value.AutoCompleteColorCode,
-                            autoCompleteGridName: value.autoCompleteSizeGrid,
-                            autoCompleteGridId: value.SizeGridID,
-                            AvailableSize: value.AvailableSize,
-                            CostPrice: value.CostPrice,
-							Id:value.Id,
-                        };
-                    });
-                    response(StyleList);
-
+                    if (result.length == 1 && request.term == result[0].StyleSKU) {
+                        debugger
+                        FillData(result[0]);
+                    }
+                        StyleList = $.map(result, function (value, key) {
+                            return {
+                                value: value.Id,
+                                label: value.StyleSKU,
+                                label1: value.SupplierStyle,
+                                autoCompleteColorName: value.AutoCompleteColorCode,
+                                autoCompleteGridName: value.autoCompleteSizeGrid,
+                                autoCompleteGridId: value.SizeGridID,
+                                AvailableSize: value.AvailableSize,
+                                CostPrice: value.CostPrice,
+                                Id: value.Id,
+                            };
+                        });
+                        response(StyleList);
                 },
                 error: function (xhr, status) {
                     alert(status)
                 }
             });
         },
-
         select: function (event, ui) {
             debugger;
             AvailableProductsLists = [];
             AvailableProducts = "";
             event.preventDefault();
-           // alert(ui.item.value);
+            $("#autoCompleteProductStyleName").val(ui.item.label);
+            var table = document.getElementById("itemBody");
+            var rows = table.getElementsByTagName("tr");
+            var flag = false;
+            if (rows.length> 0) {
+                for (var i = 0; i < rows.length; i++) {
+                    var prodSKU = $('#itemBody tr')[i].cells[1].innerText;
+                    var styleSKU = $('#itemBody tr')[i].cells[2].innerText;
+                    if (ui.item.label == styleSKU && $("#autoCompleteProductName").val() == prodSKU) {
+                        debugger
+                        alert('This Product is already exist')
+                        $("#autoCompleteProductStyleName").val('');
+                        $("#autoCompleteProductName").val('');
+                        flag = true;
+                    } else {
+                        flag = false
+                    }
+                }
+            }
+            //var prodSKU = $('#itemBody tr')[0].cells[1].innerText;
+            //var styleSKU = $('#itemBody tr')[0].cells[2].innerText;
+          //  if (ui.item.label== styleSKU && $("#autoCompleteProductName").val() == prodSKU) {
+              //  debugger
+              //  alert('This Product is already exist.Please use another.')
+             //   $("#autoCompleteProductStyleName").val('');
+            //    $("#autoCompleteProductName").val('');
+            // } else {
+            if (!flag) {
+                $("#autoCompleteProductStyleId").val(ui.item.value);
+                $("#SuplierStyle").val(ui.item.label1);
+                $("#autoCompleteColorName").val(ui.item.autoCompleteColorName);
+                $("#autoCompleteGridName").val(ui.item.autoCompleteGridName);
+                $("#autoCompleteGridId").val(ui.item.autoCompleteGridId);
+                $("#unit").val(ui.item.CostPrice);
+                AvailableProducts = ui.item.AvailableSize;
+                if (AvailableProducts != null) {
+                    AvailableProductsLists = AvailableProducts.split(',');
+                }
+                var gridName = $("#autoCompleteGridName").val();
+                GetSizeGridListAutocomplete(gridName);
+                var Count = parseInt(AvailableProductsLists.length);
 
-            checkProduct(ui.item.value);
-            //if (!status) {
-            	$("#autoCompleteProductStyleName").val(ui.item.label);
-            	$("#autoCompleteProductStyleId").val(ui.item.value);
-            	$("#SuplierStyle").val(ui.item.label1);
-            	$("#autoCompleteColorName").val(ui.item.autoCompleteColorName);
-            	$("#autoCompleteGridName").val(ui.item.autoCompleteGridName);
-            	$("#autoCompleteGridId").val(ui.item.autoCompleteGridId);
-            	$("#unit").val(ui.item.CostPrice);
-            	AvailableProducts = ui.item.AvailableSize;
-            	if (AvailableProducts != null) {
-            		AvailableProductsLists = AvailableProducts.split(',');
-            	}
-            	var gridName = $("#autoCompleteGridName").val();
-            	GetSizeGridListAutocomplete(gridName);
-            	var Count = parseInt(AvailableProductsLists.length);
+                $("#myTable tbody tr").detach();
 
-            	$("#myTable tbody tr").detach();
+                for (i = 0; i < Count - 1; i++) {
+                    $('#myTable > tbody:last-child').append('<tr id="Row' + i + '"><td><input type="text" value="' + AvailableProductsLists[i] + '" style="width:120px;" class="form-control autoCompleteItem" id="autoCompleteItem' + i + '" " /></td><td><input type="number"  min="0" style="width:120px;" class="form-control classCalculate unitCost" onkeyup="calculatePrice()"  id="Quantity' + i + '" /></td><td><input type="text" style="width:120px;" class="form-control unitCost" onkeyup="calculatePrice()" id="UnitCost' + i + '" value="' + ui.item.CostPrice + '" readonly/></td><td style="width:70px;" class="text-right"><i class="fa fa-trash" id="DeletePrice" onclick="del(this)"></i><td><input id="ItemSize' + i + '" name="ItemSize" type="hidden"/></td></td></tr>');
+                }
 
-            	for (i = 0; i < Count - 1; i++) {
-            		$('#myTable > tbody:last-child').append('<tr id="Row' + i + '"><td><input type="text" value="' + AvailableProductsLists[i] + '" style="width:120px;" class="form-control autoCompleteItem" id="autoCompleteItem' + i + '" " /></td><td><input type="number"  min="0" style="width:120px;" class="form-control classCalculate unitCost" onkeyup="calculatePrice()"  id="Quantity' + i + '" /></td><td><input type="text" style="width:120px;" class="form-control unitCost" onkeyup="calculatePrice()" id="UnitCost' + i + '" value="' + ui.item.CostPrice + '" readonly/></td><td style="width:70px;" class="text-right"><i class="fa fa-trash" id="DeletePrice" onclick="del(this)"></i><td><input id="ItemSize' + i + '" name="ItemSize" type="hidden"/></td></td></tr>');
-            	}
+                $('#myTable').append('<tbody><tr id="AddNewItem"><td colspan="4" class="text-right"><i class="fa fa-plus-circle" onclick="AddRow(this)" aria-hidden="true"></i></td></tr>  ');
 
-            	$('#myTable').append('<tbody><tr id="AddNewItem"><td colspan="4" class="text-right"><i class="fa fa-plus-circle" onclick="AddRow(this)" aria-hidden="true"></i></td></tr>  ');
-
-            	debugger;
-            	$(".autoCompleteItem").autocomplete({
-            		source: AvailableProductsLists.map(item=> { return { label: item, value: AvailableProductsLists.indexOf(item) } }),
-            		select: function (event, AvailableProductsLists) {
-            			debugger;
-            			event.preventDefault();
-            			$(event.target).val(AvailableProductsLists.item.label);
-            			$(event.target).parents("tr").find("[id^='ItemSize']").val(AvailableProductsLists.item.value);
-            			var unitCost = $("#unit").val();
-            			$(event.target).parents("tr").find("[id^='UnitCost']").val(unitCost);
-            		},
-            		minLength: 1
-            	});
-        //}
-    //else {
+                debugger;
+                $(".autoCompleteItem").autocomplete({
+                    source: AvailableProductsLists.map(item => { return { label: item, value: AvailableProductsLists.indexOf(item) } }),
+                    select: function (event, AvailableProductsLists) {
+                        debugger;
+                        event.preventDefault();
+                        $(event.target).val(AvailableProductsLists.item.label);
+                        $(event.target).parents("tr").find("[id^='ItemSize']").val(AvailableProductsLists.item.value);
+                        var unitCost = $("#unit").val();
+                        $(event.target).parents("tr").find("[id^='UnitCost']").val(unitCost);
+                    },
+                    minLength: 1
+                });
+            }
+                //}
+                //else {
+           // }
     //        	alert("ABC");
     //        }
         },
         minLength: 0
     });
-
+   
     function FillData(item){
     debugger
       AvailableProductsLists = [];
@@ -419,13 +411,13 @@
 				var n = id.parentNode.parentNode.rowIndex - 2;
 				var n2 = n + 1;
 				for (i = 0; i <= n;i++) {
-					if ($("#autoCompleteItem" + i).val() == ItemList.item.label) {
+					if ($("#autoCompleteItem"+ i).val() == ItemList.item.label) {
 						debugger
 						status = false;
 						alert("Please dont enter dublicate size.");
 						$(event.target).val(" ");
-						$(event.target).parents("tr").find("[id^='UnitCost']").val(" ");
-
+                        $(event.target).parents("tr").find("[id^='UnitCost']").val(" ");
+                        $(event.target).parents("tr").remove();
 					} else {
 						status = true;
 						$(event.target).val(ItemList.item.label);
@@ -548,7 +540,7 @@
                 if (isNaN(Cost)) { Cost = 0; }
                 var SizeColumn = parseFloat($("#myTable,#FirstBody").find("[id^='Row']:nth-child(" + i + ")").find("[id^='ItemSize']").val());
                 if (isNaN(SizeColumn)) { SizeColumn = 0; }
-                if (Size && Quantity && Cost) {
+                if (Size || Quantity && Cost) {
                     purchareOrderItems["ItemSize" + j] = Size;
                     purchareOrderItems["QuantitySize" + j] = Quantity;
                     purchareOrderItems["CostSize" + j] = Cost;

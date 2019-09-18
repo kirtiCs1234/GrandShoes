@@ -16,7 +16,7 @@
             </div>
 						
             <div class="row" style="margin:0px;">
-                <div class=" ">
+                <div class="modal-body">
                     <div class="col-sm-12 col-md-12 col-xs-12">
 @if (@Model.IsFinalize)
 {
@@ -113,17 +113,17 @@ else
                                                 <tbody id="FirstBody">
                                                     @for (int i = 0; i <Model.ItemsCount; i++)
 													{
-														if (Model.Details[i].Size != 0)
+														if (Model.Details[i].Size != null && Model.Details[i].Quantity!=0)
 														{
-                                                            <tr id="Row">
+                                                            <tr id="Row_@i">
                                                                 <td>
-                                                                    <input type="text" value="@Model.Details[i].Size" style="width:120px;" class="form-control autoCompleteItem" id="autoCompleteItem" />
+                                                                    <input type="text" value="@Model.Details[i].Size" style="width:120px;" class="form-control autoCompleteItem" id="autoCompleteItem_@i" />
                                                                 </td>
                                                                 <td>
-                                                                    <input type="number" min="0" style="width:120px;" value="@Model.Details[i].Quantity" class="form-control classCalculate" onkeyup="calculatePrice()" id="Quantity" />
+                                                                    <input type="number" min="0" style="width:120px;" value="@Model.Details[i].Quantity" class="form-control classCalculate" onkeyup="calculatePrice()" id="Quantity_@i" />
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" style="width:120px;" value="@Model.Details[i].Cost" class="form-control " onkeyup="calculatePrice()" id="UnitCost" readonly/>
+                                                                    <input type="text" style="width:120px;" value="@Model.Details[i].Cost" class="form-control " onkeyup="calculatePrice()" id="UnitCost_@i" readonly/>
                                                                 </td>
                                                                 <td style="width:70px;" class="text-right">
                                                                     <i class="fa fa-trash" id="DeletePrice" onclick="del(this)"></i>
@@ -183,7 +183,34 @@ else {
 	function Redirect() {
 		debugger
 		window.open('@Url.Content("~/Admin/Product/Index")');
-	}
+    }
+    var status = null;
+    function CheckProduct() {
+        debugger
+        var obj = {};
+        obj.PurchaseOrderId = $("#PurchareOrderId").val();
+        //alert(productId);
+        obj.autoCompleteProductName = $("#autoCompleteProductName").val();
+        obj.autoCompleteProductStyleName = $("#autoCompleteProductStyleName").val();
+        var jsonstring = JSON.stringify(obj);
+        $.ajax({
+            url: '/Admin/PurchaseOrder/CheckProductByOrderId',
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            // dataType: "json",
+            data: jsonstring,
+            success: function (result) {
+                debugger
+                if (result) {
+                    alert("This Product is already exist.")
+                }
+                status = result;
+                return result;
+            }
+        })
+
+    }
+
     $("#UpdatePurchaseorderItemForm").submit(function (e) {
         return false;
     });
@@ -258,6 +285,7 @@ else {
     });
 
     function autoProductSuggestions() {
+        debugger
         $(".autoCompleteItem").autocomplete({
             source: AvailableProductsLists.map(item=> { return { label: item, value: AvailableProductsLists.indexOf(item) } }),
             select: function (event, AvailableProductsLists) {
@@ -282,7 +310,10 @@ else {
                 success: function (result) {
     if(result.length==1 && request.term==result[0].StyleSKU){
     debugger
-    FillData(result[0]);
+        CheckProduct();
+        if (!status) {
+            FillData(result[0]);
+        }
     }
                     StyleList = $.map(result, function (value, key) {
                         return {
@@ -309,26 +340,31 @@ else {
             AvailableProductsLists = [];
             AvailableProducts = "";
             event.preventDefault();
+            CheckProduct();
             $("#autoCompleteProductStyleName").val(ui.item.label);
-            $("#autoCompleteProductStyleId").val(ui.item.value);
-            $("#SuplierStyle").val(ui.item.label1);
-            $("#autoCompleteGridName").val(ui.item.autoCompleteGridName);
-            $("#autoCompleteGridId").val(ui.item.autoCompleteGridId);
-            AvailableProducts = ui.item.AvailableSize;
-            AvailableProductsLists = AvailableProducts.split(',');
-            $("#autoCompleteColorName").val(ui.item.autoCompleteColorName);
-            var gridName = $("#autoCompleteGridName").val();
-            $("#unit").val(ui.item.CostPrice);
-            GetSizeGridListAutocomplete(gridName);
-            var Count = parseInt(AvailableProductsLists.length);
-            $("#myTable tbody tr").detach();
-            for (i = 0; i < Count; i++) {
-            	$('#myTable > tbody:last-child').append('<tr id="Row' + i + '"><td><input type="text" value="' + Math.round(AvailableProductsLists[i]) + '" style="width:120px;" class="form-control autoCompleteItem" id="autoCompleteItem' + i + '" " /></td><td><input type="number"  min="0" style="width:120px;" class="form-control classCalculate" onkeyup="calculatePrice()"  id="Quantity' + i + '" /></td><td><input type="text" style="width:120px;" class="form-control " onkeyup="calculatePrice()" id="UnitCost' + i + '" readonly/></td><td style="width:70px;" class="text-right"><i class="fa fa-trash" id="DeletePrice" onclick="del(this)"></i><td><input id="ItemSize' + i + '" name="ItemSize" type="hidden"/></td></td></tr>');
-            }
-            $('#myTable').append('<tbody><tr id="AddNewItem"><td colspan="4" class="text-right"><i class="fa fa-plus-circle" onclick="AddRow(this)" aria-hidden="true"></i></td></tr>  ');
+            if (!status) {
+                $("#autoCompleteProductStyleName").val(ui.item.label);
+                $("#autoCompleteProductStyleId").val(ui.item.value);
+                $("#SuplierStyle").val(ui.item.label1);
+                $("#autoCompleteGridName").val(ui.item.autoCompleteGridName);
+                $("#autoCompleteGridId").val(ui.item.autoCompleteGridId);
+                AvailableProducts = ui.item.AvailableSize;
+                AvailableProductsLists = AvailableProducts.split(',');
+                $("#autoCompleteColorName").val(ui.item.autoCompleteColorName);
+                var gridName = $("#autoCompleteGridName").val();
+                $("#unit").val(ui.item.CostPrice);
+                GetSizeGridListAutocomplete(gridName);
+                var Count = parseInt(AvailableProductsLists.length);
+                $("#myTable tbody tr").detach();
+                for (i = 0; i < Count; i++) {
+                    $('#myTable > tbody:last-child').append('<tr id="Row_' + i + '"><td><input type="text" value="' + Math.round(AvailableProductsLists[i]) + '" style="width:120px;" class="form-control autoCompleteItem" id="autoCompleteItem_' + i + '" " /></td><td><input type="number"  min="0" style="width:120px;" class="form-control classCalculate" onkeyup="calculatePrice()"  id="Quantity_' + i + '" /></td><td><input type="text" style="width:120px;" class="form-control " onkeyup="calculatePrice()" id="UnitCost_' + i + '" readonly/></td><td style="width:70px;" class="text-right"><i class="fa fa-trash" id="DeletePrice" onclick="del(this)"></i><td><input id="ItemSize_' + i + '" name="ItemSize" type="hidden"/></td></td></tr>');
+                }
+                $('#myTable').append('<tbody><tr id="AddNewItem"><td colspan="4" class="text-right"><i class="fa fa-plus-circle" onclick="AddRow(this)" aria-hidden="true"></i></td></tr>  ');
 
-            autoProductSuggestions();
-        },
+                autoProductSuggestions();
+            }
+            },
+      
         minLength: 1
     });
 
@@ -354,13 +390,13 @@ else {
             	$("#myTable tbody tr").detach();
 
             	for (i = 0; i < Count - 1; i++) {
-            		$('#myTable > tbody:last-child').append('<tr id="Row' + i + '"><td><input type="text" value="' + AvailableProductsLists[i] + '" style="width:120px;" class="form-control autoCompleteItem" id="autoCompleteItem' + i + '" " /></td><td><input type="number"  min="0" style="width:120px;" class="form-control classCalculate unitCost" onkeyup="calculatePrice()"  id="Quantity' + i + '" /></td><td><input type="text" style="width:120px;" class="form-control unitCost" onkeyup="calculatePrice()" id="UnitCost' + i + '" value="' +item.CostPrice + '" readonly/></td><td style="width:70px;" class="text-right"><i class="fa fa-trash" id="DeletePrice" onclick="del(this)"></i><td><input id="ItemSize' + i + '" name="ItemSize" type="hidden"/></td></td></tr>');
+            		$('#myTable > tbody:last-child').append('<tr id="Row_' + i + '"><td><input type="text" value="' + AvailableProductsLists[i] + '" style="width:120px;" class="form-control autoCompleteItem" id="autoCompleteItem_' + i + '" " /></td><td><input type="number"  min="0" style="width:120px;" class="form-control classCalculate unitCost" onkeyup="calculatePrice()"  id="Quantity_' + i + '" /></td><td><input type="text" style="width:120px;" class="form-control unitCost" onkeyup="calculatePrice()" id="UnitCost_' + i + '" value="' +item.CostPrice + '" readonly/></td><td style="width:70px;" class="text-right"><i class="fa fa-trash" id="DeletePrice" onclick="del(this)"></i><td><input id="ItemSize_' + i + '" name="ItemSize" type="hidden"/></td></td></tr>');
             	}
 
             	$('#myTable').append('<tbody><tr id="AddNewItem"><td colspan="4" class="text-right"><i class="fa fa-plus-circle" onclick="AddRow(this)" aria-hidden="true"></i></td></tr>  ');
 
             	debugger;
-            	$(".autoCompleteItem").autocomplete({
+         $(".autoCompleteItem").autocomplete({
             		source: AvailableProductsLists.map(item=> { return { label: item, value: AvailableProductsLists.indexOf(item) } }),
             		select: function (event, AvailableProductsLists) {
             			debugger;
@@ -402,8 +438,6 @@ else {
 
     var GridNumberList = {};
     var ItemList = [];
-
-
     $("#autoCompleteGridName").autocomplete({
     	source: function (request, response) {
 			debugger
@@ -417,9 +451,7 @@ else {
             for (i = 0; i < 30; i++) {
                 ItemList[i] = ui.item.sizeList[i];
             }
-            //autoCompleteItem
             $(".autoCompleteItem").autocomplete({
-
                 source: AvailableProductsLists.map(item=> { return { label: item, value: AvailableProductsLists.indexOf(item) } }),
                 select: function (event, AvailableProductsLists) {
                     debugger;
@@ -434,9 +466,7 @@ else {
             });
         },
         minLength: 1
-
     });
-
     function AddRow(id) {
         debugger;
         var i = id.parentNode.parentNode.rowIndex-1;
@@ -456,26 +486,27 @@ else {
 				return { label:item, value: ItemList.indexOf(item) }
 				debugger
         	}),
-
         	select: function (event, ItemList) {
-				debugger
+                debugger
             	event.preventDefault();
             	var i = 1;
-            	var status = true;
-            	var n = id.parentNode.parentNode.rowIndex - 1;
+                var status = true;
+                var n=@Model.ItemsCount;
+            	//var n = id.parentNode.parentNode.rowIndex;
             	var n2 = n + 1;
-            	for (i = 1; i <= n; i++) {
-            		if ($("#autoCompleteItem" + i).val() == ItemList.item.label) {
+                for (i = 0; i <=n; i++) {
+                    debugger
+                   // alert($("#autoCompleteItem_"+ i).val());
+            		if ($("#autoCompleteItem_"+ i).val() == ItemList.item.label) {
             			debugger
             			status = false;
             			alert("Please dont enter dublicate size.");
             			$(event.target).val(" ");
-            			$(event.target).parents("tr").find("[id^='UnitCost']").val(" ");
-
+                        $(event.target).parents("tr").find("[id^='UnitCost']").val(" ");
+                        $(event.target).parents("tr").remove();
             		}
             	}
             	if(status==true){
-
             			$(event.target).val(ItemList.item.label);
             			debugger
             			$(event.target).parents("tr").find("[id^='ItemSize']").val(ItemList.item.value);
@@ -505,11 +536,9 @@ else {
 
     var rowCount = 0;
     var sizeGridList = [];
-
     function GetSizeGridListAutocomplete(searchString, request, response) {
         var searchFor = request ? request.term : searchString;
         if (searchString != null) {
-
         }
         $.ajax({
             url: "/admin/purchaseOrder/AutoCompleteGridNumberList",
@@ -525,9 +554,9 @@ else {
 
                         sizeList:
                             [
-                            value.Z01.toFixed(2), value.Z02.toFixed(2), value.Z03.toFixed(2), value.Z04.toFixed(2), value.Z05.toFixed(2), value.Z06.toFixed(2), value.Z07.toFixed(2), value.Z08.toFixed(2), value.Z09.toFixed(2), value.Z10.toFixed(2),
-                            value.Z11.toFixed(2), value.Z12.toFixed(2), value.Z13.toFixed(2), value.Z14.toFixed(2), value.Z15.toFixed(2), value.Z16.toFixed(2), value.Z17.toFixed(2), value.Z18.toFixed(2), value.Z19.toFixed(2), value.Z20.toFixed(2),
-                            value.Z21.toFixed(2), value.Z22.toFixed(2), value.Z23.toFixed(2), value.Z24.toFixed(2), value.Z25.toFixed(2), value.Z26.toFixed(2), value.Z27.toFixed(2), value.Z28.toFixed(2), value.Z29.toFixed(2), value.Z30.toFixed(2),
+                            value.Z01, value.Z02, value.Z03, value.Z04, value.Z05, value.Z06, value.Z07, value.Z08, value.Z09, value.Z10,
+                            value.Z11, value.Z12, value.Z13, value.Z14, value.Z15, value.Z16, value.Z17, value.Z18, value.Z19, value.Z20,
+                            value.Z21, value.Z22, value.Z23, value.Z24, value.Z25, value.Z26, value.Z27, value.Z28, value.Z29, value.Z30,
                             ]
                     };
                 });
@@ -539,7 +568,6 @@ else {
             }
         });
     }
-
     function calculatePrice() {
         debugger;
         var price = 0;
@@ -554,14 +582,11 @@ else {
         }
         $(".ItemAmount").val(price.toFixed(2));
     };
-
-
     var purchareOrderItems = {};
     function updatePurchaseOrderItems() {
         debugger;
         purchareOrderItems.PurchaseOrderId = $("#PurchareOrderId").val();
         if ($("#PurchareOrderId").val() == "") { alert("Add Purchase Order Before Adding Items..."); }
-
         if (!$("#UpdatePurchaseorderItemForm").valid())
             return false;
         else {
@@ -575,7 +600,6 @@ else {
             purchareOrderItems.SuplierStyle = $('#SuplierStyle').val();
             //purchareOrderItems.VPI = $('#VPI').val();
             purchareOrderItems.Amount = $('.ItemAmount').val();
-
             debugger;
             var j = 1;
             var rowCount = $('#myTable tr').length - 2;
@@ -599,11 +623,7 @@ else {
                 }
                 $("#totalQuantity").val(totalQuantity);
             }
-
-            //$("#Amount").val(purchareOrderItems.Amount);
-
             var orderID = 0;
-
             $.ajax({
                 url: "/admin/PurchaseOrder/UpdatePurchaseOrderItem",
                 type: 'POST',

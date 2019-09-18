@@ -14,6 +14,12 @@ namespace DAL
     
     public partial class Log
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Log()
+        {
+            this.Designations = new HashSet<Designation>();
+        }
+    
         public int Id { get; set; }
         public Nullable<int> UserId { get; set; }
         public int ActionLogId { get; set; }
@@ -21,9 +27,10 @@ namespace DAL
         public string Comment { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<int> PageId { get; set; }
-        public string LogTable { get; set; }
     
         public virtual ActionLog ActionLog { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Designation> Designations { get; set; }
         public virtual PageName PageName { get; set; }
         public virtual User User { get; set; }
     }

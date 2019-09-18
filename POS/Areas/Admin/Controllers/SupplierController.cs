@@ -98,11 +98,11 @@ namespace POS.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult ExcelUpload(SupplierModel supplier, HttpPostedFileBase ExcelFile)
         {
+            var Code = new Dictionary<int, string>();
             Dictionary<string, string> process = new Dictionary<string, string>();
             Dictionary<int, SupplierModel> suppliers = new Dictionary<int, SupplierModel>();
+            Dictionary<int, SupplierModel> Tempsuppliers = new Dictionary<int, SupplierModel>();
             Dictionary<int, SupplierModel> updatesuppliers = new Dictionary<int, SupplierModel>();
-
-            //List<SupplierModel> suppliers = new List<SupplierModel>();
 			string filePath = string.Empty;
 			if (ExcelFile != null)
 			{
@@ -125,39 +125,29 @@ namespace POS.Areas.Admin.Controllers
 						{
                             i++;
 							var model = new SupplierModel();
-							model.Code = row.Split(',')[0];
-							model.Name = row.Split(',')[1];
-							model.PermanentAddress1 = row.Split(',')[2];
-							model.PermanentAddress2 = row.Split(',')[3];
-							model.PermanentAddress3 = row.Split(',')[4];
-							model.PermanentCity = row.Split(',')[5];
-							model.PermanentCountry = row.Split(',')[6];
-							model.PermanentPostalCode = row.Split(',')[7];
-							model.CorrespondanceAddress1 = row.Split(',')[8];
-							model.CorrespondanceAddress2 = row.Split(',')[9];
-							model.CorrespondanceAddress3 = row.Split(',')[10];
-							model.CorrespondanceCity = row.Split(',')[11];
-							model.CorrespondanceCountry = row.Split(',')[12];
-							model.CorrespondancePostalCode = row.Split(',')[13];
-							model.Limit = Convert.ToInt32(row.Split(',')[14]);
-							model.ContactNumber = row.Split(',')[15];
-							model.FaxNumber = row.Split(',')[16];
-							model.RegistrationDate = row.Split(',')[17];
+                            var rowSplit = row.Split(',');
+							model.Code = rowSplit[0];
+							model.Name = rowSplit[1];
+							model.PermanentAddress1 = rowSplit[2];
+							model.PermanentAddress2 = rowSplit[3];
+							model.PermanentAddress3 = rowSplit[4];
+							model.PermanentCity = rowSplit[5];
+							model.PermanentCountry = rowSplit[6];
+							model.PermanentPostalCode = rowSplit[7];
+							model.CorrespondanceAddress1 = rowSplit[8];
+							model.CorrespondanceAddress2 = rowSplit[9];
+							model.CorrespondanceAddress3 = rowSplit[10];
+							model.CorrespondanceCity = rowSplit[11];
+							model.CorrespondanceCountry = rowSplit[12];
+							model.CorrespondancePostalCode = rowSplit[13];
+							model.Limit = Convert.ToInt32(rowSplit[14]);
+							model.ContactNumber = rowSplit[15];
+							model.FaxNumber = rowSplit[16];
+							model.RegistrationDate = rowSplit[17];
 							model.IsActive = true;
-							string chk = row.Split(',')[0];
-                            bool isexists = Services.SupplierService.CheckSupplierCode(chk);
-							if (!isexists)
-							{
-								suppliers.Add(i,model);
-                                process[i + "#" + row.Split(',')[0]] = "Add";
-                            }
-							else
-							{
-                                updatesuppliers.Add(i, model);
-                                process[i + "#" + row.Split(',')[0]] = "Update";
-                            }
-
-						}
+                            Tempsuppliers.Add(i, model);
+                            Code.Add(i, model.Code);
+                        }
 					}
 					catch (Exception ex)
 					{
@@ -169,7 +159,25 @@ namespace POS.Areas.Admin.Controllers
                     }
 				}
 			}
-			var addList = Services.SupplierService.CreateList(suppliers);
+            var check = Services.SupplierService.SupplierCheckFilter(Code);//ServerResponse.Invoke<Dictionary<int, bool>>("api/product/getProductCheckFilter", body2, "POST");
+            if (Tempsuppliers != null && Tempsuppliers.Count > 0)
+            {
+                foreach (var item in Tempsuppliers)
+                {
+                    if (check[item.Key] == false)
+                    {
+                        suppliers.Add(item.Key, item.Value);
+                        process[item.Key + "#" + item.Value.Code] = "Add";
+                    }
+                    else
+                    {
+                        updatesuppliers.Add(item.Key, item.Value);
+                        process[item.Key + "#" + item.Value.Code] = "Update";
+                    }
+                }
+            }
+
+            var addList = Services.SupplierService.CreateList(suppliers);
 			var updateList = Services.SupplierService.UpdateList(updatesuppliers);
             var dictionaryFrom = new Dictionary<string, string>();
 

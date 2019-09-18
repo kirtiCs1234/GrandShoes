@@ -24,16 +24,20 @@ namespace Services.IService
         List<CartonManagementDetailModel> GetByCartonId(int? id);
         List<StockDistributionSummaryModel> AutoCompleteDistributionSummaryID(int summary);
         bool EditStockDistribution(StockDistributionModel stock);
-        StockDistributionModel GetLast();
+        StockDistributionModel GetBySummaryId(int id);
         bool DeleteWaste();
 		CartonManagementModel GetByIdCarton(int? id);
 		List<CartonManagementModel> GetAllCarton();
         List<IBTDetailModel> GetIBTDetails(WinnerReportModel winner);
-
-		//----for stock transfer
-		bool CompleteCreateForStock(CartonManagementForStockTransferModel data);
+        StockDistributionModel GetLast();
+        //----for stock transfer
+        bool CompleteCreateForStock(CartonManagementForStockTransferModel data);
 		List<CartonManagementForStockTransferModel> GetIBTNumberStockTransfer();
 		bool CreateCartonManagementForStock(CartonManagementForStockTransferModel model);
 		List<CartonManagementForStockTransferModel> GetIBTNumberForStock();
-	}
+        List<CartonManagementModel> GetLastSummaryData();
+        CartonManagementModel GetByIBTNumber(string IbTNumber,int? BranchID);
+        bool DispatchData(List<int> CartonList);
+        List<CartonManagementModel> GetSearchData(int? summaryID, int? branchId);
+    }
 }

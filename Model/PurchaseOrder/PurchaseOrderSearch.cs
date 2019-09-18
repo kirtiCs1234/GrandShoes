@@ -10,6 +10,7 @@ namespace Model
     {
         public int Id { get; set; }
         public string OrderNumber { get; set; }
+        public string OrderNumber1 { get; set; }
         public string SupplierName { get; set; }
         public string BuyerName { get; set; }
         public bool IsActive { get; set; }

@@ -22,6 +22,7 @@ namespace Model
         //public  string BranchName { get; set; }
         //public string BranchCode { get; set; }
         public Nullable<bool> IsActive { get; set; }
+        public  int? SymmaryID { get; set; }
        public  List<StockDistributionModel> BranchDistribution { get; set; }
        public List<ProductModel> ProductsList{ get ; set ; }
         public List<BranchModel> BranchList { get; set; }

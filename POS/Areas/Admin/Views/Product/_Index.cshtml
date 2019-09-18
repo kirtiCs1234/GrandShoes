@@ -1,8 +1,6 @@
 ﻿@model List<Model.AllProductDetailModel>
 <div class="col-sm-12 col-md-12 col-lg-12">
-
     <div class="row">
-
         <div class="forms" style="padding-top:10px 0px 5px 0;">
             <div class="col-sm-9 col-lg-9 col-md-9 col-xs-12">
                 <div class="table-style">
@@ -16,31 +14,30 @@
                                             <th>Product SKU</th>
                                             <th>Style SKU</th>
                                             <th>Product Image</th>
-
                                             <th>Description</th>
-											<th>Barcode</th>
+                                            <th>Barcode</th>
                                             <th style="min-width:125px;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="tbodyIndex">
                                         @if (Model.Count != 0)
                                         {
-                                            foreach (var item in Model)
+                                            for (var i = 0; i < Model.Count(); i++)
                                             {
-                                                <tr class="bg product-index product-index-@item.Id" onclick="getId(this,@item.Id);" style="">
+                                                <tr class="bg product-index product-index-@Model[i].Id" onclick="getId(this,@Model[i].Id);" style="" id="table">
                                                     <td style="display:none;">
-                                                        @Html.HiddenFor(modelItem => item.Id)
+                                                        @Html.HiddenFor(modelItem => Model[i].Id)
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.ProductSKU)
+                                                        @Html.DisplayFor(modelItem => Model[i].ProductSKU)
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.StyleSKU)
+                                                        @Html.DisplayFor(modelItem => Model[i].StyleSKU)
                                                     </td>
                                                     <td>
-                                                        @if (item.PrimaryImage != null)
+                                                        @if (Model[i].PrimaryImage != null)
                                                         {
-                                                            <img id="file" src="/Image/product/@item.PrimaryImage" height="50" width="50" />
+                                                            <img id="file" src="/Image/product/@Model[i].PrimaryImage" height="50" width="50" />
                                                         }
                                                         else
                                                         {
@@ -51,31 +48,57 @@
                                                     </td>
 
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.ShortDescription)
-                                                        @Html.DisplayFor(modelItem => item.LongDescription)
+                                                        @{
+                                                            var a = 0; var b = 0; var c = 0;
+                                                            if (Model[i].ShortDescription != null)
+                                                            {
+                                                                a = Model[i].ShortDescription.Length;
+                                                            }
+                                                            if (Model[i].ShortDescription != null)
+                                                            {
+                                                                b = Model[i].LongDescription.Length;
+                                                            }
+                                                            c = a + b;
+                                                            if (c > 50)
+                                                            {
+                                                                var stringdata = Model[i].ShortDescription + Model[i].LongDescription;
+                                                                var stringCount = stringdata.Substring(0, 49);
+                                                                var penData = stringdata.Substring(c-49);
+                                                                <span>@stringCount</span>
+                                                                <span id="more_@i" style="display:none">
+                                                                   @penData
+                                                                    </span>
+                                                                    <button onclick="detail(event)" id="myBtn" style="color: #09A5B2;">read more</button>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                    <span>@Model[i].ShortDescription @Model[i].LongDescription</span>
+                                                                    }
+                                                                    }
+
+                                                            </td>
+                                                    <td>
+                                                        <div>
+                                                            @*@Html.Raw(item.TemplateHtml)*@
+                                                            @{ if (Model[i].DefaultTemplateId == null)
+                                                                {
+                                                                    Model[i].DefaultTemplateId = 0;
+                                                                }
+                                                            }
+                                                            <button type="button" class="btn btn-primary add-btn add-form"
+                                                                    data-backdrop="static" data-toggle="modal" id="#myModalBarcode"
+                                                                    onclick="ShowBarcode(@Model[i].DefaultTemplateId, @Model[i].Id)" data-target="#myModalBarcode">
+                                                                Show
+                                                            </button>
+                                                        </div>
                                                     </td>
-													<td>
-														<div>
-															@*@Html.Raw(item.TemplateHtml)*@
-															@{			if (item.DefaultTemplateId == null)
-																{
-																	item.DefaultTemplateId = 0;
-																}
-															}
-															<button type="button" class="btn btn-primary add-btn add-form"
-																	data-backdrop="static" data-toggle="modal" id="#myModalBarcode"
-																	onclick="ShowBarcode(@item.DefaultTemplateId, @item.Id)" data-target="#myModalBarcode">
-																Show
-															</button>
-														</div>
-													</td>
 
                                                     <td style="min-width:85px;">
-                                                        <i class="fa fa-pencil edit-form edit" data-toggle="modal" data-backdrop="static" onclick="edit(@item.Id)"></i>
+                                                        <i class="fa fa-pencil edit-form edit" data-toggle="modal" data-backdrop="static" onclick="edit(@Model[i].Id)"></i>
                                                         &nbsp;
-                                                        <i class="fa fa-trash delete delete-form" data-toggle="modal" data- data-backdrop="static" onclick="del(@item.Id)"></i>
+                                                        <i class="fa fa-trash delete delete-form" data-toggle="modal" data- data-backdrop="static" onclick="del(@Model[i].Id)"></i>
                                                         &nbsp;
-                                                        <i class="fa fa-eye view-form details" data-toggle="modal" data-backdrop="static"  onclick="details(@item.Id)"></i>
+                                                        <i class="fa fa-eye view-form details" data-toggle="modal" data-backdrop="static" onclick="details(@Model[i].Id)"></i>
                                                     </td>
                                                 </tr>
                                             }

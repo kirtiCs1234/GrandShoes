@@ -48,9 +48,9 @@
                                         </div>
                                         <div class="col-md-4 col-xs-12 col-sm-4">
                                             <label>Supplier Name</label>
-                                            @Html.TextBoxFor(model => model.SupplierName, new { id = "SupplierName", @class = "form-control", placeholder = "Supplier Name" })
-                                            @Html.Hidden("SupplierId", new { id = "SupplierId" })
-                                            @Html.ValidationMessageFor(Model => Model.SupplierName, "", new { @class = "text-danger" })
+                                            @Html.DropDownListFor(m => m.SupplierId, null, "-Supplier Name-", htmlAttributes: new { @class = "form-control"
+                                   })
+                                            @Html.ValidationMessageFor(Model => Model.SupplierId, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="col-md-4 col-xs-12 col-sm-4">
                                             <label>Buyer Name</label>
@@ -91,7 +91,7 @@
                                         </div>
                                         <div class="col-md-4 col-xs-12 col-sm-4">
                                             <label>Order Status</label>
-                                            @Html.DropDownListFor(m => m.PurchaseOrderStatusId, ViewBag.OrderStatusList as SelectList, new { @class = "form-control" })
+                                            @Html.DropDownListFor(m => m.PurchaseOrderStatusId, ViewBag.OrderStatusList as SelectList, new { @class = "form-control",@disabled = "disabled" })
                                         </div>
                                     </div>
 

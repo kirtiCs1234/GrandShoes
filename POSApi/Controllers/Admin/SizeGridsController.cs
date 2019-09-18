@@ -432,6 +432,28 @@ namespace POSApi.Controllers
             }).ToList();
             return Ok(data);
         }
+        [HttpPost]
+        [Route("checkGridNumber")]
+        public IHttpActionResult CheckBranch(Dictionary<int, string> list)
+        {
+            var obj = new Dictionary<int, bool>();
+            if (list != null && list.Count > 0)
+            {
+                var SizeGridList = db.SizeGrids.Where(x => x.IsActive == true);
+                var code = list.Select(x => x.Value).Distinct().ToList();
+                if (code != null && code.Count > 0)
+                {
+                    SizeGridList = SizeGridList.Where(x => code.Contains(x.GridNumber));
+                }
+                var SizeGrid = SizeGridList.ToList();
+                foreach (var item in list)
+                {
+                    var result = SizeGrid.Any(x => x.GridNumber == item.Value);
+                    obj.Add(item.Key, result);
+                }
+            }
+            return Ok(obj);
+        }
         [HttpGet]
         [Route("SizeGridAutocompleteOffer")]
         public IHttpActionResult SizeGridAutocompleteOffer(string name)

@@ -19,6 +19,7 @@ namespace DAL
         {
             this.StockBranchTransactions = new HashSet<StockBranchTransaction>();
             this.StockSupplierTransactions = new HashSet<StockSupplierTransaction>();
+            this.StockWarehouseTransactions = new HashSet<StockWarehouseTransaction>();
         }
     
         public int Id { get; set; }
@@ -30,5 +31,7 @@ namespace DAL
         public virtual ICollection<StockBranchTransaction> StockBranchTransactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockSupplierTransaction> StockSupplierTransactions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockWarehouseTransaction> StockWarehouseTransactions { get; set; }
     }
 }

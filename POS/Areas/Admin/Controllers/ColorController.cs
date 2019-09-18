@@ -20,11 +20,12 @@ namespace POS.Areas.Admin.Controllers
         // GET: Admin/Color
         public ActionResult Index(int? page)
         {
-            var pData = TempData["Things"];
+            var pData = TempData["ProcessData"];
             if (pData != null)
             {
                 ViewBag.processData = pData;
             }
+
             int TotalCount = 0;
             var pageSize = 10;
             var pageNumber = page ?? 1;
@@ -110,9 +111,10 @@ namespace POS.Areas.Admin.Controllers
                             i++;
                             var model = new ColorModel();
                             var rowSplit = row.Split(',');
-                            model.Code = rowSplit[0];
-                            model.ColorLong = rowSplit[1];
-                            model.ColorShort = rowSplit[2];
+                            model.Code = rowSplit[0].ToString();
+                            model.ColorLong = rowSplit[1].ToString();
+                            model.ColorShort = rowSplit[2].ToString();
+                            model.IsActive = true;
 							var count = rowSplit[0].Length;
                             if (count == 3)
                             {

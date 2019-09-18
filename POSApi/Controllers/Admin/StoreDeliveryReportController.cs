@@ -32,10 +32,10 @@ namespace POSApi.Controllers
             var source = db.StockDistributions.Where(x => x.IsActive == true).Include(x => x.Branch).Include(x=>x.Product).Include(x=>x.StockDistributionStatu).Include(x=>x.StockDistributionSummary).Include(x=>x.Product);
             if (order!= null)
             {
-                //if (!string.IsNullOrEmpty(order.ProductSKU))
-                //{
-                //    source = source.Where(m => m.Product.ProductSKU.Contains(order.ProductSKU));
-                //}
+                if (!string.IsNullOrEmpty(order.ProductSKU))
+                {
+                    source = source.Where(m => m.Product.Barcode==order.ProductSKU);
+                }
                 if (order.BranchId>0)
                     source = source.Where(m => m.BranchId==order.BranchId);
                 //  var items = source.OrderBy(m => m.Id).Skip((areaSearch.Page ?? 1 - 1) * pageSize).Take(pageSize).ToList();

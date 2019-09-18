@@ -1,0 +1,75 @@
+﻿@model List<Model.CartonManagementModel>
+@{
+    Layout = null;
+}
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <div class="col-md-3 col-xs-12 col-sm-2">
+                <h4 class="modal-title">View Cartons</h4>
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-2">
+                    @Html.DropDownList("DistributionSummaryID", null, "-Slip Number-", htmlAttributes: new
+                        {
+                            @class = "form-control"
+                        })
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-2">
+                    @Html.DropDownList("BranchId", null, "-Branch Name-", htmlAttributes: new
+                      {
+                          @class = "form-control"
+                      })
+                </div>
+                <div class="col-md-2 col-xs-12 col-sm-2">
+                    <button type="button" class="btn btn-primary export-btn" onclick="searchData()">Search</button>
+                </div>
+            </div>
+            <div class="prtm-block-content mrgn-b-md">
+                <div class="table-responsive" style="height:270px;">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>IBTNumber</th>
+                                <th>Packing Slip</th>
+                                <th>Branch Name</th>
+                                <th>Total Items</th>
+                                <th>Pack Date</th>
+                                <th>Carton Number</th>
+                                <th style="min-width:125px;">Action</th>
+                                <th>Print</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbodyIndex table-responsive" id="table">
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.IBTNumber)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.DistributionSummaryID)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Branch.Name)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.TotalItems)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.PackDate)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CartonNumber)</td>
+ 
+                                    <td>
+                                        @if (item.IsDispatched == true)
+                                        {
+                                            <Span style="background-color:#00ff00">Dispatched</Span>
+                                        }
+                                        else
+                                        {
+                                            <Span style='background-color:#ff0000'>NotDispatch</Span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-success popup-savebtn form-control branch-btn-input" type="button" value="Approve" onclick="Print(@item.Id)" data-id="@item.Id">Print Slip</button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tbody class="tbodyIndex" id="table1"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,6 +1,5 @@
 ﻿@using POS;
 @using POS.Security;
-
 @{
     var user = CookieHelper.getUser();
 }
@@ -181,7 +180,7 @@
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span><span class="icon-bar"></span> <span class="icon-bar"></span> </button>
                         <button class="c-hamburger c-hamburger--htra prtm-bars pull-right"> <span>toggle menu</span> </button>
                         <div class="prtm-logo">
-                            <a class="navbar-brand" href="/admin/User/Index">COMPANY LOGO</a>
+                            <a class="navbar-brand" href="/admin/Welcome/Index">COMPANY LOGO</a>
                         </div>
                     </div>
                     <div id="navbar" class="navbar-collapse collapse" data-hover="dropdown">
@@ -194,7 +193,6 @@
                                     } <span class="caret"></span><img class="img-responsive display-ib mrgn-l-sm img-circle" src="~/Content/assets/img/user-1.jpg" width="64" height="45" alt="User">
                                 </a>
                                 <ul class="dropdown-menu">
-
                                     @*<li><a href="user-profile.html"><i class="fa fa-user"></i> My Profile</a></li>*@
                                     <li><a href="@Url.Action("../../MyAccount/ResetPassword")"><i class="fa fa-user"></i> Change Password</a></li>
                                     @*<li><a href="users-list.html"><i class="fa fa-money"></i> My Contact</a></li>
@@ -215,6 +213,8 @@
             <div class="prtm-sidebar">
                 <div class="prtm-sidebar-back"> </div>
                 <div class="prtm-sidebar-nav-wrapper">
+                    <div style="width:100%;display:none" id="content">
+                    </div>
                     <div class="prtm-sidebar-menu">
                         <nav class="sidebar-nav collapse">
                             <ul class="list-unstyled sidebar-menu">
@@ -228,6 +228,9 @@
                                         <li><a href="/admin/Buyer/Index"><span>Buyer</span></a></li>
                                         <li><a href="/admin/Season/Index"><span>Season</span></a></li>
                                         <li><a href="/admin/Area/Index"><span>Area</span></a></li>
+                                        <li>
+                                            <a href="/admin/Branch/Index"><span>Branch</span></a>
+                                        </li>
                                         @*<li><a href="/admin/ProductStyle/Index"><span>Product Style</span></a></li>*@
                                         <li>
                                             <a href="/Admin/Role/Index">@*<i class="fa fa-sliders ab" aria-hidden="true"></i>*@<span>Role</span></a>
@@ -246,7 +249,6 @@
                                         <li><a href="/admin/ProductCat2/Index"><span>Product Category2</span></a></li>
                                         <li><a href="/admin/ProductCat3/Index"><span>Product Category3</span></a></li>
                                         <li><a href="/admin/ProductCat4/Index"><span>Product Category4</span></a></li>
-
                                     </ul>
                                 </li>
                                 <li class="has-children">
@@ -257,7 +259,6 @@
                                         <li><a href="/admin/Product/Index"><span>Product</span></a></li>
                                         <li><a href="/admin/Offers/Index"><span>Product Search</span></a></li>
                                         <li><a href="/admin/ProductSource/Index"><span>Product Source</span></a></li>
-
                                     </ul>
                                 </li>
                                 <li class="has-children">
@@ -284,26 +285,44 @@
                                     <ul class="list-unstyled sub-menu collapse" style="display:none;">
                                         <li><a href="/admin/BranchStockReport/Index"><span>Branch Stock Report</span></a></li>
                                         <li><a href="/admin/IBTCartonReport/Index"><span>IBT Carton Report</span></a></li>
-
                                         <li><a href="/admin/PurchaseOrderReport/Index"><span>Purchase Order Report</span></a></li>
                                         <li><a href="/admin/StoreDeliveryReport/Index"><span>Stock Distribution Report</span></a></li>
+                                        <li>
+                                            <a href="/Admin/Report/BranchStockStatusReport"><span>Branch Stock Status Report</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/Admin/Report/StaffCommition"><span>Staff Commission</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/Admin/Report/GNRReport"><span>GNR Report</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/Admin/Report/DailySalesReport"><span>Daily Sales Report</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/Admin/Report/DailySalesReportSummary"><span>Daily Sales Report Summary</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/Admin/Report/OutstandingPurchaseOrderReport"><span>Outstanding Purchase Order Report</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/Admin/Report/TransactionEnquiryReport"><span>Transaction Enquiry Report</span></a>
+                                        </li>
+                                        <li>
+                                            <a href="/Admin/WinnerReport/Index"><span>Winner Report</span></a>
+                                        </li>
                                     </ul>
                                 </li>
-
                                 <li>
                                     <a href="/admin/Supplier/Index"><i class="fa fa-users" aria-hidden="true"></i><span>Supplier</span></a>
                                 </li>
                                 <li>
-                                    <a href="/admin/BranchCartonDispach/Index"><i class="fa fa-users" aria-hidden="true"></i><span>Carton Dispatch</span></a>
+                                    <a href="/admin/CartonDispatch/Index"><i class="fa fa-users" aria-hidden="true"></i><span>Carton Dispatch</span></a>
                                 </li>
 
                                 <li>
                                     <a href="/admin/User/Index"><i class="fa fa-book" aria-hidden="true"></i><span>Accounts</span></a>
                                 </li>
-                                <li>
-                                    <a href="/admin/Branch/Index"><i class="fa fa-users" aria-hidden="true"></i><span>Branch</span></a>
-                                </li>
-
                                 <li>
                                     <a href="/Admin/Template/list"><i class="fa fa-money" aria-hidden="true"></i><span>Template</span></a>
                                 </li>
@@ -334,45 +353,15 @@
                                     </a>
                                     <ul class="list-unstyled sub-menu collapse" style="display:none;">
                                         <li>
-                                            <a href="/Admin/suggestion/Index"><i class="fa fa-money" aria-hidden="true"></i><span>SMI Suggestions</span></a>
+                                            <a href="/Admin/suggestion/Index"><span>SMI Suggestions</span></a>
                                         </li>
                                         <li>
-                                            <a href="/Admin/IBTCarton/ToBranchTransfer"><i class="fa fa-money" aria-hidden="true"></i><span>SMI Distribution</span></a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li class="has-children">
-                                    <a href="#">
-                                        <i class="fa fa-server"></i><span>Report</span>
-                                    </a>
-                                    <ul class="list-unstyled sub-menu collapse" style="display:none;">
-                                        <li>
-                                            <a href="/Admin/Report/BranchStockStatusReport"><i class="fa fa-money" aria-hidden="true"></i><span>BranchStockStatusReport</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="/Admin/Report/StaffCommition"><i class="fa fa-money" aria-hidden="true"></i><span>Staff Commission</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="/Admin/Report/GNRReport"><i class="fa fa-money" aria-hidden="true"></i><span>GNR Report</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="/Admin/Report/DailySalesReport"><i class="fa fa-money" aria-hidden="true"></i><span>Daily Sales Report</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="/Admin/Report/DailySalesReportSummary"><i class="fa fa-money" aria-hidden="true"></i><span>Daily Sales Report Summary</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="/Admin/Report/OutstandingPurchaseOrderReport"><i class="fa fa-money" aria-hidden="true"></i><span>Outstanding Purchase Order Report</span></a>
-                                        </li>
-                                        <li>
-                                            <a href="/Admin/Report/TransactionEnquiryReport"><i class="fa fa-money" aria-hidden="true"></i><span>Transaction Enquiry Report</span></a>
+                                            <a href="/Admin/IBTCarton/ToBranchTransfer"><span>SMI Distribution</span></a>
                                         </li>
                                     </ul>
                                 </li>
                             </ul>
                         </nav>
-
                     </div>
                 </div>
             </div>
@@ -387,7 +376,7 @@
                                 <p>Copyright 2018 POS | All Rights Reserved</p>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 text-right">
-                                <a href="index.html">POS Logo</a>
+                                <a href="/admin/Welcome/Index">POS Logo</a>
                             </div>
                         </div>
                     </div>
@@ -449,3 +438,6 @@
     @RenderSection("scripts", false)
 </body>
 </html>
+
+
+

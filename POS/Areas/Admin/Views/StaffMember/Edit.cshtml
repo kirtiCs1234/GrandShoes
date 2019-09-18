@@ -45,30 +45,32 @@
                            type="hidden"
                            value="true" />
                 </div>
-                <div class="row  mrgn-b-lg">
-                    <div class="col-md-6 col-xs-12 col-sm-6">
-                        <label>Profile Pic</label>
-                        <div class="pop-img">
-                            @if (Model.ProfilePic != null)
-                            {
-                                <img class="create-user-image" id="user_img" src="~/Image/StaffMember/@Model.ProfilePic" height="50" width="50" onchange="show(this)" />
-                            }
+                <div class="col-md-12">
+                    <div class="row  mrgn-b-lg">
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                            <label>Profile Pic</label>
+                            <div class="pop-img">
+                                @if (Model.ProfilePic != null)
+                                {
+                                    <img class="create-user-image" id="user_img" src="~/Image/StaffMember/@Model.ProfilePic" height="50" width="50" onchange="show(this)" />
+                                }
 
 
-                            else
-                            {
-                                <img id="user_img" src="/Image/no-image.jpg" class="create-user-image" height="50" width="50" style="border:thin;" />
-                            }
+                                else
+                                {
+                                    <img id="user_img" src="/Image/no-image.jpg" class="create-user-image" height="50" width="50" style="border:thin;" />
+                                }
+                            </div>
+
+                            <input type="file" title="search image" class="" id="file" name="file" onchange="show(this)" />
+                            @Html.ValidationMessageFor(model => model.ProfilePic, "", new { @class = "text-danger" })
                         </div>
 
-                        <input type="file" title="search image" class="" id="file" name="file" onchange="show(this)" />
-                        @Html.ValidationMessageFor(model => model.ProfilePic, "", new { @class = "text-danger" })
-                    </div>
 
-
-                    <div class="col-md-6 col-xs-12 col-sm-6">
-                        <label>Fingure Print Access</label>
-                        @Html.CheckBoxFor(m => m.IsFingurPrintAccess)
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                            <label>Fingure Print Access</label>
+                            @Html.CheckBoxFor(m => m.IsFingurPrintAccess)
+                        </div>
                     </div>
                 </div>
                     <div class="modal-footer">

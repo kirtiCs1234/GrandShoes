@@ -1,0 +1,234 @@
+﻿@model Model.CartonManagementModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div class="table-style">
+    <div class="prtm-block-title pad-all-md ">
+        <div class="pos-relative">
+            <div class="caption">
+                <h3 class="text-capitalize">IBT Dispatch</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12">
+        <div class="prtm-block-content mrgn-b-md ">
+            <div class="row mrgn-b-xs">
+                @*<div class="col-md-2 col-xs-12 col-sm-3">
+                    <label>IBT Number</label>
+                </div>*@
+                <div class="col-md-3 col-xs-12 col-sm-3">
+                    @Html.EditorFor(model => model.IBTNumber, new { htmlAttributes = new { @class = "form-control", placeholder = "IBT Number" } })
+                    @Html.ValidationMessageFor(model => model.IBTNumber, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-3">
+                    @Html.DropDownListFor(model => model.BranchID,null,"--Branch--", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.BranchID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-3">
+                    <input type="button" value="Scan Carton" id="SubmitButton" class="btn btn-success popup-savebtn form-control" onclick="ScanCarton()" />
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-3">
+                    <input type="button" value="Get Cartons" id="SubmitButton" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" class="btn btn-success popup-savebtn form-control" onclick="GetData()" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 dvCartonDetails1">
+        <div class="caption">
+            <h3 class="text-capitalize">
+                Carton Detail
+            </h3>
+        </div>
+        @Html.Action("CartonDetail")
+        <div class="modal-footer">
+            <input type="button" value="Save" class="btn btn-success popup-savebtn" onclick="Dispatch()" />
+        </div>
+    </div>
+
+</div>
+<div class="modal fade" id="myModal">
+    <div id="dvCreatedetails">
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        function GetData() {
+            debugger
+            $.ajax({
+                url: '/Admin/CartonDispatch/GetData',
+                type: 'GET',
+                // data: obj,
+                success: function (result) {
+                    $('#dvCreatedetails').html(result);
+                },
+                error: function (xhr, status) {
+                    alert(status)
+                }
+            });
+        }
+        function ScanCarton() {
+            debugger
+            var id = $('#IBTNumber').val();
+            var BranchID = $('#BranchID').val();
+            if (BranchID =="") {
+                alert("Please Select Branch.")
+            } else {
+                var length = id.length;
+                if (length == 10) {
+                    $.ajax({
+                        url: '/Admin/CartonDispatch/GetByIBTNumber/' + id,
+                        type: 'Get',
+                        data: { BranchID: BranchID },
+                        success: function (result) {
+                            // alert(result)
+                            debugger
+                            if (result.IsActive == false) {
+                                alert("carton is not found.")
+                            } else if (result.IsDispatched) {
+                                alert("carton is Dispatched already.")
+                            }
+                            else {
+                                var markup = "<tr><td>" + result.IBTNumber + "</td><td>" + result.DistributionSummaryID + "</td><td>"
+                                    + result.BranchName + "</td><td>" + result.TotalItems + "</td><td>" + result.PackDate + "</td><td>" + result.CartonNumber +
+                                    "</td><td><input type='checkbox' class='check' value=" + result.Id + " name='selectedCarton' /></td></tr > ";
+                                $("#tablea1").append(markup);
+                            }
+                        }
+                    })
+                } else {
+                    alert("Please enter valid ibt Number.")
+                }
+            }
+        }
+        function allCheck(ele) {
+            debugger
+            if (ele.checked) {
+                $('.check:checkbox').each(function () {
+                    this.checked = true;
+                });
+            } else {
+                $('.check:checkbox').each(function () {
+                    this.checked = false;
+                });
+            }
+        }
+        function Dispatch() {
+            debugger
+            // $('form').validate();
+            var CartonList = [];
+            if ($('input:checked[name=selectedCarton]').length <= 0) {
+                alert('select atleast one branch !')
+            }
+            else {
+                $('input:checked[name=selectedCarton]').each(function () {
+                    debugger
+                    if ($(this).is(':checked'))
+                        CartonList.push($(this).val());
+                });
+                //if ($('form').valid()) {
+                var jsonstring = JSON.stringify(CartonList);
+                $.ajax({
+                    type: "POST", //HTTP POST Method
+                    contentType: "application/json; charset=utf-8",
+                    url: '/Admin/CartonDispatch/Dispatch',
+                    data: jsonstring,
+                    success: function (result) {
+                        alert("All Carton are dispatch.")
+                        window.location.reload();
+                    }
+                });
+
+            }
+        }
+        function Print(id) {
+        //    alert(id)
+            debugger
+            $.ajax({
+                type: "GET",
+                url: '/Admin/CartonDispatch/ViewPrint/' + id,
+                success: function (result) {
+                    debugger;
+                    $("#content").css("display", "block")
+                    $(".main-loading").removeClass("displayNone")
+                    var data = $("#content").html(result);
+                    var contents = data.html();
+                    var frame1 = $('<iframe />');
+                    frame1[0].name = "frame1";
+                    // frame1.css({ "position": "relative", "top": "-1000000px" });
+                    //$("#content .iframecontainer").html(frame1);
+                    $("body").append(frame1);
+                    var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+                    frameDoc.document.open();
+                    //Create a new HTML document.
+                    frameDoc.document.write('<html><head><title>DIV Contents</title>');
+                    frameDoc.document.write('</head><body>');
+                    //Append the external CSS file.
+                    frameDoc.document.write('<link href="/Content/StyleForPDF.css" rel="stylesheet"  type="text/css" />');
+                    //Append the DIV contents.
+                    frameDoc.document.write(contents);
+                    frameDoc.document.write('</body></html>');
+                    frameDoc.document.close();
+                    var interval = setInterval(function () {
+                        debugger;
+                        clearInterval(interval);
+                        window.frames["frame1"].focus();
+                        window.frames["frame1"].print();
+                        $(".main-loading").addClass("displayNone");
+                        frame1.remove();
+                    }, 1000);
+                    $("#content").css("display", "none")
+                    //doc.fromHTML($('#content').html(), 15, 15, {
+                    //    'width': 400,'height':400,
+                    //    'elementHandlers': specialElementHandlers
+
+                    //});
+                    //doc.save('sample-file.pdf');
+                },
+                error: function (xhr, status) {
+                    alert(status);
+                }
+            });
+        }
+        function searchData() {
+            debugger
+            var summaryID = $("#DistributionSummaryID").val();
+            var branchId = $("#BranchId").val();
+            $.ajax({
+                url: '/Admin/CartonDispatch/SearchData',
+                type: "POST",
+                data: { summaryID: summaryID, branchId: branchId },
+                success: function (result) {
+                    debugger
+                    if (result.length > 0)
+                        bindTr(result);
+                    else
+                        alert("No data found.")
+                }
+            })
+        }
+
+        function bindTr(result) {
+            debugger
+            $("#table1").empty();
+
+            for (var i = 0; i < result.length; i++) {
+                var a = "";
+                if (result[i].IsDispatched == true) {
+                    a = "<Span style='background-color:#00ff00'>Dispatched</Span>"
+                }
+                else {
+                    a = "<Span style='background-color:#ff0000'>NotDispatch</Span>"
+                }
+                var markup = "<tr><td>" + result[i].IBTNumber + "</td><td>" + result[i].DistributionSummaryID + "</td><td>"
+                    + result[i].BranchName + "</td><td>" + result[i].TotalItems + "</td><td>" + result[i].PackDate + "</td><td>" + result[i].CartonNumber +
+                    "</td><td>" + a + "</td><td><button class='btn btn-success popup - savebtn form-control branch-btn-input' type='button' value='Approve'  onclick = 'Print(" + result[i].Id+")' data-id=" + result[i].Id + ">Print Slip</button></td ></tr> ";
+                $("#table").empty();
+                $("#table1").append(markup);
+            }
+        }
+    </script>
+}
+
+

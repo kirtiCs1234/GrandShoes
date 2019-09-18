@@ -26,5 +26,6 @@ namespace Services.IService
 		ReceiveOrderModel ReceiptByPurchaseOrder(int PurchaseId);
 		List<ReceiveOrderModel> GetAllReceipt();
         List<ReceiptOrderItemModel> ReceiptByProduct(int? id);
+        List<ReceiptOrderItemModel> GetReceiptByProduct(int? id);
     }
 }

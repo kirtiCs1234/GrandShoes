@@ -44,9 +44,24 @@ namespace Model
         public Nullable<int> Quantity30 { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<int> LogId { get; set; }
-        public Nullable<System.DateTime> UpdateTime { get; set; }
-
+        public int? Quantity { get; set; }
+        public string LastSale { get; set; }
+        public string UpdateTime { get; set; }
         public virtual BranchModel Branch { get; set; }
         public virtual ProductModel Product { get; set; }
+        private int _ItemCount = 0;
+        public int ItemCount
+        {
+            get
+            {
+                _ItemCount =
+                    Convert.ToInt32((Quantity01 ?? 0) + (Quantity02 ?? 0) + (Quantity03 ?? 0) + (Quantity04 ?? 0) + (Quantity05 ?? 0) + (Quantity06 ?? 0) + (Quantity07 ?? 0) + (Quantity08 ?? 0) + (Quantity09 ?? 0) + (Quantity10 ?? 0) +
+                    (Quantity11 ?? 0) + (Quantity12 ?? 0) + (Quantity13 ?? 0) + (Quantity14 ?? 0) + (Quantity15 ?? 0) + (Quantity16 ?? 0) + (Quantity17 ?? 0) + (Quantity18 ?? 0) + (Quantity19 ?? 0) + (Quantity20 ?? 0) +
+                    (Quantity21 ?? 0) + (Quantity22 ?? 0) + (Quantity23 ?? 0) + (Quantity24 ?? 0) + (Quantity25 ?? 0) + (Quantity26 ?? 0) + (Quantity27 ?? 0) + (Quantity28 ?? 0) + (Quantity29 ?? 0) + (Quantity30 ?? 0)
+                    );
+
+                return _ItemCount;
+            }
+        }
     }
 }

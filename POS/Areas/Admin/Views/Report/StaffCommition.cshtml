@@ -1,5 +1,4 @@
 ﻿@model List<Model.Report.StaffCommitionListModel>
-
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -15,7 +14,6 @@
     ul.pagination li {
         display: inline;
     }
-
         ul.pagination li a {
             color: black;
             float: left;
@@ -23,12 +21,10 @@
             text-decoration: none;
             transition: background-color .3s;
         }
-
             ul.pagination li a.active {
                 background-color: #4CAF50;
                 color: white;
             }
-
             ul.pagination li a:hover:not(.active) {
                 background-color: #ddd;
             }
@@ -60,11 +56,9 @@
         <div class="advance-search-container col-md-12 col-lg-12 col-sm-12 col-xs-12">
             <div class="advance-content">
                 <div class="col-md-12 col-lg-12 col-xg-12">
-                    <h5 style="margin-bottom:20px;color:#000;font-weight:normal">Advanse Keyword Search</h5>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xg-4">
                     <label>Branch Range</label>
-
                 </div>
                 <div class="col-md-4 col-lg-4 col-xg-4">
                     <label>From</label>
@@ -74,8 +68,6 @@
                     <label>To</label>
                     <input type="text" name="BranchRanget" class="form-control advance-supplier-name branch-to" />
                 </div>
-
-
                 <div class="col-md-4 col-lg-4 col-xg-4">
                     <label>Date Range</label>
                 </div>

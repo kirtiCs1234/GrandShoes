@@ -31,5 +31,9 @@ namespace Services.Service
         {
             return ServerResponse.Invoke<List<StockBranchInventoryModel>>("api/stockBranchInventory/getByProduct?ProductId=" + id, "", "GET");
         }
+        public List<StockBranchInventoryModel> GetBranchSales(int? id)
+        {
+            return ServerResponse.Invoke<List<StockBranchInventoryModel>>("api/stockBranchInventory/getBranchSales?id=" + id, "", "GET");
+        }
     }
 }

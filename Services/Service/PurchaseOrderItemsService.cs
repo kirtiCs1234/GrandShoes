@@ -220,7 +220,7 @@ namespace Services.Service
         {
             return ServerResponse.Invoke<List<PurchaseOrderItemModel>>("api/PurchaseOrderItems/getByProductId?ProductID=" + id, "", "GET");
         }
-        public List<DictModel> GetDictList(int id)
+        public List<DictModel> GetDictList(int? id)
         {
             return ServerResponse.Invoke<List<DictModel>>("api/PurchaseOrderItems/GetItemList?PurchaseOrderId=" + id, "", "GET");
         }

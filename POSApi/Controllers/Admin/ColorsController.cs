@@ -61,6 +61,7 @@ namespace POSApi.Controllers.Admin
             string Message = string.Empty;
             foreach (var item in colorList)
 			{
+                item.Value.IsActive = true;
                 item.Value.CreatedOn = System.DateTime.UtcNow;
                 item.Value.UpdatedOn = System.DateTime.UtcNow;
                 result.Add(item.Key + "#" + item.Value.Code, "");
@@ -80,6 +81,43 @@ namespace POSApi.Controllers.Admin
             }
 			return Ok(result);
 		}
+        [HttpPost]
+        [Route("updateList")]
+        public IHttpActionResult UpdateList(Dictionary<int, Color> list)
+        {
+            var code = list.Where(s => s.Value.Code != null).Select(x => x.Value.Code).ToList();
+            var colors = Entities.Colors.Where(x => x.IsActive == true);
+            if (code != null && code.Count > 0)
+            {
+                colors.Where(x => code.Contains(x.Code));
+            }
+            var Colors = colors.ToList();
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            string Message = string.Empty;
+            foreach (var item in list)
+            {
+                result.Add(item.Key + "#" + item.Value.Code, "");
+                Color obj = Colors.Where(x => x.Code == item.Value.Code).FirstOrDefault();
+                obj.UpdatedOn = System.DateTime.UtcNow;
+                obj.Code = item.Value.Code;
+                obj.ColorLong = item.Value.ColorLong;
+                obj.ColorShort = item.Value.ColorShort;
+                obj.IsActive = true;
+                try
+                {
+                    result[item.Key + "#" + item.Value.Code] = "Update";
+                    Entities.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message != null)
+                    {
+                        result[item.Key + "#" + item.Value.Code] = ex.Message;
+                    }
+                }
+            }
+            return Ok(result);
+        }
         [HttpPost]
         [AllowAnonymous]
         [Route("getColorId")]
@@ -342,11 +380,11 @@ namespace POSApi.Controllers.Admin
             if(list!=null && list.Count> 0)
             {
                 var colorList = Entities.Colors.Where(x => x.IsActive == true);
-                var code=list.Select(x=>x.Value).Select(s => s[0]).Distinct().ToList();
+                var code=list.Select(x=>x.Value).Distinct().ToList();
                 if(code!=null && code.Count > 0)
-                {
-                    colorList = colorList.Where(x => code.ToString().Contains(x.Code));
-                }
+               {
+                    colorList = colorList.Where(x => code.Contains(x.Code));
+               }
                 var Color = colorList.ToList();
                 foreach (var item in list)
                 {

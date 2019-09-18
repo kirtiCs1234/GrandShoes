@@ -34,7 +34,7 @@ namespace POS.Areas.Admin.Controllers
 				if (markDOwn.Count > 0)
 				{
 					model.Count = markDOwn.Count().ToString();
-					model.LastMarkDownDate = markDown.FirstOrDefault().EffectiveDate.Substring(0, 10);
+					model.LastMarkDownDate = markDown.LastOrDefault().EffectiveDate.Substring(0, 10);
 					var amt = markDown.FirstOrDefault().NewCashPrice.ToString();
                     if (amt != "")
                     {
@@ -84,7 +84,7 @@ namespace POS.Areas.Admin.Controllers
 				if (markDown.Count > 0)
 				{
 					ViewBag.Count = markDown.Count().ToString();
-					ViewBag.LastMarkDown = markDown.FirstOrDefault().EffectiveDate.Substring(0,10);
+					ViewBag.LastMarkDown = markDown.LastOrDefault().EffectiveDate.Substring(0,10);
 
 					ViewBag.NewCashPrice = markDown.LastOrDefault().NewSellingPrice;
 

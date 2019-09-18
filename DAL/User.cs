@@ -21,6 +21,7 @@ namespace DAL
             this.IBTBranches = new HashSet<IBTBranch>();
             this.Logs = new HashSet<Log>();
             this.PagePermissions = new HashSet<PagePermission>();
+            this.Staffs = new HashSet<Staff>();
             this.StaffMembers = new HashSet<StaffMember>();
         }
     
@@ -39,8 +40,8 @@ namespace DAL
         public byte[] PasswordSalt { get; set; }
         public string UserGuid { get; set; }
         public Nullable<bool> IsPrimaryAccountHolder { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Area> Areas { get; set; }
@@ -52,6 +53,8 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PagePermission> PagePermissions { get; set; }
         public virtual Role Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Staff> Staffs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StaffMember> StaffMembers { get; set; }
     }

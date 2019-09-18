@@ -1,47 +1,61 @@
 ﻿@model Model.StockDistributionViewModel
 @{
-
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
 <div class="table-style">
-
     <div class="prtm-block-title pad-all-md">
         <div class="pos-relative">
             <div class="caption">
                 <h3 class="text-capitalize">Stock</h3>
             </div>
+            
         </div>
     </div>
-    <div class="prtm-full-block pos-relative">
         <div class="row mrgn-b-lg">
-            <div class="col-md-6 col-xs-12 col-sm-6" style="margin-top:35px;">
-
-                <label>Product</label>
-
-                @Html.DropDownListFor(m => m.ProductId, null, "--Product--", htmlAttributes: new { @class = "form-control", onchange = "productName(this);" })
-                @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger" })
+            <div class="col-md-6 col-xs-12 col-sm-6">
+                <div class="prtm-full-block">
+                    <div class="row mrgn-b-md">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-primary export-btn" onclick="confirm()">Confirm</button>
+                            <button type="button" class="btn btn-primary export-btn" id="hide" onclick="startDistribution()">Start Distribution</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Product</label>
+                            @Html.DropDownListFor(m => m.ProductId, null, "--Product--", htmlAttributes: new { @class = "form-control", onchange = "productName(this);" })
+                            @Html.ValidationMessageFor(m => m.ProductId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-6">
+                            <label>Distribution No</label>
+                            <input class="form-control" id="summary" value="@ViewBag.Id" readonly />
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-6 col-xs-12 col-sm-6">
-
-                <div class="add-btn-div col-md-12 col-lg-12 col-sm-12 col-xs-12 text-right" style="padding-right:0px;padding-bottom:10px">
-
-                    <button type="button" class="btn btn-primary export-btn" onclick="confirm()">Confirm</button>
-
-                    <button type="button" class="btn btn-primary export-btn" id="hide" onclick="startDistribution()">Start Distribution</button>
-
+                <div class="prtm-full-block" style="min-height:143px;">
+                    <div class="row mrgn-b-md">
+                        <div class="col-md-12">
+                            <label>Picking List Print</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(m => m.SymmaryID, null, "--Select Dist No--", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" onclick="getPrint()" class="btn btn-primary export-btn">Print</button>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <input class="form-control" id="summary" value="@ViewBag.Id" />
                 </div>
             </div>
-        </div>
-
         <div class="row">
             <div class="table-style">
                 @if (TempData["Success"] != null)
-            {
+                {
                     <p class="alert alert-success" id="successMessage" style="width: 300px;height: 25px;color: #fff;text-align: center; padding-bottom: 2em;">
                         @TempData["Success"]
                     </p>
@@ -52,26 +66,22 @@
                     }, 5000);
                 </script>
             </div>
-
             @using (Html.BeginForm("SaveData", "StockDistribution", FormMethod.Post, new { id = "StockForm" }))
             {
-
                 <div id="dvStockInventory" class="col-md-12 col-xs-12 col-sm-12">
                     @if (Model != null && Model.ProductInventory != null)
-                {
-                    Html.RenderPartial("_StockInventory", Model);
-                }
+                    {
+                        Html.RenderPartial("_StockInventory", Model);
+                    }
                 </div>
             }
-
         </div>
-    </div>
+    
 </div>
 @section scripts{
     <script type="text/javascript">
-
         $(document).on("click", "#cancelyesbtn", function () {
-        	window.location = '/Admin/StockDistribution/Index';
+            window.location = '/Admin/StockDistribution/Index';
         });
         var id1;
         function productName(ctrl) {
@@ -80,7 +90,46 @@
             id1 = product;
             Data(0);
         }
-
+        function getPrint() {
+            debugger
+            var id = $("#SymmaryID").val();
+            if (id !="") {
+                $.ajax({
+                    type: "GET",
+                    url: '/Admin/StockDistribution/ViewPDF/'+id,
+                    success: function (result) {
+                        debugger;
+                        $(".main-loading").removeClass("displayNone")
+                        var data = $("#content").html(result);
+                        var contents = data.html();
+                        var frame1 = $('<iframe />');
+                        frame1[0].name = "frame1";
+                        $("body").append(frame1);
+                        var frameDoc = frame1[0].contentWindow ? frame1[0].contentWindow : frame1[0].contentDocument.document ? frame1[0].contentDocument.document : frame1[0].contentDocument;
+                        frameDoc.document.open();
+                        frameDoc.document.write('<html><head><title>DIV Contents</title>');
+                        frameDoc.document.write('</head><body>');
+                        frameDoc.document.write('<link href="/Content/StyleForPDF.css" rel="stylesheet"  type="text/css" />');
+                        frameDoc.document.write(contents);
+                        frameDoc.document.write('</body></html>');
+                        frameDoc.document.close();
+                        var interval = setInterval(function () {
+                            debugger;
+                            clearInterval(interval);
+                            window.frames["frame1"].focus();
+                            window.frames["frame1"].print();
+                            $(".main-loading").addClass("displayNone");
+                            frame1.remove();
+                        }, 1000);
+                    },
+                    error: function (xhr, status) {
+                        alert(status);
+                    }
+                });
+            } else {
+                alert("Please Select Dict. No.")
+            }
+        }
         function Data(ch) {
             debugger;
             var obj = {};
@@ -92,17 +141,14 @@
                         alert("Please generate stock summary Id.")
                         $("#ProductId").val('');
                     } else {
-                    	crud = '/Admin/StockDistribution/StockInventoryForProduct';
+                        crud = '/Admin/StockDistribution/StockInventoryForProduct';
                         break;
                     }
-
                 case 1:
-                	crud = '/Admin/StockDistribution/SaveData';
+                    crud = '/Admin/StockDistribution/SaveData';
                     break;
-
             }
             $.ajax({
-
                 url: crud,
                 contentType: 'application/html; charse=utf-8',
                 type: 'GET',
@@ -112,7 +158,6 @@
                     $('#dvStockInventory').html(result);
                 },
                 error: function (xhr, status) {
-                    
                 }
             });
         }
@@ -123,17 +168,15 @@
             obj.IsActive = true;
             if (obj.Id != "") {
                 $.ajax({
-
                     type: "POST",
                     url: '/Admin/StockDistribution/Confirm',
                     data: obj,
-
                     success: function (result) {
                         debugger;
-                       
                         $('#hide').removeAttr("disabled");
                         window.location.href = '/Admin/StockDistribution/Index';
                         $("#summary").val('');
+                        alert("Distribution is confirm successfully.")
                     },
                     error: function (err) {
                         console.log(err);
@@ -142,27 +185,12 @@
             } else {
                 alert("Please first start distribution for generate distribtion no.")
             }
-            //var x = document.getElementById("summary");
-            //if (x.style.display === "block") {
-            //    x.style.display = "none";
-            //} else {
-            //    x.style.display = "block";
-            //}
-
-            //var y = document.getElementById("hide");
-            //if (y.style.display === "none") {
-            //    y.style.display = "block";
-            //} else {
-            //    y.style.display = "none";
-            //}
         }
-
         function startDistribution() {
             debugger
             var value = $('#summary').val();
             if (value == "") {
                 $.ajax({
-
                     type: "GET",
                     url: '/Admin/StockDistribution/StartDistribution',
                     success: function (result) {
@@ -176,35 +204,12 @@
                     }
                 });
             }
-            //function getStockSummeryId() {
-            //    debugger
-            //    $.ajax({
-
-            //        url: '/Admin/StockInventory/GetStockSummary',
-            //        dataType: "json",
-            //        method: 'GET',
-            //        success: function (data) {
-            //            debugger
-            //          // alert(data)
-            //          $('#summary').val(data);
-            //        },
-            //        error: function (err) {
-            //            console.log(err);
-            //        }
-            //    });
-            //}
-            //var x = document.getElementById("hide");
-            //if (x.style.display === "none") {
-            //    x.style.display = "block";
-            //} else {
-            //    x.style.display = "none";
-            //}
         }
         function getStockSummeryId() {
             debugger
             $.ajax({
 
-            	url: '/Admin/StockDistribution/GetDistribution',
+                url: '/Admin/StockDistribution/GetDistribution',
                 dataType: "json",
                 method: 'GET',
                 success: function (data) {
@@ -221,47 +226,47 @@
         function CalculationCheck(ctrl) {
             debugger;
 
-        	// var id = $("span.abc").attr('id');
-          
-            	var initValue = $(ctrl).parents('td').find('.spanval').text();
+            // var id = $("span.abc").attr('id');
 
-            	var branch = $(ctrl).val();
-            	// var span = jQuery("#span_Quantity01").text()
-            	var ctrlId = $(ctrl).attr("id");
-            	var itemNumber = ctrlId.split("_")[3];
-            	var i = ctrlId.split("_")[1];
+            var initValue = $(ctrl).parents('td').find('.spanval').text();
 
-            	var hiddenCtrl = $("#span_" + itemNumber + "_" + i);
-            	var spanV = hiddenCtrl.text();
-            	if (spanV == "") {
-            		spanV = 0;
-            	}
-            	var wareHouseCtrl = $("#ProductInventory_" + itemNumber + "");
-            	var whareHouse = wareHouseCtrl.val();
-            	var temp = whareHouse;
-            	if (whareHouse == "")
-            		whareHouse = 0;
+            var branch = $(ctrl).val();
+            // var span = jQuery("#span_Quantity01").text()
+            var ctrlId = $(ctrl).attr("id");
+            var itemNumber = ctrlId.split("_")[3];
+            var i = ctrlId.split("_")[1];
 
-
-            	if (branch == "") {
-            		branch = 0;
-            		whareHouse = temp;
-            	}
-
-            	
-            	var value = branch - initValue;
-            //	var span = $(ctrl).parents('td').find('.spanval').text(branch);
-            	if (parseInt(whareHouse) >=parseInt(value)) {
-            			whareHouse = parseInt(whareHouse) - parseInt(value);
-            			wareHouseCtrl.val(whareHouse);
-            			$(ctrl).parents('td').find('.spanval').text(branch);
-            			// hiddenCtrl.text(value);
-            		}
-            		else {
-            			alert("please enter Quantity of Stock Distrubution is less than Quantity of Stock Invebtory ");
-            			$(ctrl).val(initValue);
-            			$(ctrl).parents('td').find('.spanval').text(initValue);
-            		}
+            var hiddenCtrl = $("#span_" + itemNumber + "_" + i);
+            var spanV = hiddenCtrl.text();
+            if (spanV == "") {
+                spanV = 0;
             }
+            var wareHouseCtrl = $("#ProductInventory_" + itemNumber + "");
+            var whareHouse = wareHouseCtrl.val();
+            var temp = whareHouse;
+            if (whareHouse == "")
+                whareHouse = 0;
+
+
+            if (branch == "") {
+                branch = 0;
+                whareHouse = temp;
+            }
+
+
+            var value = branch - initValue;
+            //	var span = $(ctrl).parents('td').find('.spanval').text(branch);
+            if (parseInt(whareHouse) >= parseInt(value)) {
+                whareHouse = parseInt(whareHouse) - parseInt(value);
+                wareHouseCtrl.val(whareHouse);
+                $(ctrl).parents('td').find('.spanval').text(branch);
+                // hiddenCtrl.text(value);
+            }
+            else {
+                alert("please enter Quantity of Stock Distrubution is less than Quantity of Stock Invebtory ");
+                $(ctrl).val(initValue);
+                $(ctrl).parents('td').find('.spanval').text(initValue);
+            }
+        }
     </script>
 }

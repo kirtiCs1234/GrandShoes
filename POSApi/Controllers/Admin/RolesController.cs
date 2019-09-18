@@ -28,7 +28,7 @@ namespace POSApi.Controllers
         [Route("getDetails")]
         public IHttpActionResult GetRoles()
         {
-            var roles = db.Roles.ToList();
+            var roles = db.Roles.Where(x=>x.IsActive==true).ToList();
             return Ok(roles);
         }
         // GET: api/Role/5

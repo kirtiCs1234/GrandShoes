@@ -1,0 +1,707 @@
+﻿@model List<Model.StockDistributionModel>
+        <div class="table-responsive" style="height:400px;">
+            <div id="project">
+                @if (Model.Count != 0)
+                {
+                    <div><span>Product</span>@Model.FirstOrDefault().Product.ProductSKU-@Model.FirstOrDefault().Product.StyleSKU</div>
+                    <div><span>Color</span>@Model.FirstOrDefault().Product.Color.Code @Model.FirstOrDefault().Product.Color.ColorShort</div>
+                    <div><span>Distribution No</span>@Model.FirstOrDefault().StockDistributionSummaryId</div>
+                    <div>
+                        <span>
+                            Supplier
+                        </span>@Model.FirstOrDefault().Product.Supplier.Name
+                    </div>
+                }
+            </div>
+            @{
+                int? sum1 = 0;
+                int? sum2 = 0;
+                int? sum3 = 0;
+                int? sum4 = 0;
+                int? sum5 = 0;
+                int? sum6 = 0;
+                int? sum7 = 0;
+                int? sum8 = 0;
+                int? sum9 = 0;
+                int? sum10 = 0;
+                int? sum11 = 0;
+                int? sum12 = 0;
+                int? sum13 = 0;
+                int? sum14 = 0;
+                int? sum15 = 0;
+                int? sum16 = 0;
+                int? sum17 = 0;
+                int? sum18 = 0;
+                int? sum19 = 0;
+                int? sum20 = 0;
+                int? sum21 = 0;
+                int? sum22 = 0;
+                int? sum23 = 0;
+                int? sum24 = 0;
+                int? sum25 = 0;
+                int? sum26 = 0;
+                int? sum27 = 0;
+                int? sum28 = 0;
+                int? sum29 = 0;
+                int? sum30 = 0;
+            }
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Branch</th>
+                        <th>01</th>
+                        <th>02</th>
+                        <th>03</th>
+                        <th>04</th>
+                        <th>05</th>
+                        <th>06</th>
+                        <th>07</th>
+                        <th>08</th>
+                        <th>09</th>
+                        <th>10</th>
+                        <th>11</th>
+                        <th>12</th>
+                        <th>13</th>
+                        <th>14</th>
+                        <th>15</th>
+                        <th>16</th>
+                        <th>17</th>
+                        <th>18</th>
+                        <th>19</th>
+                        <th>20</th>
+                        <th>21</th>
+                        <th>22</th>
+                        <th>23</th>
+                        <th>24</th>
+                        <th>25</th>
+                        <th>26</th>
+                        <th>27</th>
+                        <th>28</th>
+                        <th>29</th>
+                        <th>30</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Branch.BranchCode)@Html.DisplayFor(modelItem => item.Branch.Name)</td>
+                            <td>
+                                @{
+                                    if (item.Quantity01 != 0)
+                                    {
+                                        @:@item.Quantity01
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity02 != 0)
+                                    {
+                                        @:@item.Quantity02
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity03 != 0)
+                                    {
+                                        @:@item.Quantity03
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity04 != 0)
+                                    {
+                                        @:@item.Quantity04
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity05 != 0)
+                                    {
+                                        @:@item.Quantity05
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity06 != 0)
+                                    {
+                                        @:@item.Quantity06
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity07 != 0)
+                                    {
+                                        @:@item.Quantity07
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity08 != 0)
+                                    {
+                                        @:@item.Quantity08
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity09 != 0)
+                                    {
+                                        @:@item.Quantity09
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity10 != 0)
+                                    {
+                                        @:@item.Quantity10
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity11 != 0)
+                                    {
+                                        @:@item.Quantity11
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity12 != 0)
+                                    {
+                                        @:@item.Quantity12
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity13 != 0)
+                                    {
+                                        @:@item.Quantity13
+                                    }
+                                }
+
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity14 != 0)
+                                    {
+                                        @:@item.Quantity14
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity15 != 0)
+                                    {
+                                        @:@item.Quantity15
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity16 != 0)
+                                    {
+                                        @:@item.Quantity16
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity17 != 0)
+                                    {
+                                        @:@item.Quantity17
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity18 != 0)
+                                    {
+                                        @:@item.Quantity18
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity19 != 0)
+                                    {
+                                        @:@item.Quantity19
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity20 != 0)
+                                    {
+                                        @:@item.Quantity20
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity21 != 0)
+                                    {
+                                        @:@item.Quantity21
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity22 != 0)
+                                    {
+                                        @:@item.Quantity22
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity23 != 0)
+                                    {
+                                        @:@item.Quantity23
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity24 != 0)
+                                    {
+                                        @:@item.Quantity24
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity25 != 0)
+                                    {
+                                        @:@item.Quantity25
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity26 != 0)
+                                    {
+                                        @:@item.Quantity26
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity27 != 0)
+                                    {
+                                        @:@item.Quantity27
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity28 != 0)
+                                    {
+                                        @:@item.Quantity28
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity29 != 0)
+                                    {
+                                        @:@item.Quantity29
+                                    }
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    if (item.Quantity30 != 0)
+                                    {
+                                        @:@item.Quantity30
+                                    }
+                                }
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.Total)</td>
+                        </tr>
+                        <tr>
+                          
+                            <td>
+                                @{
+                                    var value = item.Quantity01;
+                                    sum1 += value;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value2 = item.Quantity02;
+                                    sum2 += value2;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value3 = item.Quantity03;
+                                    sum3 += value3;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value4 = item.Quantity04;
+                                    sum4 += value4;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value5 = item.Quantity05;
+                                    sum5 += value5;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value6 = item.Quantity06;
+                                    sum6 += value6;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value7 = item.Quantity07;
+                                    sum7 += value7;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value8 = item.Quantity08;
+                                    sum8 += value8;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value9 = item.Quantity09;
+                                    sum9 += value9;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value10 = item.Quantity10;
+                                    sum10 += value10;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value11 = item.Quantity11;
+                                    sum11 += value11;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value12 = item.Quantity12;
+                                    sum12 += value12;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value13 = item.Quantity13;
+                                    sum13 += value13;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value14 = item.Quantity14;
+                                    sum14 += value14;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value15 = item.Quantity15;
+                                    sum15 += value15;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value16 = item.Quantity16;
+                                    sum16 += value16;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value17 = item.Quantity17;
+                                    sum17 += value17;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value18 = item.Quantity18;
+                                    sum18 += value18;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value19 = item.Quantity19;
+                                    sum19 += value19;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value20 = item.Quantity20;
+                                    sum20 += value20;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value21 = item.Quantity21;
+                                    sum21 += value21;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value22 = item.Quantity22;
+                                    sum22 += value22;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value23 = item.Quantity23;
+                                    sum23 += value23;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value24 = item.Quantity24;
+                                    sum24 += value24;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value25 = item.Quantity25;
+                                    sum25 += value25;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value26 = item.Quantity26;
+                                    sum26 += value26;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value27 = item.Quantity27;
+                                    sum27 += value27;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value28 = item.Quantity28;
+                                    sum28 += value28;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value29 = item.Quantity29;
+                                    sum29 += value29;
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var value30 = item.Quantity30;
+                                    sum30 += value30;
+                                }
+                            </td>
+
+                        </tr>
+                    }
+                        <tr style="border-top:1px solid #808080;">
+                            <td><span><b>Grand Total</b></span></td>
+                            <td>
+                                @if (sum1 != 0)
+                                {
+                                <span><b>@sum1</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum2 != 0)
+                                {
+                                <span><b>@sum2</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum3 != 0)
+                                {
+                                <span><b>@sum3</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum4 != 0)
+                                {
+                                <span><b>@sum4</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum5 != 0)
+                                {
+                                <span><b>@sum5</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum6 != 0)
+                                {
+                                <span><b>@sum6</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum7 != 0)
+                                {
+                                <span><b>@sum7</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum8 != 0)
+                                {
+                                <span><b>@sum8</b></span>
+                                }
+
+                            </td>
+                            <td>
+                                @if (sum9 != 0)
+                                {
+                                <span><b>@sum9</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum10 != 0)
+                                {
+                                <span><b>@sum10</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum11 != 0)
+                                {
+                                <span><b>@sum11</b></span>
+                                }
+                            <td>
+                                @if (sum12 != 0)
+                                {
+                                <span><b>@sum12</b></span>
+                                }
+
+                            </td>
+                            <td>
+                                @if (sum13 != 0)
+                                {
+                                <span><b>@sum13</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum14 != 0)
+                                {
+                                <span><b>@sum14</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum15 != 0)
+                                {
+                                <span><b>@sum15</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum16 != 0)
+                                {
+                                <span><b>@sum17</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum17 != 0)
+                                {
+                                <span><b>@sum18</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum18 != 0)
+                                {
+                                <span><b>@sum18</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum19 != 0)
+                                {
+                                <span><b>@sum19</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum20 != 0)
+                                {
+                                <span><b>@sum20</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum21 != 0)
+                                {
+                                <span><b>@sum21</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum22 != 0)
+                                {
+                                <span>@sum22</span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum23 != 0)
+                                {
+                                <span><b>@sum23</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum24 != 0)
+                                {
+                                <span><b>@sum24</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum25 != 0)
+                                {
+                                <span><b>@sum25</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum26 != 0)
+                                {
+                                <span><b>@sum26</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum27 != 0)
+                                {
+                                <span><b>@sum27</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum28!= 0)
+                                {
+                                <span><b>@sum28</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum29 != 0)
+                                {
+                                <span><b>@sum29</b></span>
+                                }
+                            </td>
+                            <td>
+                                @if (sum30 != 0)
+                                {
+                                <span><b>@sum30</b></span>
+                                }
+                            </td>
+                          
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>

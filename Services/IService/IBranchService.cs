@@ -16,13 +16,13 @@ namespace Services.IService
         bool Create(BranchModel branchModel);
         bool Edit(BranchModel branchModel);
         BranchModel Delete(BranchModel branchModel);
-       List<BranchModel> SearchBranch(BranchModel branchModel);
+        List<BranchModel> SearchBranch(BranchModel branchModel);
         bool CheckBranchName(BranchModel branchModel);
         bool CheckBranchCode(BranchModel branchModel);
         Dictionary<string, string> CreateList(Dictionary<int,BranchModel> list);
         Dictionary<string, string> UpdateList(Dictionary<int, BranchModel> list);
 		bool CheckBranchCode(string chk);
 		BranchModel GetByName(string name);
-
-	}
+        Dictionary<int, bool> CheckBranch(Dictionary<int, string> list);
+    }
 }

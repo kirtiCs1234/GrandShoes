@@ -1,4 +1,4 @@
-﻿using DAL;
+﻿ using DAL;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -20,6 +20,57 @@ namespace Helper.ExtensionMethod
             }
             return list1;
         }
+        public static List<ProductSource> RemoveReferences(this List<ProductSource> list)
+        {
+            List<ProductSource> list1 = new List<ProductSource>();
+            foreach(var item in list)
+            {
+                var obj = new ProductSource();
+                obj = item.RemoveReferences();
+                list1.Add(obj);
+            }
+            return list1;
+        }
+        public static List<Buyer> RemoveReferences(this List<Buyer> list)
+        {
+            List<Buyer> list1 = new List<Buyer>();
+            foreach(var item in list)
+            {
+                var obj = new Buyer();
+                obj = item.RemoveReferences();
+                list1.Add(obj);
+            }
+            return list1;
+        }
+        public static List<SalesOrderItem> RemoveReferences(this List<SalesOrderItem> list)
+        {
+            List<SalesOrderItem> list1 = new List<SalesOrderItem>();
+            foreach(var item in list)
+            {
+                var obj = new SalesOrderItem();
+                obj = item.RemoveReferences();
+                list1.Add(obj);
+            }
+            return list1;
+        }
+        public static List<PageName> RemoveReferences(this List<PageName> list)
+        {
+            var newList = new List<PageName>();
+            if (list != null)
+            {
+                list.ForEach(item =>
+                {
+                    PageName obj = new PageName();
+                    if (item != null)
+                    {
+                       // obj = item.RemoveReference();
+                    }
+                    newList.Add(item);
+                });
+            }
+            return newList;
+        }
+        
         public static List<DiscountBranch> RemoveReferences(this List<DiscountBranch> list)
         {
             List<DiscountBranch> list1 = new List<DiscountBranch>();
@@ -86,7 +137,41 @@ namespace Helper.ExtensionMethod
             }
             return list1;
         }
-		public static List<MarkDown> RemoveReferences(this List<MarkDown> list)
+        public static List<Supplier> RemoveReferences(this List<Supplier> list)
+        {
+            List<Supplier> list1 = new List<Supplier>();
+            foreach(var item in list)
+            {
+                var obj = new Supplier();
+                obj = item.RemoveReferences();
+                list1.Add(obj);
+            }
+            return list1;
+        }
+        public static List<Template> RemoveReferences(this List<Template> list)
+        {
+            List<Template> list1 = new List<Template>();
+            foreach(var item in list)
+            {
+                var obj = new Template();
+                obj = item.RemoveReferences();
+                list1.Add(obj);
+            }
+            return list1;
+        }
+        public static List<SizeGrid> RemoveReferences(this List<SizeGrid> list)
+        {
+            List<SizeGrid> list1 = new List<SizeGrid>();
+            foreach(var item in list)
+            {
+                var obj = new SizeGrid();
+                obj = item.RemoveReferences();
+                list1.Add(obj);
+            }
+            return list1;
+        }
+
+        public static List<MarkDown> RemoveReferences(this List<MarkDown> list)
 		{
 			List<MarkDown> list1 = new List<MarkDown>();
 			foreach (var item in list)
@@ -160,6 +245,16 @@ namespace Helper.ExtensionMethod
             {
                 var obj = new ReceiptOrderItem();
                 obj = item.RemoveReferences();
+                list1.Add(obj);
+            }
+            return list1;
+        }
+        public static List<Season> RemoveReferences(this List<Season> list)
+        {
+            List<Season> list1 = new List<Season>();
+            foreach(var item in list)
+            {
+                var obj = item.RemoveReferences();
                 list1.Add(obj);
             }
             return list1;
@@ -274,6 +369,39 @@ namespace Helper.ExtensionMethod
 			
 			return obj;
 		}
+        public static SalesOrderItem RemoveReferences(this SalesOrderItem item)
+        {
+            SalesOrderItem obj = new SalesOrderItem();
+            obj=item.RemoveReference();
+            if (item.Product != null)
+            {
+                obj.Product = new Product();
+                obj.Product = item.Product.RemoveReference();
+                if (item.Product.Color != null)
+                {
+                    obj.Product.Color = new Color();
+                    obj.Product.Color = item.Product.Color.RemoveReference();
+                }
+            }
+            if (item.SalesOrder != null)
+            {
+                obj.SalesOrder = new SalesOrder();
+                obj.SalesOrder = item.SalesOrder.RemoveReference();
+                if (item.SalesOrder.Branch != null)
+                {
+                    obj.SalesOrder.Branch = new Branch();
+                    obj.SalesOrder.Branch = item.SalesOrder.Branch.RemoveReference();
+                }
+                if (item.SalesOrder.StaffMember != null)
+                {
+                    obj.SalesOrder.StaffMember = new StaffMember();
+                    obj.SalesOrder.StaffMember = item.SalesOrder.StaffMember.RemoveReference();
+                }
+            }
+           
+            return obj;
+
+        }
         public static DiscountSummary RemoveReferences(this DiscountSummary item)
         {
             DiscountSummary obj = new DiscountSummary();
@@ -330,6 +458,450 @@ namespace Helper.ExtensionMethod
                     }
                 }
 
+            }
+            return obj;
+        }
+        public static Buyer RemoveReferences(this Buyer item)
+        {
+            Buyer obj = new Buyer();
+            obj = item.RemoveReference();
+            if (item.Products != null)
+            {
+                obj.Products = new List<Product>();
+                if (item.Products.Count > 0)
+                {
+                    foreach(var itemj in item.Products)
+                    {
+                        var obj2 = new Product();
+                        obj2 = itemj.RemoveReference();
+                        if (itemj.Buyer != null)
+                        {
+                            obj2.Buyer = new Buyer();
+                            obj2.Buyer = itemj.Buyer.RemoveReference();
+                        }
+                        if (itemj.Color != null)
+                        {
+                            obj2.Color = new Color();
+                            obj2.Color = itemj.Color.RemoveReference();
+                        }
+                        if (itemj.ProductCat1 != null)
+                        {
+                            obj2.ProductCat1 = new ProductCat1();
+                            obj2.ProductCat1 = itemj.ProductCat1.RemoveReference();
+                        }
+                        if (itemj.ProductCat2!= null)
+                        {
+                            obj2.ProductCat2 = new ProductCat2();
+                            obj2.ProductCat2 = itemj.ProductCat2.RemoveReference();
+                        }
+                        if (itemj.ProductCat3!= null)
+                        {
+                            obj2.ProductCat3 = new ProductCat3();
+                            obj2.ProductCat3 = itemj.ProductCat3.RemoveReference();
+                        }
+                        if (itemj.ProductCat4 != null)
+                        {
+                            obj2.ProductCat4 = new ProductCat4();
+                            obj2.ProductCat4 = itemj.ProductCat4.RemoveReference();
+                        }
+                        if (itemj.ProductSource != null)
+                        {
+                            obj2.ProductSource = new ProductSource();
+                            obj2.ProductSource = itemj.ProductSource.RemoveReference();
+                        }
+                        if (itemj.Season != null)
+                        {
+                            obj2.Season = new Season();
+                            obj2.Season = itemj.Season.RemoveReference();
+                        }
+                        if (itemj.SizeGrid != null)
+                        {
+                            obj2.SizeGrid = new SizeGrid();
+                            obj2.SizeGrid = itemj.SizeGrid.RemoveReference();
+                        }
+                        if (itemj.Supplier != null)
+                        {
+                            obj2.Supplier = new Supplier();
+                            obj2.Supplier = itemj.Supplier.RemoveReference();
+                        }
+                        if (itemj.Year!= null)
+                        {
+                            obj2.Year = new Year();
+                            obj2.Year = itemj.Year.RemoveReference();
+                        }
+                        obj.Products.Add(obj2);
+                    }
+                }
+            }
+            return obj;
+        }
+        public static Supplier RemoveReferences(this Supplier item)
+        {
+            Supplier obj = new Supplier();
+            obj = item.RemoveReference();
+            if (item.Products != null)
+            {
+                obj.Products = new List<Product>();
+                if (item.Products.Count > 0)
+                {
+                    foreach (var itemj in item.Products)
+                    {
+                        var obj2 = new Product();
+                        obj2 = itemj.RemoveReference();
+                        if (itemj.Buyer != null)
+                        {
+                            obj2.Buyer = new Buyer();
+                            obj2.Buyer = itemj.Buyer.RemoveReference();
+                        }
+                        if (itemj.Color != null)
+                        {
+                            obj2.Color = new Color();
+                            obj2.Color = itemj.Color.RemoveReference();
+                        }
+                        if (itemj.ProductCat1 != null)
+                        {
+                            obj2.ProductCat1 = new ProductCat1();
+                            obj2.ProductCat1 = itemj.ProductCat1.RemoveReference();
+                        }
+                        if (itemj.ProductCat2 != null)
+                        {
+                            obj2.ProductCat2 = new ProductCat2();
+                            obj2.ProductCat2 = itemj.ProductCat2.RemoveReference();
+                        }
+                        if (itemj.ProductCat3 != null)
+                        {
+                            obj2.ProductCat3 = new ProductCat3();
+                            obj2.ProductCat3 = itemj.ProductCat3.RemoveReference();
+                        }
+                        if (itemj.ProductCat4 != null)
+                        {
+                            obj2.ProductCat4 = new ProductCat4();
+                            obj2.ProductCat4 = itemj.ProductCat4.RemoveReference();
+                        }
+                        if (itemj.ProductSource != null)
+                        {
+                            obj2.ProductSource = new ProductSource();
+                            obj2.ProductSource = itemj.ProductSource.RemoveReference();
+                        }
+                        if (itemj.Season != null)
+                        {
+                            obj2.Season = new Season();
+                            obj2.Season = itemj.Season.RemoveReference();
+                        }
+                        if (itemj.SizeGrid != null)
+                        {
+                            obj2.SizeGrid = new SizeGrid();
+                            obj2.SizeGrid = itemj.SizeGrid.RemoveReference();
+                        }
+                        if (itemj.Supplier != null)
+                        {
+                            obj2.Supplier = new Supplier();
+                            obj2.Supplier = itemj.Supplier.RemoveReference();
+                        }
+                        if (itemj.Year != null)
+                        {
+                            obj2.Year = new Year();
+                            obj2.Year = itemj.Year.RemoveReference();
+                        }
+                        obj.Products.Add(obj2);
+                    }
+                }
+            }
+            return obj;
+        }
+        public static Template RemoveReferences(this Template item)
+        {
+            Template obj = new Template();
+            obj = item.RemoveReference();
+            if (item.Products != null)
+            {
+                obj.Products = new List<Product>();
+                if (item.Products.Count > 0)
+                {
+                    foreach (var itemj in item.Products)
+                    {
+                        var obj2 = new Product();
+                        obj2 = itemj.RemoveReference();
+                        if (itemj.Buyer != null)
+                        {
+                            obj2.Buyer = new Buyer();
+                            obj2.Buyer = itemj.Buyer.RemoveReference();
+                        }
+                        if (itemj.Color != null)
+                        {
+                            obj2.Color = new Color();
+                            obj2.Color = itemj.Color.RemoveReference();
+                        }
+                        if (itemj.ProductCat1 != null)
+                        {
+                            obj2.ProductCat1 = new ProductCat1();
+                            obj2.ProductCat1 = itemj.ProductCat1.RemoveReference();
+                        }
+                        if (itemj.ProductCat2 != null)
+                        {
+                            obj2.ProductCat2 = new ProductCat2();
+                            obj2.ProductCat2 = itemj.ProductCat2.RemoveReference();
+                        }
+                        if (itemj.ProductCat3 != null)
+                        {
+                            obj2.ProductCat3 = new ProductCat3();
+                            obj2.ProductCat3 = itemj.ProductCat3.RemoveReference();
+                        }
+                        if (itemj.ProductCat4 != null)
+                        {
+                            obj2.ProductCat4 = new ProductCat4();
+                            obj2.ProductCat4 = itemj.ProductCat4.RemoveReference();
+                        }
+                        if (itemj.ProductSource != null)
+                        {
+                            obj2.ProductSource = new ProductSource();
+                            obj2.ProductSource = itemj.ProductSource.RemoveReference();
+                        }
+                        if (itemj.Season != null)
+                        {
+                            obj2.Season = new Season();
+                            obj2.Season = itemj.Season.RemoveReference();
+                        }
+                        if (itemj.SizeGrid != null)
+                        {
+                            obj2.SizeGrid = new SizeGrid();
+                            obj2.SizeGrid = itemj.SizeGrid.RemoveReference();
+                        }
+                        if (itemj.Supplier != null)
+                        {
+                            obj2.Supplier = new Supplier();
+                            obj2.Supplier = itemj.Supplier.RemoveReference();
+                        }
+                        if (itemj.Year != null)
+                        {
+                            obj2.Year = new Year();
+                            obj2.Year = itemj.Year.RemoveReference();
+                        }
+                        obj.Products.Add(obj2);
+                    }
+                }
+            }
+            return obj;
+        }
+        public static SizeGrid RemoveReferences(this SizeGrid item)
+        {
+            SizeGrid obj = new SizeGrid();
+            obj = item.RemoveReference();
+            if (item.Products != null)
+            {
+                obj.Products = new List<Product>();
+                if (item.Products.Count > 0)
+                {
+                    foreach (var itemj in item.Products)
+                    {
+                        var obj2 = new Product();
+                        obj2 = itemj.RemoveReference();
+                        if (itemj.Buyer != null)
+                        {
+                            obj2.Buyer = new Buyer();
+                            obj2.Buyer = itemj.Buyer.RemoveReference();
+                        }
+                        if (itemj.Color != null)
+                        {
+                            obj2.Color = new Color();
+                            obj2.Color = itemj.Color.RemoveReference();
+                        }
+                        if (itemj.ProductCat1 != null)
+                        {
+                            obj2.ProductCat1 = new ProductCat1();
+                            obj2.ProductCat1 = itemj.ProductCat1.RemoveReference();
+                        }
+                        if (itemj.ProductCat2 != null)
+                        {
+                            obj2.ProductCat2 = new ProductCat2();
+                            obj2.ProductCat2 = itemj.ProductCat2.RemoveReference();
+                        }
+                        if (itemj.ProductCat3 != null)
+                        {
+                            obj2.ProductCat3 = new ProductCat3();
+                            obj2.ProductCat3 = itemj.ProductCat3.RemoveReference();
+                        }
+                        if (itemj.ProductCat4 != null)
+                        {
+                            obj2.ProductCat4 = new ProductCat4();
+                            obj2.ProductCat4 = itemj.ProductCat4.RemoveReference();
+                        }
+                        if (itemj.ProductSource != null)
+                        {
+                            obj2.ProductSource = new ProductSource();
+                            obj2.ProductSource = itemj.ProductSource.RemoveReference();
+                        }
+                        if (itemj.Season != null)
+                        {
+                            obj2.Season = new Season();
+                            obj2.Season = itemj.Season.RemoveReference();
+                        }
+                        if (itemj.SizeGrid != null)
+                        {
+                            obj2.SizeGrid = new SizeGrid();
+                            obj2.SizeGrid = itemj.SizeGrid.RemoveReference();
+                        }
+                        if (itemj.Supplier != null)
+                        {
+                            obj2.Supplier = new Supplier();
+                            obj2.Supplier = itemj.Supplier.RemoveReference();
+                        }
+                        if (itemj.Year != null)
+                        {
+                            obj2.Year = new Year();
+                            obj2.Year = itemj.Year.RemoveReference();
+                        }
+                        obj.Products.Add(obj2);
+                    }
+                }
+            }
+            return obj;
+        }
+        public static Season RemoveReferences(this Season item)
+        {
+            Season obj = new Season();
+            obj = item.RemoveReference();
+            if (item.Products != null)
+            {
+                obj.Products = new List<Product>();
+                if (item.Products.Count > 0)
+                {
+                    foreach (var itemj in item.Products)
+                    {
+                        var obj2 = new Product();
+                        obj2 = itemj.RemoveReference();
+                        if (itemj.Buyer != null)
+                        {
+                            obj2.Buyer = new Buyer();
+                            obj2.Buyer = itemj.Buyer.RemoveReference();
+                        }
+                        if (itemj.Color != null)
+                        {
+                            obj2.Color = new Color();
+                            obj2.Color = itemj.Color.RemoveReference();
+                        }
+                        if (itemj.ProductCat1 != null)
+                        {
+                            obj2.ProductCat1 = new ProductCat1();
+                            obj2.ProductCat1 = itemj.ProductCat1.RemoveReference();
+                        }
+                        if (itemj.ProductCat2 != null)
+                        {
+                            obj2.ProductCat2 = new ProductCat2();
+                            obj2.ProductCat2 = itemj.ProductCat2.RemoveReference();
+                        }
+                        if (itemj.ProductCat3 != null)
+                        {
+                            obj2.ProductCat3 = new ProductCat3();
+                            obj2.ProductCat3 = itemj.ProductCat3.RemoveReference();
+                        }
+                        if (itemj.ProductCat4 != null)
+                        {
+                            obj2.ProductCat4 = new ProductCat4();
+                            obj2.ProductCat4 = itemj.ProductCat4.RemoveReference();
+                        }
+                        if (itemj.ProductSource != null)
+                        {
+                            obj2.ProductSource = new ProductSource();
+                            obj2.ProductSource = itemj.ProductSource.RemoveReference();
+                        }
+                        if (itemj.Season != null)
+                        {
+                            obj2.Season = new Season();
+                            obj2.Season = itemj.Season.RemoveReference();
+                        }
+                        if (itemj.SizeGrid != null)
+                        {
+                            obj2.SizeGrid = new SizeGrid();
+                            obj2.SizeGrid = itemj.SizeGrid.RemoveReference();
+                        }
+                        if (itemj.Supplier != null)
+                        {
+                            obj2.Supplier = new Supplier();
+                            obj2.Supplier = itemj.Supplier.RemoveReference();
+                        }
+                        if (itemj.Year != null)
+                        {
+                            obj2.Year = new Year();
+                            obj2.Year = itemj.Year.RemoveReference();
+                        }
+                        obj.Products.Add(obj2);
+                    }
+                }
+            }
+            return obj;
+        }
+        public static ProductSource RemoveReferences(this ProductSource item)
+        {
+            ProductSource obj = new ProductSource();
+            obj = item.RemoveReference();
+            if (item.Products != null)
+            {
+                obj.Products = new List<Product>();
+                if (item.Products.Count > 0)
+                {
+                    foreach (var itemj in item.Products)
+                    {
+                        var obj2 = new Product();
+                        obj2 = itemj.RemoveReference();
+                        if (itemj.Buyer != null)
+                        {
+                            obj2.Buyer = new Buyer();
+                            obj2.Buyer = itemj.Buyer.RemoveReference();
+                        }
+                        if (itemj.Color != null)
+                        {
+                            obj2.Color = new Color();
+                            obj2.Color = itemj.Color.RemoveReference();
+                        }
+                        if (itemj.ProductCat1 != null)
+                        {
+                            obj2.ProductCat1 = new ProductCat1();
+                            obj2.ProductCat1 = itemj.ProductCat1.RemoveReference();
+                        }
+                        if (itemj.ProductCat2 != null)
+                        {
+                            obj2.ProductCat2 = new ProductCat2();
+                            obj2.ProductCat2 = itemj.ProductCat2.RemoveReference();
+                        }
+                        if (itemj.ProductCat3 != null)
+                        {
+                            obj2.ProductCat3 = new ProductCat3();
+                            obj2.ProductCat3 = itemj.ProductCat3.RemoveReference();
+                        }
+                        if (itemj.ProductCat4 != null)
+                        {
+                            obj2.ProductCat4 = new ProductCat4();
+                            obj2.ProductCat4 = itemj.ProductCat4.RemoveReference();
+                        }
+                        if (itemj.ProductSource != null)
+                        {
+                            obj2.ProductSource = new ProductSource();
+                            obj2.ProductSource = itemj.ProductSource.RemoveReference();
+                        }
+                        if (itemj.Season != null)
+                        {
+                            obj2.Season = new Season();
+                            obj2.Season = itemj.Season.RemoveReference();
+                        }
+                        if (itemj.SizeGrid != null)
+                        {
+                            obj2.SizeGrid = new SizeGrid();
+                            obj2.SizeGrid = itemj.SizeGrid.RemoveReference();
+                        }
+                        if (itemj.Supplier != null)
+                        {
+                            obj2.Supplier = new Supplier();
+                            obj2.Supplier = itemj.Supplier.RemoveReference();
+                        }
+                        if (itemj.Year != null)
+                        {
+                            obj2.Year = new Year();
+                            obj2.Year = itemj.Year.RemoveReference();
+                        }
+                        obj.Products.Add(obj2);
+                    }
+                }
             }
             return obj;
         }
@@ -400,6 +972,11 @@ namespace Helper.ExtensionMethod
                 obj.PurchaseOrder = new PurchaseOrder();
                 obj.PurchaseOrder = item.PurchaseOrder.RemoveReference();
             }
+            if (item.PurchaseOrder.PurchaseOrderStatu != null)
+            {
+                obj.PurchaseOrder.PurchaseOrderStatu = new PurchaseOrderStatu();
+                obj.PurchaseOrder.PurchaseOrderStatu = item.PurchaseOrder.PurchaseOrderStatu.RemoveReference();
+            }
             if (item.SizeGrid != null)
             {
                 obj.SizeGrid = new SizeGrid();
@@ -414,6 +991,12 @@ namespace Helper.ExtensionMethod
             
             return obj;
         }
+        //public static Buyer RemoveReferences(this Buyer item)
+        //{
+        //    Buyer obj = new Buyer();
+        //    obj.BuyLimit
+        //    return obj;
+        //}
         public static Product RemoveReferences(this Product item)
         {
             Product obj = new Product();
@@ -529,7 +1112,13 @@ namespace Helper.ExtensionMethod
 					obj.Product.Color = new Color();
 					obj.Product.Color = item.Product.Color.RemoveReference();
 				}
-			}
+                if (item.Product.Supplier != null)
+                {
+                    obj.Product.Supplier = new Supplier();
+                    obj.Product.Supplier = item.Product.Supplier.RemoveReference();
+                }
+            }
+            
 			return obj;
 		}
 
@@ -562,7 +1151,16 @@ namespace Helper.ExtensionMethod
                 obj.ReceiveOrder = new ReceiveOrder();
                 obj.ReceiveOrder = item.ReceiveOrder.RemoveReferences();
             }
-            
+            if (item.ReceiveOrder.PurchaseOrder != null)
+            {
+                obj.ReceiveOrder.PurchaseOrder = new PurchaseOrder();
+                obj.ReceiveOrder.PurchaseOrder = item.ReceiveOrder.PurchaseOrder.RemoveReferences();
+            }
+            if (item.ReceiveOrder.PurchaseOrder.PurchaseOrderStatu != null)
+            {
+                obj.ReceiveOrder.PurchaseOrder.PurchaseOrderStatu = new PurchaseOrderStatu();
+                obj.ReceiveOrder.PurchaseOrder.PurchaseOrderStatu = item.ReceiveOrder.PurchaseOrder.PurchaseOrderStatu.RemoveReferences();
+            }
             return obj;
         }
         public static Branch RemoveReferences(this Branch item)
@@ -586,6 +1184,15 @@ namespace Helper.ExtensionMethod
                 obj.StockDistributionSummary = item.StockDistributionSummary.RemoveReference();
             }
                 return obj;
+        }
+        public static PageName RemoveReferences(this PageName item)
+        {
+            PageName obj = new PageName();
+            if (item != null)
+            {
+                obj = item.RemoveReference();
+            }
+            return obj;
         }
         public static CartonManagementDetail RemoveReferences(this CartonManagementDetail item)
         {
@@ -842,6 +1449,7 @@ namespace Helper.ExtensionMethod
         private static ReceiveOrder RemoveReference(this ReceiveOrder item)
         {
             ReceiveOrder obj = new ReceiveOrder();
+            obj.SupplierInvoice = item.SupplierInvoice;
             obj.Id = item.Id;
             obj.IsActive = item.IsActive;
             obj.LogId = item.LogId;
@@ -1181,6 +1789,40 @@ namespace Helper.ExtensionMethod
             obj.Z30 = item.Z30;
             return obj;
         }
+        private static SalesOrder RemoveReference(this SalesOrder item)
+        {
+            SalesOrder obj = new SalesOrder();
+            obj.BranchId = item.BranchId;
+            obj.Discount = item.Discount;
+            obj.Id = item.Id;
+            obj.IsActive = item.IsActive;
+            obj.OrderNumber = item.OrderNumber;
+            obj.PacketQuantity = item.PacketQuantity;
+            obj.PaymentType = item.PaymentType;
+            obj.PhoneNo = item.PhoneNo;
+            obj.PromoCode = item.PromoCode;
+            obj.SalesId = item.SalesId;
+            obj.SaleType = item.SaleType;
+            obj.TotalAmount = item.TotalAmount;
+            obj.TotalQuantity = item.TotalQuantity;
+            obj.TransactionDate = item.TransactionDate;
+            return obj;
+        }
+        private static SalesOrderItem RemoveReference(this SalesOrderItem item)
+        {
+            SalesOrderItem obj = new SalesOrderItem();
+            obj.Id = item.Id;
+            obj.IsActive = item.IsActive;
+            obj.IsMarkDown = item.IsMarkDown;
+            obj.PricePerUnit = item.PricePerUnit;
+            obj.ProductSize = item.ProductSize;
+            obj.Quantity = item.Quantity;
+            obj.RemainingQuantity = item.RemainingQuantity;
+            obj.SalesOrderId = item.SalesOrderId;
+            obj.TotalPrice = item.TotalPrice;
+            obj.ProductId = item.ProductId;
+            return obj;
+        }
         private static Season RemoveReference(this Season item)
         {
             Season obj = new Season();
@@ -1336,7 +1978,6 @@ namespace Helper.ExtensionMethod
             obj.IsActive = item.IsActive;
             obj.LogId = item.LogId;
             obj.Name = item.Name;
-            
             return obj;
         }
         private static Color RemoveReference(this Color item)
@@ -1376,6 +2017,23 @@ namespace Helper.ExtensionMethod
             obj.Id = item.Id;
             obj.IsActive = item.IsActive;
             obj.Source = item.Source;
+            return obj;
+        }
+        public static Template RemoveReference(this Template item)
+        {
+            Template obj = new Template();
+            obj.Id = item.Id;
+            obj.CreatedOn = item.CreatedOn;
+            obj.UpdatedOn = item.UpdatedOn;
+            obj.Height = item.Height;
+            obj.IsActive = item.IsActive;
+            obj.LengthId = item.LengthId;
+            obj.LengthMeasure = item.LengthMeasure;
+            obj.Name = item.Name;
+            obj.paramId = item.paramId;
+            obj.SizeParameter = item.SizeParameter;
+            obj.TemplateHtml = item.TemplateHtml;
+            obj.Width = item.Width;
             return obj;
         }
         private static ProductStyle RemoveReference(this ProductStyle item)

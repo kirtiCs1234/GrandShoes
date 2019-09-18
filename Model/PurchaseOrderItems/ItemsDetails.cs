@@ -8,7 +8,7 @@ namespace Model
 {
     public  class ItemsDetails
     {
-        public decimal Size { get; set; }
+        public string Size { get; set; }
         public decimal Cost { get; set; }
         public int Quantity { get; set; }
         

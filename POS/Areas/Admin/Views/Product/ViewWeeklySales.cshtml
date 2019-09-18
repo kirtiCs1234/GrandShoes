@@ -1,0 +1,48 @@
+﻿@model List<Model.SalesWeeklyData>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">View Weekly Sales</h4>
+        </div>
+        <div class="table-style">
+            <div class="prtm-block-content mrgn-b-md">
+                @*<div class="table-responsive" style="height:270px;">*@
+                <table class="table table-bordered sales-order-table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>UnitsSold</th>
+                            <th>%Sold </th>
+                            <td>Total Sold</td>
+                            <th>%Sold</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbodyIndex">
+                        @if (Model.Count > 0) { 
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.WeekDate)</td>
+                                <td>@Html.DisplayFor(modelItem => item.TotalData)</td>
+                                <td>@Html.DisplayFor(modelItem => item.SoldData)</td>
+                                <td>@Html.DisplayFor(modelItem => item.percent)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Totalsold)</td>
+                                <td>@Html.DisplayFor(modelItem => item.TotalPercent)</td>
+                            </tr>
+                        }
+                        }
+                        else
+                        {
+                        <tr>
+                            <td>No data found.</td>
+                        </tr>
+                        }
+                    </tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

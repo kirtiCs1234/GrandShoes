@@ -19,6 +19,8 @@ namespace DAL
         {
             this.BranchDiscounts = new HashSet<BranchDiscount>();
             this.CartonManagements = new HashSet<CartonManagement>();
+            this.CartonMgmtStockTransfers = new HashSet<CartonMgmtStockTransfer>();
+            this.CartonMgmtStockTransfers1 = new HashSet<CartonMgmtStockTransfer>();
             this.ClusterBranches = new HashSet<ClusterBranch>();
             this.DiscountBranches = new HashSet<DiscountBranch>();
             this.IBTBranches = new HashSet<IBTBranch>();
@@ -26,16 +28,15 @@ namespace DAL
             this.SalesOrders = new HashSet<SalesOrder>();
             this.SMIBranchDefaults = new HashSet<SMIBranchDefault>();
             this.SMIBranchDefaults1 = new HashSet<SMIBranchDefault>();
+            this.Staffs = new HashSet<Staff>();
             this.StockAudits = new HashSet<StockAudit>();
             this.StockBranchInventories = new HashSet<StockBranchInventory>();
             this.StockBranchTransactions = new HashSet<StockBranchTransaction>();
             this.StockDistributions = new HashSet<StockDistribution>();
             this.StockTapes = new HashSet<StockTape>();
-            this.Users = new HashSet<User>();
-            this.CartonMgmtStockTransfers = new HashSet<CartonMgmtStockTransfer>();
-            this.CartonMgmtStockTransfers1 = new HashSet<CartonMgmtStockTransfer>();
             this.StockTransferDetails = new HashSet<StockTransferDetail>();
             this.StockTransferDetails1 = new HashSet<StockTransferDetail>();
+            this.Users = new HashSet<User>();
         }
     
         public int Id { get; set; }
@@ -55,13 +56,17 @@ namespace DAL
         public string StoreSize { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<int> LogId { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BranchDiscount> BranchDiscounts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartonManagement> CartonManagements { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CartonMgmtStockTransfer> CartonMgmtStockTransfers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CartonMgmtStockTransfer> CartonMgmtStockTransfers1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClusterBranch> ClusterBranches { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -77,6 +82,8 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SMIBranchDefault> SMIBranchDefaults1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Staff> Staffs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockAudit> StockAudits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockBranchInventory> StockBranchInventories { get; set; }
@@ -87,14 +94,10 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockTape> StockTapes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CartonMgmtStockTransfer> CartonMgmtStockTransfers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CartonMgmtStockTransfer> CartonMgmtStockTransfers1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockTransferDetail> StockTransferDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockTransferDetail> StockTransferDetails1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
     }
 }

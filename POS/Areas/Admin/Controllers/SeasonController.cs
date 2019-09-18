@@ -109,22 +109,21 @@ namespace POS.Areas.Admin.Controllers
 						{
                             i++;
 							var model = new SeasonModel();
-							model.Code = row.Split(',')[0];
-							model.Description = row.Split(',')[1];
+							model.Code = row.Split(',')[0].ToString();
+							model.Description = row.Split(',')[1].ToString();
 							model.IsActive = true;
-							string chk = row.Split(',')[0];
+							string chk = row.Split(',')[0].ToString();
 							bool isexists = Services.SeasonService.CheckSeasonCode1(chk);
 							if (!isexists)
 							{
 								seasons.Add(i,model);
-                                process[i + "#" + row.Split(',')[0]] = "Add";
+                                process[i + "#" + row.Split(',')[0].ToString()] = "Add";
                             }
 							else
 							{
                                 updateseasons.Add(i, model);
-                                process[i + "#" + row.Split(',')[0]] = "Update";
+                                process[i + "#" + row.Split(',')[0].ToString()] = "Update";
                             }
-
 						}
 					}
 					catch (Exception ex)
@@ -132,7 +131,7 @@ namespace POS.Areas.Admin.Controllers
                         //error loging stuff
                         if (ex.Message != null)
                         {
-                            process[i + "#" + row.Split(',')[0]] = ex.Message;
+                            process[i + "#" + row.Split(',')[0].ToString()] = ex.Message;
                         }
                     }
 				}
@@ -140,14 +139,11 @@ namespace POS.Areas.Admin.Controllers
 			var addList = Services.SeasonService.CreateList(seasons);
 			var updateList = Services.SeasonService.UpdateList(updateseasons);
             var dictionaryFrom = new Dictionary<string, string>();
-
             dictionaryFrom = sc.getFilterData(addList, updateList, process);
             TempData["ProcessData"] = dictionaryFrom;
-
             TempData["Success"] = "Data Uploaded Successfully!";
 			return RedirectToAction("Index", "Season");
 		}
-
         public ActionResult ExportList()
         {
             var data = Services.ColorService.GetAll();

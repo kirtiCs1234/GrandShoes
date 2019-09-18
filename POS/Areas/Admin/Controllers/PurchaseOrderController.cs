@@ -10,7 +10,6 @@ using System.Security.Cryptography;
 using PagedList;
 using System.IO;
 using IronPdf;
-
 namespace POS.Areas.Admin.Controllers
 {
     [CustomAuth(PageSession.PurchaseOrder)]
@@ -29,7 +28,6 @@ namespace POS.Areas.Admin.Controllers
             int CurrentPage = pageNumber;
             var endPage = CurrentPage + 4;
             int PagesToShow = 10;
-
             ViewBag.PageSize = pageSize;
             var PurchaseOrderList = Services.PurchaseOrderService.GetPaging(page, out TotalCount);
 			foreach(var item in PurchaseOrderList)
@@ -37,7 +35,6 @@ namespace POS.Areas.Admin.Controllers
 				item.OrderDate = item.OrderDate.Replace("T00:00:00", "");
 			}
             ViewBag.TotalCount = TotalCount;
-
             var result = Helper.CommonFunction.GetPages(TotalCount, pageSize, CurrentPage, PagesToShow);
             int totalPages = (TotalCount / pageSize) + (TotalCount % pageSize == 0 ? 0 : 1);
             ViewBag.result = result;
@@ -45,7 +42,6 @@ namespace POS.Areas.Admin.Controllers
             ViewBag.CurrentPage = CurrentPage;
             var pageCount = result.Count();
             ViewBag.pageCount = pageCount;
-
             ViewBag.endPage = endPage;
             return View(PurchaseOrderList);
         }
@@ -84,6 +80,8 @@ namespace POS.Areas.Admin.Controllers
             Session["PurchaseOrder"] = PO.OrderNumber;
             ViewBag.PurchaseOrderID = PO.OrderNumber;
             List<BuyerModel> BuyerLists = Services.BuyerService.GetAll();
+            var SupplierList = Services.SupplierService.GetAll();
+            ViewBag.SupplierId = new SelectList(SupplierList, "Id", "Name");
             ViewBag.BuyerId = new SelectList(BuyerLists, "Id", "Name");
             var OrderStatus = Services.PurchaseOrderService.GetPurchaseOrderStatus();
             ViewBag.OrderStatusList = new SelectList(OrderStatus, "Id", "OrderStatus");
@@ -102,7 +100,6 @@ namespace POS.Areas.Admin.Controllers
             if (PurchaseOrderById.FirstDeliveryDate.HasValue)
             {
                 ViewBag.FirstDelieveryDate = string.Format("{0:yyyy-M-dd}", PurchaseOrderById.FirstDeliveryDate);
-
             }
             if (PurchaseOrderById.OrderCompletionDate.HasValue)
             {
@@ -113,7 +110,9 @@ namespace POS.Areas.Admin.Controllers
             PO.SupplierId = PurchaseOrderById.SupplierId;
             ViewBag.SupplierId = PurchaseOrderById.SupplierId;
             ViewBag.ID = id;
-			PO.IsFinalize = PurchaseOrderById.IsFinalize;
+            var SupplierList = Services.SupplierService.GetAll();
+            ViewBag.SupplierId = new SelectList(SupplierList, "Id", "Name");
+            PO.IsFinalize = PurchaseOrderById.IsFinalize;
             PO.BuyerId = PurchaseOrderById.BuyerId;
             PO.ClientInvoiceNumber = PurchaseOrderById.ClientInvoiceNumber;
             if (PurchaseOrderById.ExpectedDeliveryDate.HasValue)
@@ -135,13 +134,17 @@ namespace POS.Areas.Admin.Controllers
             var OrderStatus = Services.PurchaseOrderService.GetPurchaseOrderStatus();
             ViewBag.OrderStatusList = new SelectList(OrderStatus, "Id", "OrderStatus");
             return View(PO);
-
 		}
         public ActionResult Create(int? id)
         {
 			var purchaseOrder = Services.PurchaseOrderService.GetPurchaseOrderById(id);
 			ViewBag.IsFinalize = purchaseOrder.IsFinalize;
             return View();
+        }
+        public ActionResult getComment(int id)
+        {
+            var data = Services.PurchaseOrderService.GetPurchaseOrderById(id);
+            return View(data);
         }
         public ActionResult DeleteOrderItem(int id)
         {
@@ -161,7 +164,123 @@ namespace POS.Areas.Admin.Controllers
 		public ActionResult EditItem(int id)
         {
             PurchaseOrderItemModel item = Services.PurchaseOrderItemsService.GetPurchaseOrderItemsById(id);
-			EditItems Data = new EditItems();
+            if (item.ItemSize1.Contains(".0"))
+            {
+                item.ItemSize1 = item.ItemSize1.Replace(".0", "");
+            }
+            if (item.ItemSize2.Contains(".0"))
+            {
+                item.ItemSize2 = item.ItemSize2.Replace(".0", "");
+            }
+            if (item.ItemSize3.Contains(".0"))
+            {
+                item.ItemSize3 = item.ItemSize3.Replace(".0", "");
+            }
+            if (item.ItemSize4.Contains(".0"))
+            {
+                item.ItemSize4 = item.ItemSize4.Replace(".0", "");
+            }
+            if (item.ItemSize5.Contains(".0"))
+            {
+                item.ItemSize5 = item.ItemSize5.Replace(".0", "");
+            }
+            if (item.ItemSize6.Contains(".0"))
+            {
+                item.ItemSize6 = item.ItemSize6.Replace(".0", "");
+            }
+            if (item.ItemSize7.Contains(".0"))
+            {
+                item.ItemSize7 = item.ItemSize7.Replace(".0", "");
+            }
+            if (item.ItemSize8.Contains(".0"))
+            {
+                item.ItemSize8 = item.ItemSize8.Replace(".0", "");
+            }
+            if (item.ItemSize9.Contains(".0"))
+            {
+                item.ItemSize9 = item.ItemSize9.Replace(".0", "");
+            }
+            if (item.ItemSize10.Contains(".0"))
+            {
+                item.ItemSize10 = item.ItemSize10.Replace(".0", "");
+            }
+            if (item.ItemSize11.Contains(".0"))
+            {
+                item.ItemSize11 = item.ItemSize11.Replace(".0", "");
+            }
+            if (item.ItemSize12.Contains(".0"))
+            {
+                item.ItemSize12 = item.ItemSize12.Replace(".0", "");
+            }
+            if (item.ItemSize13.Contains(".0"))
+            {
+                item.ItemSize13 = item.ItemSize13.Replace(".0", "");
+            }
+            if (item.ItemSize14.Contains(".0"))
+            {
+                item.ItemSize14 = item.ItemSize14.Replace(".0", "");
+            }
+            if (item.ItemSize15.Contains(".0"))
+            {
+                item.ItemSize15 = item.ItemSize15.Replace(".0", "");
+            }
+            if (item.ItemSize16.Contains(".0"))
+            {
+                item.ItemSize16 = item.ItemSize16.Replace(".0", "");
+            }
+            if (item.ItemSize17.Contains(".0"))
+            {
+                item.ItemSize17 = item.ItemSize17.Replace(".0", "");
+            }
+            if (item.ItemSize18.Contains(".0"))
+            {
+                item.ItemSize18 = item.ItemSize18.Replace(".0", "");
+            }
+            if (item.ItemSize19.Contains(".0"))
+            {
+                item.ItemSize19 = item.ItemSize19.Replace(".0", "");
+            }
+            if (item.ItemSize20.Contains(".0"))
+            {
+                item.ItemSize20 = item.ItemSize20.Replace(".0", "");
+            }
+            if (item.ItemSize21.Contains(".0"))
+            {
+                item.ItemSize21 = item.ItemSize21.Replace(".0", "");
+            }
+            if (item.ItemSize22.Contains(".0"))
+            {
+                item.ItemSize22 = item.ItemSize22.Replace(".0", "");
+            }
+            if (item.ItemSize23.Contains(".0"))
+            {
+                item.ItemSize23 = item.ItemSize23.Replace(".0", "");
+            }
+            if (item.ItemSize24.Contains(".0"))
+            {
+                item.ItemSize24 = item.ItemSize24.Replace(".0", "");
+            }
+            if (item.ItemSize25.Contains(".0"))
+            {
+                item.ItemSize25 = item.ItemSize25.Replace(".0", "");
+            }
+            if (item.ItemSize26.Contains(".0"))
+            {
+                item.ItemSize26= item.ItemSize26.Replace(".0", "");
+            }
+            if (item.ItemSize27.Contains(".0"))
+            {
+                item.ItemSize27 = item.ItemSize27.Replace(".0", "");
+            }
+            if (item.ItemSize28.Contains(".0"))
+            {
+                item.ItemSize28 = item.ItemSize28.Replace(".0", "");
+            }
+            if (item.ItemSize29.Contains(".0"))
+            {
+                item.ItemSize29 = item.ItemSize29.Replace(".0", "");
+            }
+            EditItems Data = new EditItems();
 			if (item.PurchaseOrder.IsFinalize == true)
 			{
 				Data.IsFinalize = true;
@@ -200,7 +319,7 @@ namespace POS.Areas.Admin.Controllers
             if (item.ItemSize1 != null)
             {
                 ItemsDetails data = new ItemsDetails();
-                data.Size = item.ItemSize1 ?? 0;
+                data.Size = item.ItemSize1;
                 data.Cost = item.CostSize1 ?? 0;
                 data.Quantity = item.QuantitySize1 ?? 0;
                 record.Details.Add(data);
@@ -208,7 +327,7 @@ namespace POS.Areas.Admin.Controllers
             if (item.ItemSize2 != null)
             {
                 ItemsDetails data = new ItemsDetails();
-                data.Size = item.ItemSize2 ?? 0;
+                data.Size = item.ItemSize2;
                 data.Cost = item.CostSize2 ?? 0;
                 data.Quantity = item.QuantitySize2 ?? 0;
                 record.Details.Add(data);
@@ -217,7 +336,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize3 ?? 0;
+                data.Size = item.ItemSize3;
                 data.Cost = item.CostSize3 ?? 0;
                 data.Quantity = item.QuantitySize3 ?? 0;
                 record.Details.Add(data);
@@ -226,7 +345,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize4 ?? 0;
+                data.Size = item.ItemSize4;
                 data.Cost = item.CostSize4 ?? 0;
                 data.Quantity = item.QuantitySize4 ?? 0;
                 record.Details.Add(data);
@@ -235,7 +354,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize5 ?? 0;
+                data.Size = item.ItemSize5;
                 data.Cost = item.CostSize5 ?? 0;
                 data.Quantity = item.QuantitySize5 ?? 0;
                 record.Details.Add(data);
@@ -244,7 +363,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize6 ?? 0;
+                data.Size = item.ItemSize6;
                 data.Cost = item.CostSize6 ?? 0;
                 data.Quantity = item.QuantitySize6 ?? 0;
                 record.Details.Add(data);
@@ -253,7 +372,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize7 ?? 0;
+                data.Size = item.ItemSize7;
                 data.Cost = item.CostSize7 ?? 0;
                 data.Quantity = item.QuantitySize7 ?? 0;
                 record.Details.Add(data);
@@ -262,7 +381,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize8 ?? 0;
+                data.Size = item.ItemSize8;
                 data.Cost = item.CostSize8 ?? 0;
                 data.Quantity = item.QuantitySize8 ?? 0;
                 record.Details.Add(data);
@@ -271,7 +390,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize9 ?? 0;
+                data.Size = item.ItemSize9;
                 data.Cost = item.CostSize9 ?? 0;
                 data.Quantity = item.QuantitySize9 ?? 0;
                 record.Details.Add(data);
@@ -280,7 +399,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize10 ?? 0;
+                data.Size = item.ItemSize10;
                 data.Cost = item.CostSize10 ?? 0;
                 data.Quantity = item.QuantitySize10 ?? 0;
                 record.Details.Add(data);
@@ -289,7 +408,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize11 ?? 0;
+                data.Size = item.ItemSize11;
                 data.Cost = item.CostSize11 ?? 0;
                 data.Quantity = item.QuantitySize11 ?? 0;
                 record.Details.Add(data);
@@ -298,7 +417,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize12 ?? 0;
+                data.Size = item.ItemSize12;
                 data.Cost = item.CostSize12 ?? 0;
                 data.Quantity = item.QuantitySize12 ?? 0;
                 record.Details.Add(data);
@@ -307,7 +426,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize13 ?? 0;
+                data.Size = item.ItemSize13;
                 data.Cost = item.CostSize13 ?? 0;
                 data.Quantity = item.QuantitySize13 ?? 0;
                 record.Details.Add(data);
@@ -316,7 +435,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize14 ?? 0;
+                data.Size = item.ItemSize14;
                 data.Cost = item.CostSize14 ?? 0;
                 data.Quantity = item.QuantitySize14 ?? 0;
                 record.Details.Add(data);
@@ -325,7 +444,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize15 ?? 0;
+                data.Size = item.ItemSize15;
                 data.Cost = item.CostSize15 ?? 0;
                 data.Quantity = item.QuantitySize15 ?? 0;
                 record.Details.Add(data);
@@ -334,7 +453,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize16 ?? 0;
+                data.Size = item.ItemSize16;
                 data.Cost = item.CostSize16 ?? 0;
                 data.Quantity = item.QuantitySize16 ?? 0;
                 record.Details.Add(data);
@@ -343,7 +462,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize17 ?? 0;
+                data.Size = item.ItemSize17;
                 data.Cost = item.CostSize17 ?? 0;
                 data.Quantity = item.QuantitySize17 ?? 0;
                 record.Details.Add(data);
@@ -352,7 +471,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize18 ?? 0;
+                data.Size = item.ItemSize18;
                 data.Cost = item.CostSize18 ?? 0;
                 data.Quantity = item.QuantitySize18 ?? 0;
                 record.Details.Add(data);
@@ -361,7 +480,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize19 ?? 0;
+                data.Size = item.ItemSize19;
                 data.Cost = item.CostSize19 ?? 0;
                 data.Quantity = item.QuantitySize19 ?? 0;
                 record.Details.Add(data);
@@ -370,7 +489,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize20 ?? 0;
+                data.Size = item.ItemSize20;
                 data.Cost = item.CostSize20 ?? 0;
                 data.Quantity = item.QuantitySize20 ?? 0;
                 record.Details.Add(data);
@@ -379,7 +498,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize21 ?? 0;
+                data.Size = item.ItemSize21;
                 data.Cost = item.CostSize21 ?? 0;
                 data.Quantity = item.QuantitySize21 ?? 0;
                 record.Details.Add(data);
@@ -388,7 +507,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize22 ?? 0;
+                data.Size = item.ItemSize22;
                 data.Cost = item.CostSize22 ?? 0;
                 data.Quantity = item.QuantitySize22 ?? 0;
                 record.Details.Add(data);
@@ -397,7 +516,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize23 ?? 0;
+                data.Size = item.ItemSize23;
                 data.Cost = item.CostSize23 ?? 0;
                 data.Quantity = item.QuantitySize23 ?? 0;
                 record.Details.Add(data);
@@ -406,7 +525,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize24 ?? 0;
+                data.Size = item.ItemSize24;
                 data.Cost = item.CostSize24 ?? 0;
                 data.Quantity = item.QuantitySize24 ?? 0;
                 record.Details.Add(data);
@@ -415,7 +534,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize25 ?? 0;
+                data.Size = item.ItemSize25;
                 data.Cost = item.CostSize25 ?? 0;
                 data.Quantity = item.QuantitySize25 ?? 0;
                 record.Details.Add(data);
@@ -424,7 +543,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize26 ?? 0;
+                data.Size = item.ItemSize26;
                 data.Cost = item.CostSize26 ?? 0;
                 data.Quantity = item.QuantitySize26 ?? 0;
                 record.Details.Add(data);
@@ -433,7 +552,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize27 ?? 0;
+                data.Size = item.ItemSize27;
                 data.Cost = item.CostSize27 ?? 0;
                 data.Quantity = item.QuantitySize27 ?? 0;
                 record.Details.Add(data);
@@ -442,7 +561,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize28 ?? 0;
+                data.Size = item.ItemSize28;
                 data.Cost = item.CostSize28 ?? 0;
                 data.Quantity = item.QuantitySize28 ?? 0;
                 record.Details.Add(data);
@@ -451,7 +570,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize29 ?? 0;
+                data.Size = item.ItemSize29;
                 data.Cost = item.CostSize29 ?? 0;
                 data.Quantity = item.QuantitySize29 ?? 0;
                 record.Details.Add(data);
@@ -460,7 +579,7 @@ namespace POS.Areas.Admin.Controllers
             {
                 ItemsDetails data = new ItemsDetails();
 
-                data.Size = item.ItemSize30 ?? 0;
+                data.Size = item.ItemSize30;
                 data.Cost = item.CostSize30 ?? 0;
                 data.Quantity = item.QuantitySize30 ?? 0;
                 record.Details.Add(data);
@@ -604,11 +723,18 @@ namespace POS.Areas.Admin.Controllers
 			bool status = Services.PurchaseOrderItemsService.CheckProduct(model);
 			return Json(status);
 		}
-        public ActionResult ViewPDF(int id)
+        public ActionResult ViewPDF(int? id)
         {
             var model = new Dictionary<string, string>();
            
             var data = Services.PurchaseOrderItemsService.GetDictList(id);
+            foreach(var elemet in data.Select(x => x.ItemSize.Values).ToList())
+            {
+                foreach(var value in elemet)
+                {
+                    
+                }
+            }
             var poOrder= data.Select(x => x.PurchaseOrder).FirstOrDefault();
             model.Add("OrderNumber", poOrder.OrderNumber);
             model.Add("ClientInvoiceNumber", poOrder.ClientInvoiceNumber);
@@ -694,7 +820,12 @@ namespace POS.Areas.Admin.Controllers
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
-
+        [HttpGet]
+        public JsonResult Cancelled(int? id)
+        {
+            var status = Services.PurchaseOrderService.Cancelled(id);
+            return Json(status,JsonRequestBehavior.AllowGet);
+        }
         public class ShowPurchaseOrderDetail
         {
             public ShowPurchaseOrderDetail()

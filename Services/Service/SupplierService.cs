@@ -114,5 +114,9 @@ namespace Services.Service
             Code = System.Web.HttpUtility.UrlEncode(Code);
             return ServerResponse.Invoke<bool>("/api/supplier/issupplierexist?id=" + Id + "&code=" + Code, "", "Get");
         }
+        public Dictionary<int, bool> SupplierCheckFilter(Dictionary<int, string> list)
+        {
+            return ServerResponse.Invoke<Dictionary<int, bool>>("api/supplier/checkCode", JsonConvert.SerializeObject(list), "Post");
+        }
     }
 }

@@ -113,8 +113,10 @@ namespace POS.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult ExcelUpload(BranchModel branch, HttpPostedFileBase ExcelFile)
         {
+            var Code = new Dictionary<int, string>();
             Dictionary<string, string> process = new Dictionary<string, string>();
             Dictionary<int, BranchModel> branches = new Dictionary<int, BranchModel>();
+            Dictionary<int, BranchModel> Tempbranches = new Dictionary<int, BranchModel>();
             Dictionary<int, BranchModel> updatebranches = new Dictionary<int, BranchModel>();
             List<BranchModel> branches1 = new List<BranchModel>();
 			string filePath = string.Empty;
@@ -139,57 +141,60 @@ namespace POS.Areas.Admin.Controllers
 						{
                             i++;
 							var model = new BranchModel();
-							model.BranchCode = row.Split(',')[0];
-							model.Name = row.Split(',')[1];
-							model.Telephone = row.Split(',')[2];
-							model.DateOpen = row.Split(',')[3];
-							model.DateClosed =row.Split(',')[4];
-							model.AddressLine1 = row.Split(',')[5];
-							model.AddressLine2 = row.Split(',')[6];
-							model.AddressLine3 = row.Split(',')[7];
-							model.PostalCode = row.Split(',')[8];
-							model.AreaCode = row.Split(',')[9];
-							model.IsSendStock = Convert.ToBoolean(row.Split(',')[10]);
-							model.IsClosed = Convert.ToBoolean(row.Split(',')[11]);
-							model.IsHeadOffice = Convert.ToBoolean(row.Split(',')[12]);
-							model.StoreSize = row.Split(',')[13];
+                            var rowSplit = row.Split(',');
+                            model.BranchCode = rowSplit[0].ToString();
+							model.Name = rowSplit[1].ToString();
+							model.Telephone = rowSplit[2].ToString();
+							model.DateOpen = rowSplit[3].ToString();
+							model.DateClosed =rowSplit[4].ToString();
+							model.AddressLine1 = rowSplit[5].ToString();
+							model.AddressLine2 = rowSplit[6].ToString();
+							model.AddressLine3 = rowSplit[7].ToString();
+							model.PostalCode = rowSplit[8].ToString();
+							model.AreaCode = rowSplit[9].ToString();
+							model.IsSendStock = Convert.ToBoolean(rowSplit[10].ToString());
+							model.IsClosed = Convert.ToBoolean(rowSplit[11].ToString());
+							model.IsHeadOffice = Convert.ToBoolean(rowSplit[12].ToString());
+							model.StoreSize = rowSplit[13].ToString();
 							model.IsActive = true;
-							string chk = row.Split(',')[0];
-							bool isexists = Services.BranchService.CheckBranchCode(chk);
-							if (!isexists)
-							{
-								branches.Add(i,model);
-                                process[i + "#" + row.Split(',')[0]] = "Add";
-                            }
-							else
-							{
-                                updatebranches.Add(i, model);
-                                process[i + "#" + row.Split(',')[0]] = "Update";
-                            }
+                            Tempbranches.Add(i, model);
+                            Code.Add(i, model.BranchCode);
 						}
 					}
-					catch (Exception ex)
-					{
-                        //error loging stuff
+                    catch (Exception ex)
+                    {
                         if (ex.Message != null)
                         {
                             process[i + "#" + row.Split(',')[0]] = ex.Message;
                         }
                     }
-                    
-				}
+                }
 			}
-			var addList = Services.BranchService.CreateList(branches);
+            var isexists = Services.BranchService.CheckBranch(Code);
+            if (Tempbranches != null && Tempbranches.Count > 0)
+            {
+                foreach (var item in Tempbranches)
+                {
+                    if (isexists[item.Key] == false)
+                    {
+                        branches.Add(item.Key, item.Value);
+                        process[item.Key + "#" + item.Value.BranchCode] = "Add";
+                    }
+                    else
+                    {
+                        updatebranches.Add(item.Key, item.Value);
+                        process[item.Key + "#" + item.Value.BranchCode] = "Update";
+                    }
+                }
+            }
+            var addList = Services.BranchService.CreateList(branches);
 			var updateList = Services.BranchService.UpdateList(updatebranches);
             var dictionaryFrom = new Dictionary<string, string>();
-
             dictionaryFrom = sc.getFilterData(addList, updateList, process);
             TempData["ProcessData"] = dictionaryFrom;
-
             TempData["Success"] = "Data Uploaded Successfully!";
 			return RedirectToAction("Index", "Branch");
 		}
-
         public ActionResult ExportList()
         {
             var data = Services.BranchService.GetAll();
@@ -219,14 +224,12 @@ namespace POS.Areas.Admin.Controllers
             var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
-
                 branch.IsActive = true;
                  bool BranchCreate = Services.BranchService.Create(branch);
                 TempData["Success"] = "Data Saved Successfully!";
                 return RedirectToAction("Index", "Branch");
             }
             return View(branch);
-
         }
         public ActionResult CheckBranchCode(BranchModel branch)
         {
@@ -239,7 +242,6 @@ namespace POS.Areas.Admin.Controllers
             return Json(!iExist, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Edit(int? id)
-
         {
             if (id == null)
             {
@@ -251,13 +253,11 @@ namespace POS.Areas.Admin.Controllers
 			BranchModelById.DateOpen = BranchModelById.DateOpen.Substring(0, BranchModelById.DateOpen.Length - 9);
 			return View(BranchModelById);
         }
-
         [HttpPost]
         public ActionResult Edit(BranchModel branch)
         {
             if (ModelState.IsValid)
             {
-
                 bool BranchEdit = Services.BranchService.Edit(branch);
                 TempData["Success"] = "Data Saved Successfully!";
                 return RedirectToAction("Index", "Branch");
@@ -289,6 +289,5 @@ namespace POS.Areas.Admin.Controllers
             }
             return View(branch);
         }
-    
 }
 }

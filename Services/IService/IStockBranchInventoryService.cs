@@ -13,5 +13,6 @@ namespace Services.IService
         List<StockBranchInventoryModel> GetByBranch(int? BranchId);
         bool Update(int? BranchId, List<StockBranchInventoryModel> stockList);
         List<StockBranchInventoryModel> GetByProduct(int? id);
+        List<StockBranchInventoryModel> GetBranchSales(int? id);
     }
 }

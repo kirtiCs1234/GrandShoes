@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using DAL;
+using Helper.ExtensionMethod;
 using Model;
 using Model.ForStockTransfer;
 
@@ -101,7 +102,15 @@ namespace Helper.Controllers.Admin
 			var carton = db.CartonMgmtStockTransfers.ToList();
 			return carton;
 		}
-
+        [HttpGet]
+        [Route("getLastSummaryData")]
+        public IHttpActionResult GetLastSummaryData()
+        {
+            var summary = db.StockDistributionSummaries.Where(x => x.IsActive == false).ToList();
+            var summ = summary.LastOrDefault();
+            var data = db.CartonManagements.Where(x => x.IsActive == true && x.DistributionSummaryID == summ.Id).Include(x=>x.Branch).ToList().RemoveReferences();
+            return Ok(data);
+        }
 		[HttpGet]
 		[Route("DeleteWaste")]
 		public IHttpActionResult DeleteAll()
@@ -235,7 +244,13 @@ namespace Helper.Controllers.Admin
 			db.SaveChanges();
 			return Ok(true);
 		}
-
+        [HttpGet]
+        [Route("getByIBTNumber")]
+        public IHttpActionResult GetIBTNumber(string id,int BranchID)
+        {
+            var data = db.CartonManagements.Where(x => x.IBTNumber == id && x.CartonNumber!=null && x.BranchID==BranchID).Include(x=>x.Branch).FirstOrDefault();
+            return Ok(data);
+        }
 		[HttpPost]
 		[Route("GenerateIBTForStock")]
 		public IHttpActionResult GenerateIBTForStock(CartonManagementForStockTransferModel model)
@@ -280,8 +295,8 @@ namespace Helper.Controllers.Admin
 			{
 				if (!string.IsNullOrEmpty(search.BranchName) && !search.BranchName.All(char.IsNumber))
 					source = source.Where(m => m.Branch.Name.Contains(search.BranchName.ToLower()));
-				if (search.DistributionSummaryID > 0)
-					source = source.Where(m => m.DistributionSummaryID == search.DistributionSummaryID);
+				//if (search.DistributionSummaryID > 0)
+				//	source = source.Where(m => m.DistributionSummaryID == search.DistributionSummaryID);
 				//  var items = source.OrderBy(m => m.Id).Skip((areaSearch.Page ?? 1 - 1) * pageSize).Take(pageSize).ToList();
 			}
 			int count = source.Count();
@@ -295,6 +310,7 @@ namespace Helper.Controllers.Admin
 				PackDate = x.PackDate,
 				BranchID = x.BranchID,
 				Branch = x.Branch,
+                CartonManagementDetails=db.CartonManagementDetails.Where(k=>k.CartonManagementID==x.Id).ToList(),
 				StockDistributionSummary = x.StockDistributionSummary,
 				CartonNumber = x.CartonNumber,
 				IBTNumber = x.IBTNumber,
@@ -444,6 +460,61 @@ namespace Helper.Controllers.Admin
 			db.SaveChanges();
 			return Ok(true);
 		}
+        [HttpPost]
+        [Route("dispatched")]
+        public IHttpActionResult Dispatched(List<int> CartonList)
+        {
+            var pageName = Request.RequestUri.LocalPath.getRouteName();
+          //  var kkk = pageName.Substring(3, 7);
+            foreach (var item in CartonList)
+            {
+                var data = db.CartonManagements.Where(x => x.IsActive == true && x.Id == item).Include(x=>x.CartonManagementDetails).FirstOrDefault();
+                data.IsDispatched = true;
+                List<StockWarehouseTransaction> list = new List<StockWarehouseTransaction>();
+                foreach(var element in data.CartonManagementDetails)
+                {
+                    StockWarehouseTransaction model = new StockWarehouseTransaction();
+                    model.Quantity01 = element.Z01;
+                    model.Quantity02 = element.Z02;
+                    model.Quantity03 = element.Z03;
+                    model.Quantity04 = element.Z04;
+                    model.Quantity05 = element.Z05;
+                    model.Quantity06 = element.Z06;
+                    model.Quantity07 = element.Z07;
+                    model.Quantity08 = element.Z08;
+                    model.Quantity09 = element.Z09;
+                    model.Quantity10 = element.Z10;
+                    model.Quantity11 = element.Z11;
+                    model.Quantity12 = element.Z12;
+                    model.Quantity13 = element.Z13;
+                    model.Quantity14 = element.Z14;
+                    model.Quantity15 = element.Z15;
+                    model.Quantity16 = element.Z16;
+                    model.Quantity17 = element.Z17;
+                    model.Quantity18 = element.Z18;
+                    model.Quantity19 = element.Z19;
+                    model.Quantity20 = element.Z20;
+                    model.Quantity21 = element.Z21;
+                    model.Quantity22 = element.Z22;
+                    model.Quantity23 = element.Z23;
+                    model.Quantity24 = element.Z24;
+                    model.Quantity25 = element.Z25;
+                    model.Quantity26 = element.Z26;
+                    model.Quantity27 = element.Z27;
+                    model.Quantity28 = element.Z28;
+                    model.Quantity29 = element.Z29;
+                    model.Quantity30 = element.Z30;
+                    model.StockTransactionTypeId = 2;
+                    model.PrimaryID = element.Id;
+                    model.ProductID = element.ProductID;
+                    model.TransactionReferenceID = db.TrasactionReferences.Where(x => x.Task == pageName).FirstOrDefault().Id;
+                    list.Add(model);
+                }
+                db.StockWarehouseTransactions.AddRange(list);
+                db.SaveChanges();
+            }
+            return Ok(true);
+        }
 		[HttpPost]
 		[Route("CompleteCreateForStock")]
 		public IHttpActionResult CreateForStockTransfer(CartonMgmtStockTransfer model)
@@ -527,6 +598,21 @@ namespace Helper.Controllers.Admin
 			db.SaveChanges();
 			return Ok(true);
 		}
+        [HttpPost]
+        [Route("searchData")]
+        public IHttpActionResult SerachData(int? summaryID,int? branchId)
+        {
+            var data = db.CartonManagements.Where(x => x.IsActive == true && x.CartonNumber!=null).Include(x=>x.Branch);
+            if (summaryID > 0)
+            {
+                data = data.Where(x => x.DistributionSummaryID == summaryID);
+                    }
+            if (branchId > 0)
+            {
+                data = data.Where(x => x.BranchID == branchId);
+            }
+            return Ok(data);
+        }
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)

@@ -1,8 +1,6 @@
-﻿
-@model PagedList.IPagedList<Model.PurchaseOrderModel>
+﻿@model PagedList.IPagedList<Model.PurchaseOrderModel>
 @using PagedList.Mvc;
 @using PagedList;
-
 @{
                 ViewBag.Title = "Index";
                 Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -40,14 +38,27 @@
         <button type="button" class="btn btn-primary export-btn">Export</button>&nbsp;&nbsp;
     </div>*@
 </div>
-<div class="dvUserDetails">
-    @{
-
-        Html.RenderPartial("_Index1", Model);
+<div class="table-style">
+    @if (TempData["Success"] != null)
+    {
+        <p class="alert alert-success" id="successMessage" style="width: 300px;height: 25px;color: #fff;text-align: center; padding-bottom: 2em;">
+            @TempData["Success"]
+        </p>
     }
+    <script>
+        setTimeout(function () {
+            $('#successMessage').fadeOut('slow');
+        }, 5000);
+    </script>
+    <div class="dvUserDetails">
+        @{
+
+            Html.RenderPartial("_Index1", Model);
+        }
+
+    </div>
 
 </div>
-
 <div class="modal fade" id="myCancelModal">
     <div id="Canceldiv">
         <div class="modal-dialog">

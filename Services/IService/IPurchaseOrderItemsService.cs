@@ -23,6 +23,6 @@ namespace Services.IService
 		bool CheckProduct(PurchaseOrderItemModel purchaseOrderItem);
 		bool CheckProductByOrder(PurchaseOrderItemModel model);
         List<PurchaseOrderItemModel> GetByProductId(int? id);
-        List<DictModel> GetDictList(int id);
+        List<DictModel> GetDictList(int? id);
     }
 }

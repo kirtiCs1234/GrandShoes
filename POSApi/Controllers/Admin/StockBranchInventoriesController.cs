@@ -45,9 +45,30 @@ namespace POSApi.Controllers.Admin
         [Route("getByProduct")]
         public IHttpActionResult GetByProduct(int? ProductId)
         {
-            var data = db.StockBranchInventories.Where(x => x.IsActive == true && x.ProductId == ProductId).ToList();
+            var data = db.StockBranchInventories.Where(x => x.IsActive == true && x.ProductId == ProductId).Include(x=>x.Branch).Include(x=>x.Product).Include(x=>x.Product.Color).ToList();
             return Ok(data);
         }
+        //[HttpGet]
+        //[Route("getBranchSales")]
+        //public IHttpActionResult GetBranchSales(int id)
+        //{
+        //    var stockBranch = db.StockBranchInventories.Where(x => x.IsActive == true && x.ProductId == id).ToList();
+        //    var salesOrderItem = db.SalesOrderItems.Where(x => x.IsActive == true && x.ProductId == id).ToList();
+        //    foreach (var item in stockBranch)
+        //    {
+        //        int? Quantity = 0;
+        //        var data1 = salesOrderItem.Where(x => x.SalesOrder.BranchId == item.BranchId).ToList();
+        //        foreach (var data in data1)
+        //        {
+        //            Quantity += data.Quantity;
+
+        //        }
+        //        item.Quantity = Quantity;
+        //        item.LastSale = data1.FirstOrDefault().SalesOrder.TransactionDate.ToString().Substring(0, 10);
+        //        item.UpdateTime = item.UpdateTime.ToString().Replace("T00:00:00", "");
+        //    }
+        //    return Ok();
+        //}
         [HttpPost]
         [AllowAnonymous]
         [Route("update")]
@@ -109,7 +130,7 @@ namespace POSApi.Controllers.Admin
 
             return CreatedAtRoute("DefaultApi", new { id = stockBranchInventory.Id }, stockBranchInventory);
         }
-
+        
         // DELETE: api/StockBranchInventories/5
         [ResponseType(typeof(StockBranchInventory))]
         public IHttpActionResult DeleteStockBranchInventory(int id)

@@ -51,7 +51,7 @@ namespace POSApi.Controllers.Admin
         [Route("getByProduct")]
         public IHttpActionResult GetByProductId(int ProductID)
         {
-            var data = db.ReceiptOrderItems.Where(x => x.IsActive == true && x.ProductId == ProductID).Include(x => x.ReceiveOrder).Include(x => x.Product).Include(x=>x.Product.Color).ToList();
+            var data = db.ReceiptOrderItems.Where(x => x.IsActive == true && x.ProductId == ProductID).Include(x => x.ReceiveOrder).Include(x=>x.ReceiveOrder.PurchaseOrder).Include(x => x.Product).Include(x=>x.Product.Color).Include(x=>x.ReceiveOrder.PurchaseOrder.PurchaseOrderStatu).ToList().RemoveReferences();
             return Ok(data);
         }
         [HttpGet]
@@ -194,7 +194,7 @@ namespace POSApi.Controllers.Admin
 			//{
 				db.SaveChanges();
 				list.Add(model);
-				return Ok(true);
+				//return Ok(true);
 			
 			var receipt = db.ReceiptOrderItems.Where(x => x.IsActive == true).ToList().LastOrDefault();
 			var stockInvent = db.StockInventories.Where(x => x.IsActive == true && x.ProductID == receipt.ProductId).FirstOrDefault();
@@ -274,7 +274,13 @@ namespace POSApi.Controllers.Admin
 			}
 			return Ok(true);
         }
-
+        //[HttpGet]
+        //[Route("getReceiptByProduct")]
+        //public IHttpActionResult getReceiptByProduct(int id)
+        //{
+        //    var receiptByProduct = db.ReceiptOrderItems.Where(x => x.IsActive == true && x.ProductId == id).Include(x=>x.Product).Include(x=>x.ReceiveOrder).Include(x=>x.ReceiveOrder.PurchaseOrder).ToList();
+        //    return Ok(receiptByProduct);
+        //}
         // POST: api/ReceiptOrderItems
         [HttpPost]
         [AllowAnonymous]
@@ -447,13 +453,10 @@ namespace POSApi.Controllers.Admin
                 stock.IsActive = receipt.IsActive;
                 db.StockInventories.Add(stock);
                 db.SaveChanges();
-                
             }
-
+           
 			return Ok(true);
         }
-
-        // DELETE: api/ReceiptOrderItems/5
         [HttpPost]
         [AllowAnonymous]
         [Route("delete")]
@@ -465,13 +468,10 @@ namespace POSApi.Controllers.Admin
             {
                 return NotFound();
             }
-
             db.ReceiptOrderItems.Remove(receiptOrderItem);
             db.SaveChanges();
-
             return Ok(receiptOrderItem);
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -480,7 +480,6 @@ namespace POSApi.Controllers.Admin
             }
             base.Dispose(disposing);
         }
-
         private bool ReceiptOrderItemExists(int id)
         {
             return db.ReceiptOrderItems.Count(e => e.Id == id) > 0;

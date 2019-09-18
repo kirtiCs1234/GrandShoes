@@ -361,11 +361,8 @@ namespace Helper
 
                 return _algorithm.ComputeHash(plainTextWithSaltBytes);
             }
-
             public string Type { get { return "SHA512"; } }
-
         }
-
 		public static string IBtNoForStock(List<CartonManagementForStockTransferModel> list)
 		{
 			try
@@ -383,7 +380,6 @@ namespace Helper
 					var length = NewNumber.ToString().Length;
 					var oldval = lastNo.Substring(lastNo.Length - length);
 					lastNo = lastNo.Replace(oldval, NewNumber.ToString());
-
 					//Checking for maxx limit 999999
 					//if (lastNo.Remove(1).ToUpper() != "B")
 					//{
@@ -397,8 +393,6 @@ namespace Helper
 				throw;
 			}
 		}
-
-
 	}
 }
 

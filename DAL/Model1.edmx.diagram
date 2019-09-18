@@ -4,192 +4,204 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="03ba054ae9a24759b87e4ffbd710c82a" Name="Diagram1">
-        <EntityTypeShape EntityType="GrandShoesModel.ActionExistence" Width="1.5" PointX="6.75" PointY="34.5" />
-        <EntityTypeShape EntityType="GrandShoesModel.ActionLog" Width="1.5" PointX="9.5" PointY="34.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.ActionName" Width="1.5" PointX="4.5" PointY="32.5" />
-        <EntityTypeShape EntityType="GrandShoesModel.ActionPage" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.Area" Width="1.5" PointX="6.75" PointY="47.125" />
-        <EntityTypeShape EntityType="GrandShoesModel.Branch" Width="1.5" PointX="9.75" PointY="53.625" />
-        <EntityTypeShape EntityType="GrandShoesModel.BranchDiscount" Width="1.5" PointX="12" PointY="50.25" />
-        <EntityTypeShape EntityType="GrandShoesModel.Buyer" Width="1.5" PointX="3.75" PointY="93.625" />
-        <EntityTypeShape EntityType="GrandShoesModel.CartonManagement" Width="1.5" PointX="12" PointY="53.625" />
-        <EntityTypeShape EntityType="GrandShoesModel.CartonManagementDetail" Width="1.5" PointX="14.25" PointY="60.25" />
-        <EntityTypeShape EntityType="GrandShoesModel.Cluster" Width="1.5" PointX="12.75" PointY="37.375" />
-        <EntityTypeShape EntityType="GrandShoesModel.ClusterBranch" Width="1.5" PointX="15" PointY="56.25" />
-        <EntityTypeShape EntityType="GrandShoesModel.Color" Width="1.5" PointX="3.75" PointY="106" />
-        <EntityTypeShape EntityType="GrandShoesModel.ConnectionInfo" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.Designation" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.Discount" Width="1.5" PointX="9.75" PointY="29.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.DiscountBranch" Width="1.5" PointX="10.5" PointY="62.375" />
-        <EntityTypeShape EntityType="GrandShoesModel.DiscountSummary" Width="1.5" PointX="6" PointY="62.625" />
-        <EntityTypeShape EntityType="GrandShoesModel.FTPInfo" Width="1.5" PointX="0.75" PointY="4.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.IBTBranch" Width="1.5" PointX="18" PointY="58.625" />
-        <EntityTypeShape EntityType="GrandShoesModel.IBTDetail" Width="1.5" PointX="20.25" PointY="70.5" />
-        <EntityTypeShape EntityType="GrandShoesModel.Image" Width="1.5" PointX="2.75" PointY="4.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.LayBaySale" Width="1.5" PointX="9" PointY="100.375" />
-        <EntityTypeShape EntityType="GrandShoesModel.LengthMeasure" Width="1.5" PointX="1.5" PointY="90.25" />
-        <EntityTypeShape EntityType="GrandShoesModel.Log" Width="1.5" PointX="11.75" PointY="41.125" />
-        <EntityTypeShape EntityType="GrandShoesModel.MarkDown" Width="1.5" PointX="12.75" PointY="45.625" />
-        <EntityTypeShape EntityType="GrandShoesModel.MarkDownBranch" Width="1.5" PointX="15" PointY="52.125" />
-        <EntityTypeShape EntityType="GrandShoesModel.Page" Width="1.5" PointX="4.75" PointY="3.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.PageName" Width="1.5" PointX="4.5" PointY="36.5" />
-        <EntityTypeShape EntityType="GrandShoesModel.PagePermission" Width="1.5" PointX="6.75" PointY="38.125" />
-        <EntityTypeShape EntityType="GrandShoesModel.PendingItemReceipt" Width="1.5" PointX="8.25" PointY="84.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.Product" Width="1.5" PointX="6" PointY="67.625" />
-        <EntityTypeShape EntityType="GrandShoesModel.ProductCat1" Width="1.5" PointX="3.75" PointY="59" />
-        <EntityTypeShape EntityType="GrandShoesModel.ProductCat2" Width="1.5" PointX="3.75" PointY="65.25" />
-        <EntityTypeShape EntityType="GrandShoesModel.ProductCat3" Width="1.5" PointX="3.75" PointY="68.375" />
-        <EntityTypeShape EntityType="GrandShoesModel.ProductCat4" Width="1.5" PointX="3.75" PointY="62.125" />
-        <EntityTypeShape EntityType="GrandShoesModel.ProductCategory" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.ProductGrp" Width="1.5" PointX="6.75" PointY="4.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.ProductSize" Width="1.5" PointX="0.75" PointY="7.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.ProductSource" Width="1.5" PointX="3.75" PointY="78.375" />
-        <EntityTypeShape EntityType="GrandShoesModel.ProductStyle" Width="1.5" PointX="2.75" PointY="7.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.ProductVariance" Width="1.5" PointX="15.75" PointY="48.25" />
-        <EntityTypeShape EntityType="GrandShoesModel.PromotionalDiscount" Width="1.5" PointX="8.25" PointY="66.25" />
-        <EntityTypeShape EntityType="GrandShoesModel.PurchaseOrder" Width="1.5" PointX="3" PointY="71.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.PurchaseOrderItem" Width="1.5" PointX="17.25" PointY="63.875" />
-        <EntityTypeShape EntityType="GrandShoesModel.PurchaseOrderStatu" Width="1.5" PointX="0.75" PointY="68.375" />
-        <EntityTypeShape EntityType="GrandShoesModel.ReceiptOrderItem" Width="1.5" PointX="20.25" PointY="79.875" />
-        <EntityTypeShape EntityType="GrandShoesModel.ReceiveOrder" Width="1.5" PointX="5.25" PointY="82.5" />
-        <EntityTypeShape EntityType="GrandShoesModel.ReleaseLayBayItem" Width="1.5" PointX="11.25" PointY="65.625" />
-        <EntityTypeShape EntityType="GrandShoesModel.Role" Width="1.5" PointX="2.25" PointY="41.375" />
-        <EntityTypeShape EntityType="GrandShoesModel.SalesManu" Width="1.5" PointX="4.75" PointY="7.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.SalesOrder" Width="1.5" PointX="9" PointY="41.875" />
-        <EntityTypeShape EntityType="GrandShoesModel.SalesOrderItem" Width="1.5" PointX="8.25" PointY="79.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.SalesPerson" Width="1.5" PointX="6.75" PointY="7.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.SalesTransaction" Width="1.5" PointX="22.5" PointY="53.375" />
-        <EntityTypeShape EntityType="GrandShoesModel.Season" Width="1.5" PointX="3.75" PointY="55.875" />
-        <EntityTypeShape EntityType="GrandShoesModel.SizeGrid" Width="1.5" PointX="3.75" PointY="97.125" />
-        <EntityTypeShape EntityType="GrandShoesModel.SizeParameter" Width="1.5" PointX="1.5" PointY="87.375" />
-        <EntityTypeShape EntityType="GrandShoesModel.SMIBranchDefault" Width="1.5" PointX="12" PointY="90.5" />
-        <EntityTypeShape EntityType="GrandShoesModel.StaffCommition" Width="1.5" PointX="9" PointY="38.25" />
-        <EntityTypeShape EntityType="GrandShoesModel.StaffMember" Width="1.5" PointX="6.75" PointY="42.125" />
-        <EntityTypeShape EntityType="GrandShoesModel.StaffStatu" Width="1.5" PointX="4.5" PointY="46.25" />
-        <EntityTypeShape EntityType="GrandShoesModel.StockAudit" Width="1.5" PointX="18" PointY="49.125" />
-        <EntityTypeShape EntityType="GrandShoesModel.StockBranchInventory" Width="1.5" PointX="8.25" PointY="70.125" />
-        <EntityTypeShape EntityType="GrandShoesModel.StockBranchTransaction" Width="1.5" PointX="17" PointY="86.375" />
-        <EntityTypeShape EntityType="GrandShoesModel.StockDistribution" Width="1.5" PointX="14.25" PointY="69.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.StockDistributionStatu" Width="1.5" PointX="12" PointY="58.25" />
-        <EntityTypeShape EntityType="GrandShoesModel.StockDistributionSummary" Width="1.5" PointX="9.75" PointY="49.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.StockInventory" Width="1.5" PointX="14.25" PointY="80.25" />
-        <EntityTypeShape EntityType="GrandShoesModel.StockSupplierTransaction" Width="1.5" PointX="11.25" PointY="79.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.StockTape" Width="1.5" PointX="11.25" PointY="70.125" />
-        <EntityTypeShape EntityType="GrandShoesModel.StockTransactionType" Width="1.5" PointX="9" PointY="105.375" />
-        <EntityTypeShape EntityType="GrandShoesModel.Supplier" Width="1.5" PointX="0.75" PointY="71.375" />
-        <EntityTypeShape EntityType="GrandShoesModel.Synchronise" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.sysdiagram" Width="1.5" PointX="8.75" PointY="3.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.Template" Width="1.5" PointX="3.75" PointY="88.25" />
-        <EntityTypeShape EntityType="GrandShoesModel.Transaction" Width="1.5" PointX="20.25" PointY="62.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.User" Width="1.5" PointX="4.5" PointY="39.875" />
-        <EntityTypeShape EntityType="GrandShoesModel.Year" Width="1.5" PointX="3.75" PointY="52.875" />
-        <EntityTypeShape EntityType="GrandShoesModel.t1" Width="1.5" PointX="8.75" PointY="6.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.table1" Width="1.5" PointX="8.75" PointY="9.75" />
-        <AssociationConnector Association="GrandShoesModel.FK_ActionExistence_ActionName" />
-        <AssociationConnector Association="GrandShoesModel.FK_ActionExistence_PageName" />
-        <AssociationConnector Association="GrandShoesModel.FK_Log_ActionLog" />
-        <AssociationConnector Association="GrandShoesModel.FK_ActionPage_ActionPage" />
-        <AssociationConnector Association="GrandShoesModel.FK_Area_User" />
-        <AssociationConnector Association="GrandShoesModel.FK_BranchDiscount_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_CartonManagement_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_ClusterBranch_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_DiscountBranches_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_IBTBranch_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_MarkDownBranches_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_SalesOrder_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_SMIBranchDefault_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_SMIBranchDefault_Branch1" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockAudit_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockBranchInventory_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockBranchTransaction_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockDistribution_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockTape_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_User_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_BranchDiscount_Discount" />
-        <AssociationConnector Association="GrandShoesModel.FK_Product_Buyer" />
-        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrder_Buyer" />
-        <AssociationConnector Association="GrandShoesModel.FK_CartonManagement_StockDistributionSummary" />
-        <AssociationConnector Association="GrandShoesModel.FK_CartonManagementDetails_CartonManagement" />
-        <AssociationConnector Association="GrandShoesModel.FK_CartonManagementDetails_Product" />
-        <AssociationConnector Association="GrandShoesModel.FK_ClusterBranch_Cluster" />
-        <AssociationConnector Association="GrandShoesModel.FK_Product_Color" />
-        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItem_Color" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockInventory_Color" />
-        <AssociationConnector Association="GrandShoesModel.FK_DiscountBranches_PromotionalDiscount" />
-        <AssociationConnector Association="GrandShoesModel.FK_PromotionalDiscount_DiscountSummary" />
-        <AssociationConnector Association="GrandShoesModel.FK_IBTBranch_User" />
-        <AssociationConnector Association="GrandShoesModel.FK_IBTDetails_IBTBranch" />
-        <AssociationConnector Association="GrandShoesModel.FK_IBTDetails_Product" />
-        <AssociationConnector Association="GrandShoesModel.FK_ReleaseLayBayItem_LayBaySale" />
-        <AssociationConnector Association="GrandShoesModel.FK_Transaction_LayBaySale" />
-        <AssociationConnector Association="GrandShoesModel.FK_Template_LengthMeasure" />
-        <AssociationConnector Association="GrandShoesModel.FK_Log_PageName" />
-        <AssociationConnector Association="GrandShoesModel.FK_Log_User" />
-        <AssociationConnector Association="GrandShoesModel.FK_MarkDownBranches_MarkDown" />
-        <AssociationConnector Association="GrandShoesModel.FK_PagePermission_PageName" />
-        <AssociationConnector Association="GrandShoesModel.FK_PagePermission_Role" />
-        <AssociationConnector Association="GrandShoesModel.FK_PagePermission_User" />
-        <AssociationConnector Association="GrandShoesModel.FK_PendingItemReceipt_Product" />
-        <AssociationConnector Association="GrandShoesModel.FK_PendingItemReceipt_PurchaseOrder" />
-        <AssociationConnector Association="GrandShoesModel.FK_PendingItemReceipt_ReceiveOrder" />
-        <AssociationConnector Association="GrandShoesModel.FK_Product_ProductCat1" />
-        <AssociationConnector Association="GrandShoesModel.FK_Product_ProductCat2" />
-        <AssociationConnector Association="GrandShoesModel.FK_Product_ProductCat3" />
-        <AssociationConnector Association="GrandShoesModel.FK_Product_ProductCat4" />
-        <AssociationConnector Association="GrandShoesModel.FK_Product_ProductSource" />
-        <AssociationConnector Association="GrandShoesModel.FK_Product_Season" />
-        <AssociationConnector Association="GrandShoesModel.FK_Product_SizeGrid" />
-        <AssociationConnector Association="GrandShoesModel.FK_Product_Supplier" />
-        <AssociationConnector Association="GrandShoesModel.FK_Product_Template" />
-        <AssociationConnector Association="GrandShoesModel.FK_Product_Template1" />
-        <AssociationConnector Association="GrandShoesModel.FK_Product_Year" />
-        <AssociationConnector Association="GrandShoesModel.FK_PromotionalDiscount_Product" />
-        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItem_Product" />
-        <AssociationConnector Association="GrandShoesModel.FK_ReceiptOrderItem_Product" />
-        <AssociationConnector Association="GrandShoesModel.FK_ReleaseLayBayItem_Product" />
-        <AssociationConnector Association="GrandShoesModel.FK_SalesOrderItem_Product" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockBranchInventory_Product" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockDistribution_Product" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockInventory_Product" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockSupplierTransaction_Product" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockTape_Product" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockAudit_ProductVariance" />
-        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrder_PurchaseOrderStatus" />
-        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrder_Supplier" />
-        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItem_PurchaseOrder" />
-        <AssociationConnector Association="GrandShoesModel.FK_ReceiveOrder_PurchaseOrder" />
-        <AssociationConnector Association="GrandShoesModel.FK_PurchaseOrderItems_SizeGrid" />
-        <AssociationConnector Association="GrandShoesModel.FK_ReceiptOrderItem_ReceiptOrderItem" />
-        <AssociationConnector Association="GrandShoesModel.FK_ReleaseLayBayItem_SalesOrder" />
-        <AssociationConnector Association="GrandShoesModel.FK_User_Role" />
-        <AssociationConnector Association="GrandShoesModel.FK_SalesOrder_StaffMember" />
-        <AssociationConnector Association="GrandShoesModel.FK_SalesOrderItem_SalesOrder" />
-        <AssociationConnector Association="GrandShoesModel.FK_Transaction_SalesOrder" />
-        <AssociationConnector Association="GrandShoesModel.FK_SalesTransaction_StaffMember" />
-        <AssociationConnector Association="GrandShoesModel.FK_SalesTransaction_Transaction" />
-        <AssociationConnector Association="GrandShoesModel.FK_Template_SizeParameter" />
-        <AssociationConnector Association="GrandShoesModel.FK_StaffCommition_StaffMember" />
-        <AssociationConnector Association="GrandShoesModel.FK_StaffMember_StaffStatus" />
-        <AssociationConnector Association="GrandShoesModel.FK_StaffMember_User" />
-        <AssociationConnector Association="GrandShoesModel.FK_Transaction_StaffMember" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockBranchTransaction_StockTransactionType" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockDistribution_StockDistributionStatus" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockDistribution_StockDistributionSummary" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockDistributionStatus_StockDistributionStatus" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockSupplierTransaction_StockSupplierTransaction" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockSupplierTransaction_StockTransactionType" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockSupplierTransaction_Supplier" />
-        <EntityTypeShape EntityType="GrandShoesModel.CartonMgmtDetailsStockTransfer" Width="1.5" PointX="23.25" PointY="65" />
-        <EntityTypeShape EntityType="GrandShoesModel.CartonMgmtStockTransfer" Width="1.5" PointX="21" PointY="56.75" />
-        <EntityTypeShape EntityType="GrandShoesModel.StockTransferDetail" Width="1.5" PointX="12" PointY="27.125" />
-        <AssociationConnector Association="GrandShoesModel.FK_CartonMgmtStockTransfer_Branch" />
-        <AssociationConnector Association="GrandShoesModel.FK_CartonMgmtStockTransfer_Branch1" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockTransferDetails_FromBranch" />
-        <AssociationConnector Association="GrandShoesModel.FK_StockTransferDetails_ToBranch" />
-        <AssociationConnector Association="GrandShoesModel.FK_CartonMgmtDetailsStockTransfer_CartonMgmtStockTransfer" />
-        <AssociationConnector Association="GrandShoesModel.FK_CartonMgmtDetailsStockTransfer_Product" />
-        <AssociationConnector Association="GrandShoesModel.FK_CartonMgmtStockTransfer_StockDistributionSummary" />
+      <Diagram DiagramId="a9ad00f349c2483184a06834a353b287" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ActionExistence" Width="1.5" PointX="3.75" PointY="38.375" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ActionLog" Width="1.5" PointX="4.5" PointY="42.375" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ActionName" Width="1.5" PointX="1.5" PointY="34.5" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ActionPage" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Area" Width="1.5" PointX="3.75" PointY="51.625" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Branch" Width="1.5" PointX="12.75" PointY="56.375" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.BranchDiscount" Width="1.5" PointX="18" PointY="63.625" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Buyer" Width="1.5" PointX="0.75" PointY="63.25" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.CartonManagement" Width="1.5" PointX="15" PointY="96.875" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.CartonManagementDetail" Width="1.5" PointX="17.25" PointY="90.5" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.CartonMgmtDetailsStockTransfer" Width="1.5" PointX="17.25" PointY="70.5" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.CartonMgmtStockTransfer" Width="1.5" PointX="15" PointY="60.625" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Cluster" Width="1.5" PointX="12.75" PointY="53.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ClusterBranch" Width="1.5" PointX="15" PointY="65.625" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Color" Width="1.5" PointX="0.75" PointY="98" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ConnectionInfo" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Designation" Width="1.5" PointX="9" PointY="47.25" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Discount" Width="1.5" PointX="15.75" PointY="45" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.DiscountBranch" Width="1.5" PointX="7.5" PointY="97.625" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.DiscountSummary" Width="1.5" PointX="3" PointY="99.875" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.FTPInfo" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.IBTBranch" Width="1.5" PointX="9" PointY="106" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.IBTDetail" Width="1.5" PointX="11.25" PointY="94.875" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Image" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.LayBaySale" Width="1.5" PointX="9" PointY="100.875" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.LaybyeSale" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.LengthMeasure" Width="1.5" PointX="1.5" PointY="116.625" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Log" Width="1.5" PointX="6.75" PointY="46.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.MarkDown" Width="1.5" PointX="15.75" PointY="49.875" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.MarkDownBranch" Width="1.5" PointX="18" PointY="59.375" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Page" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.PageName" Width="1.5" PointX="1.5" PointY="38.375" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.PagePermission" Width="1.5" PointX="3.75" PointY="45.125" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.PendingItemReceipt" Width="1.5" PointX="19.5" PointY="77.5" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Product" Width="1.5" PointX="3" PointY="77.625" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ProductCat1" Width="1.5" PointX="0.75" PointY="101.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ProductCat2" Width="1.5" PointX="0.75" PointY="94.875" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ProductCat3" Width="1.5" PointX="0.75" PointY="88.625" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ProductCat4" Width="1.5" PointX="0.75" PointY="91.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ProductCategory" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ProductGrp" Width="1.5" PointX="6.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ProductSize" Width="1.5" PointX="4.75" PointY="7.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ProductSource" Width="1.5" PointX="0.75" PointY="78.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ProductStyle" Width="1.5" PointX="6.75" PointY="7.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ProductVariance" Width="1.5" PointX="18.75" PointY="66.625" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.PromotionalDiscount" Width="1.5" PointX="5.25" PointY="93.5" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.PurchaseOrder" Width="1.5" PointX="6" PointY="82" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.PurchaseOrderItem" Width="1.5" PointX="14.25" PointY="74.25" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.PurchaseOrderStatu" Width="1.5" PointX="3.75" PointY="96.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ReceiptOrderItem" Width="1.5" PointX="22.5" PointY="77.625" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ReceiveOrder" Width="1.5" PointX="8.25" PointY="82.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.ReleaseLayBayItem" Width="1.5" PointX="11.25" PointY="90" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Role" Width="1.5" PointX="1.5" PointY="42" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.SalesManu" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.SalesOrder" Width="1.5" PointX="3" PointY="55.375" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.SalesOrderItem" Width="1.5" PointX="5.25" PointY="89" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.SalesPerson" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.SalesTransaction" Width="1.5" PointX="23.5" PointY="62.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Season" Width="1.5" PointX="0.75" PointY="75.625" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.SizeGrid" Width="1.5" PointX="0.75" PointY="66.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.SizeParameter" Width="1.5" PointX="1.5" PointY="113.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.SMIBranchDefault" Width="1.5" PointX="15" PointY="54.25" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Staff" Width="1.5" PointX="18" PointY="53.625" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StaffCommition" Width="1.5" PointX="3" PointY="61.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StaffMember" Width="1.5" PointX="0.75" PointY="55.625" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StaffRole" Width="1.5" PointX="8.75" PointY="3.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StaffStatu" Width="1.5" PointX="1.5" PointY="52.25" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StockAudit" Width="1.5" PointX="21" PointY="56.375" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StockBranchInventory" Width="1.5" PointX="8.25" PointY="87.5" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StockBranchTransaction" Width="1.5" PointX="23" PointY="66.5" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StockDistribution" Width="1.5" PointX="17.25" PointY="80.125" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StockDistributionStatu" Width="1.5" PointX="15" PointY="70.5" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StockDistributionSummary" Width="1.5" PointX="12.75" PointY="65.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StockInventory" Width="1.5" PointX="11.25" PointY="80.5" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StockSupplierTransaction" Width="1.5" PointX="8.25" PointY="72.125" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StockTape" Width="1.5" PointX="11.25" PointY="70.5" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StockTransactionType" Width="1.5" PointX="6" PointY="68.5" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StockTransferDetail" Width="1.5" PointX="15" PointY="102.25" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.StockWarehouseTransaction" Width="1.5" PointX="5.25" PointY="72.375" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Supplier" Width="1.5" PointX="0.75" PointY="81.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Synchronise" Width="1.5" PointX="8.75" PointY="6.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Template" Width="1.5" PointX="0.75" PointY="108.625" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Transaction" Width="1.5" PointX="20.25" PointY="71.875" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.TrasactionReference" Width="1.5" PointX="3" PointY="74.875" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.User" Width="1.5" PointX="1.5" PointY="45.375" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.Year" Width="1.5" PointX="0.75" PointY="104.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.t1" Width="1.5" PointX="8.75" PointY="9.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.table1" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_A45200_posGrandShoesModel.View_RemainingStockByBranchByProduct" Width="1.5" PointX="10.75" PointY="2.75" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_ActionExistence_ActionName" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_ActionExistence_PageName" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Log_ActionLog" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_ActionPage_ActionPage" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Area_User" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_BranchDiscount_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_CartonManagement_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_CartonMgmtStockTransfer_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_CartonMgmtStockTransfer_Branch1" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_ClusterBranch_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_DiscountBranches_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_IBTBranch_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_MarkDownBranches_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_SalesOrder_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_SMIBranchDefault_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_SMIBranchDefault_Branch1" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Staff_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockAudit_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockBranchInventory_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockBranchTransaction_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockDistribution_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockTape_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockTransferDetails_FromBranch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockTransferDetails_ToBranch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_User_Branch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_BranchDiscount_Discount" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Product_Buyer" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PurchaseOrder_Buyer" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_CartonManagement_StockDistributionSummary" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_CartonManagementDetails_CartonManagement" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_CartonManagementDetails_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_CartonMgmtDetailsStockTransfer_CartonMgmtStockTransfer" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_CartonMgmtDetailsStockTransfer_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_CartonMgmtStockTransfer_StockDistributionSummary" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_ClusterBranch_Cluster" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Product_Color" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PurchaseOrderItem_Color" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockInventory_Color" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Designation_Log" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Staff_Designation" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_DiscountBranches_PromotionalDiscount" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PromotionalDiscount_DiscountSummary" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_IBTBranch_User" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_IBTDetails_IBTBranch" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_IBTDetails_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_ReleaseLayBayItem_LayBaySale" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Transaction_LayBaySale" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Template_LengthMeasure" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Log_PageName" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Log_User" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_MarkDownBranches_MarkDown" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PagePermission_PageName" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PagePermission_Role" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PagePermission_User" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PendingItemReceipt_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PendingItemReceipt_PurchaseOrder" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PendingItemReceipt_ReceiveOrder" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Product_ProductCat1" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Product_ProductCat2" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Product_ProductCat3" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Product_ProductCat4" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Product_ProductSource" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Product_Season" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Product_SizeGrid" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Product_Supplier" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Product_Template" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Product_Template1" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Product_Year" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PromotionalDiscount_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PurchaseOrderItem_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_ReceiptOrderItem_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_ReleaseLayBayItem_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_SalesOrderItem_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockBranchInventory_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockDistribution_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockInventory_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockSupplierTransaction_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockTape_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockWarehouseTransaction_Product" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockAudit_ProductVariance" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PurchaseOrder_PurchaseOrderStatus" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PurchaseOrder_Supplier" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PurchaseOrderItem_PurchaseOrder" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_ReceiveOrder_PurchaseOrder" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_PurchaseOrderItems_SizeGrid" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_ReceiptOrderItem_ReceiptOrderItem" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_ReleaseLayBayItem_SalesOrder" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_User_Role" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_SalesOrder_StaffMember" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_SalesOrderItem_SalesOrder" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Transaction_SalesOrder" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_SalesTransaction_StaffMember" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_SalesTransaction_Transaction" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Template_SizeParameter" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Staff_User" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StaffCommition_StaffMember" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StaffMember_StaffStatus" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StaffMember_User" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_Transaction_StaffMember" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockBranchTransaction_StockTransactionType" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockDistribution_StockDistributionStatus" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockDistribution_StockDistributionSummary" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockDistributionStatus_StockDistributionStatus" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockSupplierTransaction_StockSupplierTransaction" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockSupplierTransaction_StockTransactionType" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockSupplierTransaction_Supplier" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockWarehouseTransaction_StockTransactionType" />
+        <AssociationConnector Association="DB_A45200_posGrandShoesModel.FK_StockWarehouseTransaction_TrasactionReference" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

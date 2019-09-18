@@ -51,7 +51,7 @@
             <div class="row  mrgn-b-lg">
                 <div class="col-md-2 col-xs-12 col-sm-2">
                     <label>Branch Code</label>
-                    @Html.TextBoxFor(m => m.BranchCode, new { @class = "form-control", @placeholder = "Branch Code" })
+                    @Html.DropDownListFor(m => m.BranchCode, null, "--Branch--", htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.BranchCode, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-2 col-xs-12 col-sm-2">
@@ -83,12 +83,12 @@
                     @Html.EditorFor(model => model.FromDistributionDate, new { htmlAttributes = new { @class = "form-control date", disabled = "disabled",placeholder = "From DistributionDate" } })
                     @Html.ValidationMessageFor(model => model.FromDistributionDate, "", new { @class = "text-danger" })
                 </div>
-                <div class="col-md-2 col-xs-12 col-sm-2">
+                <div class="col-md-2 col-xs-12 col-sm-2 mrgn-b-md">
                     <label>To Dist.Date</label>
                     @Html.EditorFor(model => model.ToDistributionDate, new { htmlAttributes = new { @class = "form-control date", disabled = "disabled",placeholder = "To -DistributionDate" } })
                     @Html.ValidationMessageFor(model => model.ToDistributionDate, "", new { @class = "text-danger" })
                 </div>
-                <div class="col-md-2 col-xs-12 col-sm-2">
+                <div class="col-md-2 col-xs-12 col-sm-2 ">
                     <button type="button" class="btn btn-success btn-primary btn-block export-btn" onclick="searchData()">Get Products</button>
                 </div>
             </div>
@@ -149,5 +149,126 @@
             return false;
         }
         $('.date').datepicker({ dateFormat: 'mm-dd-yy' }).val();
+        $(document).ready(function () {
+            debugger
+            var ProductSKUList = {};
+            $("#FromProductSKU").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/MarkDownBranch/AutoCompleteProductSKUList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            ProductSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value }; });
+                            response(ProductSKUList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#FromProductSKU").val(ui.item.label);
+                    $("#FromProductSKU").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
+        $(document).ready(function () {
+            debugger
+            var ProductSKUList = {};
+            $("#ToProductSKU").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/MarkDownBranch/AutoCompleteProductSKUList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            ProductSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value }; });
+                            response(ProductSKUList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#ToProductSKU").val(ui.item.label);
+                    $("#ToProductSKU").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
+        $(document).ready(function () {
+            debugger
+            var StyleSKUList = {};
+            $("#FromStyleSKU").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/Discount/AutoCompleteStyleSKUList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            StyleSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value }; });
+                            response(StyleSKUList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#FromStyleSKU").val(ui.item.label);
+                    $("#FromStyleSKU").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
+        $(document).ready(function () {
+            debugger
+            var StyleSKUList = {};
+            $("#ToStyleSKU").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/Discount/AutoCompleteStyleSKUList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            StyleSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value }; });
+                            response(StyleSKUList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#ToStyleSKU").val(ui.item.label);
+                    $("#ToStyleSKU").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
+
 </script>
 }

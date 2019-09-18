@@ -84,6 +84,7 @@ namespace POSApi.Controllers
 		{
 			var order = Entities.PurchaseOrders.Where(x => x.IsActive == true && x.ID == id).FirstOrDefault();
 			order.IsFinalize = true;
+            order.PurchaseOrderStatusId= 3;
 			Entities.SaveChanges();
 			return Ok(true);
 		}
@@ -100,7 +101,11 @@ namespace POSApi.Controllers
                 {
                     list = Entities.PurchaseOrders.Where(x => x.IsActive == false).OrderByDescending(x => x.ID);
                 }
-                if (search.OrderNumber != null)
+                if (search.OrderNumber1 != null)
+                {
+                    list = list.Where(x => x.OrderNumber == search.OrderNumber1);
+                }
+                if (search.OrderNumber != null )
                 {
                     list = list.Where(x => x.OrderNumber == search.OrderNumber);
                 }
@@ -183,8 +188,8 @@ namespace POSApi.Controllers
 		[Route("getDetailsByFinal")]
 		public List<PurchaseOrder> GetAllByFinal()
 		{
-			var List = Entities.PurchaseOrders.Where(x => x.IsActive == true && x.IsFinalize==true).OrderByDescending(x => x.ID).Include(x => x.Supplier).Include(x => x.Buyer);
-			return List.ToList();
+			var List = Entities.PurchaseOrders.Where(x => x.IsActive == true && x.IsFinalize==true && x.PurchaseOrderStatusId!=4).OrderByDescending(x => x.ID).Include(x => x.Supplier).Include(x=>x.PurchaseOrderStatu).Include(x => x.Buyer);
+			return List.ToList().RemoveReferences();
 		}
 		[HttpGet]
         [AllowAnonymous]
@@ -384,6 +389,15 @@ namespace POSApi.Controllers
                 return Ok(true);
             else
                 return Ok(false);
+        }
+        [HttpGet]
+        [Route("Cancelled")]
+        public IHttpActionResult Cancelled(int id)
+        {
+            var order = Entities.PurchaseOrders.Where(x => x.IsActive == true && x.ID == id).FirstOrDefault();
+            order.PurchaseOrderStatusId = 4;
+            Entities.SaveChanges();
+            return Ok(order);
         }
         
     }

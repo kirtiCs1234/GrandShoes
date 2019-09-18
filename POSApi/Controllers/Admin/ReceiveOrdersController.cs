@@ -11,6 +11,7 @@ using System.Web.Http.Description;
 using DAL;
 using Model;
 using Helper.ExtensionMethod;
+using Helper;
 
 namespace POSApi.Controllers.Admin
 {
@@ -139,7 +140,10 @@ namespace POSApi.Controllers.Admin
         [ResponseType(typeof(ReceiveOrder))]
         public IHttpActionResult PostReceiveOrder(int Id, ReceiveOrder receiveOrder)
         {
-			var receipt = db.ReceiveOrders.Where(x => x.IsActive == true && x.Id == Id).FirstOrDefault();
+            var pageName = Request.RequestUri.LocalPath.getRouteName();
+            var kkk = pageName.Substring(3, 7);
+            var receipt = db.ReceiveOrders.Where(x => x.IsActive == true && x.Id == Id).FirstOrDefault();
+            
 			receipt.SupplierInvoice = receiveOrder.SupplierInvoice;
 			receipt.IsActive = true;
 			//receipt.ReceiptOrderItems = receiveOrder.ReceiptOrderItems;
@@ -164,95 +168,124 @@ namespace POSApi.Controllers.Admin
 					a.IsActive = true;
 					db.ReceiptOrderItems.Add(a);
                     db.SaveChanges();
-                }
-                }
-			receipt.TotalQuantity = TotalQuantity;
-			receipt.TotalCost = TotalCost;
-			receipt.IsActive = true;
-			var receiptOrderItemList = receiveOrder.ReceiptOrderItems;
-			foreach(var item in receiptOrderItemList)
-			{
-                if (item.ProductId != null)
-                {
-                    var stock = db.StockInventories.Where(x => x.IsActive == true && x.ProductID == item.ProductId).FirstOrDefault();
+                    StockWarehouseTransaction transaction = new StockWarehouseTransaction();
+                    transaction.Quantity01 = a.Quantity01;
+                    transaction.Quantity02 = a.Quantity02;
+                    transaction.Quantity03 = a.Quantity03;
+                    transaction.Quantity04 = a.Quantity04;
+                    transaction.Quantity05 = a.Quantity05;
+                    transaction.Quantity06 = a.Quantity06;
+                    transaction.Quantity07 = a.Quantity07;
+                    transaction.Quantity08 = a.Quantity08;
+                    transaction.Quantity09 = a.Quantity09;
+                    transaction.Quantity10 = a.Quantity10;
+                    transaction.Quantity11 = a.Quantity11;
+                    transaction.Quantity12 = a.Quantity12;
+                    transaction.Quantity13 = a.Quantity13;
+                    transaction.Quantity14 = a.Quantity14;
+                    transaction.Quantity15 = a.Quantity15;
+                    transaction.Quantity16 = a.Quantity16;
+                    transaction.Quantity17 = a.Quantity17;
+                    transaction.Quantity18 = a.Quantity18;
+                    transaction.Quantity19 = a.Quantity19;
+                    transaction.Quantity20 = a.Quantity20;
+                    transaction.Quantity21 = a.Quantity21;
+                    transaction.Quantity22 = a.Quantity22;
+                    transaction.Quantity23 = a.Quantity23;
+                    transaction.Quantity24 = a.Quantity24;
+                    transaction.Quantity25 = a.Quantity25;
+                    transaction.Quantity26 = a.Quantity26;
+                    transaction.Quantity27 = a.Quantity27;
+                    transaction.Quantity28 = a.Quantity28;
+                    transaction.Quantity29 = a.Quantity29;
+                    transaction.Quantity30 = a.Quantity30;
+                    transaction.PrimaryID = a.Id;
+                    transaction.StockTransactionTypeId = 1;
+                    transaction.TransactionReferenceID = db.TrasactionReferences.Where(x => x.Task == kkk).FirstOrDefault().Id;
+                    transaction.ProductID = a.ProductId;
+                    transaction.IsActive = true;
+                    db.StockWarehouseTransactions.Add(transaction);
+                    var stock = db.StockInventories.Where(x => x.IsActive == true && x.ProductID == a.ProductId).FirstOrDefault();
                     if (stock != null)
                     {
-                        stock.Quantity01 = stock.Quantity01 + item.Quantity01 ?? 0;
-                        stock.Quantity02 = stock.Quantity02 + item.Quantity02 ?? 0;
-                        stock.Quantity03 = stock.Quantity03 + item.Quantity03 ?? 0;
-                        stock.Quantity04 = stock.Quantity04 + item.Quantity04 ?? 0;
-                        stock.Quantity05 = stock.Quantity05 + item.Quantity05 ?? 0;
-                        stock.Quantity06 = stock.Quantity06 + item.Quantity06 ?? 0;
-                        stock.Quantity07 = stock.Quantity07 + item.Quantity07 ?? 0;
-                        stock.Quantity08 = stock.Quantity08 + item.Quantity08 ?? 0;
-                        stock.Quantity09 = stock.Quantity09 + item.Quantity09 ?? 0;
-                        stock.Quantity10 = stock.Quantity10 + item.Quantity10 ?? 0;
-                        stock.Quantity11 = stock.Quantity11 + item.Quantity11 ?? 0;
-                        stock.Quantity12 = stock.Quantity12 + item.Quantity12 ?? 0;
-                        stock.Quantity13 = stock.Quantity13 + item.Quantity13 ?? 0;
-                        stock.Quantity14 = stock.Quantity14 + item.Quantity14 ?? 0;
-                        stock.Quantity15 = stock.Quantity15 + item.Quantity15 ?? 0;
-                        stock.Quantity16 = stock.Quantity16 + item.Quantity16 ?? 0;
-                        stock.Quantity17 = stock.Quantity17 + item.Quantity17 ?? 0;
-                        stock.Quantity18 = stock.Quantity18 + item.Quantity18 ?? 0;
-                        stock.Quantity19 = stock.Quantity19 + item.Quantity19 ?? 0;
-                        stock.Quantity20 = stock.Quantity20 + item.Quantity20 ?? 0;
-                        stock.Quantity21 = stock.Quantity21 + item.Quantity21 ?? 0;
-                        stock.Quantity22 = stock.Quantity01 + item.Quantity22 ?? 0;
-                        stock.Quantity23 = stock.Quantity01 + item.Quantity23 ?? 0;
-                        stock.Quantity24 = stock.Quantity01 + item.Quantity24 ?? 0;
-                        stock.Quantity25 = stock.Quantity01 + item.Quantity25 ?? 0;
-                        stock.Quantity26 = stock.Quantity01 + item.Quantity26 ?? 0;
-                        stock.Quantity27 = stock.Quantity01 + item.Quantity27 ?? 0;
-                        stock.Quantity28 = stock.Quantity01 + item.Quantity28 ?? 0;
-                        stock.Quantity29 = stock.Quantity01 + item.Quantity29 ?? 0;
-                        stock.Quantity30 = stock.Quantity01 + item.Quantity30 ?? 0;
+                        stock.Quantity01 = stock.Quantity01 + a.Quantity01 ?? 0;
+                        stock.Quantity02 = stock.Quantity02 + a.Quantity02 ?? 0;
+                        stock.Quantity03 = stock.Quantity03 + a.Quantity03 ?? 0;
+                        stock.Quantity04 = stock.Quantity04 + a.Quantity04 ?? 0;
+                        stock.Quantity05 = stock.Quantity05 + a.Quantity05 ?? 0;
+                        stock.Quantity06 = stock.Quantity06 + a.Quantity06 ?? 0;
+                        stock.Quantity07 = stock.Quantity07 + a.Quantity07 ?? 0;
+                        stock.Quantity08 = stock.Quantity08 + a.Quantity08 ?? 0;
+                        stock.Quantity09 = stock.Quantity09 + a.Quantity09 ?? 0;
+                        stock.Quantity10 = stock.Quantity10 + a.Quantity10 ?? 0;
+                        stock.Quantity11 = stock.Quantity11 + a.Quantity11 ?? 0;
+                        stock.Quantity12 = stock.Quantity12 + a.Quantity12 ?? 0;
+                        stock.Quantity13 = stock.Quantity13 + a.Quantity13 ?? 0;
+                        stock.Quantity14 = stock.Quantity14 + a.Quantity14 ?? 0;
+                        stock.Quantity15 = stock.Quantity15 + a.Quantity15 ?? 0;
+                        stock.Quantity16 = stock.Quantity16 + a.Quantity16 ?? 0;
+                        stock.Quantity17 = stock.Quantity17 + a.Quantity17 ?? 0;
+                        stock.Quantity18 = stock.Quantity18 + a.Quantity18 ?? 0;
+                        stock.Quantity19 = stock.Quantity19 + a.Quantity19 ?? 0;
+                        stock.Quantity20 = stock.Quantity20 + a.Quantity20 ?? 0;
+                        stock.Quantity21 = stock.Quantity21 + a.Quantity21 ?? 0;
+                        stock.Quantity22 = stock.Quantity01 + a.Quantity22 ?? 0;
+                        stock.Quantity23 = stock.Quantity01 + a.Quantity23 ?? 0;
+                        stock.Quantity24 = stock.Quantity01 + a.Quantity24 ?? 0;
+                        stock.Quantity25 = stock.Quantity01 + a.Quantity25 ?? 0;
+                        stock.Quantity26 = stock.Quantity01 + a.Quantity26 ?? 0;
+                        stock.Quantity27 = stock.Quantity01 + a.Quantity27 ?? 0;
+                        stock.Quantity28 = stock.Quantity01 + a.Quantity28 ?? 0;
+                        stock.Quantity29 = stock.Quantity01 + a.Quantity29 ?? 0;
+                        stock.Quantity30 = stock.Quantity01 + a.Quantity30 ?? 0;
                         db.SaveChanges();
                     }
                     else
                     {
                         var model = new StockInventory();
-                        model.Quantity01 = item.Quantity01 ?? 0;
-                        model.Quantity02 = item.Quantity02 ?? 0;
-                        model.Quantity03 = item.Quantity03 ?? 0;
-                        model.Quantity04 = item.Quantity04 ?? 0;
-                        model.Quantity05 = item.Quantity05 ?? 0;
-                        model.Quantity06 = item.Quantity06 ?? 0;
-                        model.Quantity07 = item.Quantity07 ?? 0;
-                        model.Quantity08 = item.Quantity08 ?? 0;
-                        model.Quantity09 = item.Quantity09 ?? 0;
-                        model.Quantity10 = item.Quantity10 ?? 0;
-                        model.Quantity11 = item.Quantity11 ?? 0;
-                        model.Quantity12 = item.Quantity12 ?? 0;
-                        model.Quantity13 = item.Quantity13 ?? 0;
-                        model.Quantity14 = item.Quantity14 ?? 0;
-                        model.Quantity15 = item.Quantity15 ?? 0;
-                        model.Quantity16 = item.Quantity16 ?? 0;
-                        model.Quantity17 = item.Quantity17 ?? 0;
-                        model.Quantity18 = item.Quantity18 ?? 0;
-                        model.Quantity19 = item.Quantity19 ?? 0;
-                        model.Quantity20 = item.Quantity20 ?? 0;
-                        model.Quantity21 = item.Quantity21 ?? 0;
-                        model.Quantity22 = item.Quantity22 ?? 0;
-                        model.Quantity23 = item.Quantity23 ?? 0;
-                        model.Quantity24 = item.Quantity24 ?? 0;
-                        model.Quantity25 = item.Quantity25 ?? 0;
-                        model.Quantity26 = item.Quantity26 ?? 0;
-                        model.Quantity27 = item.Quantity27 ?? 0;
-                        model.Quantity28 = item.Quantity28 ?? 0;
-                        model.Quantity29 = item.Quantity29 ?? 0;
-                        model.Quantity30 = item.Quantity30 ?? 0;
+                        model.Quantity01 = a.Quantity01 ?? 0;
+                        model.Quantity02 = a.Quantity02 ?? 0;
+                        model.Quantity03 = a.Quantity03 ?? 0;
+                        model.Quantity04 = a.Quantity04 ?? 0;
+                        model.Quantity05 = a.Quantity05 ?? 0;
+                        model.Quantity06 = a.Quantity06 ?? 0;
+                        model.Quantity07 = a.Quantity07 ?? 0;
+                        model.Quantity08 = a.Quantity08 ?? 0;
+                        model.Quantity09 = a.Quantity09 ?? 0;
+                        model.Quantity10 = a.Quantity10 ?? 0;
+                        model.Quantity11 = a.Quantity11 ?? 0;
+                        model.Quantity12 = a.Quantity12 ?? 0;
+                        model.Quantity13 = a.Quantity13 ?? 0;
+                        model.Quantity14 = a.Quantity14 ?? 0;
+                        model.Quantity15 = a.Quantity15 ?? 0;
+                        model.Quantity16 = a.Quantity16 ?? 0;
+                        model.Quantity17 = a.Quantity17 ?? 0;
+                        model.Quantity18 = a.Quantity18 ?? 0;
+                        model.Quantity19 = a.Quantity19 ?? 0;
+                        model.Quantity20 = a.Quantity20 ?? 0;
+                        model.Quantity21 = a.Quantity21 ?? 0;
+                        model.Quantity22 = a.Quantity22 ?? 0;
+                        model.Quantity23 = a.Quantity23 ?? 0;
+                        model.Quantity24 = a.Quantity24 ?? 0;
+                        model.Quantity25 = a.Quantity25 ?? 0;
+                        model.Quantity26 = a.Quantity26 ?? 0;
+                        model.Quantity27 = a.Quantity27 ?? 0;
+                        model.Quantity28 = a.Quantity28 ?? 0;
+                        model.Quantity29 = a.Quantity29 ?? 0;
+                        model.Quantity30 = a.Quantity30 ?? 0;
                         model.IsActive = true;
-                        model.ProductID = item.ProductId;
+                        model.ProductID = a.ProductId;
                         model.LogId = 2;
                         model.ColorID = 1;
                         model.BracketNumber = 1;
                         db.StockInventories.Add(model);
-                        db.SaveChanges();
+                    }
                     }
                 }
-			}
-           
+			receipt.TotalQuantity = TotalQuantity;
+			receipt.TotalCost = TotalCost;
+			receipt.IsActive = true;
+                db.SaveChanges();
             return Ok(true);
         }
 		[HttpPost]
@@ -424,9 +457,13 @@ namespace POSApi.Controllers.Admin
 				foreach (var a in receiveOrder.ReceiptOrderItems)
 				{
 					a.IsActive = false;
-				}
+                    var data = db.StockWarehouseTransactions.Where(x => x.IsActive == true && x.TransactionReferenceID == 1).FirstOrDefault();
+                    data.StockTransactionTypeId = 3;
+                    db.SaveChanges();
+                }
+
 			}
-            db.SaveChanges();
+            
             return Ok(status);
         }
 

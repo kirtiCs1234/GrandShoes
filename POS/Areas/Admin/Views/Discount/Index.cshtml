@@ -26,7 +26,7 @@
             vertical-align: top;
         }
 </style>
-<div class="table-style">
+<div class="table-style mt-15">
     <div class="prtm-full-block pos-relative col-md-4 padding-section">
         <div class="prtm-block-title pad-all-md ">
             <div class="pos-relative">
@@ -68,7 +68,7 @@
             <button type="button" class="btn btn-outline-inverse cancel" id="select-none">None</button>
         </div>
     </div>
-    <div class="prtm-full-block pos-relative col-md-8 branch-right-section">
+    <div class="prtm-full-block pos-relative col-md-8 branch-right-section min-heigh-branch">
         <div class="partial-render">
             @Html.Action("Create")
         </div>
@@ -85,10 +85,130 @@
 </div>
 @section scripts{
     <script type="text/javascript">
-            function Clear(){
+            function Clear1(){
                 debugger;
-                window.location="/Admin/Discount/Index/"+id1;
-            }
+                window.location.reload();
+        }
+        $(document).ready(function () {
+            debugger
+            var ProductSKUList = {};
+            $("#FromProductSKU").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/MarkDownBranch/AutoCompleteProductSKUList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            ProductSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value }; });
+                            response(ProductSKUList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#FromProductSKU").val(ui.item.label);
+                    $("#FromProductSKU").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
+        $(document).ready(function () {
+            debugger
+            var ProductSKUList = {};
+            $("#ToProductSKU").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/MarkDownBranch/AutoCompleteProductSKUList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            ProductSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value }; });
+                            response(ProductSKUList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#ToProductSKU").val(ui.item.label);
+                    $("#ToProductSKU").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
+        $(document).ready(function () {
+            debugger
+            var StyleSKUList = {};
+            $("#FromStyleSKU").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/Discount/AutoCompleteStyleSKUList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            StyleSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value }; });
+                            response(StyleSKUList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#FromStyleSKU").val(ui.item.label);
+                    $("#FromStyleSKU").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
+        $(document).ready(function () {
+            debugger
+            var StyleSKUList = {};
+            $("#ToStyleSKU").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/Discount/AutoCompleteStyleSKUList",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            StyleSKUList = $.map(result, function (value, key) { return { value: value.Id, label: value }; });
+                            response(StyleSKUList);
+
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#ToStyleSKU").val(ui.item.label);
+                    $("#ToStyleSKU").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        })
         function Submit() {
             debugger
             $('form').validate();
@@ -106,20 +226,29 @@
             obj.DiscountValue=$("#DiscountValue").val(),
             obj.DiscountType=$("#DiscountType").val(),
                 obj.IsActive = true
-                        if ($('form').valid()) {
-                            $.ajax({
-                                type: "POST", //HTTP POST Method
-                                url: '/Admin/Discount/Create',
-                                data: obj,
-                                success: function (result) {
-                                // alert(result.Id);
-                                 loadData(result.Id);
-                                },
-                                error: function (xhr, status) {
+            if ($('input:checked[name=selectedBranch]').length <= 0) {
+                alert('select atleast one branch !')
+            }
+            else {
+                $('input:checked[name=selectedBranch]').each(function () {
+                    if ($(this).is(':checked'))
+                        obj.BranchList.push($(this).val());
+                });
+                if ($('form').valid()) {
+                    $.ajax({
+                        type: "POST", //HTTP POST Method
+                        url: '/Admin/Discount/Create',
+                        data: obj,
+                        success: function (result) {
+                            // alert(result.Id);
+                            loadData(result.Id);
+                        },
+                        error: function (xhr, status) {
 
-                                }
-                            });
-                    }
+                        }
+                    });
+                }
+            }
         }
 
         function loadData(id) {
@@ -194,7 +323,7 @@
                 dateFormat: 'yy-mm-dd'
             });
         })
-              function showReceipt(id) {
+           function showReceipt(id) {
             debugger
             //  alert(id);
             $("#ReceiptDetail-" + id).html('<tr><td colspan = "5" style="background-color:white;"><img src="/Image/bars.gif" style="width:55px; height:47px;margin-left:40%; z-index:200" /></td></tr>');
@@ -216,7 +345,7 @@
             $(this).toggleClass("accordian-reverse");
             $(this).parent().parent().next().find(".accordian-bundling").toggle(500);
         });
-              function Allow(){
+            function Allow(){
             debugger
             $('form').validate();
             var obj = {};

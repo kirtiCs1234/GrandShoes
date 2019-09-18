@@ -161,13 +161,19 @@ namespace Helper.Controllers.Admin
 
             return Ok(stockDistribution);
         }
+        //[HttpGet]
+        //[Route("getBySummaryId")]
+        //public IHttpActionResult GetLast(int id)
+        //{
+        //    var list = db.StockDistributions.Where(x => x.IsActive == true && x.StockDistributionSummaryId==id).FirstOrDefault();
+        //    return Ok(list);
+        //}
         [HttpGet]
         [Route("getLast")]
-        public StockDistribution GetLast()
+        public IHttpActionResult GetLast()
         {
-            var list = db.StockDistributions.Where(x => x.IsActive == true).ToList().RemoveReferences();
-            var last=list.LastOrDefault();
-            return last;
+            var list = db.StockDistributions.Where(x => x.IsActive == true).LastOrDefault();
+            return Ok(list);
         }
         [HttpGet]
         [Route("getByProductId")]
@@ -223,6 +229,13 @@ namespace Helper.Controllers.Admin
             db.SaveChanges();
             return Ok(true);
            
+        }
+        [HttpGet]
+        [Route("getBySummaryId")]
+        public IHttpActionResult GetBySummaryId(int id)
+        {
+            var list = db.StockDistributions.Where(x => x.IsActive == true && x.StockDistributionSummaryId == id).Include(x=>x.Product).Include(x=>x.StockDistributionSummary).Include(x=>x.Product.Color).Include(x=>x.Product.Supplier).Include(x=>x.Branch).Include(x=>x.StockDistributionStatu).ToList();
+            return Ok(list.RemoveReferences());
         }
         [HttpGet]
         [AllowAnonymous]
@@ -324,7 +337,15 @@ namespace Helper.Controllers.Admin
 
             return Ok(stockDistribution);
         }
-        
+        [HttpGet]
+        [Route("getLastSummaryData")]
+        public IHttpActionResult GetLastSummaryData()
+        {
+            var lastSummary = db.StockDistributionSummaries.Where(x=>x.IsActive==false).ToList().LastOrDefault().Id;
+            var data = db.StockDistributions.Where(x => x.IsActive == true && x.StockDistributionSummaryId == lastSummary)
+                .Include(x=>x.Product).Include(x=>x.Product.Color).Include(x=>x.Product.Supplier).Include(x=>x.Branch).Include(x=>x.StockDistributionStatu).Include(x=>x.StockDistributionSummary).ToList();
+            return Ok(data.RemoveReferences());
+        }
         // PUT: api/StockDistributions/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutStockDistribution(int id, StockDistribution stockDistribution)

@@ -42,7 +42,7 @@ namespace POSApi.Controllers.Admin
         {
             Dictionary<int, int> branchlist = new Dictionary<int, int>();
             List<BranchStockStatusReport> result = new List<BranchStockStatusReport>();
-            var products = db.Products.Where(x => x.IsActive == true && x.StockInventories.Any(y => y.IsActive??false) == true && x.StockBranchInventories.Any(y => y.IsActive ?? false) == true)
+            var products = db.Products.Where(m => m.IsActive == true).Include(n=>n.StockBranchInventories).Include(n=>n.StockInventories)
 
                                 .Include(i=>i.Color)
                                 .Include(i=>i.Template1)
@@ -244,14 +244,14 @@ namespace POSApi.Controllers.Admin
         [Route("staff/getAll")]
         public IHttpActionResult Staff()
         {
-            var userT = db.Users.Where(x => x.RoleID == 3 && x.IsActive == true).ToList();
+            var userT = db.Users.Where(x => x.RoleID == 2 && x.IsActive == true).ToList();
             var userTId = userT.Select(s => s.Id).ToList();
 
             var staffT = db.StaffMembers.Where(x => x.IsActive == true && userTId.Contains(x.UserId??0))
                                         .Include(i=>i.User)
                                         .Include(i=>i.User.Branch)
                                         .Include(i=>i.StaffCommitions)
-                                        .Include(i=>i.SalesOrders)
+                                        .Include(i=>i.SalesOrders).Include(x=>x.SalesOrders.Select(m=>m.StaffMember.User))
                                         .Include(i=>i.SalesOrders.Select(s=>s.Transactions))
                                         .ToList();
 

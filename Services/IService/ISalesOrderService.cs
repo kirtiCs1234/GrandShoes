@@ -9,6 +9,8 @@ namespace Services.IService
 {
     public interface ISalesOrderItemService
     {
-       List<SalesOrderItemModel> GetWinnerList(WinnerReportModel winner);
+        List<SalesOrderItemModel> GetWinnerList(WinnerReportModel winner);
+        List<SalesOrderItemModel> GetByProduct(int? id);
+        List<SalesWeeklyData> GetWeeklySales(int? id);
     }
 }

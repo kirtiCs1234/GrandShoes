@@ -130,5 +130,9 @@ namespace Services.Service
             var CheckGridNo = ServerResponse.Invoke<bool>("api/sizeGrid/checkGridNo", body, "POST");
             return CheckGridNo;
         }
+        public Dictionary<int,bool> CheckGridNumber(Dictionary<int,string> list)
+        {
+            return ServerResponse.Invoke<Dictionary<int,bool>>("api/sizeGrid/checkGridNumber", JsonConvert.SerializeObject(list), "Post");
+        }
     }
 }

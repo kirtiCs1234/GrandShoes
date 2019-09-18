@@ -24,5 +24,6 @@ namespace Services.IService
         Dictionary<string, string> CreateList(Dictionary<int, SupplierModel> list);
         Dictionary<string, string> UpdateList(Dictionary<int, SupplierModel> list);
         bool IsSupplierExist(int Id, string Code);
+        Dictionary<int, bool> SupplierCheckFilter(Dictionary<int, string> list);
     }
 }

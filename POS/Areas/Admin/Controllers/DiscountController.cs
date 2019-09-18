@@ -89,6 +89,16 @@ namespace POS.Areas.Admin.Controllers
         public ActionResult History()
         {
             var DiscountSummaryList = Services.DiscountService.GetDataSummary();
+            foreach (var item in DiscountSummaryList)
+            {
+                if (item.FromDate != null && item.ToDate != null)
+                {
+                    var DateOpen = item.FromDate.Substring(0, item.FromDate.Length - 9);
+                    item.FromDate = DateOpen;
+                    var DateClosed = item.ToDate.Substring(0, item.ToDate.Length - 9);
+                    item.ToDate = DateClosed;
+                }
+            }
             TempData["Success"] = "Data Saved successfully!";
             return View(DiscountSummaryList);
         }
@@ -116,6 +126,11 @@ namespace POS.Areas.Admin.Controllers
         {
             bool status = Services.DiscountService.Delete(model);
             return RedirectToAction("Index", "Discount");
+        }
+        public JsonResult AutoCompleteStyleSKUList(string name)
+        {
+            var ProductSKUList = Services.ProductService.StyleAutocomplete(name);
+            return Json(ProductSKUList, JsonRequestBehavior.AllowGet);
         }
     }
 }

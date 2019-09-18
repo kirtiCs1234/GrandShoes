@@ -77,6 +77,10 @@ namespace Services.Service
             var CheckBranchCode = ServerResponse.Invoke<bool>("api/branch/checkBranchCode?chk=" + chk, body, "POST");
             return CheckBranchCode;
         }
+        public Dictionary<int, bool> CheckBranch(Dictionary<int, string> list)
+        {
+            return ServerResponse.Invoke<Dictionary<int, bool>>("api/branch/checkBranch", JsonConvert.SerializeObject(list), "Post");
+        }
         public BranchModel GetById(int? id)
         {
             var body = "";

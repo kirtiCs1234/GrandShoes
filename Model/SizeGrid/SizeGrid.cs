@@ -14,7 +14,6 @@ namespace Model
         [Required(ErrorMessage ="Please Enter Grid Number.")]
         [Remote("CheckGridNo", "SizeGrid", "Admin", ErrorMessage = "There is an grid no that is already uses.", AdditionalFields = "Id")]
         public string GridNumber { get; set; }
-         
         public Nullable<decimal> Z01 { get; set; }
         public Nullable<decimal> Z02 { get; set; }
         public Nullable<decimal> Z03 { get; set; }

@@ -23,6 +23,10 @@ namespace Services.Service
             return ServerResponse.Invoke<bool>("/api/stockDistributionSummaries/create", JsonConvert.SerializeObject(model), "post");
 
         }
+        public List<StockDistributionSummaryModel> GetAllSummary()
+        {
+            return ServerResponse.Invoke<List<StockDistributionSummaryModel>>("api/stockDistributionSummaries/getDetails", "", "GET");
+        }
         public List<StockDistributionSummaryModel> GetAllid()
         {
             var StockDistributionSummaryModelList = ServerResponse.Invoke<List<StockDistributionSummaryModel>>("/api/stockDistributionSummaries/getAll", "", "get");

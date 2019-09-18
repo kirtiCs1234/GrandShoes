@@ -20,6 +20,7 @@ namespace Model
         public string OrderNumber { get; set; }
         [Required(ErrorMessage ="Please Enter Client Invoice Number.")]
         public string ClientInvoiceNumber { get; set; }
+        [Required(ErrorMessage ="Please Enter Supplier.")]
         public int SupplierId { get; set; }
         [Required(ErrorMessage ="Please Enter Buyer.")]
         public int BuyerId { get; set; }
@@ -39,8 +40,8 @@ namespace Model
         public Nullable<bool> IsActive { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
+        public string Comment { get; set; }
         public string BuyerName { get; set; }
-        [Required(ErrorMessage ="Please Enter Supplier Name.")]
         public string SupplierName { get; set; }
 		public Nullable<bool> IsFinalize { get; set; }
 		public List<PurchaseOrderModel> AllPurchaseList { get; set; }

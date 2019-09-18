@@ -20,6 +20,8 @@ namespace Services.IService
         List<StockDistributionModel> GetByProductId(int? id);
         List<StockDistributionModel> GetStockData(int? DistributionSummaryID, string BranchName);
         List<StockDistributionModel> GetByProduct(int? id);
+        List<StockDistributionModel> GetLastSummaryData();
+        List<StockDistributionModel> GetBySummaryId(int id);
     }
 
 }

@@ -18,6 +18,7 @@ namespace DAL
         public Product()
         {
             this.CartonManagementDetails = new HashSet<CartonManagementDetail>();
+            this.CartonMgmtDetailsStockTransfers = new HashSet<CartonMgmtDetailsStockTransfer>();
             this.IBTDetails = new HashSet<IBTDetail>();
             this.PendingItemReceipts = new HashSet<PendingItemReceipt>();
             this.PromotionalDiscounts = new HashSet<PromotionalDiscount>();
@@ -30,7 +31,7 @@ namespace DAL
             this.StockInventories = new HashSet<StockInventory>();
             this.StockSupplierTransactions = new HashSet<StockSupplierTransaction>();
             this.StockTapes = new HashSet<StockTape>();
-            this.CartonMgmtDetailsStockTransfers = new HashSet<CartonMgmtDetailsStockTransfer>();
+            this.StockWarehouseTransactions = new HashSet<StockWarehouseTransaction>();
         }
     
         public int Id { get; set; }
@@ -77,6 +78,8 @@ namespace DAL
         public virtual Buyer Buyer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartonManagementDetail> CartonManagementDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CartonMgmtDetailsStockTransfer> CartonMgmtDetailsStockTransfers { get; set; }
         public virtual Color Color { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IBTDetail> IBTDetails { get; set; }
@@ -114,6 +117,6 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockTape> StockTapes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CartonMgmtDetailsStockTransfer> CartonMgmtDetailsStockTransfers { get; set; }
+        public virtual ICollection<StockWarehouseTransaction> StockWarehouseTransactions { get; set; }
     }
 }

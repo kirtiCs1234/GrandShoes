@@ -675,7 +675,7 @@ namespace POSApi.Controllers
         {
             if (model != null && model.Count > 0)
             {
-                var Buyers = model.Where(x => x.Value.Buyer != null).Select(s => s.Value.Buyer).Distinct().ToList();
+                var Buyers = model.Where(x => x.Value.Buyer!= null).Select(s => s.Value.Buyer).Distinct().ToList();
                 var Colors = model.Where(x => x.Value.Color != null).Select(s => s.Value.Color).Distinct().ToList();
                 var DefaultTemplates = model.Where(x => x.Value.DefaultTemplate != null).Select(s => s.Value.DefaultTemplate).Distinct().ToList();
                 var MarkdownTemplates = model.Where(x => x.Value.MarkdownTemplate != null).Select(s => s.Value.MarkdownTemplate).Distinct().ToList();
@@ -762,7 +762,7 @@ namespace POSApi.Controllers
         public IHttpActionResult GetDropDownList()
         {
             DropDownProductListModel model = new DropDownProductListModel();
-            model.BuyerModelList = db.Buyers.Where(x => x.IsActive == true).ToList().ToModelConverter<List<BuyerModel>>();
+            model.BuyerModelList = db.Buyers.Where(x => x.IsActive == true).ToList().RemoveReferences().ToModelConverter<List<BuyerModel>>();
             model.Cat1List = db.ProductCat1.Where(x => x.IsActive == true).ToList().ToModelConverter<List<ProductCat1Model>>();
             model.Cat2List = db.ProductCat2.Where(x => x.IsActive == true).ToList().ToModelConverter<List<ProductCat2Model>>();
             model.Cat3List = db.ProductCat3.Where(x => x.IsActive == true).ToList().ToModelConverter<List<ProductCat3Model>>();
@@ -770,11 +770,12 @@ namespace POSApi.Controllers
             model.ColorModelList = db.Colors.Where(x => x.IsActive == true).ToList().ToModelConverter<List<ColorModel>>();
             model.freeGiftList = db.Products.Where(x => x.IsActive == true && x.IsAllowZero == true).ToList().RemoveReferences().ToModelConverter<List<ProductModel>>();
             model.ProductGroupModelList = db.ProductGrps.Where(x => x.IsActive == true).ToList().ToModelConverter<List<ProductGrpModel>>();
-            model.ProductSourceModelList = db.ProductSources.Where(x => x.IsActive == true).ToList().ToModelConverter<List<ProductSourceModel>>();
-            model.SeasonModelList = db.Seasons.Where(x => x.IsActive == true).ToList().ToModelConverter<List<SeasonModel>>();
-            model.SizeGridModelList = db.SizeGrids.Where(x => x.IsActive == true).ToModelConverter<List<SizeGridModel>>();
-            model.SupplierModelList = db.Suppliers.Where(x => x.IsActive == true).ToList().ToModelConverter<List<SupplierModel>>();
-            model.TemplateModelList = db.Templates.Where(x => x.IsActive == true).ToList().ToModelConverter<List<TemplateModel>>();
+            model.ProductSourceModelList = db.ProductSources.Where(x => x.IsActive == true).ToList().RemoveReferences().ToModelConverter<List<ProductSourceModel>>();
+            model.SeasonModelList = db.Seasons.Where(x => x.IsActive == true).ToList().RemoveReferences().ToModelConverter<List<SeasonModel>>();
+            var sizeGrid= db.SizeGrids.Where(x => x.IsActive == true).ToList().RemoveReferences();
+            model.SizeGridModelList= sizeGrid.ToModelConverter<List<SizeGridModel>>();
+            model.SupplierModelList = db.Suppliers.Where(x => x.IsActive == true).ToList().RemoveReferences().ToModelConverter<List<SupplierModel>>();
+            model.TemplateModelList = db.Templates.Where(x => x.IsActive == true).ToList().RemoveReferences().ToModelConverter<List<TemplateModel>>();
             return Ok(model);
         }
     }

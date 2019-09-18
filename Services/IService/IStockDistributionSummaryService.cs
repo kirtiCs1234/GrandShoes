@@ -13,5 +13,6 @@ namespace Services.IService
         bool Create(StockDistributionSummaryModel model);
         bool Edit(StockDistributionSummaryModel model);
         List<StockDistributionSummaryModel> GetAllid();
+        List<StockDistributionSummaryModel> GetAllSummary();
     }
 }

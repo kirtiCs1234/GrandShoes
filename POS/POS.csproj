@@ -247,6 +247,7 @@
     <Compile Include="Areas\Admin\Controllers\BranchController.cs" />
     <Compile Include="Areas\Admin\Controllers\BranchStockReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\BuyerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CartonDispatchController.cs" />
     <Compile Include="Areas\Admin\Controllers\CartonManagement1Controller.cs" />
     <Compile Include="Areas\Admin\Controllers\CartonManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\CartonManagementReportController.cs" />
@@ -262,6 +263,7 @@
     <Compile Include="Areas\Admin\Controllers\MarkDownBranchController.cs" />
     <Compile Include="Areas\Admin\Controllers\OffersController.cs" />
     <Compile Include="Areas\Admin\Controllers\PackageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PageNameController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductCat1Controller.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductCat2Controller.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductCat3Controller.cs" />
@@ -320,6 +322,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\TreeView.cs" />
     <Compile Include="Models\ViewDistribution.cs" />
+    <Compile Include="ProductExtensionClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\MyPrincipal.cs" />
     <Compile Include="Security\SerializationModel.cs" />
@@ -922,6 +925,21 @@
     <Content Include="Areas\Admin\Views\Role\_GrantPermission.cshtml" />
     <Content Include="Areas\Admin\Views\Role\GrantPermission.cshtml" />
     <Content Include="Areas\Admin\Views\CreateBillPdf\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\StockDistribution\ViewPDF.cshtml" />
+    <Content Include="Areas\Admin\Views\CartonDispatch\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\CartonDispatch\GetData.cshtml" />
+    <Content Include="Areas\Admin\Views\CartonDispatch\CartonDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\PurchaseOrder\getComment.cshtml" />
+    <Content Include="File\BranchAD.csv" />
+    <Content Include="Areas\Admin\Views\CartonDispatch\ViewPrint.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\MarkDown.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ViewBranchSales.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ViewWeeklySales.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ViewAllSales.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\SupplierInvoice.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\GetOrderById.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\GetDistributionById.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\ViewPrintMarkDown.cshtml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
     <Content Include="Scripts\jquery.accordion.js" />

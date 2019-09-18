@@ -42,11 +42,6 @@
             @*<li class="breadcrumb-item"><a href="#">Dashboard</a></li>*@
         </ul>
     </div>
-    @*@using (Html.BeginForm("Index", "User") new { @class = "formuser" })*@
-    @*@using (Html.BeginForm("Index", "User", FormMethod.Post, new { @class = "formuser" }))
-        {*@
-    <!--------advanced search-->
-
     <div class="col-md-4 col-lg-6 col-sm-8 col-xs-12 search-container">
         <div class="top-search-navbar-search smallsearch search-marg col-md-12 col-lg-12 col-sm-12 col-xs-12">
             <div class="row">
@@ -55,12 +50,10 @@
                 <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-xs-2" name="iSupplierName" onclick="searchData(true)"><i class="fa fa-search" aria-hidden="true"></i></button>
             </div>
         </div>
-
-
         <div class="advance-search-container col-md-12 col-lg-12 col-sm-12 col-xs-12">
             <div class="advance-content">
                 <div class="col-md-12 col-lg-12 col-xg-12">
-                    <h5 style="margin-bottom:20px;color:#000;font-weight:normal">Advanse Keyword Search</h5>
+                    @*<h5 style="margin-bottom:20px;color:#000;font-weight:normal">Advanse Keyword Search</h5>*@
                 </div>
                 @*<div class="col-md-4 col-lg-4 col-xg-4">
                     <label>Branch Range</label>

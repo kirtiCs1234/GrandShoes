@@ -41,9 +41,9 @@ div.scrollmenu a:hover {
                         <th>Order Completion Date</th>
                         <th>Quantity</th>
                         <th>Amount</th>
-                        <th>Vat Amount</th>
-                        <th>Purchase Order Status</th>
-                       
+                        @*<th>Vat Amount</th>*@
+                        <th>Order Status</th>
+                       <th>Comment</th>
                         <th style="min-width:125px;">Action</th>
                     </tr>
                 </thead>
@@ -53,6 +53,7 @@ div.scrollmenu a:hover {
                         foreach (var item in Model)
                         {
                             <tr>
+                                <td style="display:none">@Html.DisplayFor(modelItem=>item.Id)</td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.OrderNumber)
                                 </td>
@@ -83,21 +84,31 @@ div.scrollmenu a:hover {
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Amount)
                                 </td>
-                                <td>
+                                @*<td>
                                     @Html.DisplayFor(modelItem => item.VatAmount)
-                                </td>
+                                </td>*@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.PurchaseOrderStatu.OrderStatus)
                                 </td>
-                                @*<td>
-                                    @Html.DisplayFor(modelItem => item.FromDate)
-                                </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.ToDate)
-                                </td>*@
+                                    @if (item.PurchaseOrderStatusId==3)
+                                    {
+                                        <button class="btn btn-success popup-savebtn form-control branch-btn-input" type="button" value="Comment" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="Comment(@item.Id)" data-id="@item.Id">Comment</button>
 
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-success popup-savebtn form-control branch-btn-input" type="button" value="Comment" data-toggle="modal" data-backdrop="static" data-target="#myModal" onclick="Comment(@item.Id)" data-id="@item.Id" disabled>Comment</button>
+                                    }
+                                </td>
                                 <td style="min-width:85px;">
-
+                                    @*@if (item.PurchaseOrderStatusId == 3)
+                                    {
+                                        <i class="fa fa-trash" id="DeletePrice" onclick="CancelOrder(event)" disabled></i>
+                                    }
+                                    else
+                                    {*@
+                                        <i class="fa fa-trash" id="DeletePrice" onclick="CancelOrder(event)"></i>
                                     <i class="fa fa-pencil edit-form edit" onclick="window.location.href='/Admin/PurchaseOrder/EditPurchaseOrder/@item.Id'"></i>
                                     &nbsp;
 

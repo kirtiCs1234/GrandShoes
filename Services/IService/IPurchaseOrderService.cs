@@ -29,6 +29,6 @@ namespace Services.IService
         List<PurchaseOrderModel> GetPaging(int? page, out int TotalCount);
         List<PurchaseOrderModel> GetSearchData1(PurchaseOrderSearchModel search, int? page, out int TotalCount);
 		bool Finalize(int? id);
-
-	}
+        PurchaseOrderModel Cancelled(int? id);
+    }
 }

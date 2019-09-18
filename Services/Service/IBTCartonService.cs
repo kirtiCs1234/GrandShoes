@@ -79,6 +79,10 @@ namespace Services.Service
         {
             return ServerResponse.Invoke<bool>("api/stockDistributions/editData?Id=" + stock.Id, JsonConvert.SerializeObject(stock), "POST");
         }
+        public StockDistributionModel GetBySummaryId(int id)
+        {
+            return ServerResponse.Invoke<StockDistributionModel>("api/stockDistributions/getDataBySummaryId?id="+id, "", "GET");
+        }
         public StockDistributionModel GetLast()
         {
             return ServerResponse.Invoke<StockDistributionModel>("api/stockDistributions/getLast", "", "GET");
@@ -91,11 +95,12 @@ namespace Services.Service
         {
             return ServerResponse.Invoke<List<IBTDetailModel>>("api/ibtBranch/getDetails", JsonConvert.SerializeObject(winner), "POST");
         }
-
-
-
-		//------------------For stock transfercarton
-		public bool CompleteCreateForStock(CartonManagementForStockTransferModel model)
+        public bool DispatchData(List<int> CartonList)
+        {
+            return ServerResponse.Invoke<bool>("api/cartonManagement/dispatched", JsonConvert.SerializeObject(CartonList), "Post");
+        }
+        //------------------For stock transfercarton
+        public bool CompleteCreateForStock(CartonManagementForStockTransferModel model)
 		{
 			return ServerResponse.Invoke<bool>("api/cartonManagement/CompleteCreateForStock", JsonConvert.SerializeObject(model), "POST");
 		}
@@ -119,5 +124,17 @@ namespace Services.Service
 		{
 			return ServerResponse.Invoke<CartonManagementModel>("api/cartonManagement/getCartonById?id=" + id, "", "GET");
 		}
-	}
+        public List<CartonManagementModel> GetLastSummaryData()
+        {
+            return ServerResponse.Invoke<List<CartonManagementModel>>("api/cartonManagement/getLastSummaryData", "", "GET");
+        }
+        public CartonManagementModel GetByIBTNumber(string IbTNumber,int? BranchID)
+        {
+            return ServerResponse.Invoke<CartonManagementModel>("api/cartonManagement/getByIBTNumber?id="+IbTNumber+"&BranchID="+ BranchID, "", "GET");
+        }
+        public List<CartonManagementModel> GetSearchData(int? summaryID,int? branchId)
+        {
+            return ServerResponse.Invoke<List<CartonManagementModel>>("api/cartonManagement/searchData?summaryID=" + summaryID + "&branchId=" + branchId, "", "POST");
+        }
+    }
 }

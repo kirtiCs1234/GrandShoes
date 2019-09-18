@@ -1,0 +1,73 @@
+﻿@model List<Model.StockBranchInventoryModel>
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            @*<div class="col-md-3 col-xs-12 col-sm-2">
+                <h4 class="modal-title">View Cartons</h4>
+            </div>*@
+            @*<div class="col-md-2 col-xs-12 col-sm-2">
+               
+                <input type="text" class="form-control" placeholder="Product SKU" value="@Model.FirstOrDefault().Product.ProductSKU"/>
+            </div>
+            <div class="col-md-2 col-xs-12 col-sm-2">
+                
+                <input type="text" class="form-control" placeholder="Style SKU" value="@Model.FirstOrDefault().Product.StyleSKU"/>
+            </div>*@
+            <div class="col-md-3 col-xs-12 col-sm-2">
+                @Html.DropDownList("BranchId", null, "-All Branch-", htmlAttributes: new
+                  {
+                      @class = "form-control"
+                  })
+            </div>
+            <div class="col-md-3 col-xs-12 col-sm-2">
+                <button type="button" class="btn btn-primary export-btn" onclick="searchData()">Search</button>
+                <button type="button" class="btn btn-primary export-btn" onclick="Print()">Print</button>
+            </div>
+        </div>
+        <div class="prtm-block-content mrgn-b-md">
+            <div class="table-responsive" style="height:270px;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr><th>Product SKU</th>
+                        <th>Style SKU</th>
+                            <th>Branch</th>
+                            <th>MarkDowns</th>
+                            <th>Sell Price</th>
+                            <th>Cost Price</th>
+                            <th>MarkDown Date</th>
+                            <th>MarkDown Unit</th>
+                            <th>Sold Units</th>
+                        </tr>
+                    </thead>
+                    <tbody class="tbodyIndex table-responsive" id="table">
+                        @if (Model.Count > 0) { 
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem=>item.Product.ProductSKU)</td>
+                                <td>@Html.DisplayFor(modelItem=>item.Product.StyleSKU)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Branch.BranchCode)@Html.DisplayFor(modelItem => item.Branch.Name)</td>
+                                <td>01</td>
+                                <td>@Html.DisplayFor(modelItem => item.Product.ActualSellingPrice)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Product.CostPrice)</td>
+                                <td>@TempData["Date"]</td>
+                                <td>@TempData["Number"]</td>
+                                <td></td>
+                            </tr>
+                        }
+                        }
+                        else
+                        {
+                        <tr>
+                            <td>No data found.</td>
+                        </tr>
+                        }
+                    </tbody>
+                    <tbody class="tbodyIndex" id="table1"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

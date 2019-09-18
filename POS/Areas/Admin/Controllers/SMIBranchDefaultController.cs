@@ -24,28 +24,15 @@ namespace POS.Areas.Admin.Controllers
         }
         public ActionResult GetAllSMIBranch(int id)
         {
-            //List<BranchModel> AllBranch = Services.BranchService.GetAll();
-            //AllBranch = AllBranch.Where(x => x.Id != id).ToList();
             BranchModel model = new BranchModel();
             var Model = Services.SMIBranchDefaultService.GetBranchByID(id);
             model.BranchDestination = Model;
-
-            //if (Model.Count>0)
-            //{
-            //    AllBranch = AllBranch.Where(b => Model.Any(a => a.FromBranchId != b.Id)).ToList();
-            //}
-           
-           // model.branches = AllBranch;
             return PartialView("GetAllSMIBranch", model);
         }
         [System.Web.Http.HttpPost]
         public ActionResult SMIBranchDefault(SMIBranchDefaultModel smiListModel)
         {         
-            //smiModel.IsActive = true;
             var Model = Services.SMIBranchDefaultService.SMIBranch(smiListModel);
-
-            //     return View(Model);           
-            // return RedirectToAction("GetAllSMIBranch", new { id = 1 });
             return RedirectToAction("index");
         }
     }

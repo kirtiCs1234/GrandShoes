@@ -72,5 +72,13 @@ namespace Services.Service
             }
             return list2;
         }
+        public List<SalesOrderItemModel> GetByProduct(int? id)
+        {
+            return ServerResponse.Invoke<List<SalesOrderItemModel>>("api/salesOrderItems/getByProduct?id=" + id, "", "GET");
+        }
+        public List<SalesWeeklyData> GetWeeklySales(int? id)
+        {
+            return ServerResponse.Invoke<List<SalesWeeklyData>>("api/salesOrderItems/getWeeklyReportByProduct?id=" + id, "", "GET");
+        }
     }
 }

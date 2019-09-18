@@ -75,6 +75,7 @@ namespace Model
 		public Nullable<decimal> Cost28 { get; set; }
 		public Nullable<decimal> Cost29 { get; set; }
 		public Nullable<decimal> Cost30 { get; set; }
+        public string Comment { get; set;}
 		public virtual ProductModel Product { get; set; }
 		public virtual PurchaseOrderModel PurchaseOrder { get; set; }
 		public virtual ReceiveOrderModel ReceiveOrder { get; set; }

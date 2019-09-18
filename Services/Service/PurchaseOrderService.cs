@@ -185,7 +185,9 @@ namespace Services.Service
 							model.ToDate = a.ToDate;
 							model.VatAmount = a.VatAmount;
 							model.SupplierName = a.Supplier.Name;
-						}
+                        model.PurchaseOrderStatu = puchaseOrderList.Where(x => x.Id == a.Id).FirstOrDefault().PurchaseOrderStatu;
+
+                        }
 						else
 						{
 							model.Id = a.Id;
@@ -207,7 +209,8 @@ namespace Services.Service
 							model.ToDate = a.ToDate;
 							model.VatAmount = a.VatAmount;
 							model.SupplierName = a.Supplier.Name;
-						}
+                        model.PurchaseOrderStatu = puchaseOrderList.Where(x => x.Id == a.Id).FirstOrDefault().PurchaseOrderStatu;
+                    }
 						PurchaseOrderUpdateList.Add(model);
 					
 				}
@@ -223,7 +226,10 @@ namespace Services.Service
             name = System.Web.HttpUtility.UrlEncode(name);
             return ServerResponse.Invoke<List<PurchaseOrderItemModel>>("api/PurchaseOrderItems/ProductsStyleAutocomplete?name=" + name, "", "get");
         }
-       
+       public PurchaseOrderModel Cancelled(int? id)
+        {
+            return ServerResponse.Invoke<PurchaseOrderModel>("api/PurchaseOrder/Cancelled?id=" + id, "", "GET");
+        }
     }
 }
 

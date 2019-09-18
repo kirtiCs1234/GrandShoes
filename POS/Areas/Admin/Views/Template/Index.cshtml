@@ -89,32 +89,32 @@
 			</div>
 
 			<div class="row  mrgn-b-lg">
-				<div class="col-lg-12 col-md-12">
+                <div class="col-lg-12 col-md-12">
 
-					@Html.HiddenFor(n => n.Id)
-					@*<input type="hidden" id="width1" name="Width" value="200" />
-						<input type="hidden" id="height1" name="Height" value="200" />*@
+                    @Html.HiddenFor(n => n.Id)
+                    @*<input type="hidden" id="width1" name="Width" value="200" />
+        <input type="hidden" id="height1" name="Height" value="200" />*@
 
-					@*<textarea id="editor" name="posEditor" class="materialize-textarea"></textarea>*@
-					<div class="row">
-						<div class="col-lg-12 col-md-12 mrgn-b-md">
-							<label class="desc-heading">Description</label>
-							<button type="button" class="btn btn-success import-btn printtext pull-right" style="margin-left:5px;">Print</button>&nbsp;&nbsp;
-							<button id="preview" type="button" class="btn btn-success preview-btn" onclick="showTemplate()">Preview »</button>
-						</div>
-					</div>
+                    @*<textarea id="editor" name="posEditor" class="materialize-textarea"></textarea>*@
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 mrgn-b-md">
+                           
+                            <button type="button" class="btn btn-success import-btn printtext pull-right" style="margin-left:5px;">Print</button>&nbsp;&nbsp;
+                            <button id="preview" type="button" class="btn btn-success preview-btn" onclick="showTemplate()">Preview »</button>
+                        </div>
+                    </div>
+                    <label class="desc-heading">Description</label>
+                    @*@Html.TextArea(Model.TemplateHtml, new { @class = "ckeditor", id = "my_content" } )*@
+                    @*<textarea id="my_content" name="TemplateHtml" class="ckeditor"></textarea>*@
+                    @Html.TextAreaFor(c => c.TemplateHtml, new { @class = "ckeditor" })
 
-					@*@Html.TextArea(Model.TemplateHtml, new { @class = "ckeditor", id = "my_content" } )*@
-					@*<textarea id="my_content" name="TemplateHtml" class="ckeditor"></textarea>*@
-					@Html.TextAreaFor(c => c.TemplateHtml, new { @class = "ckeditor" })
-
-					@*<script>
-							CKEDITOR.replace('posEditor');
-						</script>*@
+                    @*<script>
+            CKEDITOR.replace('posEditor');
+        </script>*@
 
 
 
-				</div>
+                </div>
 			</div>
 
 			<div class="row mrgn-b-lg">

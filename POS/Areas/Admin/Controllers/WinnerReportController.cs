@@ -14,6 +14,8 @@ namespace POS.Areas.Admin.Controllers
     {
         public ActionResult Index()
         {
+            var branchList = Services.BranchService.GetAll();
+            ViewBag.BranchCode = new SelectList(branchList, "Id", "BranchCode");
             return View();
         }
         [HttpPost]
@@ -22,20 +24,24 @@ namespace POS.Areas.Admin.Controllers
             var list = Services.SalesOrderItemService.GetWinnerList(winner);
             var markDown = Services.MarkDownService.GetAll();
             var IBTBranch = Services.IBTService.GetIBTDetails(winner);
-            var list1 = list.GroupBy(x => x.ProductId).Select(x => new SalesOrderItemModel
+            var list1 = new List<SalesOrderItemModel>();
+            if (list.Count > 0 && IBTBranch.Count > 0)
             {
-                ProductId = x.First().ProductId,
-                Product = Services.ProductService.GetAll().Where(m => m.Id == x.First().ProductId).FirstOrDefault(),
-                Quantity = x.Sum(m => m.Quantity),
-                CashSaleCount=x.Where(q=>q.SalesOrder.SaleType.Contains("Cash")).Sum(l=>l.Quantity),
-                LayBuySaleCount=x.Where(y=>y.SalesOrder.SaleType.Contains("LayBaySale")).Sum(j=>j.Quantity),
-                RemainingQuantity = x.Last().RemainingQuantity,
-                PricePerUnit = x.First().PricePerUnit,
-                TotalPriceAll = x.Sum(m => m.TotalPrice),
-                IBTStock = IBTBranch.Where(u => u.ProductId == x.First().ProductId).Sum(p => p.ItemCount),
-                Sold = (x.Sum(m => m.Quantity) * 100) /(IBTBranch.Where(u => u.ProductId == x.First().ProductId).Sum(p => p.ItemCount)),
-                MarkDownCount = markDown.Where(k => k.ProductSKU ==x.First().Product.ProductSKU && k.StyleSKU == x.First().Product.StyleSKU).Count(),
-        }).ToList();
+                list1 = list.GroupBy(x => x.ProductId).Select(x => new SalesOrderItemModel
+                {
+                    ProductId = x.First().ProductId,
+                    Product = Services.ProductService.GetAll().Where(m => m.Id == x.First().ProductId).FirstOrDefault(),
+                    Quantity = x.Sum(m => m.Quantity),
+                    CashSaleCount = x.Where(q => q.SalesOrder.SaleType.Contains("Cash")).Sum(l => l.Quantity),
+                    LayBuySaleCount = x.Where(y => y.SalesOrder.SaleType.Contains("LayBaySale")).Sum(j => j.Quantity),
+                    RemainingQuantity = x.Last().RemainingQuantity,
+                    PricePerUnit = x.First().PricePerUnit,
+                    TotalPriceAll = x.Sum(m => m.TotalPrice),
+                    IBTStock = IBTBranch.Where(u => u.ProductId == x.First().ProductId).Sum(p => p.ItemCount),
+                    Sold = (x.Sum(m => m.Quantity) * 100) / (IBTBranch.Where(u => u.ProductId == x.First().ProductId).Sum(p => p.ItemCount)),
+                    MarkDownCount = markDown.Where(k => k.ProductSKU == x.First().Product.ProductSKU && k.StyleSKU == x.First().Product.StyleSKU).Count(),
+                }).ToList();
+            }
             return View(list1);
         }
     }

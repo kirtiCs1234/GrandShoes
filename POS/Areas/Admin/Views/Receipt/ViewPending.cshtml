@@ -2,45 +2,47 @@
 <div class="table-style">
 	<div class="row  mrgn-b-lg">
 		<div class="col-sm-12 col-md-12 col-xs-12">
-			<div class="forms">
-				<div class="table-responsive" style="height:183px;border: 1px solid #eeeeee">
-					<table class="table table-hover table-striped">
-						<thead>
-							<tr>
-								<th>Product SKU</th>
-								<th>Style SKU</th>
-								<th>Total Cost</th>
-								<th>Total Item</th>
-							</tr>
-						</thead>
-						<tbody class="tbodyIndex" id="table1">
-							@for (var i = 0; i < Model.Count; i++)
-							{
-								<tr>
-									<td>
-										@Html.DisplayFor(modelItem => Model[i].Product.ProductSKU)
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => Model[i].Product.StyleSKU)
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => Model[i].Amount)
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => Model[i].ItemCount)
-									</td>
-								</tr>
-							}
-						</tbody>
-					</table>
-				</div>
-				
-			</div>
+            <div class="forms">
+                <div class="table-responsive" style="height:183px;border: 1px solid #eeeeee">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product SKU</th>
+                                <th>Style SKU</th>
+                                <th>Total Cost</th>
+                                <th>Total Item</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbodyIndex" id="table1">
+                            @for (var i = 0; i < Model.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model[i].Product.ProductSKU)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model[i].Product.StyleSKU)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model[i].Amount)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => Model[i].ItemCount)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-group shadow-textarea col-sm-4 col-md-4 col-xs-4">
+                    <label for="exampleFormControlTextarea6">Shadow and placeholder</label>
+                    <textarea class="form-control z-depth-1" id="Comment" rows="3" placeholder="Please write comment here..."></textarea>
+                </div>
+            </div>
 			<div class="modal-footer center">
 				<button type="button" data-backdrop="static" data-toggle="modal" data-target="#myCancelModal" id="btncancel" class="btn btn-outline-inverse cancel">Cancel</button>
 				<input type="button" onclick="Finalize()" value="Accept" class="btn btn-success popup-savebtn" />
 			</div>
 		</div>
-		
 	</div>
 </div>

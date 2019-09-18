@@ -17,6 +17,8 @@ namespace POS.Areas.Admin.Controllers
         // GET: Admin/IBTCarton
         public ActionResult Index()
         {
+            var DistributionSummaryList = Services.StockDistributionSummaryService.GetAllSummary();
+            ViewBag.DistributionSummaryID = new SelectList(DistributionSummaryList, "Id", "Id");
             return View();
         }
         
@@ -88,33 +90,39 @@ namespace POS.Areas.Admin.Controllers
             var BranchAddress = Services.IBTService.GetBranchAddress(BranchName);
             return Json(BranchAddress, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult StartPacking(string BranchName)
+        public JsonResult StartPacking(string BranchName,int DistributionSummaryID)
         {
 
             CartonManagementModel CM = new CartonManagementModel();
             CM.BranchName = BranchName;
 			var list = Services.IBTService.GetIBTNumber();
-            CM.IBTNumber=CommonFunction.IBtNo(list);
-            var Summary = Services.IBTService.GetLast();
-            var SummaryId = Summary.StockDistributionSummaryId;
-            //ViewBag.SummaryId = SummaryId;
-            CM.DistributionSummaryID = SummaryId;
-            //Session["ReceiveOrder"] = RO.ReceiptNumber;
-            var createCartonManagement = Services.IBTService.CreateCartonManagement(CM);
             var IBT = Services.IBTService.GetIBTNumber().LastOrDefault();
-            var c = Services.CartonManagementService.GetAllDetail(SummaryId);
-            if (c.Count!= 0)
+            CM.IBTNumber=CommonFunction.IBtNo(list);
+          //  var Summary = Services.IBTService.GetBySummaryId(DistributionSummaryID);
+            if (DistributionSummaryID != null)
             {
-                var cd1 = c.Where(x => x.DistributionSummaryID == SummaryId);
-                var cd = cd1.LastOrDefault().CartonNumber;
-                IBT.CartonNumber = cd + 1;
+                var SummaryId = DistributionSummaryID;
+
+                //ViewBag.SummaryId = SummaryId;
+                CM.DistributionSummaryID = SummaryId;
+                //Session["ReceiveOrder"] = RO.ReceiptNumber;
+                var createCartonManagement = Services.IBTService.CreateCartonManagement(CM);
+                
+                var c = Services.CartonManagementService.GetAllDetail(SummaryId);
+                if (c.Count != 0)
+                {
+                    var cd1 = c.Where(x => x.DistributionSummaryID == SummaryId);
+                    var cd = cd1.LastOrDefault().CartonNumber;
+                    IBT.CartonNumber = cd + 1;
+                }
+                else
+                {
+                    IBT.CartonNumber = 1;
+                }
             }
-            else
-            {
-                IBT.CartonNumber = 1;
-            }
-            //bool createCartonDetail = Services.IBTService.CreateCartonDetail1(IBT);
-            return Json(IBT, JsonRequestBehavior.AllowGet);
+                //bool createCartonDetail = Services.IBTService.CreateCartonDetail1(IBT);
+                return Json(IBT, JsonRequestBehavior.AllowGet);
+            
            // return RedirectToAction("Index", "IBTCarton");
         }
         [HttpPost]

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Model
 {
@@ -19,7 +20,7 @@ namespace Model
 		public int? purchaseId { get; set; }
 
 		public Nullable<int> ReceiptOrderId { get; set; }
-
+       
 		public Nullable<int> ProductId { get; set; }
 		public Nullable<int> ColumnNumber { get; set; }
 		public decimal SalesCost { get; set; }

@@ -331,11 +331,11 @@ namespace POSApi.Controllers.Admin
 			return stockDistribution;
 		}
         [HttpGet]
-        [Route("ProductId")]
+        [Route("getByProduct")]
         public IHttpActionResult GetByProduct(int ProductId)
         {
             var data = db.StockInventories.Where(x => x.IsActive == true && x.ProductID == ProductId).Include(x => x.Product).FirstOrDefault();
-            return Ok(true);
+            return Ok(data);
         }
 		[HttpPost]
 		[AllowAnonymous]

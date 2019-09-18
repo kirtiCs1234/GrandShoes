@@ -9,7 +9,7 @@
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="prtm-full-block pos-relative col-md-10">
-            <div class="prtm-block-content mrgn-b-md col-md-12 padding-section">
+            <div class="prtm-block-content mrgn-b-md col-md-12 ">
                 <div class="">
                     <div class="row  mrgn-b-lg">
                         <div class="col-md-4 col-xs-12 col-sm-6">
@@ -26,11 +26,11 @@
                             <label>Product SKU</label>
                         </div>
                         <div class="col-md-4 col-sm-3 col-xs-12">
-                            @Html.EditorFor(model => model.FromProductSKU, new { htmlAttributes = new { @class = "form-control", type = "text" ,@placeholder="From ProductSKU"} })
+                            @Html.EditorFor(model => model.FromProductSKU, new { htmlAttributes = new { @class = "form-control productSKU", type = "text" ,@placeholder="From ProductSKU"} })
                             @Html.ValidationMessageFor(model => model.FromProductSKU, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-4 col-sm-3 col-xs-12">
-                            @Html.EditorFor(model => model.ToProductSKU, new { htmlAttributes = new { @class = "form-control", type = "text", @placeholder = "To ProductSKU" } })
+                            @Html.EditorFor(model => model.ToProductSKU, new { htmlAttributes = new { @class = "form-control productSKU", type = "text", @placeholder = "To ProductSKU" } })
                             @Html.ValidationMessageFor(model => model.ToProductSKU, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -108,10 +108,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2 padding-section">
+        <div class="col-md-2 prtm-full-block">
+          <label style="margin-bottom:10px;">&nbsp;</label>
             <input type="button" value="Accept" id="SubmitButton" class="btn btn-success popup-savebtn form-control branch-btn-input" onclick="Submit()"/>
             <button type="button" class="btn btn-outline-inverse cancel form-control mrgn-b-md branch-btn" onclick="History()">History</button>
-            <button type="button" class="btn btn-outline-inverse cancel form-control" onclick="Clear()">Clear</button>
+            <button type="button" class="btn btn-outline-inverse cancel form-control" onclick="Clear1()">Clear</button>
         </div>
     }
     </div>
@@ -119,4 +120,5 @@
     window.onload = function () {
         $.validator.unobtrusive.parse($("#createForm"))
     }
+
 </script>

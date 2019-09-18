@@ -167,6 +167,10 @@ namespace Services.Service
 
             return ProductList;
         }
+        public List<StockDistributionModel> GetLastSummaryData()
+        {
+            return ServerResponse.Invoke<List<StockDistributionModel>>("api/stockDistributions/getLastSummaryData", "", "GET");
+        }
         public List<AddItemModel> GetProductForCarton(SearchForCarton model)
         {
             var ProductList = ServerResponse.Invoke<List<StockDistributionModel>>("api/stockDistributions/getProducts?StockDistributionSummaryId=" + model.StockDistributionSummaryId + "&&BranchId=" + model.BranchId, "", "GET");
@@ -325,6 +329,10 @@ namespace Services.Service
         public List<StockDistributionModel> GetStockData(int? DistributionSummaryID, string BranchName)
         {
             return ServerResponse.Invoke<List<StockDistributionModel>>("api/stockDistributions/GetStockData?DistributionSummaryID=" + DistributionSummaryID + "&&BranchName=" + BranchName, "", "Get");
+        }
+        public List<StockDistributionModel> GetBySummaryId(int id)
+        {
+            return ServerResponse.Invoke<List<StockDistributionModel>>("api/stockDistributions/getBySummaryId?id=" + id, "", "Get");
         }
     }
 }

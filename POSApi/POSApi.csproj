@@ -291,6 +291,7 @@
     <Compile Include="Controllers\Admin\LogController.cs" />
     <Compile Include="Controllers\Admin\MarkDownBranchesController.cs" />
     <Compile Include="Controllers\Admin\MarkDownsController.cs" />
+    <Compile Include="Controllers\Admin\PageNameController.cs" />
     <Compile Include="Controllers\Admin\PendingItemReceiptsController.cs" />
     <Compile Include="Controllers\Admin\ProductCat1Controller.cs" />
     <Compile Include="Controllers\Admin\ProductCat2Controller.cs" />

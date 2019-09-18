@@ -237,5 +237,9 @@ namespace Services.Service
         {
             return ServerResponse.Invoke<List<ReceiptOrderItemModel>>("api/receiptOrderItems/getByProduct?ProductID=" + id, "", "Get");
         }
+        public List<ReceiptOrderItemModel> GetReceiptByProduct(int? id)
+        {
+            return ServerResponse.Invoke<List<ReceiptOrderItemModel>>("api/receiptOrderItems/getReceiptByProduct?id=" + id, "", "GET");
+        }
     }
 }

@@ -24,17 +24,20 @@ namespace POSApi.Controllers.Admin
         public IHttpActionResult GetDetails(WinnerReportModel winner)
         {
             var list = db.IBTDetails.Where(x => x.IsActive == true).Include(x=>x.IBTBranch).Include(x=>x.Product).ToList();
-            if(winner.FromReportDate!=null && winner.ToReportDate != null)
+            if (list.Count > 0)
             {
-                var FromDate = Convert.ToDateTime(winner.FromReportDate).Date;
-                var ToDate = Convert.ToDateTime(winner.ToReportDate).AddDays(1).Date;
-                list = list.Where(k => k.IBTBranch.DateReceive >= FromDate && k.IBTBranch.DateReceive < ToDate).ToList();
-            }
-            if (winner.FromDistributionDate != null && winner.ToDistributionDate != null)
-            {
-                var FromDate = Convert.ToDateTime(winner.FromDistributionDate).Date;
-                var ToDate = Convert.ToDateTime(winner.ToDistributionDate).AddDays(1).Date;
-                list = list.Where(k => k.IBTBranch.DateReceive >= FromDate && k.IBTBranch.DateReceive < ToDate).ToList();
+                if (winner.FromReportDate != null && winner.ToReportDate != null)
+                {
+                    var FromDate = Convert.ToDateTime(winner.FromReportDate).Date;
+                    var ToDate = Convert.ToDateTime(winner.ToReportDate).AddDays(1).Date;
+                    list = list.Where(k => k.IBTBranch.DateReceive >= FromDate && k.IBTBranch.DateReceive < ToDate).ToList();
+                }
+                if (winner.FromDistributionDate != null && winner.ToDistributionDate != null)
+                {
+                    var FromDate = Convert.ToDateTime(winner.FromDistributionDate).Date;
+                    var ToDate = Convert.ToDateTime(winner.ToDistributionDate).AddDays(1).Date;
+                    list = list.Where(k => k.IBTBranch.DateReceive >= FromDate && k.IBTBranch.DateReceive < ToDate).ToList();
+                }
             }
             return Ok(list);
         }

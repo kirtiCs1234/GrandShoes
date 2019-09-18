@@ -34,7 +34,7 @@
             @foreach (var item in Model)
             {
 
-                var itemsize = item.ItemSize.Where(x => x.Value != "0.00").ToList();
+                var itemsize = item.ItemSize.Where(x => x.Value != "0").ToList();
                 if (itemsize != null)
                 {
                     foreach (var itemk in itemsize)
@@ -48,16 +48,13 @@
                             <td>@itemk.Value</td>
                             <td>
                                 @{
-
                                     var key = itemk.Key;
                                     if (Convert.ToInt16(key) < 9)
                                     {
                                         key = "0" + key;
                                     }
-
                                 }
                                 @Html.DisplayFor(modelItem => item.Product.Barcode)@key
-
                             </td>
                             <td>@item.CostSize[itemk.Key]</td>
                             <td>@item.QuantitySize[itemk.Key]</td>

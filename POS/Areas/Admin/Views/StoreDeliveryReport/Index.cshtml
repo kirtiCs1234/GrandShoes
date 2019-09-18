@@ -40,8 +40,8 @@
             <div class="advance-content">
                 <div class="col-md-12 col-lg-12 col-xg-12"><h5 style="margin-bottom:20px;color:#000;font-weight:normal">Advanced Keyword Search</h5></div>
                 <div class="col-md-12 col-lg-12 col-xg-12">
-                    <label>Product SKU</label>
-                    <input class="form-control searchCode" type="text" placeholder="Order Number" name="OrderNumber" id="ProductSKU" />
+                    <label>Product Barcode</label>
+                    <input class="form-control searchCode" type="text" placeholder="Barcode" name="OrderNumber" id="Barcode" />
                 </div>
 
                 <div class="col-md-12 col-lg-12 col-xg-12">
@@ -52,11 +52,10 @@
                     <label>To Date</label>
                     <input class="form-control date-picker1" type="text" placeholder="To Date" name="To Date" id="ToDate" />
                 </div>
-                <div class="col-md-12 col-lg-12 col-xg-12">
+                <div class="col-md-12 col-lg-12 col-xg-12 mrgn-b-md">
                     <label>Branch</label>
                     @Html.DropDownList("BranchId", null, "--Select Branch--", htmlAttributes: new { @class = "form-control" })
                 </div>
-
                 <div class="col-md-12 col-lg-12 col-xg-12">
                     <button type="button" onclick="searchData()" class="btn btn-success advance-search-btn">Search</button>
                 </div>
@@ -94,8 +93,7 @@
         function searchData() {
             debugger;
             var obj = {};
-            obj.ProductSKU = $('#ProductSKU').val();
-
+            obj.ProductSKU = $('#Barcode').val();
             obj.FromDate = $('#FromDate').val();
             obj.ToDateS = $('#ToDate').val();
             obj.BranchId = $('#BranchId').val();

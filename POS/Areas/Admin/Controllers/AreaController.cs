@@ -26,14 +26,9 @@ namespace POS.Areas.Admin.Controllers
             int CurrentPage = pageNumber;
             var endPage = CurrentPage + 4;
             int PagesToShow = 10;
-
-
             ViewBag.PageSize = pageSize;
             var AreaModelList = Services.AreaService.GetPaging(page, out TotalCount);
-
-            //  var AreaModelList = Services.AreaService.GetSearchData(areaSearch, page, out TotalCount);
             ViewBag.TotalCount = TotalCount;
-
             var result = CommonFunction.GetPages(TotalCount, pageSize, CurrentPage, PagesToShow);
             int totalPages = (TotalCount / pageSize) + (TotalCount % pageSize == 0 ? 0 : 1);
             ViewBag.result = result;
@@ -41,11 +36,9 @@ namespace POS.Areas.Admin.Controllers
             ViewBag.CurrentPage = CurrentPage;
             var pageCount = result.Count();
             ViewBag.pageCount = pageCount;
-
             ViewBag.endPage = endPage;
             return View(AreaModelList);
         }
-       
         public ActionResult _Index1( AreaSearch areaSearch,int? page)
         {
             int TotalCount = 0;
@@ -57,7 +50,6 @@ namespace POS.Areas.Admin.Controllers
             ViewBag.PageSize = pageSize;
            var AreaModelList = Services.AreaService.GetSearchData(areaSearch, page, out TotalCount);
            ViewBag.TotalCount = TotalCount;          
-            
             var result = CommonFunction.GetPages(TotalCount, pageSize, CurrentPage, PagesToShow);
             int totalPages = (TotalCount / pageSize) + (TotalCount % pageSize == 0 ? 0 : 1);
             ViewBag.result = result;
@@ -67,7 +59,6 @@ namespace POS.Areas.Admin.Controllers
             ViewBag.pageCount = pageCount;
             ViewBag.endPage = endPage;
             return View(AreaModelList);
-
         }
         public ActionResult Details(int? id)
         {

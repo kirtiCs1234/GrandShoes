@@ -240,11 +240,13 @@
                         }
                     </div>
                     @*<input type="file" title="search image" class="image" id="PrimaryImage" name="file1" onchange="show(this)"/>
-                @Html.ValidationMessageFor(model => model.PrimaryImage, "", new { @class = "text-danger" })*@
+        @Html.ValidationMessageFor(model => model.PrimaryImage, "", new { @class = "text-danger" })*@
+                    @{ Html.EnableClientValidation(false); }
                     @Html.TextBoxFor(m => m.PrimaryImage, new { @class = "form-control", type = "file", onchange = "show(this)", Value = @Model.PrimaryImage })
 
                     @*<input type="file" title="search image" class="" id="PrimaryImage" name="file" onchange="show(this)" />*@
                     @Html.ValidationMessageFor(model => model.PrimaryImage, "", new { @class = "text-danger" })
+                    
                 </div>
                 <div class="col-md-2 col-sm-2 col-xs-12">
                     <label>Image1</label><div>
@@ -332,6 +334,7 @@
     </div>
 </div>
 <script type="text/javascript">
+   
       	var a = $('#SizeGridID').val();
     debugger;
     _GetSizeGrid(a);
@@ -358,6 +361,13 @@
         $('.multiselect-ui').multiselect({
             includeSelectAllOption: true
         });
+    });
+    $(document).ready(function () {
+        //alert($('#IsAllowZero').val())
+        if ($('#IsAllowZero').val() == 'true') {
+
+            $("#IsFreeGift").prop("disabled", true);
+        }
     });
     $(document).ready(function () {
     	debugger

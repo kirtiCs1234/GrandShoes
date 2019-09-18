@@ -14,15 +14,11 @@ namespace POS.Areas.Admin.Controllers
     [CustomAuth(PageSession.Receipt)]
     public class ReceiptController : BaseController
     {
-        // GET: Admin/Receipt
-        
         public ActionResult Index(int? page)
-        
         {
             int pageSize = 10;
             int pageNumber = (page ?? 1);
             var PurchaseOrderList = Services.PurchaseOrderService.GetByReceiptOrder();
-
             return View(PurchaseOrderList.ToPagedList(pageNumber, pageSize));
         }
         [HttpPost]
@@ -38,14 +34,12 @@ namespace POS.Areas.Admin.Controllers
                     if (!String.IsNullOrEmpty(search.OrderNumber) || !String.IsNullOrEmpty(search.SupplierName))
                     {
                         PurchaseOrderList = PurchaseOrderList.Where(x => x.OrderNumber==search.OrderNumber || x.SupplierName.Contains(search.SupplierName.ToLower())).ToList();
-
                     }
                 }
             }
             else
             {
                 PurchaseOrderList = PurchaseOrderList.Where(x => x.OrderNumber.Contains(search.OrderNumber.ToLower()) || x.SupplierName.Contains(search.SupplierName.ToLower())).ToList();
-
             }
             return View(PurchaseOrderList.ToPagedList(pageNumber, pageSize));
         }
@@ -58,7 +52,6 @@ namespace POS.Areas.Admin.Controllers
         }
         public ActionResult Create(int id)
         {
-            // ViewBag.ReceiveOrderId = RO.ReceiptNumber;
             ReceiveOrderModel ROM = new ReceiveOrderModel();
 			var list = Services.ReceiptOrderService.GetAllReceipt();
 			ROM.ReceiptNumber = Helper.CommonFunction.ReceiptNo(list);
@@ -103,7 +96,6 @@ namespace POS.Areas.Admin.Controllers
             ViewBag.Count = receiptOrderItemList.Count();
             return View(RO);
         }
-      
         public JsonResult GetPurchaseOrderForUpdate(int? Id,int? productId)
         {
             var Product = Services.ReceiptOrderService.GetUpdateValues(Id,productId);
@@ -123,7 +115,6 @@ namespace POS.Areas.Admin.Controllers
         }
         [HttpPost]
         public JsonResult GetPurchaseOrder(PurchaseOrderSearch model)
-
         {
             var PurchaseOrderValue = Services.PurchaseOrderItemsService.GetValue(model);
             return Json(PurchaseOrderValue, JsonRequestBehavior.AllowGet);
@@ -134,13 +125,10 @@ namespace POS.Areas.Admin.Controllers
             var productList = Services.ProductService.GetAll();
             model.ProductId = productList.Where(x => x.ProductSKU == model.autoCompleteProductName && x.StyleSKU==model.autoCompleteProductStyleName).FirstOrDefault().Id;
             var create = Services.ReceiptOrderService.AddReceiptOrderItem(model);
-            
             return RedirectToAction("Index", "Receipt");
         }
         [HttpPost]
         public ActionResult EditReceiptOrderItem(ReceiptOrderItemModel model)
-
-
         {
             //var productList = Services.ProductService.GetAll();
            // model.ProductId = productList.Where(x => x.ProductSKU == model.autoCompleteProductName).FirstOrDefault().Id;
@@ -194,6 +182,7 @@ namespace POS.Areas.Admin.Controllers
 		public ActionResult Finalize(PendingItemReceiptModel model)
 		{
 			var purchaseItem = Services.PurchaseOrderItemsService.GetItemsByPurchase(model.PurchaseOrderId);
+
 			foreach(var a in purchaseItem)
 			{
 				model.TotalCost = a.Amount;
@@ -203,7 +192,8 @@ namespace POS.Areas.Admin.Controllers
 				bool create = Services.PendingItemReceiptService.Create(model);
 
 			}
-			return RedirectToAction("Index");
+            TempData["Success"] = "Receipt Create Successfully!";
+            return RedirectToAction("Index");
 		}
 	}
 }

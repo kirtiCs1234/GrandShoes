@@ -29,10 +29,10 @@ namespace Services.IService
         UserModel GetUserId(string sku);
         Dictionary<string, string> CreateList(Dictionary<int, UserModel> list);
         Dictionary<string, string> UpdateList(Dictionary<int, UserModel> list);
-
+        Dictionary<int, bool> CheckEmailDict(Dictionary<int, string> list);
         UserModel GetByUserName(string name);
 		bool GetByUserFullName(string name);
         bool CheckEmail(string name);
-
+        Dictionary<int, Tuple<string, string, string, string>> UserImportFilter(Dictionary<int, Tuple<string, string, string, string>> list);
     }
 }

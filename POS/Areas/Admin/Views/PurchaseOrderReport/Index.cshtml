@@ -41,7 +41,7 @@
                 <div class="col-md-12 col-lg-12 col-xg-12"><h5 style="margin-bottom:20px;color:#000;font-weight:normal">Advanced Keyword Search</h5></div>
                 <div class="col-md-12 col-lg-12 col-xg-12">
                     <label>Order Number</label>
-                    <input class="form-control searchCode" type="text" placeholder="Order Number" name="OrderNumber" id="OrderNumber" />
+                    <input class="form-control searchCode" type="text" placeholder="Order Number" name="OrderNumber" id="OrderNumber1" />
                 </div>
                
                 <div class="col-md-12 col-lg-12 col-xg-12">
@@ -52,7 +52,7 @@
                     <label>To Date</label>
                     <input class="form-control date-picker1" type="text" placeholder="To Date" name="To Date" id="ToDate" />
                 </div>
-                <div class="col-md-12 col-lg-12 col-xg-12">
+                <div class="col-md-12 col-lg-12 col-xg-12 mrgn-b-md">
                     <label>Order Status</label>
                     @Html.DropDownList("PurchaseOrderStatusId", null,"--Purchase Order Status--", htmlAttributes: new { @class = "form-control" })
                 </div>
@@ -98,8 +98,8 @@
         function searchData() {
             debugger;
             var obj = {};
+            obj.OrderNumber1 = $('#OrderNumber1').val();
             obj.OrderNumber = $('#OrderNumber').val();
-           
             obj.FromDate = $('#FromDate').val();
             obj.ToDateS = $('#ToDate').val();
             obj.PurchaseOrderStatusId = $('#PurchaseOrderStatusId').val();
@@ -120,8 +120,8 @@
         }
         $(document).on("click", "a[href^='/Admin/PurchaseOrderReport/_Index1?page']", function () {
             var obj = {};
+            obj.OrderNumber1 = $('#OrderNumber1').val();
             obj.OrderNumber = $('#OrderNumber').val();
-
             obj.FromDate = $('#FromDate').val();
             obj.ToDateS = $('#ToDate').val();
             obj.PurchaseOrderStatusId = $('#PurchaseOrderStatusId').val();

@@ -155,6 +155,26 @@ namespace POSApi.Controllers
             return Ok(result);
         }
         [HttpPost]
+        [Route("getUserImportFilter")]
+        public IHttpActionResult getProductImportFilter(Dictionary<int, Tuple<string, string, string, string>> model)
+        {
+            Dictionary<int, Tuple<string, string, string, string>> tuple = new Dictionary<int, Tuple<string, string, string, string>>();
+            if (model!= null && model.Count > 0)
+            {
+                var role = model.Select(x => x.Value.Item1).Distinct().ToList();
+                var branch = model.Select(x => x.Value.Item2).Distinct().ToList();
+                var dbRole = db.Roles.Where(x => x.IsActive == true && role.Contains(x.RoleName)).ToList();
+                var dbBranch = db.Branches.Where(x => x.IsActive == true && branch.Contains(x.Name)).ToList();
+                foreach (var item in model)
+                {
+                    var a = (dbRole.Where(x => x.RoleName == item.Value.Item1).FirstOrDefault()?.Id).ToString();
+                    var b = (db.Branches.Where(x => x.Name == item.Value.Item2).FirstOrDefault()?.Id).ToString();
+                    tuple.Add(item.Key, Tuple.Create(item.Value.Item1, item.Value.Item2, a, b));
+                }
+            }
+            return Ok(tuple);
+        }
+        [HttpPost]
 		[Route("CheckUserName")]
 		public IHttpActionResult CheckName(string name)
 		{
@@ -279,7 +299,28 @@ namespace POSApi.Controllers
 
             return Ok(user);
         }
-
+        [HttpPost]
+        [Route("checkUser")]
+        public IHttpActionResult CheckUser(Dictionary<int, string> list)
+        {
+            var obj = new Dictionary<int, bool>();
+            if (list != null && list.Count > 0)
+            {
+                var UserList = db.Users.Where(x => x.IsActive == true);
+                var email = list.Select(x => x.Value).Distinct().ToList();
+                if (email!= null && email.Count > 0)
+                {
+                    UserList = UserList.Where(x => email.Contains(x.Email));
+                }
+                var Color = UserList.ToList();
+                foreach (var item in list)
+                {
+                    var result = Color.Any(x => x.Email == item.Value);
+                    obj.Add(item.Key, result);
+                }
+            }
+            return Ok(obj);
+        }
         // PUT: api/Users/5
         [HttpPost]
         [AllowAnonymous]

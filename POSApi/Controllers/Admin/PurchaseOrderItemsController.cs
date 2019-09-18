@@ -31,42 +31,157 @@ namespace POSApi.Controllers
 			DAL.PurchaseOrderItem Order = new DAL.PurchaseOrderItem();
 
             Order.PurchaseOrderId = OrderItem.PurchaseOrderId;
-            var ProductId = Entities.Products.Where(x => x.IsActive == true && x.ProductSKU == OrderItem.ProductSKU && x.StyleSKU == OrderItem.StyleSKU).FirstOrDefault().Id;
-            Order.ProductID= ProductId;
+            var Product = Entities.Products.Where(x => x.IsActive == true && x.ProductSKU == OrderItem.ProductSKU && x.StyleSKU == OrderItem.StyleSKU).Include(x=>x.SizeGrid).FirstOrDefault();
+            Order.ProductID= Product.Id;
+            var sizeGrid = Entities.SizeGrids.Where(x => x.Id == Product.SizeGridID).FirstOrDefault();
             Order.Amount = (OrderItem.Amount)??0;
           // Order.ProductStyleId = OrderItem.ProductStyleId;
             Order.SizeGridId = OrderItem.SizeGridId;
            Order.ColorId = Entities.Colors.Where(x=>x.IsActive==true && x.Code==OrderItem.autoCompleteColorName).FirstOrDefault().Id;
             Order.SuplierStyle = OrderItem.SuplierStyle;
-            //Order.VarianceID = Entities.ProductVariances.Where(x => x.IsActive == true && x.ProductID == OrderItem.ProductId && x.ColorID == OrderItem.ColorId).FirstOrDefault().ID;
+            var dict = new Dictionary<string, string>();
+            var keyval = Utility.getKeyVaue(sizeGrid).Where(x => x.Key.Contains("Z")).ToList();
+            foreach (var item2 in keyval)
+            {
+                if (!string.IsNullOrEmpty(item2.Value))
+                {
+                    if (item2.Value.Contains(".0"))
+                    {
+                        //item2[item2.Key] = 	item2.Value.Replace(".0", "");
+                        dict.Add(item2.Key, item2.Value.Replace(".0", ""));
+                    }
+                    else
+                    {
+                        dict.Add(item2.Key, item2.Value);
+                    }
+                }
+            }
+            var ItemDict = new Dictionary<string, string>();
+            var CostDict = new Dictionary<string, string>();
+            var QuantityDict = new Dictionary<string, string>();
+           var dataItemSize= Utility.getKeyVaue(OrderItem).Where(x => x.Key.Contains("ItemSize")).ToList();
+            foreach(var item in dataItemSize)
+            {
+                if (item.Value !="")
+                {
+                    var data = dict.Where(x => x.Value == item.Value).FirstOrDefault();
+                    var data1 = data.Key;
+                    var b = "";
+                    var a = data1.Substring(0, 2);
+                    if (a == "Z0")
+                    {
+                        b = data1.Replace("Z0", "");
+                    }
+                    else
+                    {
+                        b=data1.Replace("Z","");
+                    }
+                    var itemKey = Utility.getKeyVaue(Order).Where(x => x.Key.Contains("ItemSize")).ToList();
+                    var value = itemKey.Where(x => x.Key.Replace("ItemSize", "") == b).FirstOrDefault();
+                    ItemDict.Add(value.Key, data.Value);
+                    var CostKey1 = Utility.getKeyVaue(OrderItem).Where(x => x.Key.Contains("CostSize")).ToList();
+                    var costValue1= CostKey1.Where(x => x.Key.Replace("CostSize", "") == item.Key.Replace("ItemSize", "")).FirstOrDefault();
+                    var CostKey= Utility.getKeyVaue(Order).Where(x => x.Key.Contains("CostSize")).ToList();
+                    var costValue = CostKey.Where(x => x.Key.Replace("CostSize", "") == value.Key.Replace("ItemSize", "")).FirstOrDefault();
+                    CostDict.Add(costValue.Key, costValue1.Value);
+                    var QuantityKey1 = Utility.getKeyVaue(OrderItem).Where(x => x.Key.Contains("QuantitySize")).ToList();
+                    var QuantityValue1 = QuantityKey1.Where(x => x.Key.Replace("QuantitySize", "") == item.Key.Replace("ItemSize", "")).FirstOrDefault();
 
-            Order.ItemSize1 = (OrderItem.ItemSize1??0); Order.ItemSize2 = (OrderItem.ItemSize2??0); Order.ItemSize3 = (OrderItem.ItemSize3??0); Order.ItemSize4 = (OrderItem.ItemSize4??0);
-            Order.ItemSize5 = (OrderItem.ItemSize5??0); Order.ItemSize6 = (OrderItem.ItemSize6??0); Order.ItemSize7 = (OrderItem.ItemSize7??0); Order.ItemSize8 = (OrderItem.ItemSize8??0);
-            Order.ItemSize9 = (OrderItem.ItemSize9??0); Order.ItemSize10 = (OrderItem.ItemSize10??0); Order.ItemSize11 = (OrderItem.ItemSize11??0); Order.ItemSize12 = (OrderItem.ItemSize12??0);
-            Order.ItemSize13 = (OrderItem.ItemSize13??0); Order.ItemSize14 = (OrderItem.ItemSize14??0); Order.ItemSize15 = (OrderItem.ItemSize15??0); Order.ItemSize16 = (OrderItem.ItemSize16??0);
-            Order.ItemSize17 = (OrderItem.ItemSize17??0); Order.ItemSize18 = (OrderItem.ItemSize18??0); Order.ItemSize19 = (OrderItem.ItemSize19??0); Order.ItemSize20 = (OrderItem.ItemSize20??0);
-            Order.ItemSize21 = (OrderItem.ItemSize21??0); Order.ItemSize22 = (OrderItem.ItemSize22??0); Order.ItemSize23 = (OrderItem.ItemSize23??0); Order.ItemSize24 = (OrderItem.ItemSize24??0);
-            Order.ItemSize25 = (OrderItem.ItemSize25??0); Order.ItemSize26 = (OrderItem.ItemSize26??0); Order.ItemSize27 = (OrderItem.ItemSize27??0); Order.ItemSize28 = (OrderItem.ItemSize28??0);
-            Order.ItemSize29 = (OrderItem.ItemSize29??0); Order.ItemSize30 = (OrderItem.ItemSize30??0);
-
-            Order.QuantitySize1 = (OrderItem.QuantitySize1??0); Order.QuantitySize2 = (OrderItem.QuantitySize2??0); Order.QuantitySize3 = (OrderItem.QuantitySize3??0); Order.QuantitySize4 = (OrderItem.QuantitySize4??0);
-            Order.QuantitySize5 = (OrderItem.QuantitySize5??0); Order.QuantitySize6 = (OrderItem.QuantitySize6??0); Order.QuantitySize7 = (OrderItem.QuantitySize7??0); Order.QuantitySize8 = (OrderItem.QuantitySize8??0);
-            Order.QuantitySize9 = (OrderItem.QuantitySize9??0); Order.QuantitySize10 = (OrderItem.QuantitySize10??0); Order.QuantitySize11 = (OrderItem.QuantitySize11??0); Order.QuantitySize12 = (OrderItem.QuantitySize12??0);
-            Order.QuantitySize13 = (OrderItem.QuantitySize13??0); Order.QuantitySize14 = (OrderItem.QuantitySize14??0); Order.QuantitySize15 = (OrderItem.QuantitySize15??0); Order.QuantitySize16 = (OrderItem.QuantitySize16??0);
-            Order.QuantitySize17 = (OrderItem.QuantitySize17??0); Order.QuantitySize18 = (OrderItem.QuantitySize18??0); Order.QuantitySize19 = (OrderItem.QuantitySize19??0); Order.QuantitySize20 = (OrderItem.QuantitySize20??0);
-            Order.QuantitySize21 = (OrderItem.QuantitySize21??0); Order.QuantitySize22 = (OrderItem.QuantitySize22??0); Order.QuantitySize23 = (OrderItem.QuantitySize23??0); Order.QuantitySize24 = (OrderItem.QuantitySize24??0);
-            Order.QuantitySize25 = (OrderItem.QuantitySize25??0); Order.QuantitySize26 = (OrderItem.QuantitySize26??0); Order.QuantitySize27 = (OrderItem.QuantitySize27??0); Order.QuantitySize28 = (OrderItem.QuantitySize28??0);
-            Order.QuantitySize29 = (OrderItem.QuantitySize29??0); Order.QuantitySize30 = (OrderItem.QuantitySize30??0);
-
-            Order.CostSize1 = OrderItem.CostSize1; Order.CostSize2 = OrderItem.CostSize2; Order.CostSize3 = OrderItem.CostSize3; Order.CostSize4 = OrderItem.CostSize4;
-            Order.CostSize5 = OrderItem.CostSize5; Order.CostSize6 = OrderItem.CostSize6; Order.CostSize7 = OrderItem.CostSize7; Order.CostSize8 = OrderItem.CostSize8;
-            Order.CostSize9 = OrderItem.CostSize9; Order.CostSize10 = OrderItem.CostSize10; Order.CostSize11 = OrderItem.CostSize11; Order.CostSize12 = OrderItem.CostSize12;
-            Order.CostSize13 = OrderItem.CostSize13; Order.CostSize14 = OrderItem.CostSize14; Order.CostSize15 = OrderItem.CostSize15; Order.CostSize16 = OrderItem.CostSize16;
-            Order.CostSize17 = OrderItem.CostSize17; Order.CostSize18 = OrderItem.CostSize18; Order.CostSize19 = OrderItem.CostSize19; Order.CostSize20 = OrderItem.CostSize20;
-            Order.CostSize21 = OrderItem.CostSize21; Order.CostSize22 = OrderItem.CostSize22; Order.CostSize23 = OrderItem.CostSize23; Order.CostSize24 = OrderItem.CostSize24;
-            Order.CostSize25 = OrderItem.CostSize25; Order.CostSize26 = OrderItem.CostSize26; Order.CostSize27 = OrderItem.CostSize27; Order.CostSize28 = OrderItem.CostSize28;
-            Order.CostSize29 = OrderItem.CostSize29; Order.CostSize30 = OrderItem.CostSize30;
-
+                    var QuantityKey = Utility.getKeyVaue(Order).Where(x => x.Key.Contains("QuantitySize")).ToList();
+                    var QuantityValue = QuantityKey.Where(x => x.Key.Replace("QuantitySize", "") ==value.Key.Replace("ItemSize", "")).FirstOrDefault();
+                    QuantityDict.Add(QuantityValue.Key, QuantityValue1.Value);
+                }
+            }
+            Order.ItemSize1 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize1").FirstOrDefault().Value);
+            Order.ItemSize2 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize2").FirstOrDefault().Value);
+            Order.ItemSize3 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize3").FirstOrDefault().Value);
+            Order.ItemSize4 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize4").FirstOrDefault().Value);
+            Order.ItemSize5 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize5").FirstOrDefault().Value);
+            Order.ItemSize6 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize6").FirstOrDefault().Value);
+            Order.ItemSize7 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize7").FirstOrDefault().Value);
+            Order.ItemSize8 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize8").FirstOrDefault().Value);
+            Order.ItemSize9 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize9").FirstOrDefault().Value);
+            Order.ItemSize10 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize10").FirstOrDefault().Value);
+            Order.ItemSize11= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize11").FirstOrDefault().Value);
+            Order.ItemSize12= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize12").FirstOrDefault().Value);
+            Order.ItemSize13= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize13").FirstOrDefault().Value);
+            Order.ItemSize14= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize14").FirstOrDefault().Value);
+            Order.ItemSize15= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize15").FirstOrDefault().Value);
+            Order.ItemSize16= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize16").FirstOrDefault().Value);
+            Order.ItemSize17= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize17").FirstOrDefault().Value);
+            Order.ItemSize18= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize18").FirstOrDefault().Value);
+            Order.ItemSize19= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize19").FirstOrDefault().Value);
+            Order.ItemSize20= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize20").FirstOrDefault().Value);
+            Order.ItemSize21= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize21").FirstOrDefault().Value);
+            Order.ItemSize22= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize22").FirstOrDefault().Value);
+            Order.ItemSize23= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize23").FirstOrDefault().Value);
+            Order.ItemSize24= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize24").FirstOrDefault().Value);
+            Order.ItemSize25= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize25").FirstOrDefault().Value);
+            Order.ItemSize26= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize26").FirstOrDefault().Value);
+            Order.ItemSize27= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize27").FirstOrDefault().Value);
+            Order.ItemSize28= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize28").FirstOrDefault().Value);
+            Order.ItemSize29= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize29").FirstOrDefault().Value);
+            Order.ItemSize30= Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize30").FirstOrDefault().Value);
+            Order.CostSize1 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize1").FirstOrDefault().Value);
+            Order.CostSize2 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize2").FirstOrDefault().Value);
+            Order.CostSize3 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize3").FirstOrDefault().Value);
+            Order.CostSize4 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize4").FirstOrDefault().Value);
+            Order.CostSize5 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize5").FirstOrDefault().Value);
+            Order.CostSize6 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize6").FirstOrDefault().Value);
+            Order.CostSize7 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize7").FirstOrDefault().Value);
+            Order.CostSize8 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize8").FirstOrDefault().Value);
+            Order.CostSize9 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize9").FirstOrDefault().Value);
+            Order.CostSize10 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize10").FirstOrDefault().Value);
+            Order.CostSize11= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize11").FirstOrDefault().Value);
+            Order.CostSize12= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize12").FirstOrDefault().Value);
+            Order.CostSize13= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize13").FirstOrDefault().Value);
+            Order.CostSize14= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize14").FirstOrDefault().Value);
+            Order.CostSize15= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize15").FirstOrDefault().Value);
+            Order.CostSize16= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize16").FirstOrDefault().Value);
+            Order.CostSize17= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize17").FirstOrDefault().Value);
+            Order.CostSize18= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize18").FirstOrDefault().Value);
+            Order.CostSize19= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize19").FirstOrDefault().Value);
+            Order.CostSize20= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize20").FirstOrDefault().Value);
+            Order.CostSize21= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize21").FirstOrDefault().Value);
+            Order.CostSize22= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize22").FirstOrDefault().Value);
+            Order.CostSize23= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize23").FirstOrDefault().Value);
+            Order.CostSize24= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize24").FirstOrDefault().Value);
+            Order.CostSize25= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize25").FirstOrDefault().Value);
+            Order.CostSize26= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize26").FirstOrDefault().Value);
+            Order.CostSize27= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize27").FirstOrDefault().Value);
+            Order.CostSize28= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize28").FirstOrDefault().Value);
+            Order.CostSize29= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize29").FirstOrDefault().Value);
+            Order.CostSize30= Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize30").FirstOrDefault().Value);
+            Order.QuantitySize1 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize1").FirstOrDefault().Value);
+            Order.QuantitySize2 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize2").FirstOrDefault().Value);
+            Order.QuantitySize3 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize3").FirstOrDefault().Value);
+            Order.QuantitySize4 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize4").FirstOrDefault().Value);
+            Order.QuantitySize5 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize5").FirstOrDefault().Value);
+            Order.QuantitySize6 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize6").FirstOrDefault().Value);
+            Order.QuantitySize7 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize7").FirstOrDefault().Value);
+            Order.QuantitySize8 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize8").FirstOrDefault().Value);
+            Order.QuantitySize9 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize9").FirstOrDefault().Value);
+            Order.QuantitySize10 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize10").FirstOrDefault().Value);
+            Order.QuantitySize11= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize11").FirstOrDefault().Value);
+            Order.QuantitySize12= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize12").FirstOrDefault().Value);
+            Order.QuantitySize13= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize13").FirstOrDefault().Value);
+            Order.QuantitySize14= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize14").FirstOrDefault().Value);
+            Order.QuantitySize15= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize15").FirstOrDefault().Value);
+            Order.QuantitySize16= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize16").FirstOrDefault().Value);
+            Order.QuantitySize17= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize17").FirstOrDefault().Value);
+            Order.QuantitySize18= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize18").FirstOrDefault().Value);
+            Order.QuantitySize19= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize19").FirstOrDefault().Value);
+            Order.QuantitySize20= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize20").FirstOrDefault().Value);
+            Order.QuantitySize21= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize21").FirstOrDefault().Value);
+            Order.QuantitySize22= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize22").FirstOrDefault().Value);
+            Order.QuantitySize23= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize23").FirstOrDefault().Value);
+            Order.QuantitySize24= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize24").FirstOrDefault().Value);
+            Order.QuantitySize25= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize25").FirstOrDefault().Value);
+            Order.QuantitySize26= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize26").FirstOrDefault().Value);
+            Order.QuantitySize27= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize27").FirstOrDefault().Value);
+            Order.QuantitySize28= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize28").FirstOrDefault().Value);
+            Order.QuantitySize29= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize29").FirstOrDefault().Value);
+            Order.QuantitySize30= Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize30").FirstOrDefault().Value);
             Order.IsActive = true;
             Entities.PurchaseOrderItems.Add(Order);
             Entities.SaveChanges();
@@ -105,7 +220,16 @@ namespace POSApi.Controllers
 			var product = Entities.Products.Where(x => x.IsActive == true && x.ProductSKU == OrderItem.ProductSKU && x.StyleSKU == OrderItem.StyleSKU).FirstOrDefault();
 			if (OrderItem.ItemSize1 != null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize1.ToString());
+                bool sizes1 = false;
+                if (OrderItem.ItemSize1.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize1.ToString().Replace(".0","");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize1.ToString());
+                }
 				if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize1 + ",";
@@ -113,240 +237,498 @@ namespace POSApi.Controllers
 			}
 			if (OrderItem.ItemSize2 != null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize2.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize2.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize2.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize2.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize2 + ",";
 				}
 			}
 			if (OrderItem.ItemSize3 != null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize3.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize3.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize3.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize3.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize3 + ",";
 				}
 			}
 			if (OrderItem.ItemSize4 != null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize4.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize4.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize4.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize4.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize4+ ",";
 				}
 			}
 			if (OrderItem.ItemSize5 != null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize5.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize5.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize5.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize5.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize5+ ",";
 				}
 			}
 			if (OrderItem.ItemSize6 != null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize6.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize6.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize6.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize6.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize6 + ",";
 				}
 			}
 			if (OrderItem.ItemSize7 != null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize7.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize7.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize7.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize7.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize7 + ",";
 				}
 			}
 			if (OrderItem.ItemSize8 != null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize8.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize8.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize8.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize8.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize8+ ",";
 				}
 			}
 			if (OrderItem.ItemSize9 != null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize9.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize9.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize9.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize9.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize9+ ",";
 				}
 			}
 			if (OrderItem.ItemSize10 != null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize10.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize10.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize10.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize10.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize10 + ",";
 				}
 			}
 			if (OrderItem.ItemSize11!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize10.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize11.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize11.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize11.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize11 + ",";
 				}
 			}
 			if (OrderItem.ItemSize12!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize12.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize12.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize12.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize12.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize12 + ",";
 				}
 			}
 			if (OrderItem.ItemSize13!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize13.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize13.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize13.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize13.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize13 + ",";
 				}
 			}
 			if (OrderItem.ItemSize14!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize14.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize14.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize14.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize14.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize14+ ",";
 				}
 			}
 			if (OrderItem.ItemSize15!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize15.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize15.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize15.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize15.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize15+ ",";
 				}
 			}
 			if (OrderItem.ItemSize16!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize16.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize16.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize16.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize16.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize16 + ",";
 				}
 			}
 			if (OrderItem.ItemSize17 != null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize17.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize17.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize17.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize17.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize17+ ",";
 				}
 			}
 			if (OrderItem.ItemSize18!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize18.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize18.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize18.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize18.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize18+ ",";
 				}
 			}
 			if (OrderItem.ItemSize19!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize19.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize19.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize19.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize19.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize19+ ",";
 				}
 			}
 			if (OrderItem.ItemSize20!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize20.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize20.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize20.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize20.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize20+ ",";
 				}
 			}
 			if (OrderItem.ItemSize21!= null)
-			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize21.ToString());
-				if (!sizes1)
+            {
+                bool sizes1 = false;
+                if (OrderItem.ItemSize21.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize21.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize21.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize21+ ",";
 				}
 			}
 			if (OrderItem.ItemSize22!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize22.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize22.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize22.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize22.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize22+ ",";
 				}
 			}
 			if (OrderItem.ItemSize23!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize23.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize23.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize23.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize23.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize23+ ",";
 				}
 			}
 			if (OrderItem.ItemSize24!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize24.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize24.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize24.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize24.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize24+ ",";
 				}
 			}
 			if (OrderItem.ItemSize25!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize25.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize25.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize25.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize25.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize25+ ",";
 				}
 			}
 			if (OrderItem.ItemSize26 != null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize26.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize26.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize26.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize26.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize26 + ",";
 				}
 			}
 			if (OrderItem.ItemSize27!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize27.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize27.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize27.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize27.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize27+ ",";
 				}
 			}
 			if (OrderItem.ItemSize28!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize28.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize28.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize28.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize28.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize28+ ",";
 				}
 			}
 			if (OrderItem.ItemSize29!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize29.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize29.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize29.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize29.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize29+ ",";
 				}
 			}
 			if (OrderItem.ItemSize30!= null)
 			{
-				bool sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize30.ToString());
-				if (!sizes1)
+                bool sizes1 = false;
+                if (OrderItem.ItemSize30.ToString().Contains(".0"))
+                {
+                    var Isize1 = OrderItem.ItemSize30.ToString().Replace(".0", "");
+                    sizes1 = product.AvailableSize.Contains(Isize1);
+                }
+                else
+                {
+                    sizes1 = product.AvailableSize.Contains(OrderItem.ItemSize30.ToString());
+                }
+                if (!sizes1)
 				{
 					product.AvailableSize += OrderItem.ItemSize30+ ",";
 				}
 			}
-			
-				Entities.SaveChanges();
-			
-			
+	    	Entities.SaveChanges();
 			int id = Order.PurchaseOrderId;
             return Ok(id);
         }
@@ -386,14 +768,14 @@ namespace POSApi.Controllers
         [Route("getByProductId")]
         public IHttpActionResult GetByProduct(int ProductID)
         {
-            var data = Entities.PurchaseOrderItems.Where(x => x.IsActive == true && x.ProductID == ProductID).Include(x=>x.Product).Include(x=>x.Color).Include(x=>x.PurchaseOrder).ToList().RemoveReferences();
+            var data = Entities.PurchaseOrderItems.Where(x => x.IsActive == true && x.ProductID == ProductID).Include(x=>x.Product).Include(x=>x.Color).Include(x=>x.PurchaseOrder).Include(x=>x.PurchaseOrder.PurchaseOrderStatu).ToList().RemoveReferences();
             return Ok(data);
         }
 		[HttpPost]
 		[Route("checkProductByOrder")]
 		public IHttpActionResult CheckProductByProduct(PurchaseOrderItemModel model)
 		{
-			var status = Entities.PurchaseOrderItems.Any(x => x.IsActive == true && x.PurchaseOrderId == model.PurchaseOrderId && x.ProductID == model.ProductId);
+			var status = Entities.PurchaseOrderItems.Any(x => x.IsActive == true && x.PurchaseOrderId == model.PurchaseOrderId && x.Product.ProductSKU == model.autoCompleteProductName && x.Product.StyleSKU==model.autoCompleteProductStyleName);
 			return Ok(status);
 		}
 		[HttpPost]
@@ -401,7 +783,7 @@ namespace POSApi.Controllers
 		public IHttpActionResult CheckProduct(PurchaseOrderItemModel purchase)
 		{
 			var list = Entities.PurchaseOrderItems.Where(x => x.IsActive == true).Include(x => x.Product).ToList();
-			bool status = list.Any(x => x.Product.ProductSKU == purchase.ProductSKU && x.Product.StyleSKU == purchase.StyleSKU);
+			bool status = list.Any(x => x.Product.ProductSKU == purchase.autoCompleteProductName && x.Product.StyleSKU == purchase.autoCompleteProductStyleName);
 			return Ok(status);
 		}
         // GET: All PurchaseOrderItems
@@ -420,36 +802,36 @@ namespace POSApi.Controllers
                 SuplierStyle = m.SuplierStyle,
                // ProductStyleId = m.ProductStyleId,
 
-                ItemSize1 = m.ItemSize1,
-                ItemSize2 = m.ItemSize2,
-                ItemSize3 = m.ItemSize3,
-                ItemSize4 = m.ItemSize4,
-                ItemSize5 = m.ItemSize5,
-                ItemSize6 = m.ItemSize6,
-                ItemSize7 = m.ItemSize7,
-                ItemSize8 = m.ItemSize8,
-                ItemSize9 = m.ItemSize9,
-                ItemSize10 = m.ItemSize10,
-                ItemSize11 = m.ItemSize11,
-                ItemSize12 = m.ItemSize12,
-                ItemSize13 = m.ItemSize13,
-                ItemSize14 = m.ItemSize14,
-                ItemSize15 = m.ItemSize15,
-                ItemSize16 = m.ItemSize16,
-                ItemSize17 = m.ItemSize17,
-                ItemSize18 = m.ItemSize18,
-                ItemSize19 = m.ItemSize19,
-                ItemSize20 = m.ItemSize20,
-                ItemSize21 = m.ItemSize21,
-                ItemSize22 = m.ItemSize22,
-                ItemSize23 = m.ItemSize23,
-                ItemSize24 = m.ItemSize24,
-                ItemSize25 = m.ItemSize25,
-                ItemSize26 = m.ItemSize26,
-                ItemSize27 = m.ItemSize27,
-                ItemSize28 = m.ItemSize28,
-                ItemSize29 = m.ItemSize29,
-                ItemSize30 = m.ItemSize30,
+                ItemSize1 = m.ItemSize1.ToString(),
+                ItemSize2 = m.ItemSize2.ToString(),
+                ItemSize3 = m.ItemSize3.ToString(),
+                ItemSize4 = m.ItemSize4.ToString(),
+                ItemSize5 = m.ItemSize5.ToString(),
+                ItemSize6 = m.ItemSize6.ToString(),
+                ItemSize7 = m.ItemSize7.ToString(),
+                ItemSize8 = m.ItemSize8.ToString(),
+                ItemSize9 = m.ItemSize9.ToString(),
+                ItemSize10 = m.ItemSize10.ToString(),
+                ItemSize11 = m.ItemSize11.ToString(),
+                ItemSize12 = m.ItemSize12.ToString(),
+                ItemSize13 = m.ItemSize13.ToString(),
+                ItemSize14 = m.ItemSize14.ToString(),
+                ItemSize15 = m.ItemSize15.ToString(),
+                ItemSize16 = m.ItemSize16.ToString(),
+                ItemSize17 = m.ItemSize17.ToString(),
+                ItemSize18 = m.ItemSize18.ToString(),
+                ItemSize19 = m.ItemSize19.ToString(),
+                ItemSize20 = m.ItemSize20.ToString(),
+                ItemSize21 = m.ItemSize21.ToString(),
+                ItemSize22 = m.ItemSize22.ToString(),
+                ItemSize23 = m.ItemSize23.ToString(),
+                ItemSize24 = m.ItemSize24.ToString(),
+                ItemSize25 = m.ItemSize25.ToString(),
+                ItemSize26 = m.ItemSize26.ToString(),
+                ItemSize27 = m.ItemSize27.ToString(),
+                ItemSize28 = m.ItemSize28.ToString(),
+                ItemSize29 = m.ItemSize29.ToString(),
+                ItemSize30 = m.ItemSize30.ToString(),
 
                 QuantitySize1 = m.QuantitySize1,
                 QuantitySize2 = m.QuantitySize2,
@@ -555,8 +937,19 @@ namespace POSApi.Controllers
                 model.PurchaseOrderId = item.PurchaseOrderId;
                 model.SupplierStyle = item.SuplierStyle;
                 var utility = Utilities.getKeyVaue(item);
-                model.ItemSize = Utilities.getFilterDictionary(utility, "ItemSize"); //utility.Where(x => x.Key.Contains("ItemSize")).ToList();
-                
+                model.ItemSize = new Dictionary<string, string>();
+                var keyData= Utilities.getFilterDictionary(utility, "ItemSize"); //utility.Where(x => x.Key.Contains("ItemSize")).ToList();
+                foreach(var keyValue in keyData)
+                {
+                    if (keyValue.Value.Contains(".0"))
+                    {
+                        model.ItemSize.Add(keyValue.Key, keyValue.Value.Replace(".0", ""));
+                    }
+                    else
+                    {
+                        model.ItemSize.Add(keyValue.Key, keyValue.Value);
+                    }
+                }
                 //ItemSize.ForEach(f => model.ItemSize.Add(f.Key, f.Value));
                 model.CostSize = Utilities.getFilterDictionary(utility, "CostSize"); //utility.Where(x => x.Key.Contains("CostSize")).ToList();
                 model.QuantitySize= Utilities.getFilterDictionary(utility, "QuantitySize"); //utility.Where(x => x.Key.Contains("QuantitySize")).ToList();
@@ -815,16 +1208,18 @@ public List<PurchaseOrderItem> GetSearchValue(PurchaseOrderSearch model)
             model.QuantitySize22 = orderItem.QuantitySize22; model.QuantitySize23 = orderItem.QuantitySize23; model.QuantitySize24 = orderItem.QuantitySize24;
             model.QuantitySize25 = orderItem.QuantitySize25; model.QuantitySize26 = orderItem.QuantitySize26; model.QuantitySize27 = orderItem.QuantitySize27;
             model.QuantitySize28= orderItem.QuantitySize28; model.QuantitySize29 = orderItem.QuantitySize29; model.QuantitySize30 = orderItem.QuantitySize30;
-            model.ItemSize1 = orderItem.ItemSize1; model.ItemSize2 = orderItem.ItemSize2; model.ItemSize3 = orderItem.ItemSize3;
-            model.ItemSize4 = orderItem.ItemSize4; model.ItemSize5 = orderItem.ItemSize5; model.ItemSize6 = orderItem.ItemSize6;
-            model.ItemSize7 = orderItem.ItemSize7; model.ItemSize8 = orderItem.ItemSize8; model.ItemSize9 = orderItem.ItemSize9;
-            model.ItemSize10 = orderItem.ItemSize10; model.ItemSize11 = orderItem.ItemSize11; model.ItemSize12 = orderItem.ItemSize12;
-            model.ItemSize13= orderItem.ItemSize13; model.ItemSize14= orderItem.ItemSize14; model.ItemSize15= orderItem.ItemSize15;
-            model.ItemSize16= orderItem.ItemSize16; model.ItemSize17 = orderItem.ItemSize17; model.ItemSize18= orderItem.ItemSize18;
-            model.ItemSize19= orderItem.ItemSize19; model.ItemSize20= orderItem.ItemSize20; model.ItemSize21= orderItem.ItemSize21;
-            model.ItemSize22= orderItem.ItemSize22; model.ItemSize23= orderItem.ItemSize23; model.ItemSize24= orderItem.ItemSize24;
-            model.ItemSize25= orderItem.ItemSize25; model.ItemSize26= orderItem.ItemSize26; model.ItemSize27= orderItem.ItemSize27;
-            model.ItemSize28= orderItem.ItemSize28; model.ItemSize29 = orderItem.ItemSize29; model.ItemSize30= orderItem.ItemSize30;
+            model.ItemSize1 = orderItem.ItemSize1.ToString();
+            
+            model.ItemSize2 = orderItem.ItemSize2.ToString(); model.ItemSize3 = orderItem.ItemSize3.ToString();
+            model.ItemSize4 = orderItem.ItemSize4.ToString(); model.ItemSize5 = orderItem.ItemSize5.ToString(); model.ItemSize6 = orderItem.ItemSize6.ToString();
+            model.ItemSize7 = orderItem.ItemSize7.ToString(); model.ItemSize8 = orderItem.ItemSize8.ToString(); model.ItemSize9 = orderItem.ItemSize9.ToString();
+            model.ItemSize10 = orderItem.ItemSize10.ToString(); model.ItemSize11 = orderItem.ItemSize11.ToString(); model.ItemSize12 = orderItem.ItemSize12.ToString();
+            model.ItemSize13= orderItem.ItemSize13.ToString(); model.ItemSize14= orderItem.ItemSize14.ToString(); model.ItemSize15= orderItem.ItemSize15.ToString();
+            model.ItemSize16= orderItem.ItemSize16.ToString(); model.ItemSize17 = orderItem.ItemSize17.ToString(); model.ItemSize18= orderItem.ItemSize18.ToString();
+            model.ItemSize19= orderItem.ItemSize19.ToString(); model.ItemSize20= orderItem.ItemSize20.ToString(); model.ItemSize21= orderItem.ItemSize21.ToString();
+            model.ItemSize22= orderItem.ItemSize22.ToString(); model.ItemSize23= orderItem.ItemSize23.ToString(); model.ItemSize24= orderItem.ItemSize24.ToString();
+            model.ItemSize25= orderItem.ItemSize25.ToString(); model.ItemSize26= orderItem.ItemSize26.ToString(); model.ItemSize27= orderItem.ItemSize27.ToString();
+            model.ItemSize28= orderItem.ItemSize28.ToString(); model.ItemSize29 = orderItem.ItemSize29.ToString(); model.ItemSize30= orderItem.ItemSize30.ToString();
             model.ID = orderItem.ID;
             model.IsActive = orderItem.IsActive;
             model.PurchaseOrderId = orderItem.PurchaseOrderId;
@@ -848,38 +1243,157 @@ public List<PurchaseOrderItem> GetSearchValue(PurchaseOrderSearch model)
 			DAL.PurchaseOrderItem Order = new DAL.PurchaseOrderItem();
             Order = Entities.PurchaseOrderItems.Where(s => s.ID == OrderItem.ID).FirstOrDefault();
              Order.PurchaseOrderId = OrderItem.PurchaseOrderId;
-           // Order.ProductID = OrderItem.ProductId;
+            Order.ProductID = OrderItem.ProductId;
             Order.Amount = (OrderItem.Amount)??0;
             //Order.ProductStyleId = OrderItem.ProductStyleId;
             Order.SizeGridId = OrderItem.SizeGridId;
+            var sizeGrid = Entities.SizeGrids.Where(x => x.IsActive == true && x.Id == Order.SizeGridId).FirstOrDefault();
             Order.ColorId = OrderItem.ColorId;
             Order.SuplierStyle = OrderItem.SuplierStyle;
-            Order.ItemSize1 = OrderItem.ItemSize1; Order.ItemSize2 = OrderItem.ItemSize2; Order.ItemSize3 = OrderItem.ItemSize3; Order.ItemSize4 = OrderItem.ItemSize4;
-            Order.ItemSize5 = OrderItem.ItemSize5; Order.ItemSize6 = OrderItem.ItemSize6; Order.ItemSize7 = OrderItem.ItemSize7; Order.ItemSize8 = OrderItem.ItemSize8;
-            Order.ItemSize9 = OrderItem.ItemSize9; Order.ItemSize10 = OrderItem.ItemSize10; Order.ItemSize11 = OrderItem.ItemSize11; Order.ItemSize12 = OrderItem.ItemSize12;
-            Order.ItemSize13 = OrderItem.ItemSize13; Order.ItemSize14 = OrderItem.ItemSize14; Order.ItemSize15 = OrderItem.ItemSize15; Order.ItemSize16 = OrderItem.ItemSize16;
-            Order.ItemSize17 = OrderItem.ItemSize17; Order.ItemSize18 = OrderItem.ItemSize18; Order.ItemSize19 = OrderItem.ItemSize19; Order.ItemSize20 = OrderItem.ItemSize20;
-            Order.ItemSize21 = OrderItem.ItemSize21; Order.ItemSize22 = OrderItem.ItemSize22; Order.ItemSize23 = OrderItem.ItemSize23; Order.ItemSize24 = OrderItem.ItemSize24;
-            Order.ItemSize25 = OrderItem.ItemSize25; Order.ItemSize26 = OrderItem.ItemSize26; Order.ItemSize27 = OrderItem.ItemSize27; Order.ItemSize28 = OrderItem.ItemSize28;
-            Order.ItemSize29 = OrderItem.ItemSize29; Order.ItemSize30 = OrderItem.ItemSize30;
-            Order.QuantitySize1 = OrderItem.QuantitySize1; Order.QuantitySize2 = OrderItem.QuantitySize2; Order.QuantitySize3 = OrderItem.QuantitySize3; Order.QuantitySize4 = OrderItem.QuantitySize4;
-            Order.QuantitySize5 = OrderItem.QuantitySize5; Order.QuantitySize6 = OrderItem.QuantitySize6; Order.QuantitySize7 = OrderItem.QuantitySize7; Order.QuantitySize8 = OrderItem.QuantitySize8;
-            Order.QuantitySize9 = OrderItem.QuantitySize9; Order.QuantitySize10 = OrderItem.QuantitySize10; Order.QuantitySize11 = OrderItem.QuantitySize11; Order.QuantitySize12 = OrderItem.QuantitySize12;
-            Order.QuantitySize13 = OrderItem.QuantitySize13; Order.QuantitySize14 = OrderItem.QuantitySize14; Order.QuantitySize15 = OrderItem.QuantitySize15; Order.QuantitySize16 = OrderItem.QuantitySize16;
-            Order.QuantitySize17 = OrderItem.QuantitySize17; Order.QuantitySize18 = OrderItem.QuantitySize18; Order.QuantitySize19 = OrderItem.QuantitySize19; Order.QuantitySize20 = OrderItem.QuantitySize20;
-            Order.QuantitySize21 = OrderItem.QuantitySize21; Order.QuantitySize22 = OrderItem.QuantitySize22; Order.QuantitySize23 = OrderItem.QuantitySize23; Order.QuantitySize24 = OrderItem.QuantitySize24;
-            Order.QuantitySize25 = OrderItem.QuantitySize25; Order.QuantitySize26 = OrderItem.QuantitySize26; Order.QuantitySize27 = OrderItem.QuantitySize27; Order.QuantitySize28 = OrderItem.QuantitySize28;
-            Order.QuantitySize29 = OrderItem.QuantitySize29; Order.QuantitySize30 = OrderItem.QuantitySize30;
 
-            Order.CostSize1 = OrderItem.CostSize1; Order.CostSize2 = OrderItem.CostSize2; Order.CostSize3 = OrderItem.CostSize3; Order.CostSize4 = OrderItem.CostSize4;
-            Order.CostSize5 = OrderItem.CostSize5; Order.CostSize6 = OrderItem.CostSize6; Order.CostSize7 = OrderItem.CostSize7; Order.CostSize8 = OrderItem.CostSize8;
-            Order.CostSize9 = OrderItem.CostSize9; Order.CostSize10 = OrderItem.CostSize10; Order.CostSize11 = OrderItem.CostSize11; Order.CostSize12 = OrderItem.CostSize12;
-            Order.CostSize13 = OrderItem.CostSize13; Order.CostSize14 = OrderItem.CostSize14; Order.CostSize15 = OrderItem.CostSize15; Order.CostSize16 = OrderItem.CostSize16;
-            Order.CostSize17 = OrderItem.CostSize17; Order.CostSize18 = OrderItem.CostSize18; Order.CostSize19 = OrderItem.CostSize19; Order.CostSize20 = OrderItem.CostSize20;
-            Order.CostSize21 = OrderItem.CostSize21; Order.CostSize22 = OrderItem.CostSize22; Order.CostSize23 = OrderItem.CostSize23; Order.CostSize24 = OrderItem.CostSize24;
-            Order.CostSize25 = OrderItem.CostSize25; Order.CostSize26 = OrderItem.CostSize26; Order.CostSize27 = OrderItem.CostSize27; Order.CostSize28 = OrderItem.CostSize28;
-            Order.CostSize29 = OrderItem.CostSize29; Order.CostSize30 = OrderItem.CostSize30;
+            var dict = new Dictionary<string, string>();
+            var keyval = Utility.getKeyVaue(sizeGrid).Where(x => x.Key.Contains("Z")).ToList();
+            foreach (var item2 in keyval)
+            {
+                if (!string.IsNullOrEmpty(item2.Value))
+                {
+                    if (item2.Value.Contains(".0"))
+                    {
+                        //item2[item2.Key] = 	item2.Value.Replace(".0", "");
+                        dict.Add(item2.Key, item2.Value.Replace(".0", ""));
+                    }
+                    else
+                    {
+                        dict.Add(item2.Key, item2.Value);
+                    }
+                }
+            }
+            var ItemDict = new Dictionary<string, string>();
+            var CostDict = new Dictionary<string, string>();
+            var QuantityDict = new Dictionary<string, string>();
+            var dataItemSize = Utility.getKeyVaue(OrderItem).Where(x => x.Key.Contains("ItemSize")).ToList();
+            foreach (var item in dataItemSize)
+            {
+                if (item.Value != "")
+                {
+                    var data = dict.Where(x => x.Value == item.Value).FirstOrDefault();
+                    var data1 = data.Key;
+                    var b = "";
+                    var a = data1.Substring(0, 2);
+                    if (a == "Z0")
+                    {
+                        b = data1.Replace("Z0", "");
+                    }
+                    else
+                    {
+                        b = data1.Replace("Z", "");
+                    }
+                    var itemKey = Utility.getKeyVaue(Order).Where(x => x.Key.Contains("ItemSize")).ToList();
+                    var value = itemKey.Where(x => x.Key.Replace("ItemSize", "") == b).FirstOrDefault();
+                    ItemDict.Add(value.Key, data.Value);
+                    var CostKey1 = Utility.getKeyVaue(OrderItem).Where(x => x.Key.Contains("CostSize")).ToList();
+                    var costValue1 = CostKey1.Where(x => x.Key.Replace("CostSize", "") == item.Key.Replace("ItemSize", "")).FirstOrDefault();
+                    var CostKey = Utility.getKeyVaue(Order).Where(x => x.Key.Contains("CostSize")).ToList();
+                    var costValue = CostKey.Where(x => x.Key.Replace("CostSize", "") == value.Key.Replace("ItemSize", "")).FirstOrDefault();
+                    CostDict.Add(costValue.Key, costValue1.Value);
+                    var QuantityKey1 = Utility.getKeyVaue(OrderItem).Where(x => x.Key.Contains("QuantitySize")).ToList();
+                    var QuantityValue1 = QuantityKey1.Where(x => x.Key.Replace("QuantitySize", "") == item.Key.Replace("ItemSize", "")).FirstOrDefault();
 
+                    var QuantityKey = Utility.getKeyVaue(Order).Where(x => x.Key.Contains("QuantitySize")).ToList();
+                    var QuantityValue = QuantityKey.Where(x => x.Key.Replace("QuantitySize", "") == value.Key.Replace("ItemSize", "")).FirstOrDefault();
+                    QuantityDict.Add(QuantityValue.Key, QuantityValue1.Value);
+                }
+            }
+            Order.ItemSize1 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize1").FirstOrDefault().Value);
+            Order.ItemSize2 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize2").FirstOrDefault().Value);
+            Order.ItemSize3 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize3").FirstOrDefault().Value);
+            Order.ItemSize4 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize4").FirstOrDefault().Value);
+            Order.ItemSize5 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize5").FirstOrDefault().Value);
+            Order.ItemSize6 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize6").FirstOrDefault().Value);
+            Order.ItemSize7 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize7").FirstOrDefault().Value);
+            Order.ItemSize8 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize8").FirstOrDefault().Value);
+            Order.ItemSize9 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize9").FirstOrDefault().Value);
+            Order.ItemSize10 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize10").FirstOrDefault().Value);
+            Order.ItemSize11 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize11").FirstOrDefault().Value);
+            Order.ItemSize12 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize12").FirstOrDefault().Value);
+            Order.ItemSize13 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize13").FirstOrDefault().Value);
+            Order.ItemSize14 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize14").FirstOrDefault().Value);
+            Order.ItemSize15 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize15").FirstOrDefault().Value);
+            Order.ItemSize16 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize16").FirstOrDefault().Value);
+            Order.ItemSize17 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize17").FirstOrDefault().Value);
+            Order.ItemSize18 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize18").FirstOrDefault().Value);
+            Order.ItemSize19 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize19").FirstOrDefault().Value);
+            Order.ItemSize20 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize20").FirstOrDefault().Value);
+            Order.ItemSize21 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize21").FirstOrDefault().Value);
+            Order.ItemSize22 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize22").FirstOrDefault().Value);
+            Order.ItemSize23 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize23").FirstOrDefault().Value);
+            Order.ItemSize24 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize24").FirstOrDefault().Value);
+            Order.ItemSize25 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize25").FirstOrDefault().Value);
+            Order.ItemSize26 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize26").FirstOrDefault().Value);
+            Order.ItemSize27 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize27").FirstOrDefault().Value);
+            Order.ItemSize28 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize28").FirstOrDefault().Value);
+            Order.ItemSize29 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize29").FirstOrDefault().Value);
+            Order.ItemSize30 = Convert.ToDecimal(ItemDict.Where(x => x.Key == "ItemSize30").FirstOrDefault().Value);
+            Order.CostSize1 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize1").FirstOrDefault().Value);
+            Order.CostSize2 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize2").FirstOrDefault().Value);
+            Order.CostSize3 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize3").FirstOrDefault().Value);
+            Order.CostSize4 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize4").FirstOrDefault().Value);
+            Order.CostSize5 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize5").FirstOrDefault().Value);
+            Order.CostSize6 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize6").FirstOrDefault().Value);
+            Order.CostSize7 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize7").FirstOrDefault().Value);
+            Order.CostSize8 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize8").FirstOrDefault().Value);
+            Order.CostSize9 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize9").FirstOrDefault().Value);
+            Order.CostSize10 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize10").FirstOrDefault().Value);
+            Order.CostSize11 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize11").FirstOrDefault().Value);
+            Order.CostSize12 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize12").FirstOrDefault().Value);
+            Order.CostSize13 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize13").FirstOrDefault().Value);
+            Order.CostSize14 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize14").FirstOrDefault().Value);
+            Order.CostSize15 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize15").FirstOrDefault().Value);
+            Order.CostSize16 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize16").FirstOrDefault().Value);
+            Order.CostSize17 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize17").FirstOrDefault().Value);
+            Order.CostSize18 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize18").FirstOrDefault().Value);
+            Order.CostSize19 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize19").FirstOrDefault().Value);
+            Order.CostSize20 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize20").FirstOrDefault().Value);
+            Order.CostSize21 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize21").FirstOrDefault().Value);
+            Order.CostSize22 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize22").FirstOrDefault().Value);
+            Order.CostSize23 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize23").FirstOrDefault().Value);
+            Order.CostSize24 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize24").FirstOrDefault().Value);
+            Order.CostSize25 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize25").FirstOrDefault().Value);
+            Order.CostSize26 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize26").FirstOrDefault().Value);
+            Order.CostSize27 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize27").FirstOrDefault().Value);
+            Order.CostSize28 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize28").FirstOrDefault().Value);
+            Order.CostSize29 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize29").FirstOrDefault().Value);
+            Order.CostSize30 = Convert.ToDecimal(CostDict.Where(x => x.Key == "CostSize30").FirstOrDefault().Value);
+            Order.QuantitySize1 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize1").FirstOrDefault().Value);
+            Order.QuantitySize2 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize2").FirstOrDefault().Value);
+            Order.QuantitySize3 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize3").FirstOrDefault().Value);
+            Order.QuantitySize4 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize4").FirstOrDefault().Value);
+            Order.QuantitySize5 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize5").FirstOrDefault().Value);
+            Order.QuantitySize6 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize6").FirstOrDefault().Value);
+            Order.QuantitySize7 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize7").FirstOrDefault().Value);
+            Order.QuantitySize8 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize8").FirstOrDefault().Value);
+            Order.QuantitySize9 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize9").FirstOrDefault().Value);
+            Order.QuantitySize10 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize10").FirstOrDefault().Value);
+            Order.QuantitySize11 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize11").FirstOrDefault().Value);
+            Order.QuantitySize12 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize12").FirstOrDefault().Value);
+            Order.QuantitySize13 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize13").FirstOrDefault().Value);
+            Order.QuantitySize14 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize14").FirstOrDefault().Value);
+            Order.QuantitySize15 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize15").FirstOrDefault().Value);
+            Order.QuantitySize16 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize16").FirstOrDefault().Value);
+            Order.QuantitySize17 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize17").FirstOrDefault().Value);
+            Order.QuantitySize18 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize18").FirstOrDefault().Value);
+            Order.QuantitySize19 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize19").FirstOrDefault().Value);
+            Order.QuantitySize20 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize20").FirstOrDefault().Value);
+            Order.QuantitySize21 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize21").FirstOrDefault().Value);
+            Order.QuantitySize22 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize22").FirstOrDefault().Value);
+            Order.QuantitySize23 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize23").FirstOrDefault().Value);
+            Order.QuantitySize24 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize24").FirstOrDefault().Value);
+            Order.QuantitySize25 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize25").FirstOrDefault().Value);
+            Order.QuantitySize26 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize26").FirstOrDefault().Value);
+            Order.QuantitySize27 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize27").FirstOrDefault().Value);
+            Order.QuantitySize28 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize28").FirstOrDefault().Value);
+            Order.QuantitySize29 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize29").FirstOrDefault().Value);
+            Order.QuantitySize30 = Convert.ToInt16(QuantityDict.Where(x => x.Key == "QuantitySize30").FirstOrDefault().Value);
             Order.IsActive = true;
             Entities.SaveChanges();
             var purchaseOrderItem = Entities.PurchaseOrderItems.Where(x => x.IsActive == true && x.PurchaseOrderId == OrderItem.PurchaseOrderId).ToList();

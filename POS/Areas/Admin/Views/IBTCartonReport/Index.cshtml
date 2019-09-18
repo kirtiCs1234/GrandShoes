@@ -18,7 +18,7 @@
         <div class="top-search-navbar-search smallsearch col-md-12 col-lg-12 col-sm-12 col-12">
             <div class="row">
 
-                <input class="top-search-navbar-input col-md-8 col-lg-10 col-sm-8 col-xs-8 searchiFirstName" type="text" placeholder="Search Carton" Id="CNumber" name="iFirstName">
+                <input class="top-search-navbar-input col-md-8 col-lg-10 col-sm-8 col-xs-8 searchiFirstName" type="text" placeholder="Search Carton By Branch" Id="CNumber" name="iFirstName">
                 <button class="advance-search col-md-2 col-lg-1 col-sm-2 col-xs-2" type="button"></button>
 
                 <button class="top-search-navbar-button col-md-2 col-lg-1 col-sm-2 col-xs-2" onclick="searchData()">
@@ -47,11 +47,38 @@
 @section scripts{
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
     <script type="text/javascript">
+        $(document).ready(function () {
+            debugger
+            var BranchList = {};
+            $("#CNumber").autocomplete({
+                source: function (request, response) {
+                    debugger
+                    $.ajax({
+                        url: "/Admin/IBTCarton/AutoCompleteBranch",
+                        type: "GET",
+                        data: { name: request.term },
+                        success: function (result) {
+                            debugger
+                            BranchList = $.map(result, function (value, key) { return { value: value.ID, label: value.Name }; });
+                            response(BranchList);
+                        },
+                        error: function (xhr, status) {
+                            alert(status)
+                        }
+                    });
+                },
+                select: function (event, ui) {
+                    debugger
+                    event.preventDefault();
+                    $("#CNumber").val(ui.item.label);
+                    $("#CNumber").val(ui.item.value);
+                },
+                minLength: 1
+            });
+        });
         function searchData() {
             debugger;
             var obj = {};
-
-            obj.DistributionSummaryID = $('#CNumber').val();
             obj.BranchName = $('#CNumber').val();
             obj.IsActive = true;
             $.ajax({
@@ -111,7 +138,7 @@
                     }
                 });
         }
-        $(".accordian-btn").click(function () {
+        $(document).on('click', ".accordian-btn", function () {
             $(this).toggleClass("accordian-reverse");
             $(this).parent().parent().next().find(".accordian-bundling").toggle(500);
         });

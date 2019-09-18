@@ -3471,6 +3471,7 @@ textarea {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
+    outline:none;
    
 }
 
@@ -12857,7 +12858,7 @@ button.top-search-navbar-button .fa {
     }
 
         .prtm-sidebar .prtm-sidebar-menu i {
-            margin-right: 20px;
+            margin-right:6px;
             font-size: 18px;
             min-width: 20px;
         }
@@ -12886,7 +12887,7 @@ button.top-search-navbar-button .fa {
         .prtm-sidebar .prtm-sidebar-menu .has-children > a:after {
             content: "\f105";
             font-family: 'FontAwesome';
-            right: 40px;
+            right: 10px;
             top: 12px;
             color: #fff;
             transform: translateX(0);
@@ -21125,4 +21126,81 @@ ul.branch-list li{
     border: 2px solid #eee;
     padding-bottom: 25px;
     text-align: center;
+}
+
+.tabs {
+    max-width: 100%;
+}
+
+#tab-button {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    #tab-button li {
+        display: table-cell;
+        width: 20%;
+    }
+
+        #tab-button li a {
+            display: block;
+            padding: .5em;
+            background: #eee;
+            border: 1px solid #ddd;
+            text-align: center;
+            color: #000;
+            text-decoration: none;
+        }
+
+        #tab-button li:not(:first-child) a {
+            border-left: none;
+        }
+
+        #tab-button li a:hover,
+        #tab-button .is-active a {
+            border-bottom-color: transparent;
+            background: #fff;
+        }
+
+.tab-contents {
+    padding: .5em 2em 1em;
+    border: 1px solid #ddd;
+}
+
+
+
+.tab-button-outer {
+    display: none;
+}
+
+.tab-contents {
+    margin-top: 20px;
+}
+
+.min-heigh-branch{
+    min-height:417px;
+}
+.mt-15{
+    margin-top:15px;
+}
+@media screen and (min-width: 768px) {
+    .tab-button-outer {
+        position: relative;
+        z-index: 2;
+        display: block;
+    }
+
+    .tab-select-outer {
+        display: none;
+    }
+
+    .tab-contents {
+        position: relative;
+        top: -1px;
+        margin-top: 0;
+    }
 }
